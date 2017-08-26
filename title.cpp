@@ -11,6 +11,9 @@ Title::Title(QWidget *parent) :
 {
     ui->setupUi(this);
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/title.qss"));
+    connect(ui->CloseBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigCloseBtnClicked()));
+    connect(ui->MinBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMinBtnClicked()));
+    connect(ui->MaxBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMaxBtnClicked()));
 }
 
 Title::~Title()
@@ -28,3 +31,12 @@ void Title::paintEvent(QPaintEvent *event)
     p.setBrush(QColor("#3c4145"));
     p.drawRect(rect());
 }
+
+void Title::mouseDoubleClickEvent(QMouseEvent *event)
+{
+    if(event->button() == Qt::LeftButton)
+    {
+        emit SigDoubleClicked();
+    }
+}
+

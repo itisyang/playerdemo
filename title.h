@@ -2,6 +2,7 @@
 #define MAINWIDTITLE_H
 
 #include <QWidget>
+#include <QMouseEvent>
 
 namespace Ui {
 class Title;
@@ -16,6 +17,13 @@ public:
     ~Title();
 private:
     void paintEvent(QPaintEvent *event);
+    //双击
+    void mouseDoubleClickEvent(QMouseEvent *event);
+signals:
+    void SigCloseBtnClicked();
+    void SigMinBtnClicked();
+    void SigMaxBtnClicked();
+    void SigDoubleClicked();
 private:
     Ui::Title *ui;
 

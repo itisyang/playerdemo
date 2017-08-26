@@ -13,9 +13,10 @@ MainWidget::MainWidget(QWidget *parent) :
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
     setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
-    //setMouseTracking(true);
 
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/mainwidget.qss"));
+
+    ConnectSignalSlots();
 }
 
 MainWidget::~MainWidget()
@@ -26,11 +27,11 @@ MainWidget::~MainWidget()
 
 void MainWidget::mousePressEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton)
+    if(event->button() == Qt::LeftButton && ui->TitleWid->height() >= event->pos().y())
     {
         mouse_press = true;
         //鼠标相对于窗体的位置（或者使用event->globalPos() - this->pos()）
-        move_point = event->pos();;
+        move_point = event->pos();
     }
 }
 void MainWidget::mouseMoveEvent(QMouseEvent *event)
@@ -45,6 +46,37 @@ void MainWidget::mouseMoveEvent(QMouseEvent *event)
         this->move(move_pos - move_point);
     }
 }
+
+void MainWidget::ConnectSignalSlots()
+{
+    connect(ui->TitleWid, SIGNAL(SigCloseBtnClicked()), this, SLOT(OnCloseBtnClicked()));
+    connect(ui->TitleWid, SIGNAL(SigMaxBtnClicked()), this, SLOT(OnMaxBtnClicked()));
+    connect(ui->TitleWid, SIGNAL(SigMinBtnClicked()), this, SLOT(OnMinBtnClicked()));
+    connect(ui->TitleWid, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
+}
+
+void MainWidget::OnCloseBtnClicked()
+{
+    this->close();
+}
+
+void MainWidget::OnMinBtnClicked()
+{
+    this->showMinimized();
+}
+
+void MainWidget::OnMaxBtnClicked()
+{
+    if (isMaximized())
+    {
+        showNormal();
+    }
+    else
+    {
+        showMaximized();
+    }
+}
+
 void MainWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);

@@ -23,6 +23,12 @@ private:
     void mouseReleaseEvent(QMouseEvent *event);
    //鼠标移动事件
     void mouseMoveEvent(QMouseEvent *event);
+    //连接信号槽
+    void ConnectSignalSlots();
+private slots:
+    void OnCloseBtnClicked();
+    void OnMinBtnClicked();
+    void OnMaxBtnClicked();
 private:
     Ui::MainWidget *ui;
 

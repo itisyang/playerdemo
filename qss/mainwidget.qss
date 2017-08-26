@@ -1,4 +1,7 @@
-
+QWidget{
+    background: #171717;
+    color:white;
+}
 
 /* ******************QScrollBar*******************/
 /**  垂直  **/

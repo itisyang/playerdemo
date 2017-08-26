@@ -3,7 +3,7 @@
 
 QPushButton#MenuBtn {
         background-color:transparent;
-        /*image: url(:/res/minimize.png);*/
+        font-size:30px;
 }
 
 QPushButton#MenuBtn:hover {

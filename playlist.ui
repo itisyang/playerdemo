@@ -31,6 +31,9 @@
    </property>
    <item row="0" column="0">
     <widget class="QListWidget" name="List">
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <item>
       <property name="text">
        <string>testlist0</string>

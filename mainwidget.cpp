@@ -1,4 +1,6 @@
 #include <QFile>
+#include <QPainter>
+#include <QtMath>
 
 #include "mainwidget.h"
 #include "ui_mainwidget.h"
@@ -14,14 +16,57 @@ MainWidget::MainWidget(QWidget *parent) :
     //无边框、无系统菜单、 任务栏点击最小化
     setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
 
+    //保证窗口不被绘制上的部分透明
+    setAttribute(Qt::WA_TranslucentBackground);
+
+    //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/mainwidget.qss"));
 
+    //连接自定义信号与槽
     ConnectSignalSlots();
 }
 
 MainWidget::~MainWidget()
 {
     delete ui;
+}
+
+void MainWidget::paintEvent(QPaintEvent *event)
+{
+    if (!this->isMaximized() && !this->isFullScreen())
+    {//边框阴影
+        int nShadowWidth = 5;
+        this->layout()->setMargin(nShadowWidth);
+
+        QPainterPath path;
+        path.setFillRule(Qt::WindingFill);
+        path.addRect(nShadowWidth, nShadowWidth,
+                     this->width() - nShadowWidth*2, this->height() - nShadowWidth*2);
+
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.fillPath(path, QBrush(Qt::white));
+
+        QColor color(0, 0, 0, 50);
+        for(int i = 0; i < nShadowWidth; i++)
+        {
+            QPainterPath path;
+            path.setFillRule(Qt::WindingFill);
+            //path.addRoundRect(10-i, 10-i, this->width()-(10-i)*2, this->height()-(10-i)*2, 1, 1);
+            path.addRect(nShadowWidth - i,
+                         nShadowWidth - i,
+                         this->width() - (nShadowWidth - i ) * 2,
+                         this->height() - (nShadowWidth - i) * 2);
+            color.setAlpha(150 - qSqrt(i) * 50);
+            painter.setPen(color);
+            painter.drawPath(path);
+        }
+    }
+    else
+    {
+        int nShadowWidth = 0;
+        this->layout()->setMargin(nShadowWidth);
+    }
 }
 
 

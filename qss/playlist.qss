@@ -1,4 +1,4 @@
-QWidget{
+QWidget#List{
     background: #212121;
     color:white;
 }

@@ -17,6 +17,8 @@ public:
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
 private:
+    //绘制
+    void paintEvent(QPaintEvent *event);
     //鼠标按下事件
     void mousePressEvent(QMouseEvent *event);
    //鼠标释放事件

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
-    <height>569</height>
+    <width>868</width>
+    <height>587</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
-    <widget class="MainWidTitle" name="widget_3" native="true">
+    <widget class="Title" name="TitleWid" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -27,7 +27,7 @@
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
-      <widget class="PlayList" name="widget" native="true">
+      <widget class="PlayList" name="PlaylistWid" native="true">
        <property name="maximumSize">
         <size>
          <width>200</width>
@@ -37,7 +37,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QWidget" name="widget_2" native="true"/>
+      <widget class="QWidget" name="PlayWid" native="true"/>
      </item>
     </layout>
    </item>
@@ -52,9 +52,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>MainWidTitle</class>
+   <class>Title</class>
    <extends>QWidget</extends>
-   <header>mainwidtitle.h</header>
+   <header>title.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

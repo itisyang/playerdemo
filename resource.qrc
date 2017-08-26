@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>res/close.png</file>
+        <file>res/maximize.png</file>
+        <file>res/minimize.png</file>
+        <file>qss/mainwidget.qss</file>
+        <file>qss/playlist.qss</file>
+        <file>qss/title.qss</file>
+    </qresource>
+</RCC>

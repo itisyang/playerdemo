@@ -1,5 +1,10 @@
+#include <QFile>
+
 #include "mainwidget.h"
 #include "ui_mainwidget.h"
+
+#include "globalhelper.h"
+
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
@@ -9,6 +14,8 @@ MainWidget::MainWidget(QWidget *parent) :
     //无边框、无系统菜单、 任务栏点击最小化
     setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
     //setMouseTracking(true);
+
+    setStyleSheet(GlobalHelper::GetQssStr(":/qss/mainwidget.qss"));
 }
 
 MainWidget::~MainWidget()
@@ -40,6 +47,7 @@ void MainWidget::mouseMoveEvent(QMouseEvent *event)
 }
 void MainWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    Q_UNUSED(event);
     //设置鼠标为未被按下
     mouse_press = false;
 }

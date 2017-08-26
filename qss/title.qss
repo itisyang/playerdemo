@@ -1,0 +1,56 @@
+
+
+
+QPushButton#MenuBtn {
+        background-color:transparent;
+        /*image: url(:/res/minimize.png);*/
+}
+
+QPushButton#MenuBtn:hover {
+    background:#696969;
+}
+
+QPushButton#MenuBtn:pressed {
+    background:#363636;
+}
+
+
+QPushButton#MinBtn {
+        background-color:transparent;
+        image: url(:/res/minimize.png);
+}
+
+QPushButton#MinBtn:hover {
+    background:#696969;
+}
+
+QPushButton#MinBtn:pressed {
+    background:#363636;
+}
+
+QPushButton#MaxBtn {
+        background-color:transparent;
+        image: url(:/res/maximize.png);
+}
+
+QPushButton#MaxBtn:hover {
+    background:#696969;
+}
+
+QPushButton#MaxBtn:pressed {
+    background:#363636;
+}
+
+QPushButton#CloseBtn {
+        background-color:transparent;
+        image: url(:/res/close.png);
+}
+
+QPushButton#CloseBtn:hover {
+    background:#8B0000;
+}
+
+QPushButton#CloseBtn:pressed {
+    background:#FF0000;
+}
+

@@ -31,6 +31,8 @@ private slots:
     void OnCloseBtnClicked();
     void OnMinBtnClicked();
     void OnMaxBtnClicked();
+signals:
+    void SigShowMax(bool bIfMax);
 private:
     Ui::MainWidget *ui;
 

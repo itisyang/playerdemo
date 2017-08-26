@@ -19,6 +19,8 @@ private:
     void paintEvent(QPaintEvent *event);
     //双击
     void mouseDoubleClickEvent(QMouseEvent *event);
+public slots:
+    void OnChangeMaxBtnStyle(bool bIfMax);
 signals:
     void SigCloseBtnClicked();
     void SigMinBtnClicked();

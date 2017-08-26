@@ -33,9 +33,11 @@ MainWidget::~MainWidget()
 
 void MainWidget::paintEvent(QPaintEvent *event)
 {
+    Q_UNUSED(event);
+
     if (!this->isMaximized() && !this->isFullScreen())
     {//边框阴影
-        int nShadowWidth = 5;
+        int nShadowWidth = 3;
         this->layout()->setMargin(nShadowWidth);
 
         QPainterPath path;
@@ -98,6 +100,7 @@ void MainWidget::ConnectSignalSlots()
     connect(ui->TitleWid, SIGNAL(SigMaxBtnClicked()), this, SLOT(OnMaxBtnClicked()));
     connect(ui->TitleWid, SIGNAL(SigMinBtnClicked()), this, SLOT(OnMinBtnClicked()));
     connect(ui->TitleWid, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
+    connect(this, SIGNAL(SigShowMax(bool)), ui->TitleWid, SLOT(OnChangeMaxBtnStyle(bool)));
 }
 
 void MainWidget::OnCloseBtnClicked()
@@ -115,10 +118,12 @@ void MainWidget::OnMaxBtnClicked()
     if (isMaximized())
     {
         showNormal();
+        emit SigShowMax(false);
     }
     else
     {
         showMaximized();
+        emit SigShowMax(true);
     }
 }
 

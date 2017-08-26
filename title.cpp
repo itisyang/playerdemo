@@ -40,3 +40,16 @@ void Title::mouseDoubleClickEvent(QMouseEvent *event)
     }
 }
 
+void Title::OnChangeMaxBtnStyle(bool bIfMax)
+{
+    if (bIfMax)
+    {
+        ui->MaxBtn->setStyleSheet("QPushButton{image: url(:/res/restore.png);}");
+    }
+    else
+    {
+        ui->MaxBtn->setStyleSheet("QPushButton{image: url(:/res/maximize.png);}");
+    }
+
+}
+

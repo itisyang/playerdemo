@@ -7,5 +7,6 @@
         <file>qss/playlist.qss</file>
         <file>qss/title.qss</file>
         <file>res/restore.png</file>
+        <file>qss/display.qss</file>
     </qresource>
 </RCC>

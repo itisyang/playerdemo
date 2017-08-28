@@ -55,7 +55,7 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QWidget" name="PlayWid" native="true"/>
+      <widget class="Display" name="PlayWid" native="true"/>
      </item>
     </layout>
    </item>
@@ -73,6 +73,12 @@
    <class>Title</class>
    <extends>QWidget</extends>
    <header>title.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Display</class>
+   <extends>QWidget</extends>
+   <header>display.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

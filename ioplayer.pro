@@ -28,18 +28,24 @@ SOURCES += \
         mainwidget.cpp \
     playlist.cpp \
     title.cpp \
-    globalhelper.cpp
+    globalhelper.cpp \
+    display.cpp \
+    ctrlbar.cpp
 
 HEADERS += \
         mainwidget.h \
     playlist.h \
     title.h \
-    globalhelper.h
+    globalhelper.h \
+    display.h \
+    ctrlbar.h
 
 FORMS += \
         mainwidget.ui \
     playlist.ui \
-    title.ui
+    title.ui \
+    display.ui \
+    ctrlbar.ui
 
 RESOURCES += \
     resource.qrc

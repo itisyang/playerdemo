@@ -1,4 +1,17 @@
-QWidget#List{
+
+/*****列表*******/
+QListWidget{
     background: #212121;
-    color:white;
+    border: 2px solid transparent;
+    color: #b6b6b6;
+}
+
+QListWidget::item:selected {
+     background: #11cdba;
+     padding: 0px;
+     margin: 0px;
+     color: black;
+     border-width: 1px;
+     border-style: solid;
+     border-color: #11cdba;
 }

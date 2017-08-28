@@ -10,8 +10,6 @@ PlayList::PlayList(QWidget *parent) :
     ui->setupUi(this);
 
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/playlist.qss"));
-
-    //ui->List->setFlags(ui->List->flags() & ~Qt::ItemIsSelectable);
 }
 
 PlayList::~PlayList()

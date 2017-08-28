@@ -1,17 +1,20 @@
 
-
-
+QWidget{
+    background: #3c4145;
+    color:white;
+}
 QPushButton#MenuBtn {
-        background-color:transparent;
-        font-size:30px;
+    background-color:transparent;
+    font-size:30px;
+    color:#9C9C9C;
 }
 
 QPushButton#MenuBtn:hover {
-    background:#696969;
+    color:#CFCFCF;
 }
 
 QPushButton#MenuBtn:pressed {
-    background:#363636;
+    color:#A9A9A9;
 }
 
 

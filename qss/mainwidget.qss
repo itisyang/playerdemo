@@ -84,23 +84,6 @@ QLabel#play_label{
     background-color: #161616;
 }
 
-/*****列表*******/
-QListWidget{
-    border: 2px solid transparent;
-    background: #ffffff;
-    color: #000000;
-}
-
-QListWidget::item:selected {
-     background: transparent;
-     padding: 0px;
-     margin: 0px;
-     color: #11cdba;
-     border-width: 1px;
-     border-style: solid;
-     border-color: #11cdba;
-}
-
 /*****菜单*****/
 
 QMenu{

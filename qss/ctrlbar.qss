@@ -1,0 +1,18 @@
+QWidget#BgWidget{
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                            stop: 0 #374040, stop: 1.0 #222930);
+    color:white;
+}
+
+QPushButton#PlayOrPauseBtn {
+        background-color:transparent;
+        image: url(:/res/play_n.png);
+}
+
+QPushButton#PlayOrPauseBtn:hover {
+    image: url(:/res/play_h.png);
+}
+
+QPushButton#PlayOrPauseBtn:pressed {
+    image: url(:/res/play_p.png);
+}

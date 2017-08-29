@@ -36,7 +36,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="BgWidget" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>

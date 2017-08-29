@@ -10,6 +10,10 @@ Title::Title(QWidget *parent) :
     ui(new Ui::Title)
 {
     ui->setupUi(this);
+
+    //保证窗口不被绘制上的部分透明
+    setAttribute(Qt::WA_TranslucentBackground);
+
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/title.qss"));
     connect(ui->CloseBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigCloseBtnClicked()));
     connect(ui->MinBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMinBtnClicked()));

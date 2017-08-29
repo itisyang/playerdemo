@@ -1,22 +1,24 @@
 
-QWidget{
-    background: #3c4145;
+QWidget#BgWidget{
+    background: #f24841;
     color:white;
+    border-top-left-radius:10px;
+    border-top-right-radius:10px;
 }
 QPushButton#MenuBtn {
     background-color:transparent;
     font-size:30px;
-    color:#9C9C9C;
-}
-
-QPushButton#MenuBtn:hover {
     color:#CFCFCF;
+}
+/*
+QPushButton#MenuBtn:hover {
+    color:#9C9C9C;
 }
 
 QPushButton#MenuBtn:pressed {
     color:#A9A9A9;
 }
-
+*/
 
 QPushButton#MinBtn {
         background-color:transparent;

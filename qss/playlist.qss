@@ -1,7 +1,15 @@
 
 /*****列表*******/
 QListWidget{
-    background: #212121;
+    background:#293341;
+/*
+    background: qlineargradient(x1: 1, y1: 0, x2: 0, y2: 0.5, x3:1, y3:1,
+                            stop: 0 #48535e,
+                            stop: 0.5 #293341,
+                            stop: 1.0 #445053);
+    /*
+    background-color: qradialgradient(cx:1, cy:0, fx:1, fy:1, radius:0.3, stop:0 #48535e, stop:1 #445053);
+    */
     border: 2px solid transparent;
     color: #b6b6b6;
 }

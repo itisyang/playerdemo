@@ -1,6 +1,6 @@
 
 QWidget#BgWidget{
-    background: #f24841;
+    background: /*#f24841*/black;
     color:white;
     border-top-left-radius:10px;
     border-top-right-radius:10px;

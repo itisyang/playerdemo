@@ -107,56 +107,6 @@ QMenu::item:selected{
 }
 
 
-/*****进度条*****/
-
-QSlider{
-    height:30px;
-    background-color: transparent;
-    border:none;
-}
-/***未播放***/
-QSlider::add-page:Horizontal  {
-    background-color: rgb(87, 97, 106);
-    height:4px;
-}
-/***已播放***/
-QSlider::sub-page:Horizontal   {
-    background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));
-    background-color: rgb(37, 168, 198);
-    height:4px;
-}
-/*刻槽*/
-QSlider::groove:Horizontal   {
-    background:red;
-    height:6px;
-}
-/*手柄\操控*/
-QSlider::handle:Horizontal   {
-    height: 15px;
-    width:  15px;
-    border-image: url(:/slider_vertical.png);
-    margin: -5 0px;
-}
-
-QSlider::add-page:vertical{
-    background-color: rgb(37, 168, 198);
-    width:4px;
-}
-QSlider::sub-page:vertical{
-    background-color: rgb(87, 97, 106);
-    width:4px;
-}
-QSlider::groove:vertical{
-    background:transparent;
-    width:6px;
-}
-QSlider::handle:vertical{
-    height: 13px;
-    width:13px;
-    border-image: url(:/slider_vertical.png);
-    margin: -0 -4px;
-}
-
 QTimeEdit{
     background-color: transparent;
     border:none;

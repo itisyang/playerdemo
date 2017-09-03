@@ -3,16 +3,29 @@
 
 #include "globalhelper.h"
 
-PlayList::PlayList(QWidget *parent) :
+Playlist::Playlist(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::PlayList)
+    ui(new Ui::Playlist)
 {
     ui->setupUi(this);
 
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/playlist.qss"));
+    ui->List->hide();
 }
 
-PlayList::~PlayList()
+Playlist::~Playlist()
 {
     delete ui;
+}
+
+void Playlist::on_HideOrShowBtn_clicked()
+{
+    if (ui->List->isHidden())
+    {
+        ui->List->show();
+    }
+    else
+    {
+        ui->List->hide();
+    }
 }

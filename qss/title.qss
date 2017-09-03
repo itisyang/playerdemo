@@ -1,21 +1,25 @@
 
 QWidget#BgWidget{
-    background: /*#f24841*/black;
+    /*background: #f24841;*/
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                            stop: 0 #374040, stop: 1.0 #222930);
     color:white;
-    border-top-left-radius:10px;
-    border-top-right-radius:10px;
+    /*border-top-left-radius:10px;
+    border-top-right-radius:10px;*/
 }
-QPushButton#MenuBtn {
+QPushButton#LogoBtn {
+    image: url(:/res/ioplayer.png);
     background-color:transparent;
     font-size:30px;
     color:#CFCFCF;
+    image: url(:/res/IOPlayer.png);
 }
 /*
-QPushButton#MenuBtn:hover {
+QPushButton#LogoBtn:hover {
     color:#9C9C9C;
 }
 
-QPushButton#MenuBtn:pressed {
+QPushButton#LogoBtn:pressed {
     color:#A9A9A9;
 }
 */

@@ -18,6 +18,7 @@ Title::Title(QWidget *parent) :
     connect(ui->CloseBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigCloseBtnClicked()));
     connect(ui->MinBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMinBtnClicked()));
     connect(ui->MaxBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMaxBtnClicked()));
+    ui->LogoBtn->setText("");
 }
 
 Title::~Title()

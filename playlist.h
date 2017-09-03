@@ -4,19 +4,22 @@
 #include <QWidget>
 
 namespace Ui {
-class PlayList;
+class Playlist;
 }
 
-class PlayList : public QWidget
+class Playlist : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit PlayList(QWidget *parent = 0);
-    ~PlayList();
+    explicit Playlist(QWidget *parent = 0);
+    ~Playlist();
+
+private slots:
+    void on_HideOrShowBtn_clicked();
 
 private:
-    Ui::PlayList *ui;
+    Ui::Playlist *ui;
 };
 
 #endif // PLAYLIST_H

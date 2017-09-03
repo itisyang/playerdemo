@@ -11,8 +11,6 @@ CtrlBar::CtrlBar(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QString qss = GlobalHelper::GetQssStr(":/qss/ctrlbar.qss");
-    qDebug() << qss;
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/ctrlbar.qss"));
 }
 

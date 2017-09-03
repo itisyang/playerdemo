@@ -8,9 +8,14 @@
         <file>qss/title.qss</file>
         <file>res/restore.png</file>
         <file>qss/display.qss</file>
-        <file>res/play_n.png</file>
-        <file>res/play_h.png</file>
-        <file>res/play_p.png</file>
         <file>qss/ctrlbar.qss</file>
+        <file>res/fullscreen.png</file>
+        <file>res/menu.png</file>
+        <file>res/pause.png</file>
+        <file>res/play.png</file>
+        <file>res/quiet.png</file>
+        <file>res/stop.png</file>
+        <file>res/volume.png</file>
+        <file>res/IOPlayer.png</file>
     </qresource>
 </RCC>

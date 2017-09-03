@@ -6,14 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>868</width>
-    <height>587</height>
+    <width>984</width>
+    <height>688</height>
    </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
   </property>
   <property name="windowTitle">
    <string>MainWidget</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -30,80 +33,16 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="Title" name="TitleWid" native="true">
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>50</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item row="0" column="0">
-      <widget class="PlayList" name="PlaylistWid" native="true">
-       <property name="maximumSize">
-        <size>
-         <width>200</width>
-         <height>16777215</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <layout class="QGridLayout" name="gridLayout">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <item row="0" column="0">
-        <widget class="Display" name="PlayWid" native="true">
-         <zorder>widget</zorder>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="CtrlBar" name="CtrlBarWid" native="true">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>100</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
+    <widget class="Display" name="PlayWid" native="true"/>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>PlayList</class>
-   <extends>QWidget</extends>
-   <header>playlist.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Title</class>
-   <extends>QWidget</extends>
-   <header>title.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
    <class>Display</class>
    <extends>QWidget</extends>
    <header>display.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>CtrlBar</class>
-   <extends>QWidget</extends>
-   <header>ctrlbar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

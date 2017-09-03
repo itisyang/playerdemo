@@ -14,18 +14,69 @@ QLabel{
 
 QPushButton#PlayOrPauseBtn {
         background-color:transparent;
-        image: url(:/res/play_n.png);
+        image: url(:/res/play.png);
 }
 
 QPushButton#PlayOrPauseBtn:hover {
-    image: url(:/res/play_h.png);
+
 }
 
 QPushButton#PlayOrPauseBtn:pressed {
-    image: url(:/res/play_p.png);
+
+}
+
+QPushButton#StopBtn{
+        background-color:transparent;
+        image: url(:/res/stop.png);
+}
+
+QPushButton#StopBtn:hover {
+    image: url(:/res/stop.png);
+}
+
+QPushButton#StopBtn:pressed {
+    image: url(:/res/stop.png);
+}
+
+QPushButton#VolumeBtn {
+        background-color:transparent;
+        image: url(:/res/volume.png);
+}
+
+QPushButton#VolumeBtn:hover {
+    image: url(:/res/volume.png);
+}
+
+QPushButton#VolumeBtn:pressed {
+    image: url(:/res/volume.png);
+}
+
+QPushButton#FullscreenBtn {
+        background-color:transparent;
+        image: url(:/res/fullscreen.png);
+}
+
+QPushButton#FullscreenBtn:hover {
+
+}
+
+QPushButton#FullscreenBtn:pressed {
+
 }
 
 
+QPushButton#MenuBtn{
+        background-color:transparent;
+        image: url(:/res/menu.png);
+}
+
+QPushButton#MenuBtn:hover {
+
+}
+
+QPushButton#MenuBtn:pressed {
+
+}
 
 
 

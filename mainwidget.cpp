@@ -158,10 +158,13 @@ void MainWidget::leaveEvent(QEvent *event)
 //    {
 //        m_pCtrlBar->hide();
 //    }
+    if (0)
+    {
+        m_pCtrlBar->hide();
+        m_pPlaylist->hide();
+        m_pTitle->hide();
+    }
 
-    m_pCtrlBar->hide();
-    m_pPlaylist->hide();
-    m_pTitle->hide();
 }
 
 void MainWidget::ConnectSignalSlots()
@@ -175,15 +178,15 @@ void MainWidget::ConnectSignalSlots()
 
 void MainWidget::AdjustUiPos()
 {
+    m_pTitle->move(gShadowWidth, gShadowWidth);
+    m_pTitle->setFixedWidth(width() - gShadowWidth * 2);
+
     m_pCtrlBar->move(0 + gShadowWidth, height() - 80 - gShadowWidth);
     m_pCtrlBar->setFixedSize(width() - gShadowWidth * 2, 80);
 
     int nPlaylistWidth = m_pPlaylist->width();
-    m_pPlaylist->move(width() - nPlaylistWidth - gShadowWidth, 100);
-    m_pPlaylist->setFixedHeight(height() - 220);
-
-    m_pTitle->move(0 + gShadowWidth, 0);
-    m_pTitle->setFixedWidth(width() - gShadowWidth * 2);
+    m_pPlaylist->move(width() - nPlaylistWidth - gShadowWidth, m_pTitle->height() + gShadowWidth);
+    m_pPlaylist->setFixedHeight(height() - m_pTitle->height() - m_pCtrlBar->height() - gShadowWidth * 2);
 }
 
 void MainWidget::OnCloseBtnClicked()

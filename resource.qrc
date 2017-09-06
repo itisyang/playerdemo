@@ -17,5 +17,7 @@
         <file>res/stop.png</file>
         <file>res/volume.png</file>
         <file>res/IOPlayer.png</file>
+        <file>res/fullscreen_h.png</file>
+        <file>res/fullscreen_p.png</file>
     </qresource>
 </RCC>

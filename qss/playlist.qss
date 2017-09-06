@@ -1,15 +1,7 @@
 
 /*****列表*******/
 QListWidget{
-    background:#293341;
-/*
-    background: qlineargradient(x1: 1, y1: 0, x2: 0, y2: 0.5, x3:1, y3:1,
-                            stop: 0 #48535e,
-                            stop: 0.5 #293341,
-                            stop: 1.0 #445053);
-    /*
-    background-color: qradialgradient(cx:1, cy:0, fx:1, fy:1, radius:0.3, stop:0 #48535e, stop:1 #445053);
-    */
+    background:#222930;
     border: 2px solid transparent;
     color: #b6b6b6;
 }
@@ -22,4 +14,18 @@ QListWidget::item:selected {
      border-width: 1px;
      border-style: solid;
      border-color: #11cdba;
+}
+
+QPushButton,QToolButton{
+    background-color:#222930;
+    padding: 5px;
+    border: none;
+    font-size:13px;
+    color:#FFFFFF;
+}
+QPushButton::hover,QToolButton::hover{
+    background:#374040;
+}
+QPushButton::pressed,QToolButton::pressed{
+    background:#363636;
 }

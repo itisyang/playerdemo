@@ -57,11 +57,11 @@ QPushButton#FullscreenBtn {
 }
 
 QPushButton#FullscreenBtn:hover {
-
+    image: url(:/res/fullscreen_h.png);
 }
 
 QPushButton#FullscreenBtn:pressed {
-
+    image: url(:/res/fullscreen_p.png);
 }
 
 

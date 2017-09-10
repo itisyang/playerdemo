@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QtMath>
 #include <QDebug>
+#include <QAbstractItemView>
+#include <QMimeData>
 #include "mainwidget.h"
 #include "ui_mainwidget.h"
 
@@ -36,6 +38,16 @@ MainWidget::MainWidget(QWidget *parent) :
 
     //连接自定义信号与槽
     ConnectSignalSlots();
+
+    //接受放下事件
+    setAcceptDrops(true);
+    //可以清晰地看到放下过程中的图标指示
+    //setDropIndicatorShown(true);
+
+//    setAcceptDrops(true);
+//    setDragDropMode(QAbstractItemView::DragDrop);
+//    setDragEnabled(true);
+//    setDropIndicatorShown(true);
 }
 
 MainWidget::~MainWidget()
@@ -165,6 +177,30 @@ void MainWidget::leaveEvent(QEvent *event)
         m_pTitle->hide();
     }
 
+}
+
+void MainWidget::dragEnterEvent(QDragEnterEvent *event)
+{
+    if(event->mimeData()->hasFormat("text/uri-list"))
+    {
+        event->acceptProposedAction();
+    }
+
+}
+
+void MainWidget::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+    if(urls.isEmpty())
+    {
+        return;
+    }
+
+    foreach(QUrl url, urls)
+    {
+        QString file_name = url.toLocalFile();
+        qDebug() << file_name;
+    }
 }
 
 void MainWidget::ConnectSignalSlots()

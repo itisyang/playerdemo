@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QDragEnterEvent>
 
 #include "ctrlbar.h"
 #include "playlist.h"
@@ -35,6 +36,9 @@ protected:
 
     void enterEvent(QEvent *event);
     void leaveEvent(QEvent *event);
+    void dragEnterEvent(QDragEnterEvent *event);
+    //void dragMoveEvent(QDragMoveEvent *event);
+    void dropEvent(QDropEvent *event);
 private:
 
 

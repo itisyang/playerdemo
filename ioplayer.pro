@@ -30,7 +30,11 @@ SOURCES += \
     title.cpp \
     globalhelper.cpp \
     display.cpp \
-    ctrlbar.cpp
+    ctrlbar.cpp \
+    readthread.cpp \
+    videothread.cpp \
+    audiothread.cpp \
+    subtitlethread.cpp
 
 HEADERS += \
         mainwidget.h \
@@ -38,7 +42,11 @@ HEADERS += \
     title.h \
     globalhelper.h \
     display.h \
-    ctrlbar.h
+    ctrlbar.h \
+    readthread.h \
+    videothread.h \
+    audiothread.h \
+    subtitlethread.h
 
 FORMS += \
         mainwidget.ui \
@@ -49,3 +57,18 @@ FORMS += \
 
 RESOURCES += \
     resource.qrc
+
+INCLUDEPATH += lib/ffmpeg/include
+
+LIBS += -L$$PWD/lib/ffmpeg/lib
+LIBS += -lavcodec
+LIBS += -lavdevice
+LIBS += -lavfilter
+LIBS += -lavformat
+LIBS += -lavutil
+LIBS += -lpostproc
+LIBS += -lswresample
+LIBS += -lswscale
+
+#win32:LIBS+=\
+#-L$$PWD/ffmpeg/lib/-lavcodec-lavdevice-lavfilter-lavformat-lavutil-lpostproc-lswresample-lswscale

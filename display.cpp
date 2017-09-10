@@ -11,9 +11,21 @@ Display::Display(QWidget *parent) :
 
     //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/display.qss"));
+
+    InitFFmpeg();
 }
 
 Display::~Display()
 {
     delete ui;
+}
+
+bool Display::InitFFmpeg()
+{
+    avdevice_register_all();
+    avfilter_register_all();
+    av_register_all();
+    avformat_network_init();
+
+    return true;
 }

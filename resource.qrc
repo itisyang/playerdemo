@@ -19,5 +19,6 @@
         <file>res/IOPlayer.png</file>
         <file>res/fullscreen_h.png</file>
         <file>res/fullscreen_p.png</file>
+        <file>res/fontawesome-webfont.ttf</file>
     </qresource>
 </RCC>

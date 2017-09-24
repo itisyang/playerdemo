@@ -8,9 +8,7 @@ Playlist::Playlist(QWidget *parent) :
     ui(new Ui::Playlist)
 {
     ui->setupUi(this);
-
-    setStyleSheet(GlobalHelper::GetQssStr(":/qss/playlist.qss"));
-    ui->List->hide();
+    InitUi();
 }
 
 Playlist::~Playlist()
@@ -18,14 +16,24 @@ Playlist::~Playlist()
     delete ui;
 }
 
+bool Playlist::InitUi()
+{
+    setStyleSheet(GlobalHelper::GetQssStr(":/qss/playlist.css"));
+    ui->List->hide();
+
+    GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
+}
+
 void Playlist::on_HideOrShowBtn_clicked()
 {
     if (ui->List->isHidden())
     {
         ui->List->show();
+        GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf105));
     }
     else
     {
         ui->List->hide();
+        GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
     }
 }

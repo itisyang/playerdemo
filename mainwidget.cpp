@@ -24,7 +24,7 @@ MainWidget::MainWidget(QWidget *parent) :
     setAttribute(Qt::WA_TranslucentBackground);
 
     //加载样式
-    setStyleSheet(GlobalHelper::GetQssStr(":/qss/mainwidget.qss"));
+    setStyleSheet(GlobalHelper::GetQssStr(":/qss/mainwidget.css"));
 
 
     m_pCtrlBar = new CtrlBar(this);

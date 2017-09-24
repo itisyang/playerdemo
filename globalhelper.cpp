@@ -19,3 +19,13 @@ QString GlobalHelper::GetQssStr(QString strQssPath)
     }
     return strQss;
 }
+
+void GlobalHelper::SetIcon(QPushButton* btn, int iconSize, QChar icon)
+{
+    QFont font;
+    font.setFamily("FontAwesome");
+    font.setPointSize(iconSize);
+
+    btn->setFont(font);
+    btn->setText(icon);
+}

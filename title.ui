@@ -57,7 +57,7 @@
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>10</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -82,10 +82,10 @@
         <property name="font">
          <font>
           <family>华文彩云</family>
-          <pointsize>20</pointsize>
-          <weight>50</weight>
+          <pointsize>18</pointsize>
+          <weight>75</weight>
           <italic>false</italic>
-          <bold>false</bold>
+          <bold>true</bold>
           <underline>false</underline>
           <strikeout>false</strikeout>
          </font>
@@ -112,14 +112,14 @@
        <widget class="QPushButton" name="MinBtn">
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>50</width>
+          <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>50</width>
+          <height>50</height>
          </size>
         </property>
         <property name="text">
@@ -131,14 +131,14 @@
        <widget class="QPushButton" name="MaxBtn">
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>50</width>
+          <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>50</width>
+          <height>50</height>
          </size>
         </property>
         <property name="text">
@@ -150,14 +150,14 @@
        <widget class="QPushButton" name="CloseBtn">
         <property name="minimumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>50</width>
+          <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>30</width>
-          <height>30</height>
+          <width>50</width>
+          <height>50</height>
          </size>
         </property>
         <property name="text">

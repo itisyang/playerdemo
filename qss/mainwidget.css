@@ -63,8 +63,8 @@ QPushButton,QToolButton{
     background-color:#528B8B;
     padding: 5px;
     border: none;
-    font-size:13px;
-    color:#FFFFFF;
+/*    font-size:13px;
+    color:#FFFFFF;*/
 }
 QPushButton::hover,QToolButton::hover{
     background:#696969;
@@ -92,7 +92,7 @@ QMenu{
     border: none;
 }
 QMenu::menu-arrow {
-    none;
+
 }
 QMenu::item{
     background-color: #3C4144;

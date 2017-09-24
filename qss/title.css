@@ -7,13 +7,16 @@ QWidget#BgWidget{
     /*border-top-left-radius:10px;
     border-top-right-radius:10px;*/
 }
-QPushButton#LogoBtn {
+QPushButton{
+    background-color:transparent;
+}
+/*QPushButton#LogoBtn {
     image: url(:/res/ioplayer.png);
     background-color:transparent;
     font-size:30px;
     color:#CFCFCF;
     image: url(:/res/IOPlayer.png);
-}
+}*/
 /*
 QPushButton#LogoBtn:hover {
     color:#9C9C9C;
@@ -26,7 +29,7 @@ QPushButton#LogoBtn:pressed {
 
 QPushButton#MinBtn {
         background-color:transparent;
-        image: url(:/res/minimize.png);
+        /*image: url(:/res/minimize.png);*/
 }
 
 QPushButton#MinBtn:hover {
@@ -39,7 +42,7 @@ QPushButton#MinBtn:pressed {
 
 QPushButton#MaxBtn {
         background-color:transparent;
-        image: url(:/res/maximize.png);
+        /*image: url(:/res/maximize.png);*/
 }
 
 QPushButton#MaxBtn:hover {
@@ -50,9 +53,12 @@ QPushButton#MaxBtn:pressed {
     background:#363636;
 }
 
+
+
 QPushButton#CloseBtn {
         background-color:transparent;
-        image: url(:/res/close.png);
+        /*image: url(:/res/close.png);*/
+        /*text: "\uf2d4";*/
 }
 
 QPushButton#CloseBtn:hover {
@@ -62,4 +68,3 @@ QPushButton#CloseBtn:hover {
 QPushButton#CloseBtn:pressed {
     background:#FF0000;
 }
-

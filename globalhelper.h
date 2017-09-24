@@ -2,13 +2,14 @@
 #define GLOBALHELPER_H
 
 #include <QString>
+#include <QPushButton>
 
 class GlobalHelper
 {
 public:
     GlobalHelper();
     static QString GetQssStr(QString strQssPath);
-
+    static void    SetIcon(QPushButton* btn, int iconSize, QChar icon);
 };
 
 #endif // GLOBALHELPER_H

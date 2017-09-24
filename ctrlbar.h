@@ -15,6 +15,8 @@ public:
     explicit CtrlBar(QWidget *parent = 0);
     ~CtrlBar();
 
+    bool InitUi();
+
 private:
     Ui::CtrlBar *ui;
 };

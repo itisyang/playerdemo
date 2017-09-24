@@ -15,6 +15,8 @@ public:
     explicit Playlist(QWidget *parent = 0);
     ~Playlist();
 
+    bool InitUi();
+
 private slots:
     void on_HideOrShowBtn_clicked();
 

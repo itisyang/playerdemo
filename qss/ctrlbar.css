@@ -1,90 +1,25 @@
+
 QWidget#BgWidget{
     background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
                             stop: 0 #374040, stop: 1.0 #222930);
     color:white;
 }
 
-QWidget#VolumeWid{
+*{
     background-color:transparent;
 }
 
-QLabel{
-    background-color:transparent;
+QPushButton:hover{
+    color:  Cyan;
 }
-
-QPushButton#PlayOrPauseBtn {
-        background-color:transparent;
-        image: url(:/res/play.png);
+QPushButton:pressed {
+    color:  CadetBlue;
 }
-
-QPushButton#PlayOrPauseBtn:hover {
-
-}
-
-QPushButton#PlayOrPauseBtn:pressed {
-
-}
-
-QPushButton#StopBtn{
-        background-color:transparent;
-        image: url(:/res/stop.png);
-}
-
-QPushButton#StopBtn:hover {
-    image: url(:/res/stop.png);
-}
-
-QPushButton#StopBtn:pressed {
-    image: url(:/res/stop.png);
-}
-
-QPushButton#VolumeBtn {
-        background-color:transparent;
-        image: url(:/res/volume.png);
-}
-
-QPushButton#VolumeBtn:hover {
-    image: url(:/res/volume.png);
-}
-
-QPushButton#VolumeBtn:pressed {
-    image: url(:/res/volume.png);
-}
-
-QPushButton#FullscreenBtn {
-        background-color:transparent;
-        image: url(:/res/fullscreen.png);
-}
-
-QPushButton#FullscreenBtn:hover {
-    image: url(:/res/fullscreen_h.png);
-}
-
-QPushButton#FullscreenBtn:pressed {
-    image: url(:/res/fullscreen_p.png);
-}
-
-
-QPushButton#MenuBtn{
-        background-color:transparent;
-        image: url(:/res/menu.png);
-}
-
-QPushButton#MenuBtn:hover {
-
-}
-
-QPushButton#MenuBtn:pressed {
-
-}
-
 
 
 /*****进度条*****/
-
 QSlider{
     /*height:30px;*/
-    background-color: transparent;
     border:none;
 }
 /***未播放***/
@@ -120,7 +55,6 @@ QSlider::sub-page:vertical{
     width:4px;
 }
 QSlider::groove:vertical{
-    background:transparent;
     width:6px;
 }
 QSlider::handle:vertical{

@@ -10,7 +10,7 @@ Display::Display(QWidget *parent) :
     ui->setupUi(this);
 
     //加载样式
-    setStyleSheet(GlobalHelper::GetQssStr(":/qss/display.qss"));
+    setStyleSheet(GlobalHelper::GetQssStr(":/qss/display.css"));
 
     InitFFmpeg();
 }

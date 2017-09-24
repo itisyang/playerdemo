@@ -11,19 +11,30 @@ Title::Title(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //保证窗口不被绘制上的部分透明
-    setAttribute(Qt::WA_TranslucentBackground);
-
-    setStyleSheet(GlobalHelper::GetQssStr(":/qss/title.qss"));
     connect(ui->CloseBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigCloseBtnClicked()));
     connect(ui->MinBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMinBtnClicked()));
     connect(ui->MaxBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMaxBtnClicked()));
-    ui->LogoBtn->setText("");
+
+    InitUi();
 }
 
 Title::~Title()
 {
     delete ui;
+}
+
+bool Title::InitUi()
+{
+    //保证窗口不被绘制上的部分透明
+    setAttribute(Qt::WA_TranslucentBackground);
+
+    setStyleSheet(GlobalHelper::GetQssStr(":/qss/title.css"));
+
+    //ui->LogoBtn->setText("");
+
+    GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d0));
+    GlobalHelper::SetIcon(ui->MinBtn, 9, QChar(0xf2d1));
+    GlobalHelper::SetIcon(ui->CloseBtn, 9, QChar(0xf2d3));
 }
 
 
@@ -45,12 +56,11 @@ void Title::OnChangeMaxBtnStyle(bool bIfMax)
 {
     if (bIfMax)
     {
-        ui->MaxBtn->setStyleSheet("QPushButton{image: url(:/res/restore.png);}");
+        ui->MaxBtn->setText(QChar(0xf2d2));
     }
     else
     {
-        ui->MaxBtn->setStyleSheet("QPushButton{image: url(:/res/maximize.png);}");
+        ui->MaxBtn->setText(QChar(0xf2d0));
     }
-
 }
 

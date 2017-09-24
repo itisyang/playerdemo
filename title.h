@@ -15,6 +15,7 @@ class Title : public QWidget
 public:
     explicit Title(QWidget *parent = 0);
     ~Title();
+    bool InitUi();
 private:
     void paintEvent(QPaintEvent *event);
     //双击

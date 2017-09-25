@@ -4,6 +4,8 @@
 #include <QDebug>
 #include <QAbstractItemView>
 #include <QMimeData>
+#include <QSizeGrip>
+
 #include "mainwidget.h"
 #include "ui_mainwidget.h"
 
@@ -31,6 +33,10 @@ MainWidget::MainWidget(QWidget *parent) :
     m_pPlaylist = new Playlist(this);
     m_pTitle = new Title(this);
 
+//    m_pCtrlBar->hide();
+//    m_pPlaylist->hide();
+//    m_pTitle->hide();
+
 
     m_bMousePress = false;
 
@@ -48,6 +54,12 @@ MainWidget::MainWidget(QWidget *parent) :
 //    setDragDropMode(QAbstractItemView::DragDrop);
 //    setDragEnabled(true);
 //    setDropIndicatorShown(true);
+
+    //窗口大小调节
+//    QSizeGrip   *pSizeGrip = new QSizeGrip(this);
+//    pSizeGrip->setMinimumSize(10, 10);
+//    pSizeGrip->setMaximumSize(10, 10);
+//    ui->verticalLayout->addWidget(pSizeGrip, 0, Qt::AlignBottom | Qt::AlignRight);
 }
 
 MainWidget::~MainWidget()
@@ -98,12 +110,12 @@ void MainWidget::paintEvent(QPaintEvent *event)
 
 void MainWidget::mousePressEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton && m_pTitle->height() >= event->pos().y())
-    {
+//    if(event->button() == Qt::LeftButton && m_pTitle->height() >= event->pos().y())
+//    {
         m_bMousePress = true;
         //鼠标相对于窗体的位置（或者使用event->globalPos() - this->pos()）
         move_point = event->pos();
-    }
+//    }
 }
 void MainWidget::mouseMoveEvent(QMouseEvent *event)
 {
@@ -161,45 +173,11 @@ void MainWidget::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
 
-//    QRect rectCtrl = QRect(m_pCtrlBar->pos(), m_pCtrlBar->size());
-//    if (rectCtrl.contains(cursor().pos()))
-//    {
-//        m_pCtrlBar->show();
-//    }
-//    else
-//    {
-//        m_pCtrlBar->hide();
-//    }
-    if (0)
+    if (1)
     {
         m_pCtrlBar->hide();
         m_pPlaylist->hide();
         m_pTitle->hide();
-    }
-
-}
-
-void MainWidget::dragEnterEvent(QDragEnterEvent *event)
-{
-    if(event->mimeData()->hasFormat("text/uri-list"))
-    {
-        event->acceptProposedAction();
-    }
-
-}
-
-void MainWidget::dropEvent(QDropEvent *event)
-{
-    QList<QUrl> urls = event->mimeData()->urls();
-    if(urls.isEmpty())
-    {
-        return;
-    }
-
-    foreach(QUrl url, urls)
-    {
-        QString file_name = url.toLocalFile();
-        qDebug() << file_name;
     }
 }
 
@@ -223,6 +201,7 @@ void MainWidget::AdjustUiPos()
     int nPlaylistWidth = m_pPlaylist->width();
     m_pPlaylist->move(width() - nPlaylistWidth - gShadowWidth, m_pTitle->height() + gShadowWidth);
     m_pPlaylist->setFixedHeight(height() - m_pTitle->height() - m_pCtrlBar->height() - gShadowWidth * 2);
+
 }
 
 void MainWidget::OnCloseBtnClicked()

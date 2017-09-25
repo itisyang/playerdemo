@@ -1,31 +1,45 @@
 
+*{
+    background-color:transparent;
+}
+
+QPushButton:hover{
+    color:  Cyan;
+}
+QPushButton:pressed {
+    color:  CadetBlue;
+}
+
 /*****列表*******/
 QListWidget{
-    background:#222930;
-    border: 2px solid transparent;
-    color: #b6b6b6;
+    /*background:#222930;*/
+    border: 0px solid Cyan;
 }
-
+QListWidget::item:hover{
+    /*background: Cyan;*/
+    padding: 0px;
+    margin: 0px;
+    color: Cyan;
+    border: 1px solid Cyan;
+}
 QListWidget::item:selected {
-     background: #11cdba;
-     padding: 0px;
-     margin: 0px;
-     color: black;
-     border-width: 1px;
-     border-style: solid;
-     border-color: #11cdba;
+    background: Cyan;
+    padding: 0px;
+    margin: 0px;
+    color: black;
+    border: 1px solid Cyan;
 }
 
-QPushButton,QToolButton{
+/*QPushButton,QToolButton{
     background-color:#222930;
     padding: 5px;
     border: none;
-/*    font-size:13px;
-    color:#FFFFFF;*/
+    font-size:13px;
+    color:#FFFFFF;
 }
 QPushButton::hover,QToolButton::hover{
     background:#374040;
 }
 QPushButton::pressed,QToolButton::pressed{
     background:#363636;
-}
+}*/

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>984</width>
-    <height>688</height>
+    <width>703</width>
+    <height>441</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -16,7 +16,10 @@
   <property name="windowTitle">
    <string>MainWidget</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -29,11 +32,8 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
-    <widget class="Display" name="PlayWid" native="true"/>
+   <item>
+    <widget class="Display" name="widget" native="true"/>
    </item>
   </layout>
  </widget>

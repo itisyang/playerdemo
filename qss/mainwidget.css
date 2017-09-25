@@ -1,87 +1,6 @@
-QWidget{
-    background: #171717;
+*{
+    background-color: #171717;
     color:white;
-}
-
-/* ******************QScrollBar*******************/
-/**  垂直  **/
-QScrollBar:vertical {
-    background: white;
-    margin: 0px 0px 0px 0px;
-    width: 6px;
-}
-QScrollBar::handle:vertical {
-    background: #21bba3;
-    min-height: 1px;
-    border: none;
-    border-radius: 3px;
-}
-
-QScrollBar::add-line:vertical {
-    height: 0px;
-    subcontrol-position: bottom;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::sub-line:vertical {
-    height: 0px;
-    subcontrol-position: top;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
-}
-/**  水平  **/
-QScrollBar:horizontal {
-    background: white;
-    margin: 0px 0px 0px 0px;
-    height: 6px;
-}
-QScrollBar::handle:horizontal {
-    background: #21bba3;
-    min-width: 1px;
-}
-QScrollBar::add-line:horizontal {
-    width: 1px;
-    subcontrol-position: right;
-    subcontrol-origin: margin;
-}
-QScrollBar::sub-line:horizontal {
-    width: 1px;
-    subcontrol-position: left;
-    subcontrol-origin: margin;
-}
-
-QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
-    background: none;
-}
-
-/* ******************QPushButton****************** */
-
-QPushButton,QToolButton{
-    background-color:#528B8B;
-    padding: 5px;
-    border: none;
-/*    font-size:13px;
-    color:#FFFFFF;*/
-}
-QPushButton::hover,QToolButton::hover{
-    background:#696969;
-}
-QPushButton::pressed,QToolButton::pressed{
-    background:#363636;
-}
-
-QPushButton::menu-indicator{
-    subcontrol-position: left center;
-    color: white;
-}
-
-
-/** 播放控件 **/
-QLabel#play_label{
-    background-color: #161616;
 }
 
 /*****菜单*****/
@@ -105,14 +24,6 @@ QMenu::item:selected{
     background-color:#1C1C1C;
     color:white;
 }
-
-
-QTimeEdit{
-    background-color: transparent;
-    border:none;
-    color:white;
-}
-
 
 /**********提示**********/
 QToolTip{

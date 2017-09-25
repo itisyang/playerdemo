@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QSizeGrip>
 
 #include "ctrlbar.h"
 #include "ui_ctrlbar.h"
@@ -27,4 +28,7 @@ bool CtrlBar::InitUi()
     GlobalHelper::SetIcon(ui->StopBtn, 13, QChar(0xf28e));
     GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
     GlobalHelper::SetIcon(ui->MenuBtn, 12, QChar(0xf038));
+
+    return true;
+
 }

@@ -8,6 +8,7 @@
 #include "ctrlbar.h"
 #include "playlist.h"
 #include "title.h"
+#include "display.h"
 
 namespace Ui {
 class MainWidget;
@@ -36,9 +37,9 @@ protected:
 
     void enterEvent(QEvent *event);
     void leaveEvent(QEvent *event);
-    void dragEnterEvent(QDragEnterEvent *event);
+    //void dragEnterEvent(QDragEnterEvent *event);
     //void dragMoveEvent(QDragMoveEvent *event);
-    void dropEvent(QDropEvent *event);
+    //void dropEvent(QDropEvent *event);
 private:
 
 
@@ -59,6 +60,7 @@ private:
     CtrlBar     *m_pCtrlBar;    //播放控制面板
     Playlist    *m_pPlaylist;   //播放列表面板
     Title       *m_pTitle;      //标题栏面板
+    Display     *m_pDisplay;    //显示区域
 
     QPoint  move_point;     //移动的距离
     bool    m_bMousePress;    //鼠标按下

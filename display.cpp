@@ -29,3 +29,25 @@ bool Display::InitFFmpeg()
 
     return true;
 }
+void Display::dragEnterEvent(QDragEnterEvent *event)
+{
+    if(event->mimeData()->hasFormat("text/uri-list"))
+    {
+        event->acceptProposedAction();
+    }
+}
+
+void Display::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+    if(urls.isEmpty())
+    {
+        return;
+    }
+
+    foreach(QUrl url, urls)
+    {
+        QString file_name = url.toLocalFile();
+        qDebug() << file_name;
+    }
+}

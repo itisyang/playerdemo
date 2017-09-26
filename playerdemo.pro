@@ -22,42 +22,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-
-SOURCES += \
-        main.cpp \
-        mainwidget.cpp \
-    playlist.cpp \
-    title.cpp \
-    globalhelper.cpp \
-    display.cpp \
-    ctrlbar.cpp \
-    readthread.cpp \
-    videothread.cpp \
-    audiothread.cpp \
-    subtitlethread.cpp
-
-HEADERS += \
-        mainwidget.h \
-    playlist.h \
-    title.h \
-    globalhelper.h \
-    display.h \
-    ctrlbar.h \
-    readthread.h \
-    videothread.h \
-    audiothread.h \
-    subtitlethread.h
-
-FORMS += \
-        mainwidget.ui \
-    playlist.ui \
-    title.ui \
-    display.ui \
-    ctrlbar.ui
-
-RESOURCES += \
-    resource.qrc
-
 INCLUDEPATH += lib/ffmpeg/include
 
 LIBS += -L$$PWD/lib/ffmpeg/lib
@@ -72,3 +36,38 @@ LIBS += -lswscale
 
 #win32:LIBS+=\
 #-L$$PWD/ffmpeg/lib/-lavcodec-lavdevice-lavfilter-lavformat-lavutil-lpostproc-lswresample-lswscale
+
+RESOURCES += \
+    resource.qrc
+
+FORMS += \
+    src/ctrlbar.ui \
+    src/display.ui \
+    src/mainwidget.ui \
+    src/playlist.ui \
+    src/title.ui
+
+HEADERS += \
+    src/audiothread.h \
+    src/ctrlbar.h \
+    src/display.h \
+    src/globalhelper.h \
+    src/mainwidget.h \
+    src/playlist.h \
+    src/readthread.h \
+    src/subtitlethread.h \
+    src/title.h \
+    src/videothread.h
+
+SOURCES += \
+    src/audiothread.cpp \
+    src/ctrlbar.cpp \
+    src/display.cpp \
+    src/globalhelper.cpp \
+    src/main.cpp \
+    src/mainwidget.cpp \
+    src/playlist.cpp \
+    src/readthread.cpp \
+    src/subtitlethread.cpp \
+    src/title.cpp \
+    src/videothread.cpp

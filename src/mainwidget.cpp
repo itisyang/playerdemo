@@ -122,12 +122,21 @@ void MainWidget::mouseMoveEvent(QMouseEvent *event)
     //若鼠标左键被按下
     if(m_bMousePress)
     {
-        //鼠标相对于屏幕的位置
-        QPoint move_pos = event->globalPos();
+        if (isMaximized())
+        {
+            showNormal();
+            m_bMousePress = !m_bMousePress;//避免窗体移动
+        }
+        else
+        {
+            //鼠标相对于屏幕的位置
+            QPoint move_pos = event->globalPos();
 
-        //移动主窗体位置
-        this->move(move_pos - move_point);
-        //qDebug() << "MainWidget::mouseMoveEvent";
+            //移动主窗体位置
+            this->move(move_pos - move_point);
+            //qDebug() << "MainWidget::mouseMoveEvent";
+        }
+
     }
 }
 

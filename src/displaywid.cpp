@@ -1,26 +1,26 @@
-#include "display.h"
+#include "displaywid.h"
 #include "ui_display.h"
 
 #include "globalhelper.h"
 
-Display::Display(QWidget *parent) :
+DisplayWid::DisplayWid(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Display)
+    ui(new Ui::DisplayWid)
 {
     ui->setupUi(this);
 
     //加载样式
-    setStyleSheet(GlobalHelper::GetQssStr(":/qss/display.css"));
+    setStyleSheet(GlobalHelper::GetQssStr(":/qss/displaywid.css"));
 
     InitFFmpeg();
 }
 
-Display::~Display()
+DisplayWid::~DisplayWid()
 {
     delete ui;
 }
 
-bool Display::InitFFmpeg()
+bool DisplayWid::InitFFmpeg()
 {
     avdevice_register_all();
     avfilter_register_all();
@@ -29,7 +29,7 @@ bool Display::InitFFmpeg()
 
     return true;
 }
-void Display::dragEnterEvent(QDragEnterEvent *event)
+void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
 {
     if(event->mimeData()->hasFormat("text/uri-list"))
     {
@@ -37,7 +37,7 @@ void Display::dragEnterEvent(QDragEnterEvent *event)
     }
 }
 
-void Display::dropEvent(QDropEvent *event)
+void DisplayWid::dropEvent(QDropEvent *event)
 {
     QList<QUrl> urls = event->mimeData()->urls();
     if(urls.isEmpty())

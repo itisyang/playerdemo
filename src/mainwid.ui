@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWidget</class>
- <widget class="QWidget" name="MainWidget">
+ <class>MainWid</class>
+ <widget class="QWidget" name="MainWid">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -33,16 +33,16 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="Display" name="widget" native="true"/>
+    <widget class="DisplayWid" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>Display</class>
+   <class>DisplayWid</class>
    <extends>QWidget</extends>
-   <header>src/display.h</header>
+   <header>src/displaywid.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

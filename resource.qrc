@@ -16,9 +16,9 @@
         <file>res/fullscreen_p.png</file>
         <file>res/fontawesome-webfont.ttf</file>
         <file>qss/ctrlbar.css</file>
-        <file>qss/display.css</file>
-        <file>qss/mainwidget.css</file>
+        <file>qss/displaywid.css</file>
         <file>qss/playlist.css</file>
         <file>qss/title.css</file>
+        <file>qss/mainwid.css</file>
     </qresource>
 </RCC>

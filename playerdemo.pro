@@ -43,31 +43,31 @@ RESOURCES += \
 FORMS += \
     src/ctrlbar.ui \
     src/display.ui \
-    src/mainwidget.ui \
+    src/mainwid.ui \
     src/playlist.ui \
     src/title.ui
 
 HEADERS += \
     src/audiothread.h \
     src/ctrlbar.h \
-    src/display.h \
     src/globalhelper.h \
-    src/mainwidget.h \
+    src/mainwid.h \
     src/playlist.h \
     src/readthread.h \
     src/subtitlethread.h \
     src/title.h \
-    src/videothread.h
+    src/videothread.h \
+    src/displaywid.h
 
 SOURCES += \
     src/audiothread.cpp \
     src/ctrlbar.cpp \
-    src/display.cpp \
     src/globalhelper.cpp \
     src/main.cpp \
-    src/mainwidget.cpp \
+    src/mainwid.cpp \
     src/playlist.cpp \
     src/readthread.cpp \
     src/subtitlethread.cpp \
     src/title.cpp \
-    src/videothread.cpp
+    src/videothread.cpp \
+    src/displaywid.cpp

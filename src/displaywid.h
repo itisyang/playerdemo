@@ -26,16 +26,16 @@ extern "C"
 #include "readthread.h"
 
 namespace Ui {
-class Display;
+class DisplayWid;
 }
 
-class Display : public QWidget
+class DisplayWid : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Display(QWidget *parent = 0);
-    ~Display();
+    explicit DisplayWid(QWidget *parent = 0);
+    ~DisplayWid();
 
 protected:
     void dropEvent(QDropEvent *event);
@@ -46,7 +46,7 @@ private:
     ReadThread m_threadReadThread;
 
 private:
-    Ui::Display *ui;
+    Ui::DisplayWid *ui;
 };
 
 #endif // DISPLAY_H

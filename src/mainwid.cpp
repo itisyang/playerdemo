@@ -161,10 +161,13 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
     QPoint tl = mapToGlobal(rect.topLeft());
     QPoint rb = mapToGlobal(rect.bottomRight());
 
+    this->region(gloPoint);
+
+    qDebug() << "MainWid::mouseMoveEvent";
     //若鼠标左键被按下
     if (!m_bLeftMousePress)
     {
-        this->region(gloPoint);
+
     }
     else
     {

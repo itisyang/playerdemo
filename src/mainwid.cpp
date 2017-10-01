@@ -12,7 +12,7 @@
 #include "globalhelper.h"
 
 
-const int gShadowWidth = 3;//边框阴影宽度
+const int gShadowWidth = 2;//边框阴影宽度
 
 MainWid::MainWid(QWidget *parent) :
     QWidget(parent),
@@ -25,7 +25,7 @@ MainWid::MainWid(QWidget *parent) :
     this->setMouseTracking(true);
 
     //保证窗口不被绘制上的部分透明
-    setAttribute(Qt::WA_TranslucentBackground);
+    //setAttribute(Qt::WA_TranslucentBackground);
 
     //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/MainWid.css"));
@@ -74,7 +74,7 @@ MainWid::~MainWid()
 void MainWid::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-
+#if 0
     if (!this->isMaximized() && !this->isFullScreen())
     {//边框阴影
         int nShadowWidth = gShadowWidth;
@@ -109,6 +109,8 @@ void MainWid::paintEvent(QPaintEvent *event)
         int nShadowWidth = 0;
         this->layout()->setMargin(nShadowWidth);
     }
+
+#endif
 }
 
 
@@ -117,6 +119,7 @@ void MainWid::mousePressEvent(QMouseEvent *event)
     switch(event->button())
     {
         case Qt::LeftButton:
+            this->region(event->globalPos());
             m_bLeftMousePress = true;
             if(dir != NONE)
             {
@@ -161,15 +164,15 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
     QPoint tl = mapToGlobal(rect.topLeft());
     QPoint rb = mapToGlobal(rect.bottomRight());
 
-    this->region(gloPoint);
+
 
     qDebug() << "MainWid::mouseMoveEvent";
-    //若鼠标左键被按下
+
     if (!m_bLeftMousePress)
     {
-
+        this->region(gloPoint);
     }
-    else
+    else//若鼠标左键被按下
     {
         if (isMaximized())
         {
@@ -178,7 +181,7 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
         }
         else
         {
-            if(dir != NONE)
+            if(dir != NONE && 0)
             {
                 QRect rMove(tl, rb);
 
@@ -227,6 +230,7 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
                     break;
                 }
                 this->setGeometry(rMove);
+
             }
             else
             {
@@ -237,6 +241,7 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
                 this->move(move_pos - move_point);
                 //qDebug() << "MainWid::mouseMoveEvent";
                 event->accept();
+
             }
 
         }

@@ -32,7 +32,7 @@ bool Title::InitUi()
 
     GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d0));
     GlobalHelper::SetIcon(ui->MinBtn, 9, QChar(0xf2d1));
-    GlobalHelper::SetIcon(ui->CloseBtn, 9, QChar(0xf2d3));
+    GlobalHelper::SetIcon(ui->CloseBtn, 9, QChar(0xf00d));
 
     return true;
 }

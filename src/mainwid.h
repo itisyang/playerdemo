@@ -63,6 +63,8 @@ signals:
 private:
     Ui::MainWid *ui;
 
+    bool m_bPlaying;//正在播放
+
     CtrlBar     *m_pCtrlBar;    //播放控制面板
     Playlist    *m_pPlaylist;   //播放列表面板
     Title       *m_pTitle;      //标题栏面板

@@ -64,6 +64,8 @@ MainWid::MainWid(QWidget *parent) :
 //    ui->verticalLayout->addWidget(pSizeGrip, 0, Qt::AlignBottom | Qt::AlignRight);
     m_bLeftMousePress = false;
     dir = NONE;
+
+    m_bPlaying = false;
 }
 
 MainWid::~MainWid()
@@ -292,7 +294,7 @@ void MainWid::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
 
-    if (1)
+    if (m_bPlaying)
     {
         m_pCtrlBar->hide();
         m_pPlaylist->hide();

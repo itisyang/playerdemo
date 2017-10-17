@@ -31,21 +31,8 @@
    </property>
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="4">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
      <item row="0" column="2">
-      <widget class="QPushButton" name="VolumeBtn">
+      <widget class="QPushButton" name="BackwardBtn">
        <property name="minimumSize">
         <size>
          <width>50</width>
@@ -60,25 +47,6 @@
        </property>
        <property name="text">
         <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QSlider" name="horizontalSlider">
-       <property name="minimumSize">
-        <size>
-         <width>80</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
        </property>
       </widget>
      </item>
@@ -101,10 +69,61 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="label">
+     <item row="0" column="4">
+      <widget class="QPushButton" name="VolumeBtn">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
        <property name="text">
-        <string>00:00</string>
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="5">
+      <widget class="QSlider" name="horizontalSlider">
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>80</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>/00:00</string>
        </property>
       </widget>
      </item>
@@ -127,15 +146,34 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
-      <widget class="QLabel" name="label_2">
+     <item row="0" column="7">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>/00:00</string>
+        <string>00:00</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="7">
+     <item row="0" column="9">
       <widget class="QPushButton" name="MenuBtn">
+       <property name="minimumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>50</width>
+         <height>50</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="ForwardBtn">
        <property name="minimumSize">
         <size>
          <width>50</width>

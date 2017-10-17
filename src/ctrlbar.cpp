@@ -24,10 +24,12 @@ bool CtrlBar::InitUi()
 {
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/ctrlbar.css"));
 
-    GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 20, QChar(0xf01d));
-    GlobalHelper::SetIcon(ui->StopBtn, 13, QChar(0xf28e));
+    GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+    GlobalHelper::SetIcon(ui->StopBtn, 12, QChar(0xf04d));
     GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
     GlobalHelper::SetIcon(ui->MenuBtn, 12, QChar(0xf038));
+    GlobalHelper::SetIcon(ui->ForwardBtn, 12, QChar(0xf051));
+    GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
 
     return true;
 

@@ -58,7 +58,7 @@ HEADERS += \
     src/title.h \
     src/videothread.h \
     src/displaywid.h \
-    framelesshelper.h
+    src/framelesshelper.h
 
 SOURCES += \
     src/audiothread.cpp \
@@ -72,4 +72,4 @@ SOURCES += \
     src/title.cpp \
     src/videothread.cpp \
     src/displaywid.cpp \
-    framelesshelper.cpp
+    src/framelesshelper.cpp

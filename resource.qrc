@@ -1,19 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>res/close.png</file>
-        <file>res/maximize.png</file>
-        <file>res/minimize.png</file>
-        <file>res/restore.png</file>
-        <file>res/fullscreen.png</file>
-        <file>res/menu.png</file>
-        <file>res/pause.png</file>
-        <file>res/play.png</file>
-        <file>res/quiet.png</file>
-        <file>res/stop.png</file>
-        <file>res/volume.png</file>
-        <file>res/IOPlayer.png</file>
-        <file>res/fullscreen_h.png</file>
-        <file>res/fullscreen_p.png</file>
         <file>res/fontawesome-webfont.ttf</file>
         <file>qss/ctrlbar.css</file>
         <file>qss/displaywid.css</file>

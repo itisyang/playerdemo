@@ -13,6 +13,9 @@
   <property name="mouseTracking">
    <bool>false</bool>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::WheelFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>MainWidget</string>
   </property>

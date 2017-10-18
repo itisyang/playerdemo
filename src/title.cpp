@@ -46,10 +46,10 @@ void Title::paintEvent(QPaintEvent *event)
 
 void Title::mouseDoubleClickEvent(QMouseEvent *event)
 {
-    if(event->button() == Qt::LeftButton)
-    {
-        emit SigDoubleClicked();
-    }
+//    if(event->button() == Qt::LeftButton)
+//    {
+//        emit SigDoubleClicked();
+//    }
 }
 
 void Title::OnChangeMaxBtnStyle(bool bIfMax)

@@ -27,12 +27,7 @@ public:
 protected:
     //绘制
     void paintEvent(QPaintEvent *event);
-    //鼠标按下事件
-    void mousePressEvent(QMouseEvent *event);
-   //鼠标释放事件
-    void mouseReleaseEvent(QMouseEvent *event);
-   //鼠标移动事件
-    void mouseMoveEvent(QMouseEvent *event);
+
     //窗口大小变化事件
     void resizeEvent(QResizeEvent *event);
     //窗口移动事件
@@ -45,8 +40,6 @@ protected:
     //void dropEvent(QDropEvent *event);
 private:
 
-    //计算点的区域
-    void region(const QPoint &cursorGlobalPoint);
     //连接信号槽
     void ConnectSignalSlots();
 
@@ -68,12 +61,7 @@ private:
     CtrlBar     *m_pCtrlBar;    //播放控制面板
     Playlist    *m_pPlaylist;   //播放列表面板
     Title       *m_pTitle;      //标题栏面板
-    DisplayWid     *m_pDisplay;    //显示区域
-
-    QPoint  move_point;     //移动的距离
-    bool    m_bLeftMousePress;    //鼠标按下
-    QPoint dragPosition;// 窗口移动拖动时需要记住的点
-    Direction dir;        // 窗口大小改变时，记录改变方向
+    DisplayWid  *m_pDisplay;    //显示区域
 };
 
 #endif // MainWid_H

@@ -25,6 +25,8 @@ Title::~Title()
 
 bool Title::InitUi()
 {
+    ui->MovieNameLab->clear();
+
     //保证窗口不被绘制上的部分透明
     setAttribute(Qt::WA_TranslucentBackground);
 
@@ -46,10 +48,10 @@ void Title::paintEvent(QPaintEvent *event)
 
 void Title::mouseDoubleClickEvent(QMouseEvent *event)
 {
-//    if(event->button() == Qt::LeftButton)
-//    {
-//        emit SigDoubleClicked();
-//    }
+    if(event->button() == Qt::LeftButton)
+    {
+        emit SigDoubleClicked();
+    }
 }
 
 void Title::OnChangeMaxBtnStyle(bool bIfMax)

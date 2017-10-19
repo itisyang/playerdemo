@@ -40,10 +40,6 @@ public:
 protected:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
-private:
-    bool InitFFmpeg();
-
-    ReadThread m_threadReadThread;
 
 private:
     Ui::DisplayWid *ui;

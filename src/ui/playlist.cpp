@@ -26,6 +26,16 @@ bool Playlist::InitUi()
     return true;
 }
 
+bool Playlist::GetPlaylistStatus()
+{
+    if (ui->List->isHidden())
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void Playlist::on_HideOrShowBtn_clicked()
 {
     if (ui->List->isHidden())
@@ -40,4 +50,6 @@ void Playlist::on_HideOrShowBtn_clicked()
         //this->setFixedWidth(ui->HideOrShowBtn->width());
         GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
     }
+
+    emit SigUpdateUi();
 }

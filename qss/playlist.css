@@ -3,7 +3,9 @@
     background-color:transparent;
     color:white;
 }
-
+QPushButton{
+    color:  white;
+}
 QPushButton:hover{
     color:  Cyan;
 }

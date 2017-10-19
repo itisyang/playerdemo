@@ -43,13 +43,14 @@ private:
     //连接信号槽
     void ConnectSignalSlots();
 
-    //调整模块显示位置
-    void AdjustUiPos();
 private slots:
     //关闭、最小化、最大化按钮响应
     void OnCloseBtnClicked();
     void OnMinBtnClicked();
     void OnMaxBtnClicked();
+
+    //调整窗口模块
+    void OnAdjustUi();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -62,6 +63,8 @@ private:
     Playlist    *m_pPlaylist;   //播放列表面板
     Title       *m_pTitle;      //标题栏面板
     DisplayWid  *m_pDisplay;    //显示区域
+
+    const int m_nShadowWidth;//阴影宽度
 };
 
 #endif // MainWid_H

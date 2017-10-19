@@ -11,21 +11,23 @@
 #include "framelesshelper.h"
 #include "globalhelper.h"
 
-
-const int gShadowWidth = 2;//边框阴影宽度
-
 MainWid::MainWid(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::MainWid)
+    ui(new Ui::MainWid),
+    m_nShadowWidth(0)
 {
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
     setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
+    //加载样式
+    QString qss = GlobalHelper::GetQssStr(":/qss/mainwid.css");
+    //qDebug() << qss;
+    setStyleSheet(qss);
 
-    m_pCtrlBar = new CtrlBar(this);
-    m_pPlaylist = new Playlist(this);
     m_pTitle = new Title(this);
     m_pDisplay = new DisplayWid(this);
+    m_pPlaylist = new Playlist(this);
+    m_pCtrlBar = new CtrlBar(this);
 
     FramelessHelper *pHelper = new FramelessHelper(this);
     pHelper->activateOn(this);  //激活当前窗体
@@ -41,8 +43,7 @@ MainWid::MainWid(QWidget *parent) :
     //保证窗口不被绘制上的部分透明
     //setAttribute(Qt::WA_TranslucentBackground);
 
-    //加载样式
-    setStyleSheet(GlobalHelper::GetQssStr(":/qss/MainWid.css"));
+
 
 
     //连接自定义信号与槽
@@ -78,7 +79,7 @@ void MainWid::paintEvent(QPaintEvent *event)
 #if 0
     if (!this->isMaximized() && !this->isFullScreen())
     {//边框阴影
-        int nShadowWidth = gShadowWidth;
+        int nShadowWidth = m_nShadowWidth;
         this->layout()->setMargin(nShadowWidth);
 
         QPainterPath path;
@@ -119,34 +120,19 @@ void MainWid::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
 
-    AdjustUiPos();
+    OnAdjustUi();
 }
 
 void MainWid::moveEvent(QMoveEvent *event)
 {
     Q_UNUSED(event);
 
-    AdjustUiPos();
-
+    OnAdjustUi();
 }
 
 void MainWid::enterEvent(QEvent *event)
 {
     Q_UNUSED(event);
-
-    //QRect rectCtrl = QRect(m_pCtrlBar->pos(), m_pCtrlBar->size());
-//    QPoint pointCtrl = this->pos() + m_pCtrlBar->pos();
-//    QRect rectCtrl = QRect(pointCtrl.x(), pointCtrl.y(), width(), 100);
-//    QPoint pos = cursor().pos();
-//    qDebug() << pos;
-//    if (rectCtrl.contains(pos))
-//    {
-//        m_pCtrlBar->show();
-//    }
-//    else
-//    {
-//        m_pCtrlBar->hide();
-//    }
 
     m_pCtrlBar->show();
     m_pPlaylist->show();
@@ -172,24 +158,35 @@ void MainWid::ConnectSignalSlots()
     connect(m_pTitle, SIGNAL(SigMinBtnClicked()), this, SLOT(OnMinBtnClicked()));
     connect(m_pTitle, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
     connect(this, SIGNAL(SigShowMax(bool)), m_pTitle, SLOT(OnChangeMaxBtnStyle(bool)));
+    connect(m_pPlaylist, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
 }
 
-void MainWid::AdjustUiPos()
+void MainWid::OnAdjustUi()
 {
-    m_pTitle->move(gShadowWidth, gShadowWidth);
-    m_pTitle->setFixedWidth(width() - gShadowWidth * 2);
+    m_pTitle->move(m_nShadowWidth, m_nShadowWidth);
+    m_pTitle->setFixedWidth(width() - m_nShadowWidth * 2);
 
-    m_pDisplay->move(gShadowWidth, gShadowWidth + m_pTitle->height());
-    m_pDisplay->setFixedSize(this->width() - m_pPlaylist->width() - gShadowWidth*2,
-                             this->height() - m_pTitle->height() - m_pCtrlBar->height() - gShadowWidth*2);
+    m_pDisplay->move(m_nShadowWidth, m_nShadowWidth + m_pTitle->height());
+    int nDisplayW = 0;
+    int nDisplayH = 0;
+    nDisplayH = this->height() - m_pTitle->height() - m_pCtrlBar->height() - m_nShadowWidth*2;
+    if (m_pPlaylist->GetPlaylistStatus())//播放列表显示
+    {
+        nDisplayW = this->width() - m_pPlaylist->width() - m_nShadowWidth*2;
+    }
+    else
+    {
+        nDisplayW = this->width() - m_nShadowWidth*2;
+    }
 
-    m_pCtrlBar->move(gShadowWidth, height() - 80 - gShadowWidth);
-    m_pCtrlBar->setFixedSize(width() - gShadowWidth * 2, 80);
+    m_pDisplay->setFixedSize(nDisplayW, nDisplayH);
 
     int nPlaylistWidth = m_pPlaylist->width();
-    m_pPlaylist->move(width() - nPlaylistWidth - gShadowWidth, m_pTitle->height() + gShadowWidth);
-    m_pPlaylist->setFixedHeight(height() - m_pTitle->height() - m_pCtrlBar->height() - gShadowWidth * 2);
+    m_pPlaylist->move(width() - nPlaylistWidth - m_nShadowWidth, m_pTitle->height() + m_nShadowWidth);
+    m_pPlaylist->setFixedHeight(height() - m_pTitle->height() - m_pCtrlBar->height() - m_nShadowWidth * 2);
 
+    m_pCtrlBar->move(m_nShadowWidth, height() - 80 - m_nShadowWidth);
+    m_pCtrlBar->setFixedSize(width() - m_nShadowWidth * 2, 80);
 }
 
 void MainWid::OnCloseBtnClicked()

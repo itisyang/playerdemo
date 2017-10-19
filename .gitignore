@@ -31,3 +31,4 @@
 *.out
 *.app
 /lib/ffmpeg/lib/*.def
+/lib/sdl/lib/pkgconfig/sdl2.pc

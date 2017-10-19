@@ -11,8 +11,6 @@ DisplayWid::DisplayWid(QWidget *parent) :
 
     //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/displaywid.css"));
-
-    InitFFmpeg();
 }
 
 DisplayWid::~DisplayWid()
@@ -20,15 +18,6 @@ DisplayWid::~DisplayWid()
     delete ui;
 }
 
-bool DisplayWid::InitFFmpeg()
-{
-    avdevice_register_all();
-    avfilter_register_all();
-    av_register_all();
-    avformat_network_init();
-
-    return true;
-}
 void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
 {
     if(event->mimeData()->hasFormat("text/uri-list"))

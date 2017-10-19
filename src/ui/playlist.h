@@ -16,10 +16,11 @@ public:
     ~Playlist();
 
     bool InitUi();
-
+    bool GetPlaylistStatus();
 private slots:
     void on_HideOrShowBtn_clicked();
-
+signals:
+    void SigUpdateUi();
 private:
     Ui::Playlist *ui;
 };

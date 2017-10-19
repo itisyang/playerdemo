@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>703</width>
-    <height>441</height>
+    <width>1011</width>
+    <height>681</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -35,20 +35,9 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="DisplayWid" name="widget" native="true"/>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>DisplayWid</class>
-   <extends>QWidget</extends>
-   <header>src/displaywid.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

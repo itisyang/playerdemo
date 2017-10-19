@@ -1,6 +1,6 @@
 
 #include <QFile>
-
+#include <QDebug>
 #include "globalhelper.h"
 
 GlobalHelper::GlobalHelper()
@@ -16,6 +16,10 @@ QString GlobalHelper::GetQssStr(QString strQssPath)
     {
         strQss = FileQss.readAll();
         FileQss.close();
+    }
+    else
+    {
+        qDebug() << "获取样式失败" << "样式表：" << strQssPath;
     }
     return strQss;
 }

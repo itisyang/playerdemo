@@ -8,7 +8,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ioplayer
+TARGET = playerdemo
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -23,7 +23,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 INCLUDEPATH += lib/ffmpeg/include
-
 LIBS += -L$$PWD/lib/ffmpeg/lib
 LIBS += -lavcodec
 LIBS += -lavdevice
@@ -34,42 +33,46 @@ LIBS += -lpostproc
 LIBS += -lswresample
 LIBS += -lswscale
 
-#win32:LIBS+=\
-#-L$$PWD/ffmpeg/lib/-lavcodec-lavdevice-lavfilter-lavformat-lavutil-lpostproc-lswresample-lswscale
+INCLUDEPATH += lib/sdl/include
+LIBS += -L$$PWD/lib/sdl/lib
+LIBS += -lSDL2
 
 RESOURCES += \
     resource.qrc
 
 FORMS += \
-    src/ctrlbar.ui \
-    src/display.ui \
-    src/mainwid.ui \
-    src/playlist.ui \
-    src/title.ui
+    src/ui/ctrlbar.ui \
+    src/ui/display.ui \
+    src/ui/mainwid.ui \
+    src/ui/playlist.ui \
+    src/ui/title.ui
+
+INCLUDEPATH += src/ \
+    src/ui/
 
 HEADERS += \
     src/audiothread.h \
-    src/ctrlbar.h \
+    src/ui/ctrlbar.h \
     src/globalhelper.h \
-    src/mainwid.h \
-    src/playlist.h \
+    src/ui/mainwid.h \
+    src/ui/playlist.h \
     src/readthread.h \
     src/subtitlethread.h \
-    src/title.h \
+    src/ui/title.h \
     src/videothread.h \
-    src/displaywid.h \
-    src/framelesshelper.h
+    src/ui/displaywid.h \
+    src/ui/framelesshelper.h
 
 SOURCES += \
     src/audiothread.cpp \
-    src/ctrlbar.cpp \
+    src/ui/ctrlbar.cpp \
     src/globalhelper.cpp \
     src/main.cpp \
-    src/mainwid.cpp \
-    src/playlist.cpp \
+    src/ui/mainwid.cpp \
+    src/ui/playlist.cpp \
     src/readthread.cpp \
     src/subtitlethread.cpp \
-    src/title.cpp \
+    src/ui/title.cpp \
     src/videothread.cpp \
-    src/displaywid.cpp \
-    src/framelesshelper.cpp
+    src/ui/displaywid.cpp \
+    src/ui/framelesshelper.cpp

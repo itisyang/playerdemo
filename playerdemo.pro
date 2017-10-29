@@ -51,28 +51,28 @@ INCLUDEPATH += src/ \
     src/ui/
 
 HEADERS += \
-    src/audiothread.h \
     src/ui/ctrlbar.h \
     src/globalhelper.h \
     src/ui/mainwid.h \
     src/ui/playlist.h \
-    src/readthread.h \
-    src/subtitlethread.h \
     src/ui/title.h \
-    src/videothread.h \
     src/ui/displaywid.h \
-    src/ui/framelesshelper.h
+    src/ui/framelesshelper.h \
+    readfile.h \
+    videodec.h \
+    subtitledec.h \
+    audiodec.h
 
 SOURCES += \
-    src/audiothread.cpp \
     src/ui/ctrlbar.cpp \
     src/globalhelper.cpp \
     src/main.cpp \
     src/ui/mainwid.cpp \
     src/ui/playlist.cpp \
-    src/readthread.cpp \
-    src/subtitlethread.cpp \
     src/ui/title.cpp \
-    src/videothread.cpp \
     src/ui/displaywid.cpp \
-    src/ui/framelesshelper.cpp
+    src/ui/framelesshelper.cpp \
+    readfile.cpp \
+    videodec.cpp \
+    subtitledec.cpp \
+    audiodec.cpp

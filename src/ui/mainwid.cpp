@@ -6,8 +6,8 @@
 #include <QMimeData>
 #include <QSizeGrip>
 
-#include "MainWid.h"
-#include "ui_MainWid.h"
+#include "mainwid.h"
+#include "ui_mainwid.h"
 #include "framelesshelper.h"
 #include "globalhelper.h"
 

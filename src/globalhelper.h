@@ -1,6 +1,31 @@
 #ifndef GLOBALHELPER_H
 #define GLOBALHELPER_H
 
+enum ERROR_CODE
+{
+    SUCCEED = 0,
+    ERROR_FILE_INVALID
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #include <QString>
 #include <QPushButton>
 

@@ -23,7 +23,6 @@ extern "C"
 #include "libavdevice/avdevice.h"
 }
 
-#include "readthread.h"
 
 namespace Ui {
 class DisplayWid;

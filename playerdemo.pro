@@ -33,7 +33,7 @@ LIBS += -lpostproc
 LIBS += -lswresample
 LIBS += -lswscale
 
-INCLUDEPATH += lib/sdl/include
+INCLUDEPATH += lib/sdl/include/SDL2
 LIBS += -L$$PWD/lib/sdl/lib
 LIBS += -lSDL2
 
@@ -61,7 +61,8 @@ HEADERS += \
     readfile.h \
     videodec.h \
     subtitledec.h \
-    audiodec.h
+    audiodec.h \
+    videostate.h
 
 SOURCES += \
     src/ui/ctrlbar.cpp \
@@ -75,4 +76,5 @@ SOURCES += \
     readfile.cpp \
     videodec.cpp \
     subtitledec.cpp \
-    audiodec.cpp
+    audiodec.cpp \
+    videostate.cpp

@@ -5,25 +5,7 @@ enum ERROR_CODE
 {
     SUCCEED = 0,
     ERROR_FILE_INVALID
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 
 
 #include <QString>

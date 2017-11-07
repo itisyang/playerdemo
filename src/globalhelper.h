@@ -3,8 +3,8 @@
 
 enum ERROR_CODE
 {
-    ERROR_NO_ERROR = 0,
-    ERROR_FILE_INVALID
+    NoError = 0,
+    ErrorFileInvalid
 };
 
 

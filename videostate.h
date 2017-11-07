@@ -160,17 +160,24 @@ typedef struct Decoder {
     SDL_Thread *decoder_tid;
 } Decoder;
 
+//单例模式
 class VideoState : public QObject
 {
     Q_OBJECT
-public:
-    explicit VideoState(QObject *parent = nullptr);
 
+public:
+    //explicit VideoState(QObject *parent = nullptr);
+
+    static VideoState* GetInstance();
 signals:
 
 public slots:
 
 private:
+    explicit VideoState(QObject *parent = nullptr);
+    static VideoState* m_pInstance;
+
+
     static const QString strProgrameBirthYear;//程序初始创建年
 
     SDL_Thread *read_tid;

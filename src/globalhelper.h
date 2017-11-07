@@ -3,7 +3,7 @@
 
 enum ERROR_CODE
 {
-    SUCCEED = 0,
+    ERROR_NO_ERROR = 0,
     ERROR_FILE_INVALID
 };
 

@@ -4,3 +4,9 @@ ReadFile::ReadFile(QObject *parent) : QObject(parent)
 {
 
 }
+
+int ReadFile::OnStartRead(QString strFileName)
+{
+
+    return ERROR_NO_ERROR;
+}

@@ -71,7 +71,7 @@ HEADERS += \
     videodec.h \
     subtitledec.h \
     audiodec.h \
-    videostate.h
+    videoctl.h
 
 SOURCES += \
     src/ui/ctrlbar.cpp \
@@ -86,4 +86,4 @@ SOURCES += \
     videodec.cpp \
     subtitledec.cpp \
     audiodec.cpp \
-    videostate.cpp
+    videoctl.cpp

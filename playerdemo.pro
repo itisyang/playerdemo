@@ -22,20 +22,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-INCLUDEPATH += lib/ffmpeg/include
-LIBS += -L$$PWD/lib/ffmpeg/lib
-LIBS += -lavcodec
-LIBS += -lavdevice
-LIBS += -lavfilter
-LIBS += -lavformat
-LIBS += -lavutil
-LIBS += -lpostproc
-LIBS += -lswresample
-LIBS += -lswscale
+#INCLUDEPATH += lib/ffmpeg/include
+#LIBS += -L$$PWD/lib/ffmpeg/lib
+#LIBS += -lavcodec
+#LIBS += -lavdevice
+#LIBS += -lavfilter
+#LIBS += -lavformat
+#LIBS += -lavutil
+#LIBS += -lpostproc
+#LIBS += -lswresample
+#LIBS += -lswscale
 
-INCLUDEPATH += lib/sdl/include/SDL2
-LIBS += -L$$PWD/lib/sdl/lib
-LIBS += -lSDL2
+#INCLUDEPATH += lib/sdl/include/SDL2
+#LIBS += -L$$PWD/lib/sdl/lib
+#LIBS += -llibSDL2
+
+INCLUDEPATH += \
+    lib/ffmpeg/include \
+    lib/sdl/include \
+
+win32: LIBS += \
+    -L$$PWD/lib/ffmpeg/lib -lavcodec -lavdevice -lavfilter -lavformat -lavutil -lswresample -lswscale \
+    -L$$PWD/lib/sdl/lib/x86 -lSDL2 \
+
 
 RESOURCES += \
     resource.qrc

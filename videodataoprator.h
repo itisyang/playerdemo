@@ -37,22 +37,23 @@ private:
     bool GetDataDecSubtitle(AVFrame* frame);
 private:
 
-    const int MaxNumFrameCache;//缓存帧数
+    const int m_nMaxNumFrameCache;//缓存帧数
 
+    // V-Video  A-Audio S-Subtitle
     //解码前
-    QMutex m_mutexVideo;
-    QMutex m_mutexAudio;
-    QMutex m_mutexSubtitle;
-    QList<AVPacket> m_listVideo;
-    QList<AVPacket> m_listAudio;
-    QList<AVPacket> m_listSubtitle;
+    QMutex m_mutexV;
+    QMutex m_mutexA;
+    QMutex m_mutexS;
+    QList<AVPacket*> m_listV;
+    QList<AVPacket*> m_listA;
+    QList<AVPacket*> m_listS;
     //解码后
-    QMutex m_mutexPic;
-    QMutex m_mutexSam;
-    QMutex m_mutexSub;
-    QList<AVFrame> m_ListPic;
-    QList<AVFrame> m_ListSam;
-    QList<AVFrame> m_ListSub;
+    QMutex m_mutexVDec;
+    QMutex m_mutexADec;
+    QMutex m_mutexSDec;
+    QList<AVFrame*> m_ListVDec;
+    QList<AVFrame*> m_ListADec;
+    QList<AVFrame*> m_ListSDec;
 
 };
 

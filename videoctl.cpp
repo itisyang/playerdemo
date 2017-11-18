@@ -30,3 +30,8 @@ VideoCtl *VideoCtl::ReleaseInstance()
 
 }
 
+bool VideoCtl::StartPlay(QString FileName)
+{
+
+}
+

@@ -35,10 +35,15 @@ public slots:
 private:
     explicit VideoCtl(QObject *parent = nullptr);
 
-    bool ConnectSignals();
+    bool Init();
+
+    bool ConnectSignalSlots();
+
 private:
 
     static VideoCtl* m_pInstance;
+
+    bool m_bInited;
 
     VideoDataOprator m_Oprator;//数据处理
     VideoDec m_VideoDec;//视频解码

@@ -6,6 +6,8 @@ const QString VideoCtl::strProgrameBirthYear = "2017";
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
 {
+    m_bInited = false;
+
 #if CONFIG_AVDEVICE
     //注册所有设备
     avdevice_register_all();
@@ -18,11 +20,40 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     av_register_all();
     //网络格式初始化
     avformat_network_init();
+
+
 }
 
-bool VideoCtl::ConnectSignals()
+bool VideoCtl::Init()
 {
-    connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
+    if (m_bInited == true)
+    {
+        return true;
+    }
+
+    if (ConnectSignalSlots() == false)
+    {
+        return false;
+    }
+
+    m_bInited = true;
+}
+
+bool VideoCtl::ConnectSignalSlots()
+{
+    QList<bool> listRet;
+    bool bRet;
+    bRet = connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
+    listRet.append(bRet);
+
+
+    foreach (bRet, listRet)
+    {
+        if (bRet == false)
+        {
+            return false;
+        }
+    }
 }
 
 VideoCtl *VideoCtl::m_pInstance = new VideoCtl();

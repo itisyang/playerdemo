@@ -17,8 +17,5 @@ void VideoDec::run()
 
 void VideoDec::OnStartDec()
 {
-    qDebug() << "VideoDec::OnStartDec";
     StartThread();
-
-    //return NoError;
 }

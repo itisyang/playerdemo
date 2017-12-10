@@ -50,7 +50,7 @@ MainWid::MainWid(QWidget *parent) :
     ConnectSignalSlots();
 
     //接受放下事件
-    setAcceptDrops(true);
+    //setAcceptDrops(true);
     //可以清晰地看到放下过程中的图标指示
     //setDropIndicatorShown(true);
 

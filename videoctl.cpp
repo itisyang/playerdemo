@@ -1,4 +1,6 @@
 #include "VideoCtl.h"
+#include <QThread>
+#include <QDebug>
 
 const QString VideoCtl::strProgrameBirthYear = "2017";
 
@@ -18,6 +20,11 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     avformat_network_init();
 }
 
+bool VideoCtl::ConnectSignals()
+{
+    connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
+}
+
 VideoCtl *VideoCtl::m_pInstance = new VideoCtl();
 
 VideoCtl *VideoCtl::GetInstance()
@@ -32,6 +39,7 @@ VideoCtl *VideoCtl::ReleaseInstance()
 
 bool VideoCtl::StartPlay(QString FileName)
 {
-
+    qDebug() << "VideoCtl Thread ID:" << QThread::currentThreadId();
+    emit SigStartDec();
 }
 

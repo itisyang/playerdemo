@@ -3,12 +3,14 @@
 
 #include <QObject>
 #include "globalhelper.h"
-
-class SubtitleDec : public QObject
+#include "customthread.h"
+class SubtitleDec : public CustomThread
 {
     Q_OBJECT
 public:
-    explicit SubtitleDec(QObject *parent = nullptr);
+    explicit SubtitleDec();
+
+    void run();
 
 signals:
 

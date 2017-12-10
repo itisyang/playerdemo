@@ -1,12 +1,28 @@
 #include "readfile.h"
-
-ReadFile::ReadFile(QObject *parent) : QObject(parent)
+#include <QDebug>
+ReadFile::ReadFile()
 {
 
 }
 
-int ReadFile::OnStartRead(QString strFileName)
+void ReadFile::run()
 {
+    if (m_strFilePath.isEmpty())
+    {
+        return;
+    }
+    while (m_bRunning)
+    {
+
+        break;
+    }
+}
+
+int ReadFile::OnStartRead(QString strFilePath)
+{
+    m_strFilePath = strFilePath;
+
+    StartThread();
 
     return NoError;
 }

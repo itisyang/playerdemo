@@ -11,6 +11,7 @@ DisplayWid::DisplayWid(QWidget *parent) :
 
     //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/displaywid.css"));
+    setAcceptDrops(true);
 }
 
 DisplayWid::~DisplayWid()
@@ -20,10 +21,11 @@ DisplayWid::~DisplayWid()
 
 void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
 {
-    if(event->mimeData()->hasFormat("text/uri-list"))
-    {
-        event->acceptProposedAction();
-    }
+//    if(event->mimeData()->hasFormat("text/uri-list"))
+//    {
+//        event->acceptProposedAction();
+//    }
+    event->acceptProposedAction();
 }
 
 void DisplayWid::dropEvent(QDropEvent *event)
@@ -38,5 +40,8 @@ void DisplayWid::dropEvent(QDropEvent *event)
     {
         QString file_name = url.toLocalFile();
         qDebug() << file_name;
+
     }
+
+    VideoCtl::GetInstance()->StartPlay("123");
 }

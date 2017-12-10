@@ -1,12 +1,24 @@
 #include "videodec.h"
+#include <QDebug>
 
-VideoDec::VideoDec(QObject *parent) : QObject(parent)
+VideoDec::VideoDec()
 {
 
 }
 
-int VideoDec::OnStartDec()
+void VideoDec::run()
 {
+    while (m_bRunning)
+    {
+        qDebug() << "VideoDec Thread ID:" << QThread::currentThreadId();
+        break;
+    }
+}
 
-    return NoError;
+void VideoDec::OnStartDec()
+{
+    qDebug() << "VideoDec::OnStartDec";
+    StartThread();
+
+    //return NoError;
 }

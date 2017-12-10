@@ -3,18 +3,21 @@
 
 #include <QObject>
 #include "globalhelper.h"
+#include "customthread.h"
 
-class VideoDec : public QObject
+class VideoDec : public CustomThread
 {
     Q_OBJECT
 public:
-    explicit VideoDec(QObject *parent = nullptr);
+    explicit VideoDec();
+
+    void run();
 
 signals:
 
 public slots:
     //由主线程发信号至已使用moveToThread的VideoDec实例，下面的函数在线程中执行
-    int OnStartDec();
+    void OnStartDec();
 };
 
 #endif // VIDEODEC_H

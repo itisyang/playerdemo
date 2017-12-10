@@ -3,12 +3,14 @@
 
 #include <QObject>
 #include "globalhelper.h"
-
-class AudioDec : public QObject
+#include "customthread.h"
+class AudioDec : public CustomThread
 {
     Q_OBJECT
 public:
-    explicit AudioDec(QObject *parent = nullptr);
+    explicit AudioDec();
+
+    void run();
 
 signals:
 

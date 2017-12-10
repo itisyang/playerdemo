@@ -72,7 +72,8 @@ HEADERS += \
     subtitledec.h \
     audiodec.h \
     videoctl.h \
-    videodataoprator.h
+    videodataoprator.h \
+    customthread.h
 
 SOURCES += \
     src/ui/ctrlbar.cpp \
@@ -88,4 +89,5 @@ SOURCES += \
     subtitledec.cpp \
     audiodec.cpp \
     videoctl.cpp \
-    videodataoprator.cpp
+    videodataoprator.cpp \
+    customthread.cpp

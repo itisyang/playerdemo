@@ -1,8 +1,16 @@
 #include "subtitledec.h"
 
-SubtitleDec::SubtitleDec(QObject *parent) : QObject(parent)
+SubtitleDec::SubtitleDec()
 {
 
+}
+
+void SubtitleDec::run()
+{
+    while (m_bRunning)
+    {
+
+    }
 }
 
 int SubtitleDec::OnStartDec()

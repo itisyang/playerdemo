@@ -24,14 +24,14 @@ public:
     //explicit VideoCtl(QObject *parent = nullptr);
 
     static VideoCtl* GetInstance();
-    static VideoCtl* ReleaseInstance();
+    static void ReleaseInstance();
 
-    bool StartPlay(QString FileName);//开始播放
+    bool StartPlay(QString strFileName);//开始播放
 
 signals:
     void SigStartDec(); //开始解码信号
 public slots:
-
+    void OnPlayMsg(QString strMsg);
 private:
     explicit VideoCtl(QObject *parent = nullptr);
 
@@ -45,7 +45,10 @@ private:
 
     bool m_bInited;
 
+    ReadFile m_ReadFile;//文件读取
+
     VideoDataOprator m_Oprator;//数据处理
+
     VideoDec m_VideoDec;//视频解码
     AudioDec m_AudioDec;//音频解码
     SubtitleDec m_SubtitleDec;//字幕解码

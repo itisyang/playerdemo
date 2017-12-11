@@ -38,10 +38,16 @@ void DisplayWid::dropEvent(QDropEvent *event)
 
     foreach(QUrl url, urls)
     {
-        QString file_name = url.toLocalFile();
-        qDebug() << file_name;
+        QString strFileName = url.toLocalFile();
+        qDebug() << strFileName;
+        VideoCtl *pVideoCtl = VideoCtl::GetInstance();
+        if (pVideoCtl)
+        {
+            pVideoCtl->StartPlay(strFileName);
+        }
 
+        break;
     }
 
-    VideoCtl::GetInstance()->StartPlay("123");
+
 }

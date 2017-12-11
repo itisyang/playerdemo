@@ -18,6 +18,8 @@ signals:
 public slots:
     //由主线程发信号至已使用moveToThread的VideoDec实例，下面的函数在线程中执行
     void OnStartDec();
+
+
 };
 
 #endif // VIDEODEC_H

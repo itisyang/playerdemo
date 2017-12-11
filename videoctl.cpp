@@ -37,15 +37,19 @@ bool VideoCtl::Init()
     }
 
     m_bInited = true;
+
+    return true;
 }
 
 bool VideoCtl::ConnectSignalSlots()
 {
     QList<bool> listRet;
     bool bRet;
+
     bRet = connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
     listRet.append(bRet);
 
+    bRet = connect(&m_ReadFile, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
 
     foreach (bRet, listRet)
     {
@@ -54,23 +58,40 @@ bool VideoCtl::ConnectSignalSlots()
             return false;
         }
     }
+
+    return true;
 }
 
 VideoCtl *VideoCtl::m_pInstance = new VideoCtl();
 
 VideoCtl *VideoCtl::GetInstance()
 {
+    if (false == m_pInstance->Init())
+    {
+        return NULL;
+    }
     return m_pInstance;
 }
 
-VideoCtl *VideoCtl::ReleaseInstance()
+void VideoCtl::ReleaseInstance()
 {
 
 }
 
-bool VideoCtl::StartPlay(QString FileName)
+bool VideoCtl::StartPlay(QString strFileName)
 {
     qDebug() << "VideoCtl Thread ID:" << QThread::currentThreadId();
-    emit SigStartDec();
+
+    if (NoError == m_ReadFile.StartRead(strFileName))
+    {
+        emit SigStartDec();
+    }
+
+    return true;
+}
+
+void VideoCtl::OnPlayMsg(QString strMsg)
+{
+    qDebug() << strMsg;
 }
 

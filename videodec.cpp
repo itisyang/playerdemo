@@ -19,3 +19,5 @@ void VideoDec::OnStartDec()
 {
     StartThread();
 }
+
+

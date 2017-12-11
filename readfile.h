@@ -13,13 +13,14 @@ public:
 
     void run();
 
+    int  StartRead(QString strFilePath);
 signals:
-
+    void SigPlayMsg(QString strMsg);
 public slots:
-    //由主线程发信号至已使用moveToThread的ReadFile实例，下面的函数在线程中执行
     int OnStartRead(QString strFilePath);
 private:
     QString m_strFilePath;
+    AVFormatContext *m_pFormatCtx;
 };
 
 #endif // READFILE_H

@@ -50,8 +50,13 @@ bool VideoCtl::ConnectSignalSlots()
     listRet.append(bRet);
 
     bRet = connect(&m_ReadFile, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    listRet.append(bRet);
 
-    foreach (bRet, listRet)
+
+
+
+
+    for (bool bRet : listRet)
     {
         if (bRet == false)
         {

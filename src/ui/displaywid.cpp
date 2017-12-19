@@ -36,7 +36,7 @@ void DisplayWid::dropEvent(QDropEvent *event)
         return;
     }
 
-    foreach(QUrl url, urls)
+    for(QUrl url: urls)
     {
         QString strFileName = url.toLocalFile();
         qDebug() << strFileName;

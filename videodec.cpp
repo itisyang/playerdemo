@@ -1,5 +1,6 @@
-#include "videodec.h"
 #include <QDebug>
+#include "videodec.h"
+
 
 VideoDec::VideoDec()
 {
@@ -19,5 +20,3 @@ void VideoDec::OnStartDec()
 {
     StartThread();
 }
-
-

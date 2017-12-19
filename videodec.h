@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @brief   视频解码
+ * @author  itisyang
+ * @date
+ * @note
+ */
+
 #ifndef VIDEODEC_H
 #define VIDEODEC_H
 

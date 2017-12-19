@@ -495,6 +495,8 @@ bool FramelessHelper::eventFilter(QObject *obj, QEvent *event)
             return true;
         }
     }
+    default:
+        break;
     }
     return QObject::eventFilter(obj, event);
 }
@@ -524,7 +526,7 @@ void FramelessHelper::setRubberBandOnMove(bool movable)
 {
     d->m_bRubberBandOnMove = movable;
     QList<WidgetData*> list = d->m_widgetDataHash.values();
-    foreach (WidgetData *data, list)
+    for (WidgetData *data: list)
     {
         data->updateRubberBandStatus();
     }
@@ -544,7 +546,7 @@ void FramelessHelper::setRubberBandOnResize(bool resizable)
 {
     d->m_bRubberBandOnResize = resizable;
     QList<WidgetData*> list = d->m_widgetDataHash.values();
-    foreach (WidgetData *data, list)
+    for (WidgetData *data: list)
     {
         data->updateRubberBandStatus();
     }

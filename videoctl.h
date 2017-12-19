@@ -39,6 +39,9 @@ private:
 
     bool ConnectSignalSlots();
 
+public:
+    AVFormatContext *ic;
+
 private:
 
     static VideoCtl* m_pInstance;
@@ -54,7 +57,6 @@ private:
     SubtitleDec m_SubtitleDec;//字幕解码
 
     static const QString strProgrameBirthYear;//程序初始创建年
-
 };
 
 #endif // VIDEOCTL_H

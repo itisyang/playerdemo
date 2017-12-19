@@ -17,9 +17,13 @@ bool CustomThread::StartThread()
     {
         this->start();
     }
+
+    return true;
 }
 
 bool CustomThread::StopThread()
 {
     m_bRunning = false;
+
+    return true;
 }

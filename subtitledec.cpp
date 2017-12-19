@@ -15,5 +15,7 @@ void SubtitleDec::run()
 
 int SubtitleDec::OnStartDec()
 {
+    StartThread();
+
     return NoError;
 }

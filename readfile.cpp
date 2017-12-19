@@ -1,5 +1,8 @@
-#include "readfile.h"
 #include <QDebug>
+
+#include "readfile.h"
+#include "videoctl.h"
+
 ReadFile::ReadFile()
 {
     m_pFormatCtx = NULL;
@@ -12,7 +15,7 @@ void ReadFile::run()
     int nAudioIndex = -1;
     int nSubtitleIndex = -1;
 
-    qDebug() << "VideoCtl Thread ID:" << QThread::currentThreadId();
+    qDebug() << "ReadFile Thread ID:" << QThread::currentThreadId();
 
     if (m_strFilePath.isEmpty())
     {
@@ -62,20 +65,21 @@ void ReadFile::run()
                     + " " + QString::number(nAudioIndex)
                     + " " + QString::number(nSubtitleIndex));
 
+    VideoCtl::GetInstance()->ic = m_pFormatCtx;
+
     // 发送解码信号
     if (nVideoIndex >= 0)
     {
-
+        emit SigStartVideoDec();
     }
     if (nAudioIndex >= 0)
     {
-
+        emit SigStartAudioDec();
     }
     if (nSubtitleIndex >= 0)
     {
-
+        emit SigStartSubtitleDec();
     }
-
 
     while (m_bRunning)
     {

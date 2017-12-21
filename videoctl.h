@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @brief   视频解码线程
+ * @author  itisyang
+ * @date    20171221
+ * @note
+ */
+
 #ifndef VIDEOCTL_H
 #define VIDEOCTL_H
 

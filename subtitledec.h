@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @brief   字幕解码线程
+ * @author  itisyang
+ * @date    20171221
+ * @note
+ */
+
 #ifndef SUBTITLEDEC_H
 #define SUBTITLEDEC_H
 
@@ -9,13 +17,23 @@ class SubtitleDec : public CustomThread
     Q_OBJECT
 public:
     explicit SubtitleDec();
-
+    /**
+     * @brief   线程入口
+     * @param
+     * @return
+     * @note
+     */
     void run();
 
 signals:
 
 public slots:
-    //由主线程发信号至已使用moveToThread的SubtitleDec实例，下面的函数在线程中执行
+    /**
+     * @brief   开始解码
+     * @param
+     * @return  错误码
+     * @note
+     */
     int OnStartDec();
 };
 

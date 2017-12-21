@@ -2,7 +2,7 @@
  * @file
  * @brief   自定义线程抽象类
  * @author  itisyang
- * @date
+ * @date    20171221
  * @note
  */
 
@@ -23,12 +23,12 @@ public:
      * @return
      * @note
      */
-    /*virtual */void run() = 0;
+    virtual void run() = 0;
 
     /**
      * @brief  启动线程
      * @param
-     * @return
+     * @return  true 成功 false 失败
      * @note
      */
     bool StartThread();
@@ -36,7 +36,7 @@ public:
     /**
      * @brief  停止线程
      * @param
-     * @return
+     * @return  true 成功 false 失败
      * @note
      */
     bool StopThread();

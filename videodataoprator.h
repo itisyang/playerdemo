@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @brief   数据管理线程（视频、音频、字幕）
+ * @author  itisyang
+ * @date    20171221
+ * @note
+ */
+
 #ifndef VIDEODATAOPRATOR_H
 #define VIDEODATAOPRATOR_H
 

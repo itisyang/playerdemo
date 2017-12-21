@@ -1,8 +1,8 @@
 /**
  * @file
- * @brief   音频解码
+ * @brief   音频解码线程
  * @author  itisyang
- * @date    20171219
+ * @date    20171221
  * @note
  */
 
@@ -20,7 +20,12 @@ class AudioDec : public CustomThread
     Q_OBJECT
 public:
     explicit AudioDec();
-
+    /**
+     * @brief   线程入口
+     * @param
+     * @return
+     * @note
+     */
     void run();
 
 signals:
@@ -28,9 +33,9 @@ signals:
 public slots:
 
     /**
-     * @brief   由主线程发信号至已使用moveToThread的AudioDec实例，下面的函数在线程中执行
+     * @brief   开始解码
      * @param
-     * @return
+     * @return  错误码
      * @note
      */
     int OnStartDec();

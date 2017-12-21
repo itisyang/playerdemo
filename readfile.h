@@ -1,3 +1,11 @@
+/**
+ * @file
+ * @brief   读取文件线程
+ * @author  itisyang
+ * @date    20171221
+ * @note
+ */
+
 #ifndef READFILE_H
 #define READFILE_H
 
@@ -11,20 +19,26 @@ class ReadFile : public CustomThread
 public:
     explicit ReadFile();
 
-    void run();
     /**
-     * @brief  开始读取
+     * @brief   线程入口
      * @param
      * @return
      * @note
      */
+    void run();
+    /**
+     * @brief  开始读取
+     * @param
+     * @return 错误码
+     * @note
+     */
     int  StartRead(QString strFilePath);
 signals:
-    void SigPlayMsg(QString strMsg); ///< 播放信息
+    void SigPlayMsg(QString strMsg);    ///< 播放信息信号
 
-    void SigStartVideoDec();    ///< 视频解码信号
-    void SigStartAudioDec();    ///< 音频解码信号
-    void SigStartSubtitleDec(); ///< 字幕解码信号
+    void SigStartVideoDec();            ///< 视频解码信号
+    void SigStartAudioDec();            ///< 音频解码信号
+    void SigStartSubtitleDec();         ///< 字幕解码信号
 
 public slots:
     /**

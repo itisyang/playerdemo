@@ -2,7 +2,7 @@
  * @file
  * @brief   视频解码
  * @author  itisyang
- * @date
+ * @date    20171221
  * @note
  */
 
@@ -18,13 +18,23 @@ class VideoDec : public CustomThread
     Q_OBJECT
 public:
     explicit VideoDec();
-
+    /**
+     * @brief   线程入口
+     * @param
+     * @return
+     * @note
+     */
     void run();
 
 signals:
 
 public slots:
-    //由主线程发信号至已使用moveToThread的VideoDec实例，下面的函数在线程中执行
+    /**
+     * @brief   开始解码
+     * @param
+     * @return  错误码
+     * @note
+     */
     void OnStartDec();
 
 

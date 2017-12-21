@@ -36,8 +36,11 @@ public:
 
     bool StartPlay(QString strFileName);//开始播放
 
+    AVFormatContext* GetAVFormatCtx();
+
 signals:
     void SigStartDec(); //开始解码信号
+    void SigPlayMsg(QString strMsg);//错误信息
 public slots:
     void OnPlayMsg(QString strMsg);
 private:
@@ -48,7 +51,7 @@ private:
     bool ConnectSignalSlots();
 
 public:
-    AVFormatContext *ic;
+
 
 private:
 
@@ -65,6 +68,8 @@ private:
     SubtitleDec m_SubtitleDec;//字幕解码
 
     static const QString strProgrameBirthYear;//程序初始创建年
+
+    AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
 };
 
 #endif // VIDEOCTL_H

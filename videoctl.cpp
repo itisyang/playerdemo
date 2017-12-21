@@ -7,6 +7,7 @@ const QString VideoCtl::strProgrameBirthYear = "2017";
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
 {
     m_bInited = false;
+    m_pAVFormatContext = nullptr;
 
 #if CONFIG_AVDEVICE
     //注册所有设备
@@ -46,19 +47,31 @@ bool VideoCtl::ConnectSignalSlots()
     QList<bool> listRet;
     bool bRet;
 
-    bRet = connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
+    //错误信息信号槽连接
+    bRet = connect(this, SIGNAL(SigPlayMsg(QString)), SLOT(OnPlayMsg(QString)));
     listRet.append(bRet);
-
     bRet = connect(&m_ReadFile, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
     listRet.append(bRet);
+    bRet = connect(&m_VideoDec, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    listRet.append(bRet);
+    bRet = connect(&m_AudioDec, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    listRet.append(bRet);
+    bRet = connect(&m_SubtitleDec, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    listRet.append(bRet);
+
+    //开始解码信号槽连接
+    bRet = connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
+    listRet.append(bRet);
+    bRet = connect(this, SIGNAL(SigStartDec()), &m_AudioDec, SLOT(OnStartDec()));
+    listRet.append(bRet);
+    bRet = connect(this, SIGNAL(SigStartDec()), &m_SubtitleDec, SLOT(OnStartDec()));
+    listRet.append(bRet);
 
 
 
-
-
-    for (bool bRet : listRet)
+    for (bool bReturn : listRet)
     {
-        if (bRet == false)
+        if (bReturn == false)
         {
             return false;
         }
@@ -93,6 +106,20 @@ bool VideoCtl::StartPlay(QString strFileName)
     }
 
     return true;
+}
+
+AVFormatContext *VideoCtl::GetAVFormatCtx()
+{
+    if (m_pAVFormatContext == nullptr)
+    {
+        m_pAVFormatContext = avformat_alloc_context();
+        if (!m_pAVFormatContext)
+        {
+            emit SigPlayMsg("Could not allocate context.");
+        }
+    }
+
+    return m_pAVFormatContext;
 }
 
 void VideoCtl::OnPlayMsg(QString strMsg)

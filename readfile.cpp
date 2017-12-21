@@ -14,6 +14,7 @@ void ReadFile::run()
     int nVideoIndex = -1;
     int nAudioIndex = -1;
     int nSubtitleIndex = -1;
+    AVFormatContext *ic = NULL;
 
     qDebug() << "ReadFile Thread ID:" << QThread::currentThreadId();
 
@@ -21,41 +22,37 @@ void ReadFile::run()
     {
         return;
     }
-    if (m_pFormatCtx)
-    {
-        avformat_free_context(m_pFormatCtx);
-        m_pFormatCtx = NULL;
-    }
+
+
     //构建 处理封装格式 结构体
-    m_pFormatCtx = avformat_alloc_context();
-    if (!m_pFormatCtx)
+    ic = VideoCtl::GetInstance()->GetAVFormatCtx();
+    if (!ic)
     {
-        emit SigPlayMsg("Could not allocate context.");
         return;
     }
 
-    err = avformat_open_input(&m_pFormatCtx, m_strFilePath.toUtf8().data(), NULL, NULL);
+    err = avformat_open_input(&ic, m_strFilePath.toUtf8().data(), NULL, NULL);
     if (err < 0)
     {
         emit SigPlayMsg(m_strFilePath + " open fail, err = " + QString::number(err));
         return;
     }
-    if (avformat_find_stream_info(m_pFormatCtx, NULL) < 0)
+    if (avformat_find_stream_info(ic, NULL) < 0)
     {
         emit SigPlayMsg("Couldn't find stream information.");
         return ;
     }
-    for (i = 0; i<m_pFormatCtx->nb_streams; i++)
+    for (i = 0; i< ic->nb_streams; i++)
     {
-        if(m_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO)
+        if(ic->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO)
         {
             nVideoIndex=i;
         }
-        else if(m_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_AUDIO)
+        else if(ic->streams[i]->codec->codec_type==AVMEDIA_TYPE_AUDIO)
         {
             nAudioIndex=i;
         }
-        else if(m_pFormatCtx->streams[i]->codec->codec_type==AVMEDIA_TYPE_SUBTITLE)
+        else if(ic->streams[i]->codec->codec_type==AVMEDIA_TYPE_SUBTITLE)
         {
             nSubtitleIndex=i;
         }
@@ -64,8 +61,6 @@ void ReadFile::run()
     emit SigPlayMsg("stream info:" + QString::number(nVideoIndex)
                     + " " + QString::number(nAudioIndex)
                     + " " + QString::number(nSubtitleIndex));
-
-    VideoCtl::GetInstance()->ic = m_pFormatCtx;
 
     // 发送解码信号
     if (nVideoIndex >= 0)

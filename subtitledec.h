@@ -26,7 +26,7 @@ public:
     void run();
 
 signals:
-
+    void SigPlayMsg(QString strMsg);    ///< 播放信息信号
 public slots:
     /**
      * @brief   开始解码

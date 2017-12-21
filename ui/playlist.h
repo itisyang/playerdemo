@@ -17,6 +17,8 @@ public:
 
     bool InitUi();
     bool GetPlaylistStatus();
+public slots:
+    void OnAddFile(QString strFileName);
 private slots:
     void on_HideOrShowBtn_clicked();
 signals:

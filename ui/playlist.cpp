@@ -19,9 +19,11 @@ Playlist::~Playlist()
 bool Playlist::InitUi()
 {
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/playlist.css"));
-    ui->List->hide();
+    //ui->List->hide();
     //this->setFixedWidth(ui->HideOrShowBtn->width());
-    GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
+    //GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
+
+    ui->List->clear();
 
     return true;
 }
@@ -36,19 +38,24 @@ bool Playlist::GetPlaylistStatus()
     return true;
 }
 
+void Playlist::OnAddFile(QString strFileName)
+{
+    ui->List->addItem(strFileName);
+}
+
 void Playlist::on_HideOrShowBtn_clicked()
 {
     if (ui->List->isHidden())
     {
         ui->List->show();
         //this->setFixedWidth(ui->HideOrShowBtn->width() + ui->List->width());
-        GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf105));
+        //GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf105));
     }
     else
     {
         ui->List->hide();
         //this->setFixedWidth(ui->HideOrShowBtn->width());
-        GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
+        //GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
     }
 
     emit SigUpdateUi();

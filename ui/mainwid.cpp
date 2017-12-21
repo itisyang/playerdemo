@@ -159,6 +159,9 @@ void MainWid::ConnectSignalSlots()
     connect(m_pTitle, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
     connect(this, SIGNAL(SigShowMax(bool)), m_pTitle, SLOT(OnChangeMaxBtnStyle(bool)));
     connect(m_pPlaylist, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
+
+    connect(m_pDisplay, SIGNAL(SigAddFile(QString)), m_pPlaylist, SLOT(OnAddFile(QString)));
+
 }
 
 void MainWid::OnAdjustUi()

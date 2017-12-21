@@ -1,8 +1,9 @@
 
 *{
-    background-color:transparent;
+    background:transparent;
     color:white;
 }
+
 QPushButton{
     color:  white;
 }

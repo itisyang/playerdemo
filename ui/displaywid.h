@@ -23,7 +23,8 @@ public:
 protected:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
-
+signals:
+    void SigAddFile(QString strFileName);///< 增加视频文件
 private:
     Ui::DisplayWid *ui;
 };

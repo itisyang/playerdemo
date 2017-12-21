@@ -58,7 +58,8 @@ FORMS += \
     ui/display.ui \
     ui/mainwid.ui \
     ui/playlist.ui \
-    ui/title.ui
+    ui/title.ui \
+    ui/playlistctrlbar.ui
 
 INCLUDEPATH +=  \
     ui/
@@ -77,7 +78,8 @@ HEADERS += \
     audiodec.h \
     videoctl.h \
     videodataoprator.h \
-    customthread.h
+    customthread.h \
+    ui/playlistctrlbar.h
 
 SOURCES += \
     ui/ctrlbar.cpp \
@@ -94,4 +96,5 @@ SOURCES += \
     audiodec.cpp \
     videoctl.cpp \
     videodataoprator.cpp \
-    customthread.cpp
+    customthread.cpp \
+    ui/playlistctrlbar.cpp

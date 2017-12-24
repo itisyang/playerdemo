@@ -30,7 +30,7 @@ bool Playlist::InitUi()
 
 bool Playlist::GetPlaylistStatus()
 {
-    if (ui->List->isHidden())
+    if (this->isHidden())
     {
         return false;
     }
@@ -41,22 +41,4 @@ bool Playlist::GetPlaylistStatus()
 void Playlist::OnAddFile(QString strFileName)
 {
     ui->List->addItem(strFileName);
-}
-
-void Playlist::on_HideOrShowBtn_clicked()
-{
-    if (ui->List->isHidden())
-    {
-        ui->List->show();
-        //this->setFixedWidth(ui->HideOrShowBtn->width() + ui->List->width());
-        //GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf105));
-    }
-    else
-    {
-        ui->List->hide();
-        //this->setFixedWidth(ui->HideOrShowBtn->width());
-        //GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
-    }
-
-    emit SigUpdateUi();
 }

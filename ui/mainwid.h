@@ -9,8 +9,7 @@
 #include "playlist.h"
 #include "title.h"
 #include "displaywid.h"
-
-enum Direction { UP=0, DOWN=1, LEFT, RIGHT, LEFTTOP, LEFTBOTTOM, RIGHTBOTTOM, RIGHTTOP, NONE };
+#include "playlistctrlbar.h"
 
 
 namespace Ui {
@@ -48,6 +47,8 @@ private slots:
     void OnCloseBtnClicked();
     void OnMinBtnClicked();
     void OnMaxBtnClicked();
+    //显示、隐藏播放列表
+    void OnShowOrHidePlaylist();
 
     //调整窗口模块
     void OnAdjustUi();
@@ -57,14 +58,15 @@ signals:
 private:
     Ui::MainWid *ui;
 
-    bool m_bPlaying;//正在播放
+    bool m_bPlaying; ///< 正在播放
 
-    CtrlBar     *m_pCtrlBar;    //播放控制面板
-    Playlist    *m_pPlaylist;   //播放列表面板
-    Title       *m_pTitle;      //标题栏面板
-    DisplayWid  *m_pDisplay;    //显示区域
+    CtrlBar     *m_pCtrlBar;    ///< 播放控制面板
+    Playlist    *m_pPlaylist;   ///< 播放列表面板
+    Title       *m_pTitle;      ///< 标题栏面板
+    DisplayWid  *m_pDisplay;    ///< 显示区域
+    PlaylistCtrlBar *m_pPlaylistCtrlBar; ///< 播放列表控制按钮
 
-    const int m_nShadowWidth;//阴影宽度
+    const int m_nShadowWidth; ///< 阴影宽度
 };
 
 #endif // MainWid_H

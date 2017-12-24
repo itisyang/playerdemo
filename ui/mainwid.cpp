@@ -28,6 +28,7 @@ MainWid::MainWid(QWidget *parent) :
     m_pDisplay = new DisplayWid(this);
     m_pPlaylist = new Playlist(this);
     m_pCtrlBar = new CtrlBar(this);
+    m_pPlaylistCtrlBar = new PlaylistCtrlBar(this);
 
     FramelessHelper *pHelper = new FramelessHelper(this);
     pHelper->activateOn(this);  //激活当前窗体
@@ -134,21 +135,21 @@ void MainWid::enterEvent(QEvent *event)
 {
     Q_UNUSED(event);
 
-    m_pCtrlBar->show();
-    m_pPlaylist->show();
-    m_pTitle->show();
+//    m_pCtrlBar->show();
+//    m_pPlaylist->show();
+//    m_pTitle->show();
 }
 
 void MainWid::leaveEvent(QEvent *event)
 {
     Q_UNUSED(event);
 
-    if (m_bPlaying)
-    {
-        m_pCtrlBar->hide();
-        m_pPlaylist->hide();
-        m_pTitle->hide();
-    }
+//    if (m_bPlaying)
+//    {
+//        m_pCtrlBar->hide();
+//        m_pPlaylist->hide();
+//        m_pTitle->hide();
+//    }
 }
 
 void MainWid::ConnectSignalSlots()
@@ -161,14 +162,16 @@ void MainWid::ConnectSignalSlots()
     connect(m_pPlaylist, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
 
     connect(m_pDisplay, SIGNAL(SigAddFile(QString)), m_pPlaylist, SLOT(OnAddFile(QString)));
-
+    connect(m_pPlaylistCtrlBar, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
 }
 
 void MainWid::OnAdjustUi()
 {
+    //标题栏位置
     m_pTitle->move(m_nShadowWidth, m_nShadowWidth);
     m_pTitle->setFixedWidth(width() - m_nShadowWidth * 2);
 
+    //显示区域位置
     m_pDisplay->move(m_nShadowWidth, m_nShadowWidth + m_pTitle->height());
     int nDisplayW = 0;
     int nDisplayH = 0;
@@ -184,10 +187,28 @@ void MainWid::OnAdjustUi()
 
     m_pDisplay->setFixedSize(nDisplayW, nDisplayH);
 
+    //播放列表位置
     int nPlaylistWidth = m_pPlaylist->width();
     m_pPlaylist->move(width() - nPlaylistWidth - m_nShadowWidth, m_pTitle->height() + m_nShadowWidth);
     m_pPlaylist->setFixedHeight(height() - m_pTitle->height() - m_pCtrlBar->height() - m_nShadowWidth * 2);
 
+    if (m_pPlaylist->GetPlaylistStatus())//播放列表显示
+    {
+        m_pPlaylistCtrlBar->move(width() - nPlaylistWidth - m_nShadowWidth - m_pPlaylistCtrlBar->width(),
+                                 m_pTitle->height() + m_nShadowWidth);
+
+    }
+    else
+    {
+        m_pPlaylistCtrlBar->move(width() - m_nShadowWidth - m_pPlaylistCtrlBar->width(),
+                                 m_pTitle->height() + m_nShadowWidth);
+    }
+
+    m_pPlaylistCtrlBar->setFixedHeight(m_pPlaylist->height());
+
+
+
+    //播放控制面板位置
     m_pCtrlBar->move(m_nShadowWidth, height() - 80 - m_nShadowWidth);
     m_pCtrlBar->setFixedSize(width() - m_nShadowWidth * 2, 80);
 }
@@ -214,5 +235,19 @@ void MainWid::OnMaxBtnClicked()
         showMaximized();
         emit SigShowMax(true);
     }
+}
+
+void MainWid::OnShowOrHidePlaylist()
+{
+     if (m_pPlaylist->isHidden())
+     {
+         m_pPlaylist->show();
+     }
+     else
+     {
+         m_pPlaylist->hide();
+     }
+
+     OnAdjustUi();
 }
 

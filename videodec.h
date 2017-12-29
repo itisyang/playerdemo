@@ -26,6 +26,11 @@ public:
      */
     void run();
 
+    int video_stream;
+    AVStream *video_st;
+    AVCodecContext *video_avctx;
+
+
 signals:
     void SigPlayMsg(QString strMsg);    ///< 播放信息信号
 public slots:

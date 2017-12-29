@@ -122,6 +122,37 @@ AVFormatContext *VideoCtl::GetAVFormatCtx()
     return m_pAVFormatContext;
 }
 
+VideoDataOprator *VideoCtl::GetVideoDataOprator()
+{
+    return &m_VideoDataOprator;
+}
+
+bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex)
+{
+    AVFormatContext *ic = VideoCtl::GetInstance()->GetAVFormatCtx();
+    AVCodecContext *avctx;
+    AVCodec *codec;
+
+    if (nVideoStreamIndex >= 0)
+    {
+        //初始化结构体
+        avctx = avcodec_alloc_context3(NULL);
+        if (!avctx)
+            return false;
+        avcodec_parameters_to_context(avctx, ic->streams[nVideoStreamIndex]->codecpar);
+        av_codec_set_pkt_timebase(avctx, ic->streams[nVideoStreamIndex]->time_base);
+        //寻找解码器
+        codec = avcodec_find_decoder(avctx->codec_id);
+        avcodec_open2(avctx, codec, NULL);
+
+        m_VideoDec.video_stream = nVideoStreamIndex;
+        m_VideoDec.video_st = ic->streams[nVideoStreamIndex];
+        m_VideoDec.video_avctx = avctx;
+    }
+
+    return true;
+}
+
 void VideoCtl::OnPlayMsg(QString strMsg)
 {
     qDebug() << strMsg;

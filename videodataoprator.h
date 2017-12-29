@@ -52,16 +52,16 @@ private:
     QMutex m_mutexV;
     QMutex m_mutexA;
     QMutex m_mutexS;
-    QList<AVPacket*> m_listV;
-    QList<AVPacket*> m_listA;
-    QList<AVPacket*> m_listS;
+    QList<AVPacket> m_listV;
+    QList<AVPacket> m_listA;
+    QList<AVPacket> m_listS;
     //解码后
     QMutex m_mutexVDec;
     QMutex m_mutexADec;
     QMutex m_mutexSDec;
-    QList<AVFrame*> m_ListVDec;
-    QList<AVFrame*> m_ListADec;
-    QList<AVFrame*> m_ListSDec;
+    QList<AVFrame> m_ListVDec;
+    QList<AVFrame> m_ListADec;
+    QList<AVFrame> m_ListSDec;
 
 };
 

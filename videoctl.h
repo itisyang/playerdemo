@@ -38,6 +38,8 @@ public:
 
     AVFormatContext* GetAVFormatCtx();
 
+    VideoDataOprator* GetVideoDataOprator();
+    bool StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
 signals:
     void SigStartDec(); //开始解码信号
     void SigPlayMsg(QString strMsg);//错误信息
@@ -61,7 +63,7 @@ private:
 
     ReadFile m_ReadFile;//文件读取
 
-    VideoDataOprator m_Oprator;//数据处理
+    VideoDataOprator m_VideoDataOprator;//数据处理
 
     VideoDec m_VideoDec;//视频解码
     AudioDec m_AudioDec;//音频解码
@@ -70,6 +72,17 @@ private:
     static const QString strProgrameBirthYear;//程序初始创建年
 
     AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
+
+
+
+    int audio_stream;
+    AVStream *audio_st;
+    AVCodecContext *audio_avctx;
+
+    int subtitle_stream;
+    AVStream *subtitle_st;
+    AVCodecContext *subtitle_avctx;
+
 };
 
 #endif // VIDEOCTL_H

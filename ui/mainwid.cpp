@@ -207,7 +207,6 @@ void MainWid::OnAdjustUi()
     m_pPlaylistCtrlBar->setFixedHeight(m_pPlaylist->height());
 
 
-
     //播放控制面板位置
     m_pCtrlBar->move(m_nShadowWidth, height() - 80 - m_nShadowWidth);
     m_pCtrlBar->setFixedSize(width() - m_nShadowWidth * 2, 80);

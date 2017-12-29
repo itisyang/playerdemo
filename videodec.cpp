@@ -1,6 +1,6 @@
 #include <QDebug>
 #include "videodec.h"
-
+#include "videoctl.h"
 
 VideoDec::VideoDec()
 {
@@ -9,8 +9,11 @@ VideoDec::VideoDec()
 
 void VideoDec::run()
 {
+
     while (m_bRunning)
     {
+
+
         qDebug() << "VideoDec Thread ID:" << QThread::currentThreadId();
         break;
     }

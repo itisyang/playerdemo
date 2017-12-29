@@ -16,6 +16,8 @@ void ReadFile::run()
     int nSubtitleIndex = -1;
     AVFormatContext *ic = NULL;
 
+    AVPacket pkt1, *pkt = &pkt1;
+
     qDebug() << "ReadFile Thread ID:" << QThread::currentThreadId();
 
     if (m_strFilePath.isEmpty())
@@ -62,6 +64,7 @@ void ReadFile::run()
                     + " " + QString::number(nAudioIndex)
                     + " " + QString::number(nSubtitleIndex));
 
+    VideoCtl::GetInstance()->StreamComponentOpen(nVideoIndex, nAudioIndex, nSubtitleIndex);
     // 发送解码信号
     if (nVideoIndex >= 0)
     {
@@ -78,9 +81,25 @@ void ReadFile::run()
 
     while (m_bRunning)
     {
+        //按帧读取
+        ret = av_read_frame(ic, pkt);
+        if (ret < 0)
+        {
+            break;
+        }
+        //按数据帧的类型存放至对应队列
+        if (pkt->stream_index == nVideoIndex) {
+            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, VIDEO_DATA);
+            emit SigPlayMsg("一帧");
+//        } else if (pkt->stream_index == nAudioIndex) {
+//            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, AUDIO_DATA);
+//        } else if (pkt->stream_index == nSubtitleIndex) {
+//            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, SUBTITLE_DATA);
+        } else {
+            av_packet_unref(pkt);
+        }
 
-
-        break;
+        //break;
     }
 }
 

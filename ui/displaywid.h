@@ -23,10 +23,14 @@ public:
 protected:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
+private slots:
+    void OnImage(QImage& img);
 signals:
     void SigAddFile(QString strFileName);///< 增加视频文件
 private:
     Ui::DisplayWid *ui;
+
+    VideoCtl *m_VideoCtl;
 };
 
 #endif // DISPLAY_H

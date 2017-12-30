@@ -12,6 +12,9 @@ DisplayWid::DisplayWid(QWidget *parent) :
     //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/qss/displaywid.css"));
     setAcceptDrops(true);
+
+    m_VideoCtl = VideoCtl::GetInstance();
+    connect(m_VideoCtl, SIGNAL(SigImage(QImage&)), this, SLOT(OnImage(QImage &)));
 }
 
 DisplayWid::~DisplayWid()
@@ -26,6 +29,15 @@ void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
 //        event->acceptProposedAction();
 //    }
     event->acceptProposedAction();
+}
+
+void DisplayWid::OnImage(QImage &image)
+{
+    QPixmap pix = QPixmap::fromImage(image).scaled(ui->label->width(),
+                                           ui->label->height(),
+                                           Qt::KeepAspectRatio,
+                                           Qt::SmoothTransformation);
+    ui->label->setPixmap(pix);
 }
 
 void DisplayWid::dropEvent(QDropEvent *event)
@@ -44,10 +56,9 @@ void DisplayWid::dropEvent(QDropEvent *event)
         break;
     }
 
-    VideoCtl *pVideoCtl = VideoCtl::GetInstance();
-    if (pVideoCtl)
+    if (m_VideoCtl)
     {
-        pVideoCtl->StartPlay(urls.first().toLocalFile());
+        m_VideoCtl->StartPlay(urls.first().toLocalFile());
     }
 
 

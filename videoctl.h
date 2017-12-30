@@ -43,6 +43,7 @@ public:
 signals:
     void SigStartDec(); //开始解码信号
     void SigPlayMsg(QString strMsg);//错误信息
+    void SigImage(QImage& img);
 public slots:
     void OnPlayMsg(QString strMsg);
 private:

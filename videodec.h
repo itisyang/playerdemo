@@ -10,6 +10,7 @@
 #define VIDEODEC_H
 
 #include <QObject>
+#include <QImage>
 #include "globalhelper.h"
 #include "customthread.h"
 
@@ -33,6 +34,8 @@ public:
 
 signals:
     void SigPlayMsg(QString strMsg);    ///< 播放信息信号
+
+    void SigImage(QImage& img);
 public slots:
     /**
      * @brief   开始解码

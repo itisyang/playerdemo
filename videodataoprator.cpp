@@ -1,5 +1,5 @@
 #include "videodataoprator.h"
-
+#include <unistd.h>
 VideoDataOprator::VideoDataOprator(QObject *parent) : QObject(parent),
   m_nMaxNumFrameCache(10)
 {
@@ -84,15 +84,28 @@ bool VideoDataOprator::GetDataDec(AVFrame *frame, DATA_TYPE type)
 
 bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
 {
-    if (m_mutexV.tryLock())
+    while(1)
     {
-        if (m_listV.size() < m_nMaxNumFrameCache)
+        if (m_mutexV.tryLock())
         {
-            m_listV.append(*pkt);
+            if (m_listV.size() < m_nMaxNumFrameCache)
+            {
+                m_listV.append(*pkt);
+                m_mutexV.unlock();
+                break;
+            }
+            else
+            {
+                m_mutexV.unlock();
+                usleep(500*1000);
+            }
         }
-
-        m_mutexV.unlock();
+        else
+        {
+            usleep(500*1000);
+        }
     }
+
 
     return true;
 }
@@ -104,12 +117,17 @@ bool VideoDataOprator::GetDataVideo(AVPacket *pkt)
         if (m_listV.size() > 0)
         {
             *pkt = m_listV.takeFirst();
+            m_mutexV.unlock();
+            return true;
         }
-
-        m_mutexV.unlock();
+        else
+        {
+            m_mutexV.unlock();
+            return false;
+        }
     }
 
-    return true;
+    return false;
 }
 
 bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)

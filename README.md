@@ -1,5 +1,10 @@
 # playerdemo
-## A video player demo
-> based on Qt 5.9.0 and FFmpeg 3.3.3
+A simple video player demo
 
-> powered by itisyang
+## introduction
+- based on FFmpeg 3.3.3
+- developed by vs2017 and qt5.9.3
+- powered by itisyang
+
+## contact way
+- email: itisyang@126.com or itisyang@gmail.com

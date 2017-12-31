@@ -1,4 +1,4 @@
-#include <QDebug>
+﻿#include <QDebug>
 
 #include "readfile.h"
 #include "videoctl.h"
@@ -89,7 +89,18 @@ void ReadFile::run()
         }
         //按数据帧的类型存放至对应队列
         if (pkt->stream_index == nVideoIndex) {
-            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, VIDEO_DATA);
+			while (1)
+			{
+				if (VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, VIDEO_DATA) == true)
+				{
+					break;
+				}
+				else
+				{
+					usleep(1000 * 500);
+				}
+			}
+            
             emit SigPlayMsg("一帧");
 //        } else if (pkt->stream_index == nAudioIndex) {
 //            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, AUDIO_DATA);

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief   音频解码线程
  * @author  itisyang

@@ -1,5 +1,5 @@
 #include "videodataoprator.h"
-#include <unistd.h>
+//#include <unistd.h>
 VideoDataOprator::VideoDataOprator(QObject *parent) : QObject(parent),
   m_nMaxNumFrameCache(10)
 {
@@ -10,13 +10,22 @@ bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
 {
     switch (type) {
     case VIDEO_DATA:
-        PutDataVideo(pkt);
+		if (PutDataVideo(pkt) == false)
+		{
+			return false;
+		}
         break;
     case AUDIO_DATA:
-        PutDataAudio(pkt);
+        if (PutDataAudio(pkt) == false)
+		{
+			return false;
+		}
         break;
     case SUBTITLE_DATA:
-        PutDataSubtitle(pkt);
+        if (PutDataSubtitle(pkt) == false)
+		{
+			return false;
+		}
         break;
     default:
         break;
@@ -97,12 +106,12 @@ bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
             else
             {
                 m_mutexV.unlock();
-                usleep(500*1000);
+				return false;
             }
         }
         else
         {
-            usleep(500*1000);
+			return false;
         }
     }
 

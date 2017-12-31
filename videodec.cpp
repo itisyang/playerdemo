@@ -1,4 +1,4 @@
-#include <QDebug>
+﻿#include <QDebug>
 #include "videodec.h"
 #include "videoctl.h"
 #include "videodataoprator.h"

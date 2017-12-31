@@ -28,12 +28,15 @@
       <Extensions>moc;h;cpp</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{32498620-46a0-4818-a002-691d7da35bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Decoder">
+      <UniqueIdentifier>{04e1880e-2971-4a73-a388-027d5887913c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mainwid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_mainwid.cpp">
@@ -45,46 +48,13 @@
     <ClCompile Include="GeneratedFiles\qrc_mainwid.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="audiodec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ctrlbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="customthread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="displaywid.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framelesshelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="globalhelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="playlist.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="playlistctrlbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="readfile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="subtitledec.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="videoctl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="videodataoprator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="videodec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_audiodec.cpp">
@@ -159,51 +129,51 @@
     <ClCompile Include="GeneratedFiles\Release\moc_videodec.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="ctrlbar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="displaywid.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="framelesshelper.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="mainwid.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="playlist.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="playlistctrlbar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="videodec.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="videoctl.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="subtitledec.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="readfile.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
+    <ClCompile Include="audiodec.cpp">
+      <Filter>Decoder</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="mainwid.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="mainwid.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="mainwid.qrc">
       <Filter>Resource Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="audiodec.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="ctrlbar.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="displaywid.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="framelesshelper.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="playlist.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="playlistctrlbar.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="readfile.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="subtitledec.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="title.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="videoctl.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="videodataoprator.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="videodec.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ctrlbar.ui">
@@ -220,6 +190,42 @@
     </CustomBuild>
     <CustomBuild Include="title.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ctrlbar.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="displaywid.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="framelesshelper.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="mainwid.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="playlist.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="playlistctrlbar.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="title.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="audiodec.h">
+      <Filter>Decoder</Filter>
+    </CustomBuild>
+    <CustomBuild Include="readfile.h">
+      <Filter>Decoder</Filter>
+    </CustomBuild>
+    <CustomBuild Include="subtitledec.h">
+      <Filter>Decoder</Filter>
+    </CustomBuild>
+    <CustomBuild Include="videodec.h">
+      <Filter>Decoder</Filter>
+    </CustomBuild>
+    <CustomBuild Include="videoctl.h">
+      <Filter>Decoder</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

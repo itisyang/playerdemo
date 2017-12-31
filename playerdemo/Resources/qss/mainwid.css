@@ -1,0 +1,33 @@
+*{
+    background-color: #171717;
+    color:white;
+}
+
+/*****菜单*****/
+
+QMenu{
+    background-color:white;
+    color:black;
+    border: none;
+}
+QMenu::menu-arrow {
+
+}
+QMenu::item{
+    background-color: #3C4144;
+    color:white;
+    padding:8px 20px;
+    margin:0px 0px;
+    border-bottom:1px solid #1C1C1C;
+}
+QMenu::item:selected{
+    background-color:#1C1C1C;
+    color:white;
+}
+
+/**********提示**********/
+QToolTip{
+        border: 1px solid rgb(45, 45, 45);
+        background: white;
+        color: black;
+}

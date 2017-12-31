@@ -1,0 +1,80 @@
+/*
+QWidget#BgWidget{
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 0,
+                            stop: 0 #374040, stop: 1.0 #222930);
+    color:white;
+}*/
+
+*{
+    background-color:transparent;
+    color:white;
+}
+
+QPushButton:hover{
+    color:  Cyan;
+}
+QPushButton:pressed {
+    color:  CadetBlue;
+}
+QSlider::groove:horizontal {
+border: 1px solid #4A708B;
+background: #C0C0C0;
+height: 5px;
+border-radius: 2px;
+padding-left:-1px;
+padding-right:-1px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+    stop:0 #B1B1B1, stop:1 #c4c4c4);
+background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+    stop: 0 #5DCCFF, stop: 1 #1874CD);
+border: 1px solid #4A708B;
+height: 10px;
+border-radius: 2px;
+}
+
+QSlider::add-page:horizontal {
+background: #575757;
+border: 0px solid #777;
+height: 10px;
+border-radius: 2px;
+}
+
+QSlider::handle:horizontal
+{
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
+    stop:0.6 #45ADED, stop:0.8 rgba(255, 255, 255, 255));
+
+    width: 11px;
+    margin-top: -3px;
+    margin-bottom: -3px;
+    border-radius: 5px;
+}
+
+QSlider::handle:horizontal:hover {
+    background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 #2A8BDA,
+    stop:0.8 rgba(255, 255, 255, 255));
+
+    width: 11px;
+    margin-top: -3px;
+    margin-bottom: -3px;
+    border-radius: 5px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #00009C;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 4px;
+}

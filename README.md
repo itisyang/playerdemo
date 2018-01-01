@@ -3,8 +3,11 @@ A simple video player demo
 
 ## introduction
 - based on FFmpeg 3.3.3
-- developed by vs2017 and qt5.9.3
+- developed by VS2017 and Qt5.9.3
 - powered by itisyang
 
-## contact way
+## usage
+- This project has .sln and .pro file, .sln for Windows, .pro for Linux
+
+## contact wayof
 - email: itisyang@126.com or itisyang@gmail.com

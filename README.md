@@ -9,5 +9,5 @@ A simple video player demo
 ## usage
 - This project has .sln and .pro file, .sln for Windows, .pro for Linux
 
-## contact wayof
+## contact way
 - email: itisyang@126.com or itisyang@gmail.com

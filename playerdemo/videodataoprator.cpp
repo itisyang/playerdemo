@@ -1,5 +1,5 @@
 #include "videodataoprator.h"
-//#include <unistd.h>
+
 VideoDataOprator::VideoDataOprator(QObject *parent) : QObject(parent),
   m_nMaxNumFrameCache(10)
 {
@@ -34,23 +34,24 @@ bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
     return true;
 }
 //获取原始数据
-bool VideoDataOprator::GetData(AVPacket *pkt, DATA_TYPE type)
+bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
 {
+	bool bRet = false;
     switch (type) {
     case VIDEO_DATA:
-        GetDataVideo(pkt);
+		bRet = GetDataVideo(pkt);
         break;
     case AUDIO_DATA:
-        GetDataAudio(pkt);
+        //GetDataAudio(pkt);
         break;
     case SUBTITLE_DATA:
-        GetDataSubtitle(pkt);
+        //GetDataSubtitle(pkt);
         break;
     default:
         break;
     }
 
-    return true;
+    return bRet;
 }
 //存放解码数据
 bool VideoDataOprator::PutDataDec(AVFrame *frame, DATA_TYPE type)
@@ -99,7 +100,9 @@ bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
         {
             if (m_listV.size() < m_nMaxNumFrameCache)
             {
-                m_listV.append(*pkt);
+				AVPacket avpkt;
+				memcpy(&avpkt, pkt, sizeof(AVPacket));
+                m_listV.append(avpkt);
                 m_mutexV.unlock();
                 break;
             }
@@ -119,13 +122,13 @@ bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
     return true;
 }
 
-bool VideoDataOprator::GetDataVideo(AVPacket *pkt)
+bool VideoDataOprator::GetDataVideo(AVPacket& pkt)
 {
     if (m_mutexV.tryLock())
     {
         if (m_listV.size() > 0)
         {
-            *pkt = m_listV.takeFirst();
+			pkt = m_listV.takeFirst();
             m_mutexV.unlock();
             return true;
         }

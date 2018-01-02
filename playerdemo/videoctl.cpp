@@ -2,6 +2,8 @@
 #include <QThread>
 #include <QDebug>
 
+# pragma execution_character_set("utf-8")
+
 const QString VideoCtl::strProgrameBirthYear = "2017";
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)

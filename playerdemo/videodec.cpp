@@ -23,7 +23,7 @@ void VideoDec::run()
     while (m_bRunning)
     {
         AVPacket pkt;
-        if (pVideoDataOprator->GetData(&pkt, VIDEO_DATA) == false)
+        if (pVideoDataOprator->GetData(pkt, VIDEO_DATA) == false)
         {
             msleep(500);
             continue;
@@ -34,9 +34,18 @@ void VideoDec::run()
         qDebug() << "初始化图片空间";
         AVFrame *picture = av_frame_alloc();
 
-        uint8_t *out_buffer = NULL;
-        out_buffer = new uint8_t[av_image_get_buffer_size(AV_PIX_FMT_RGB24,
-                                                          frame->width, frame->height, 1)];
+		uint8_t *out_buffer = NULL;
+		try
+		{
+			out_buffer = new uint8_t[av_image_get_buffer_size(AV_PIX_FMT_RGB24,
+				frame->width, frame->height, 1)];
+		}
+		catch (const std::exception& e)
+		{
+			qDebug() << e.what();
+			return;
+		}
+
         ret = av_image_fill_arrays(picture->data, picture->linesize,
                              out_buffer, AV_PIX_FMT_RGB24, frame->width, frame->height, 1);
 

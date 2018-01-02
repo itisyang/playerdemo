@@ -21,7 +21,7 @@ public:
     explicit VideoDataOprator(QObject *parent = nullptr);
 
     bool PutData(AVPacket* pkt, DATA_TYPE type);//存放原始数据
-    bool GetData(AVPacket* pkt, DATA_TYPE type);//获取原始数据
+    bool GetData(AVPacket& pkt, DATA_TYPE type);//获取原始数据
     bool PutDataDec(AVFrame* frame, DATA_TYPE type);//存放解码数据
     bool GetDataDec(AVFrame* frame, DATA_TYPE type);//获取解码数据
 
@@ -30,7 +30,7 @@ signals:
 public slots:
 private:
     bool PutDataVideo(AVPacket* pkt);
-    bool GetDataVideo(AVPacket* pkt);
+    bool GetDataVideo(AVPacket& pkt);
     bool PutDataDecVideo(AVFrame* frame);
     bool GetDataDecVideo(AVFrame* frame);
 

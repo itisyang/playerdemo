@@ -3,6 +3,8 @@
 #include "readfile.h"
 #include "videoctl.h"
 
+# pragma execution_character_set("utf-8")
+
 ReadFile::ReadFile()
 {
     m_pFormatCtx = NULL;
@@ -79,6 +81,8 @@ void ReadFile::run()
         emit SigStartSubtitleDec();
     }
 
+	VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
+
     while (m_bRunning)
     {
         //按帧读取
@@ -87,11 +91,12 @@ void ReadFile::run()
         {
             break;
         }
+
         //按数据帧的类型存放至对应队列
         if (pkt->stream_index == nVideoIndex) {
 			while (1)
 			{
-				if (VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, VIDEO_DATA) == true)
+				if (pVideoDataOprator->PutData(pkt, VIDEO_DATA) == true)
 				{
 					break;
 				}
@@ -103,9 +108,9 @@ void ReadFile::run()
             
             emit SigPlayMsg("一帧");
 //        } else if (pkt->stream_index == nAudioIndex) {
-//            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, AUDIO_DATA);
+//            pVideoDataOprator->PutData(pkt, AUDIO_DATA);
 //        } else if (pkt->stream_index == nSubtitleIndex) {
-//            VideoCtl::GetInstance()->GetVideoDataOprator()->PutData(pkt, SUBTITLE_DATA);
+//            pVideoDataOprator->PutData(pkt, SUBTITLE_DATA);
         } else {
             av_packet_unref(pkt);
         }

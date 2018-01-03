@@ -11,6 +11,8 @@
 
 #include <QObject>
 #include <QThread>
+#include <QPixmap>
+#include <QString>
 
 #include "globalhelper.h"
 
@@ -43,7 +45,7 @@ public:
 signals:
     void SigStartDec(); //开始解码信号
     void SigPlayMsg(QString strMsg);//错误信息
-    void SigImage(QImage& img);
+    void SigImage(QPixmap& img);
 public slots:
     void OnPlayMsg(QString strMsg);
 private:

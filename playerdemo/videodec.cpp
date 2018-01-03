@@ -3,6 +3,8 @@
 #include "videoctl.h"
 #include "videodataoprator.h"
 
+# pragma execution_character_set("utf-8")
+
 VideoDec::VideoDec()
 {
 
@@ -34,11 +36,13 @@ void VideoDec::run()
         qDebug() << "初始化图片空间";
         AVFrame *picture = av_frame_alloc();
 
+		int nWidth = video_avctx->width;
+		int nHeight = video_avctx->height;
 		uint8_t *out_buffer = NULL;
 		try
 		{
 			out_buffer = new uint8_t[av_image_get_buffer_size(AV_PIX_FMT_RGB24,
-				frame->width, frame->height, 1)];
+				nWidth, nHeight, 1)];
 		}
 		catch (const std::exception& e)
 		{
@@ -47,21 +51,25 @@ void VideoDec::run()
 		}
 
         ret = av_image_fill_arrays(picture->data, picture->linesize,
-                             out_buffer, AV_PIX_FMT_RGB24, frame->width, frame->height, 1);
+                             out_buffer, AV_PIX_FMT_RGB24, nWidth, nHeight, 1);
 
         SwsContext *pSwsContext = NULL;
-        pSwsContext = sws_getContext(frame->width, frame->height, AV_PIX_FMT_YUV420P,
-                                     frame->width, frame->height, AV_PIX_FMT_RGB24,
+        pSwsContext = sws_getContext(nWidth, nHeight, AV_PIX_FMT_YUV420P,
+			nWidth, nHeight, AV_PIX_FMT_RGB24,
                                      SWS_BICUBIC, 0, 0, 0);
 
         ret = sws_scale(pSwsContext,(const uint8_t* const *)frame->data,
-                  frame->linesize, 0, frame->height, picture->data, picture->linesize);
+			frame->linesize, 0, nHeight, picture->data, picture->linesize);
 
         QImage* image = new QImage(picture->data[0],
-                frame->width, frame->height, QImage::Format_RGB888);
+			nWidth, nHeight, QImage::Format_RGB888);
 
-
-        emit SigImage(*image);
+		QPixmap pix = QPixmap::fromImage(*image);
+		//.scaled(ui->label->width(),
+		//ui->label->height(),
+		//	Qt::KeepAspectRatio,
+		//	Qt::SmoothTransformation);
+        emit SigImage(pix);
         msleep(500);
 //        qDebug() << "VideoDec Thread ID:" << QThread::currentThreadId();
 //        break;

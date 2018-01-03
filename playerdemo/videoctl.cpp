@@ -68,8 +68,8 @@ bool VideoCtl::ConnectSignalSlots()
     listRet.append(bRet);
     bRet = connect(this, SIGNAL(SigStartDec()), &m_SubtitleDec, SLOT(OnStartDec()));
     listRet.append(bRet);
-
-	bRet = connect(&m_VideoDec, SIGNAL(SigImage(QPixmap)), this, SIGNAL(SigImage(QPixmap)));
+	qRegisterMetaType<QPixmap>("QPixmap&");
+	bRet = connect(&m_VideoDec, SIGNAL(SigImage(QPixmap&)), this, SIGNAL(SigImage(QPixmap&)));
 	listRet.append(bRet);
 	
 

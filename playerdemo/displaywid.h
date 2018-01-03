@@ -24,7 +24,7 @@ protected:
     void dropEvent(QDropEvent *event);
     void dragEnterEvent(QDragEnterEvent *event);
 private slots:
-    void OnImage(QPixmap img);
+    void OnImage(QPixmap& img);
 	void OnDisplayMsg(QString strMsg);
 signals:
     void SigAddFile(QString strFileName);///< 增加视频文件

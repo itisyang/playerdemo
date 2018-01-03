@@ -106,7 +106,7 @@ void ReadFile::run()
 				}
 			}
             
-            emit SigPlayMsg("一帧");
+            //emit SigPlayMsg("一帧");
 //        } else if (pkt->stream_index == nAudioIndex) {
 //            pVideoDataOprator->PutData(pkt, AUDIO_DATA);
 //        } else if (pkt->stream_index == nSubtitleIndex) {

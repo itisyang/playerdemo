@@ -100,8 +100,8 @@ bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
         {
             if (m_listV.size() < m_nMaxNumFrameCache)
             {
-				AVPacket avpkt;
-				memcpy(&avpkt, pkt, sizeof(AVPacket));
+				AVPacket *avpkt = new AVPacket;
+				memcpy(avpkt, pkt, sizeof(AVPacket));
                 m_listV.append(avpkt);
                 m_mutexV.unlock();
                 break;
@@ -128,8 +128,13 @@ bool VideoDataOprator::GetDataVideo(AVPacket& pkt)
     {
         if (m_listV.size() > 0)
         {
-			pkt = m_listV.takeFirst();
-            m_mutexV.unlock();
+			AVPacket* pAVPacket = m_listV.takeFirst();
+			m_mutexV.unlock();
+
+			memcpy(&pkt, pAVPacket, sizeof(AVPacket));
+			delete pAVPacket;
+			pAVPacket = NULL;
+            
             return true;
         }
         else

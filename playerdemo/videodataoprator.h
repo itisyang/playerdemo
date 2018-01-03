@@ -52,7 +52,7 @@ private:
     QMutex m_mutexV;
     QMutex m_mutexA;
     QMutex m_mutexS;
-    QList<AVPacket> m_listV;
+    QList<AVPacket*> m_listV;
     QList<AVPacket> m_listA;
     QList<AVPacket> m_listS;
     //解码后

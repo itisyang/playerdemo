@@ -35,7 +35,7 @@ public:
 signals:
     void SigPlayMsg(QString strMsg);    ///< 播放信息信号
 
-    void SigImage(QPixmap& img);
+    void SigImage(QPixmap img);
 public slots:
     /**
      * @brief   开始解码

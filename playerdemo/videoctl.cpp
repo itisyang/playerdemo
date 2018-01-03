@@ -50,15 +50,15 @@ bool VideoCtl::ConnectSignalSlots()
     bool bRet;
 
     //错误信息信号槽连接
-    bRet = connect(this, SIGNAL(SigPlayMsg(QString)), SLOT(OnPlayMsg(QString)));
+    //bRet = connect(this, SIGNAL(SigPlayMsg(QString)), SLOT(OnPlayMsg(QString)));
+    //listRet.append(bRet);
+    bRet = connect(&m_ReadFile, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
     listRet.append(bRet);
-    bRet = connect(&m_ReadFile, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    bRet = connect(&m_VideoDec, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
     listRet.append(bRet);
-    bRet = connect(&m_VideoDec, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    bRet = connect(&m_AudioDec, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
     listRet.append(bRet);
-    bRet = connect(&m_AudioDec, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
-    listRet.append(bRet);
-    bRet = connect(&m_SubtitleDec, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnPlayMsg(QString)));
+    bRet = connect(&m_SubtitleDec, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
     listRet.append(bRet);
 
     //开始解码信号槽连接
@@ -69,7 +69,7 @@ bool VideoCtl::ConnectSignalSlots()
     bRet = connect(this, SIGNAL(SigStartDec()), &m_SubtitleDec, SLOT(OnStartDec()));
     listRet.append(bRet);
 
-	bRet = connect(&m_VideoDec, SIGNAL(SigImage(QPixmap&)),this , SIGNAL(SigImage(QPixmap&)));
+	bRet = connect(&m_VideoDec, SIGNAL(SigImage(QPixmap)), this, SIGNAL(SigImage(QPixmap)));
 	listRet.append(bRet);
 	
 

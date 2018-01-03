@@ -14,7 +14,8 @@ DisplayWid::DisplayWid(QWidget *parent) :
     setAcceptDrops(true);
 
     m_VideoCtl = VideoCtl::GetInstance();
-    connect(m_VideoCtl, SIGNAL(SigImage(QPixmap&)), this, SLOT(OnImage(QPixmap&)));
+    connect(m_VideoCtl, SIGNAL(SigImage(QPixmap)), this, SLOT(OnImage(QPixmap)));
+	connect(m_VideoCtl, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnDisplayMsg(QString)));
 }
 
 DisplayWid::~DisplayWid()
@@ -31,9 +32,17 @@ void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
     event->acceptProposedAction();
 }
 
-void DisplayWid::OnImage(QPixmap& pix)
+void DisplayWid::OnImage(QPixmap pix)
 {
+	//qDebug() << pix.width() << pix.height() << pix.size();
+	pix = pix.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
     ui->label->setPixmap(pix);
+}
+
+void DisplayWid::OnDisplayMsg(QString strMsg)
+{
+	qDebug() << "DisplayWid::OnDisplayMsg " << strMsg;
 }
 
 void DisplayWid::dropEvent(QDropEvent *event)

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief   数据管理线程（视频、音频、字幕）
  * @author  itisyang

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief   字幕解码线程
  * @author  itisyang

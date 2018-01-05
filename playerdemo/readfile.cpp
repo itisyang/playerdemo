@@ -98,6 +98,7 @@ void ReadFile::run()
 			{
 				if (pVideoDataOprator->PutData(pkt, VIDEO_DATA) == true)
 				{
+					qDebug() << "读取一帧";
 					break;
 				}
 				else

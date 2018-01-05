@@ -1,7 +1,10 @@
+﻿#include <QDebug>
 #include "displaywid.h"
 #include "ui_display.h"
 
 #include "globalhelper.h"
+
+# pragma execution_character_set("utf-8")
 
 DisplayWid::DisplayWid(QWidget *parent) :
     QWidget(parent),
@@ -37,8 +40,10 @@ void DisplayWid::OnImage(QPixmap& pix)
 {
 	//qDebug() << pix.width() << pix.height() << pix.size();
 	pix = pix.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    ui->label->setPixmap(pix);
+	
+    ui->label->setPixmap(pix);//播放一帧
+	qDebug() << "读取一帧";
+	//qDebug() << "获取样式失败" << "播放一帧 ";
 }
 
 void DisplayWid::OnDisplayMsg(QString strMsg)

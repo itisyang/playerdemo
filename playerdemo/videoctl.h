@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief   视频解码线程
  * @author  itisyang
@@ -16,8 +16,6 @@
 
 #include "globalhelper.h"
 
-#include "SDL.h"
-#include "SDL_thread.h"
 
 #include "readfile.h"
 #include "videodec.h"

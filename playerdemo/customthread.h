@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file
  * @brief   自定义线程抽象类
  * @author  itisyang

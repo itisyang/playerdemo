@@ -1,5 +1,7 @@
-#ifndef GLOBALHELPER_H
+﻿#ifndef GLOBALHELPER_H
 #define GLOBALHELPER_H
+
+# pragma execution_character_set("utf-8")
 
 enum ERROR_CODE
 {

@@ -1,4 +1,4 @@
-#include "VideoCtl.h"
+﻿#include "VideoCtl.h"
 #include <QThread>
 #include <QDebug>
 

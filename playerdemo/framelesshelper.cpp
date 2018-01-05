@@ -1,4 +1,4 @@
-#include <QRect>
+﻿#include <QRect>
 #include <QRubberBand>
 #include <QMouseEvent>
 #include <QHoverEvent>

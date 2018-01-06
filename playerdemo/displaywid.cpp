@@ -18,7 +18,7 @@ DisplayWid::DisplayWid(QWidget *parent) :
 
     m_VideoCtl = VideoCtl::GetInstance();
 	qRegisterMetaType<QPixmap>("QPixmap&");
-    connect(m_VideoCtl, SIGNAL(SigImage(QPixmap&)), this, SLOT(OnImage(QPixmap&)));
+    connect(m_VideoCtl, SIGNAL(SigImage(QPixmap&)), this, SLOT(OnImage(QPixmap&)), Qt::DirectConnection);
 	connect(m_VideoCtl, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnDisplayMsg(QString)));
 }
 
@@ -42,7 +42,7 @@ void DisplayWid::OnImage(QPixmap& pix)
 	pix = pix.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 	
     ui->label->setPixmap(pix);//播放一帧
-	qDebug() << "读取一帧";
+	qDebug() << "播放一帧";
 	//qDebug() << "获取样式失败" << "播放一帧 ";
 }
 

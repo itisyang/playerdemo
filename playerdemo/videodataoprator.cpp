@@ -5,7 +5,7 @@ VideoDataOprator::VideoDataOprator(QObject *parent) : QObject(parent),
 {
 
 }
-//存放原始数据
+
 bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
 {
     switch (type) {
@@ -33,7 +33,7 @@ bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
 
     return true;
 }
-//获取原始数据
+
 bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
 {
 	bool bRet = false;

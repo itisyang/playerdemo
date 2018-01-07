@@ -1,4 +1,14 @@
-﻿#ifndef MainWid_H
+﻿/*
+ * @file 	mainwid.h
+ * @date 	2018/01/07 11:12
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	主界面
+ * @note
+ */
+#ifndef MainWid_H
 #define MainWid_H
 
 #include <QWidget>

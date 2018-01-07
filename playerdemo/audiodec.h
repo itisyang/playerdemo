@@ -1,8 +1,11 @@
-﻿/**
- * @file
- * @brief   音频解码线程
- * @author  itisyang
- * @date    20171221
+﻿/*
+ * @file 	audiodec.h
+ * @date 	2018/01/07 11:11
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	音频解码线程
  * @note
  */
 
@@ -22,9 +25,6 @@ public:
     explicit AudioDec();
     /**
      * @brief   线程入口
-     * @param
-     * @return
-     * @note
      */
     void run();
 
@@ -34,7 +34,7 @@ public slots:
 
     /**
      * @brief   开始解码
-     * @param
+     *
      * @return  错误码
      * @note
      */

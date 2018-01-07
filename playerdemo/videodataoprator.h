@@ -1,8 +1,11 @@
-﻿/**
- * @file
- * @brief   数据管理线程（视频、音频、字幕）
- * @author  itisyang
- * @date    20171221
+﻿/*
+ * @file 	videodataoprator.h
+ * @date 	2018/01/07 10:57
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	数据管理线程（视频、音频、字幕）
  * @note
  */
 
@@ -19,11 +22,42 @@ class VideoDataOprator : public QObject
     Q_OBJECT
 public:
     explicit VideoDataOprator(QObject *parent = nullptr);
-
-    bool PutData(AVPacket* pkt, DATA_TYPE type);//存放原始数据
-    bool GetData(AVPacket& pkt, DATA_TYPE type);//获取原始数据
-    bool PutDataDec(AVFrame* frame, DATA_TYPE type);//存放解码数据
-    bool GetDataDec(AVFrame* frame, DATA_TYPE type);//获取解码数据
+	/**
+	 * @brief	存放原始数据
+	 * 
+	 * @param	pkt	数据包
+	 * @param	type 数据包类型
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
+    bool PutData(AVPacket* pkt, DATA_TYPE type);
+	/**
+	 * @brief	获取原始数据
+	 * 
+	 * @param	pkt	数据包
+	 * @param	type 数据包类型
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
+    bool GetData(AVPacket& pkt, DATA_TYPE type);
+	/**
+	 * @brief	存放解码数据
+	 * 
+	 * @param	frame 解码数据帧
+	 * @param	type 数据类型
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
+    bool PutDataDec(AVFrame* frame, DATA_TYPE type);
+	/**
+	 * @brief	获取解码数据
+	 * 
+	 * @param	frame 解码数据帧
+	 * @param	type 数据类型
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
+    bool GetDataDec(AVFrame* frame, DATA_TYPE type);
 
 signals:
 

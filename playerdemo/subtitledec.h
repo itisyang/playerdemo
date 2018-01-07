@@ -1,8 +1,11 @@
-﻿/**
- * @file
- * @brief   字幕解码线程
- * @author  itisyang
- * @date    20171221
+﻿/*
+ * @file 	subtitledec.h
+ * @date 	2018/01/07 11:11
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	字幕解码线程
  * @note
  */
 
@@ -19,9 +22,6 @@ public:
     explicit SubtitleDec();
     /**
      * @brief   线程入口
-     * @param
-     * @return
-     * @note
      */
     void run();
 
@@ -30,7 +30,7 @@ signals:
 public slots:
     /**
      * @brief   开始解码
-     * @param
+     *
      * @return  错误码
      * @note
      */

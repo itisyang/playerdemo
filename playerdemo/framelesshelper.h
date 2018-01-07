@@ -1,4 +1,14 @@
-﻿#ifndef FRAMELESSHELPER_H
+﻿/*
+ * @file 	framelesshelper.h
+ * @date 	2018/01/07 11:12
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	无边框界面辅助类
+ * @note
+ */
+#ifndef FRAMELESSHELPER_H
 #define FRAMELESSHELPER_H
 
 #include <QObject>

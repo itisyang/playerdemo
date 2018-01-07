@@ -1,11 +1,13 @@
-﻿/**
- * @file
- * @brief   视频解码线程
- * @author  itisyang
- * @date    20171221
+﻿/*
+ * @file 	videoctl.h
+ * @date 	2018/01/07 10:48
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	视频控制类
  * @note
  */
-
 #ifndef VIDEOCTL_H
 #define VIDEOCTL_H
 
@@ -33,24 +35,51 @@ public:
 
     static VideoCtl* GetInstance();
     static void ReleaseInstance();
-
-    bool StartPlay(QString strFileName);//开始播放
+	/**
+	 * @brief	开始播放
+	 * 
+	 * @param	strFileName 文件完整路径
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
+    bool StartPlay(QString strFileName);
 
     AVFormatContext* GetAVFormatCtx();
 
     VideoDataOprator* GetVideoDataOprator();
+
+	/**
+	 * @brief	打开流
+	 * 
+	 * @param	nVideoStreamIndex 视频流序号
+	 * @param	nAudioStreamIndex 音频流序号
+	 * @param	nSubtitleStreamIndex 字幕流序号
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
     bool StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
 signals:
-    void SigStartDec(); //开始解码信号
-    void SigPlayMsg(QString strMsg);//错误信息
-    void SigImage(QPixmap& img);
+    void SigStartDec();				//< 开始解码信号
+    void SigPlayMsg(QString strMsg);//< 错误信息
+    void SigImage(QPixmap& img);	//< 一帧图像
 public slots:
-    void OnPlayMsg(QString strMsg);
+    void OnPlayMsg(QString strMsg); //< 播放消息
 private:
     explicit VideoCtl(QObject *parent = nullptr);
-
+	/**
+	 * @brief	初始化
+	 * 
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
     bool Init();
 
+	/**
+	 * @brief	连接信号槽
+	 * 
+	 * @return	true 成功 false 失败
+	 * @note 	
+	 */
     bool ConnectSignalSlots();
 
 public:
@@ -60,29 +89,28 @@ private:
 
     static VideoCtl* m_pInstance;
 
-    bool m_bInited;
+    bool m_bInited;	//< 初始化标志
 
-    ReadFile m_ReadFile;//文件读取
+    ReadFile m_ReadFile;//< 文件读取
 
-    VideoDataOprator m_VideoDataOprator;//数据处理
+    VideoDataOprator m_VideoDataOprator;//< 数据处理
 
-    VideoDec m_VideoDec;//视频解码
-    AudioDec m_AudioDec;//音频解码
-    SubtitleDec m_SubtitleDec;//字幕解码
+    VideoDec m_VideoDec;		//< 视频解码
+    AudioDec m_AudioDec;		//< 音频解码
+    SubtitleDec m_SubtitleDec;	//< 字幕解码
 
-    static const QString strProgrameBirthYear;//程序初始创建年
+    static const QString strProgrameBirthYear;//< 程序初始创建年
 
     AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
 
 
+    int audio_stream;			//< 音频流序号
+    AVStream *audio_st;			//< 音频流结构体
+    AVCodecContext *audio_avctx;//< 音频解码器结构体
 
-    int audio_stream;
-    AVStream *audio_st;
-    AVCodecContext *audio_avctx;
-
-    int subtitle_stream;
-    AVStream *subtitle_st;
-    AVCodecContext *subtitle_avctx;
+    int subtitle_stream;			//< 字幕流序号
+    AVStream *subtitle_st;			//< 字幕流结构体
+    AVCodecContext *subtitle_avctx;	//< 字幕解码器结构体
 
 };
 

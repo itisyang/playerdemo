@@ -1,8 +1,11 @@
-﻿/**
- * @file
- * @brief   读取文件线程
- * @author  itisyang
- * @date    20171221
+﻿/*
+ * @file 	readfile.h
+ * @date 	2018/01/07 11:11
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	读取文件线程
  * @note
  */
 
@@ -21,14 +24,11 @@ public:
 
     /**
      * @brief   线程入口
-     * @param
-     * @return
-     * @note
      */
     void run();
     /**
      * @brief  开始读取
-     * @param
+     *
      * @return 错误码
      * @note
      */
@@ -43,6 +43,7 @@ signals:
 public slots:
     /**
      * @brief   开始读取文件
+	 *
      * @param   strFilePath 文件名
      * @return  错误码
      * @note

@@ -1,8 +1,11 @@
-﻿/**
- * @file
- * @brief   视频解码
- * @author  itisyang
- * @date    20171221
+﻿/*
+ * @file 	videodec.h
+ * @date 	2018/01/07 11:10
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	视频解码
  * @note
  */
 
@@ -19,12 +22,9 @@ class VideoDec : public CustomThread
     Q_OBJECT
 public:
     explicit VideoDec();
-    /**
-     * @brief   线程入口
-     * @param
-     * @return
-     * @note
-     */
+	/**
+	 * @brief	线程入口	
+	 */
     void run();
 
     int video_stream;
@@ -35,11 +35,11 @@ public:
 signals:
     void SigPlayMsg(QString strMsg);    ///< 播放信息信号
 
-    void SigImage(QPixmap& img);
+    void SigImage(QPixmap& img);		//< 一帧图像
 public slots:
     /**
      * @brief   开始解码
-     * @param
+	 *
      * @return  错误码
      * @note
      */

@@ -1,3 +1,13 @@
+﻿/*
+ * @file 	playlistctrlbar.h
+ * @date 	2018/01/07 11:13
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	播放列表控制控件(控制隐藏或显示)
+ * @note
+ */
 #ifndef PLAYLISTCTRLBAR_H
 #define PLAYLISTCTRLBAR_H
 
@@ -18,7 +28,7 @@ public:
 private slots:
     void on_ShowOrHideBtn_clicked();
 signals:
-    void SigShowOrHidePlaylist();
+    void SigShowOrHidePlaylist();	//< 显示或隐藏信号
 private:
     Ui::PlaylistCtrlBar *ui;
 };

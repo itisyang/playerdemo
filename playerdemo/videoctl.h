@@ -43,6 +43,15 @@ public:
 	 * @note 	
 	 */
     bool StartPlay(QString strFileName);
+	/**
+	* @brief	开始播放
+	*
+	* @param	strFileName 文件完整路径
+	* @param	widPlayWid 播放窗口id
+	* @return	true 成功 false 失败
+	* @note
+	*/
+	bool StartPlay(QString strFileName, WId widPlayWid);
 
     AVFormatContext* GetAVFormatCtx();
 

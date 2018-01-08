@@ -62,6 +62,7 @@ private slots:
 	void OnDisplayMsg(QString strMsg);
 signals:
     void SigAddFile(QString strFileName);///< 增加视频文件
+	void SigAddFile(QString strFileName, WId widPlayWid);
 private:
     Ui::DisplayWid *ui;
 

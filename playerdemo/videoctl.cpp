@@ -112,6 +112,11 @@ bool VideoCtl::StartPlay(QString strFileName)
     return true;
 }
 
+bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
+{
+	return true;
+}
+
 AVFormatContext *VideoCtl::GetAVFormatCtx()
 {
     if (m_pAVFormatContext == nullptr)

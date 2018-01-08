@@ -70,6 +70,7 @@ void DisplayWid::dropEvent(QDropEvent *event)
     if (m_VideoCtl)
     {
         m_VideoCtl->StartPlay(urls.first().toLocalFile());
+		m_VideoCtl->StartPlay(urls.first().toLocalFile(), ui->label->winId());
     }
 
 

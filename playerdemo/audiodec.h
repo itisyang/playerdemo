@@ -23,13 +23,12 @@ class AudioDec : public CustomThread
     Q_OBJECT
 public:
     explicit AudioDec();
-    /**
-     * @brief   线程入口
-     */
-    void run();
+
 
 signals:
+
     void SigPlayMsg(QString strMsg);    ///< 播放信息信号
+
 public slots:
 
     /**
@@ -39,6 +38,13 @@ public slots:
      * @note
      */
     int OnStartDec();
+
+private:
+
+	/**
+	* @brief   线程入口
+	*/
+	void run();
 };
 
 #endif // AUDIODEC_H

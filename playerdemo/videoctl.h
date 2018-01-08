@@ -24,6 +24,7 @@
 #include "audiodec.h"
 #include "subtitledec.h"
 #include "videodataoprator.h"
+#include <playthread.h>
 
 //单例模式
 class VideoCtl : public QObject
@@ -69,6 +70,7 @@ public:
     bool StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
 signals:
     void SigStartDec();				//< 开始解码信号
+	void SigStartPlay();
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigImage(QPixmap& img);	//< 一帧图像
 public slots:
@@ -107,6 +109,8 @@ private:
     VideoDec m_VideoDec;		//< 视频解码
     AudioDec m_AudioDec;		//< 音频解码
     SubtitleDec m_SubtitleDec;	//< 字幕解码
+
+	PlayThread m_PlayThread;	//< 播放线程
 
     static const QString strProgrameBirthYear;//< 程序初始创建年
 

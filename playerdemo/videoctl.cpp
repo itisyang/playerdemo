@@ -72,6 +72,9 @@ bool VideoCtl::ConnectSignalSlots()
 	bRet = connect(&m_VideoDec, SIGNAL(SigImage(QPixmap&)), this, SIGNAL(SigImage(QPixmap&)));
 	listRet.append(bRet);
 	
+	//开始播放信号
+	bRet = connect(this, SIGNAL(SigStartPlay()), &m_PlayThread, SLOT(OnStarPlay()));
+	listRet.append(bRet);
 
     for (bool bReturn : listRet)
     {
@@ -107,6 +110,7 @@ bool VideoCtl::StartPlay(QString strFileName)
     if (NoError == m_ReadFile.StartRead(strFileName))
     {
         emit SigStartDec();
+		emit SigStartPlay();
     }
 
     return true;

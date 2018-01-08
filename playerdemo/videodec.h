@@ -22,10 +22,6 @@ class VideoDec : public CustomThread
     Q_OBJECT
 public:
     explicit VideoDec();
-	/**
-	 * @brief	线程入口	
-	 */
-    void run();
 
     int video_stream;
     AVStream *video_st;
@@ -45,7 +41,11 @@ public slots:
      */
     void OnStartDec();
 
-
+private:
+	/**
+	* @brief	线程入口
+	*/
+	void run();
 };
 
 #endif // VIDEODEC_H

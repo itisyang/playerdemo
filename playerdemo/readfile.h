@@ -23,10 +23,6 @@ public:
     explicit ReadFile();
 
     /**
-     * @brief   线程入口
-     */
-    void run();
-    /**
      * @brief  开始读取
      *
      * @return 错误码
@@ -35,7 +31,6 @@ public:
     int  StartRead(QString strFilePath);
 signals:
     void SigPlayMsg(QString strMsg);    ///< 播放信息信号
-
     void SigStartVideoDec();            ///< 视频解码信号
     void SigStartAudioDec();            ///< 音频解码信号
     void SigStartSubtitleDec();         ///< 字幕解码信号
@@ -50,6 +45,11 @@ public slots:
      */
     int OnStartRead(QString strFilePath);
 private:
+	/**
+	* @brief   线程入口
+	*/
+	void run();
+
     QString m_strFilePath;          ///< 文件名
     AVFormatContext *m_pFormatCtx;  ///< 视频文件格式上下文
 };

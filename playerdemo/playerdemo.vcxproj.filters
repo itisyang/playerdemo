@@ -165,6 +165,15 @@
     <ClCompile Include="audiodec.cpp">
       <Filter>Decoder</Filter>
     </ClCompile>
+    <ClCompile Include="playthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_playthread.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_playthread.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwid.ui">
@@ -226,6 +235,9 @@
     </CustomBuild>
     <CustomBuild Include="videoctl.h">
       <Filter>Decoder</Filter>
+    </CustomBuild>
+    <CustomBuild Include="playthread.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

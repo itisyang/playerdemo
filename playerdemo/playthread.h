@@ -12,6 +12,7 @@
 #pragma once
 #include "customthread.h"
 #include "globalhelper.h"
+
 class PlayThread :
 	public CustomThread
 {
@@ -21,9 +22,10 @@ public:
 	~PlayThread();
 public slots:
 	/**
+	 * #param	wid 画面显示窗口句柄
 	 * @brief	开始播放
 	 */
-	void OnStarPlay();
+	void OnStarPlay(WId wid);
 private:
 	/**
 	* @brief	线程入口
@@ -37,6 +39,15 @@ private:
 	 * @return	
 	 * @note 	
 	 */
+private:
+// 	SDL_Window *window;
+// 	SDL_Renderer *renderer;
 
+	SDL_Texture *vid_texture; //<
+
+	WId m_WId; //< 画面显示窗口句柄
+
+
+	SwsContext *img_convert_ctx;
 };
 

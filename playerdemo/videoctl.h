@@ -70,7 +70,7 @@ public:
     bool StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
 signals:
     void SigStartDec();				//< 开始解码信号
-	void SigStartPlay();
+	void SigStartPlay(WId wid);			//< 开始播放显示信号
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigImage(QPixmap& img);	//< 一帧图像
 public slots:

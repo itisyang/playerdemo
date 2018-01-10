@@ -73,7 +73,8 @@ bool VideoCtl::ConnectSignalSlots()
 	listRet.append(bRet);
 	
 	//开始播放信号
-	bRet = connect(this, SIGNAL(SigStartPlay()), &m_PlayThread, SLOT(OnStarPlay()));
+	qRegisterMetaType<WId>("WId");
+	bRet = connect(this, SIGNAL(SigStartPlay(WId)), &m_PlayThread, SLOT(OnStarPlay(WId)));
 	listRet.append(bRet);
 
     for (bool bReturn : listRet)
@@ -110,7 +111,7 @@ bool VideoCtl::StartPlay(QString strFileName)
     if (NoError == m_ReadFile.StartRead(strFileName))
     {
         emit SigStartDec();
-		emit SigStartPlay();
+		//emit SigStartPlay();
     }
 
     return true;
@@ -118,6 +119,12 @@ bool VideoCtl::StartPlay(QString strFileName)
 
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 {
+	if (NoError == m_ReadFile.StartRead(strFileName))
+	{
+		emit SigStartDec();
+		emit SigStartPlay(widPlayWid);
+	}
+
 	return true;
 }
 

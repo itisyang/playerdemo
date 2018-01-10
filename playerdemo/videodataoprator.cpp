@@ -77,14 +77,14 @@ bool VideoDataOprator::GetDataDec(AVFrame &frame, DATA_TYPE type)
 {
     switch (type) {
     case VIDEO_DATA:
-        GetDataDecVideo(frame);
-        break;
+        return GetDataDecVideo(frame);
+
     case AUDIO_DATA:
-        GetDataDecAudio(frame);
-        break;
+		return GetDataDecAudio(frame);
+
     case SUBTITLE_DATA:
-        GetDataDecSubtitle(frame);
-        break;
+		return GetDataDecSubtitle(frame);
+
     default:
         break;
     }
@@ -98,9 +98,9 @@ bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
     {
         if (m_listV.size() < m_nMaxNumFrameCache)
         {
-			AVPacket *avpkt = new AVPacket;
-			memcpy(avpkt, pkt, sizeof(AVPacket));
-            m_listV.append(avpkt);
+			AVPacket *pAVPacket = new AVPacket;
+			memcpy(pAVPacket, pkt, sizeof(AVPacket));
+            m_listV.append(pAVPacket);
             m_mutexV.unlock();
         }
         else
@@ -148,9 +148,9 @@ bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 	{
 		if (m_ListVDec.size() < m_nMaxNumFrameCache)
 		{
-			AVFrame *avframe = new AVFrame;
-			memcpy(avframe, frame, sizeof(AVFrame));
-			m_ListVDec.append(avframe);
+			AVFrame *pAVFrame = new AVFrame;
+			memcpy(pAVFrame, frame, sizeof(AVFrame));
+			m_ListVDec.append(pAVFrame);
 			m_mutexVDec.unlock();
 		}
 		else
@@ -169,7 +169,7 @@ bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 
 bool VideoDataOprator::GetDataDecVideo(AVFrame& frame)
 {
-	if (m_mutexVDec.tryLock())
+	if (m_mutexVDec.tryLock(100))
 	{
 		if (m_listV.size() > 0)
 		{

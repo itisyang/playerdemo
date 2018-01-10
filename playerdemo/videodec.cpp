@@ -25,7 +25,7 @@ void VideoDec::run()
 	AVFrame *frame = av_frame_alloc();
 	AVPacket pkt;
 	AVFrame *picture = av_frame_alloc();
-
+	SwsContext *pSwsContext = NULL;
     while (m_bRunning)
     {
         if (pVideoDataOprator->GetData(pkt, VIDEO_DATA) == false)
@@ -39,7 +39,12 @@ void VideoDec::run()
 
         //qDebug() << "初始化图片空间";
 
+		if (got_frame != 0)
+		{
+			pVideoDataOprator->PutDataDec(frame, VIDEO_DATA);
+		}
 
+# if 0
 		int nWidth = frame->width;
 		int nHeight = frame->height;
 
@@ -65,17 +70,18 @@ void VideoDec::run()
 			out_buffer, AV_PIX_FMT_RGB24, nWidth, nHeight, 1);
 
 		//图像缩放规则
-		SwsContext *pSwsContext = sws_getContext(nWidth, nHeight, AV_PIX_FMT_YUV420P,
-			nWidth, nHeight, AV_PIX_FMT_RGB24,
-			SWS_BICUBIC, 0, 0, 0);
+// 		pSwsContext = sws_getContext(nWidth, nHeight, AV_PIX_FMT_YUV420P,
+// 			nWidth, nHeight, AV_PIX_FMT_RGB24,
+// 			SWS_BICUBIC, 0, 0, 0);
+
+		pSwsContext = sws_getCachedContext(pSwsContext,
+			nWidth, nHeight, (AVPixelFormat)frame->format, nWidth, nHeight,
+			AV_PIX_FMT_RGB24, SWS_BICUBIC, NULL, NULL, NULL);
 		//第一个参数为sws_getContext函数返回的值
 		//第四个参数为从输入图像数据的第多少列开始逐行扫描，通常设为0
 		//第五个参数为需要扫描多少行，通常为输入图像数据的高度
 		ret = sws_scale(pSwsContext, (const uint8_t* const *)frame->data,
 			frame->linesize, 0, nHeight, picture->data, picture->linesize);
-
-		sws_freeContext(pSwsContext);
-
 
         QImage* image = new QImage(picture->data[0],
 			nWidth, nHeight, QImage::Format_RGB888);
@@ -94,10 +100,13 @@ void VideoDec::run()
 		//msleep(1000/(video_avctx->framerate.num/ video_avctx->framerate.den));
 //        qDebug() << "VideoDec Thread ID:" << QThread::currentThreadId();
 //        break;
+#endif
     }
 
+	//sws_freeContext(pSwsContext);
+
 	av_frame_free(&frame);
-	av_frame_free(&picture);
+	//av_frame_free(&picture);
 }
 
 void VideoDec::OnStartDec()

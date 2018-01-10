@@ -78,5 +78,6 @@ extern "C"{
 #include "libswresample/swresample.h"
 }
 
+#include "SDL.h"
 
 #endif // GLOBALHELPER_H

@@ -29,5 +29,14 @@ private:
 	* @brief	线程入口
 	*/
 	void run();
+
+	/**
+	 * @brief	
+	 * 
+	 * @param	
+	 * @return	
+	 * @note 	
+	 */
+
 };
 

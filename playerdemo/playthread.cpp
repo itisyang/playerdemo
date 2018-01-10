@@ -19,4 +19,12 @@ void PlayThread::OnStarPlay()
 void PlayThread::run()
 {
 	qDebug() << "PlayThread::run";
+	//SDL_UpdateYUVTexture
+	//SDL_UpdateTexture
+	//SDL_RenderCopyEx
+	//SDL_RenderCopy
+
+	AVFrame avframe;
+	
+
 }

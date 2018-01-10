@@ -57,7 +57,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool GetDataDec(AVFrame* frame, DATA_TYPE type);
+    bool GetDataDec(AVFrame& frame, DATA_TYPE type);
 
 signals:
 
@@ -66,17 +66,17 @@ private:
     bool PutDataVideo(AVPacket* pkt);
     bool GetDataVideo(AVPacket& pkt);
     bool PutDataDecVideo(AVFrame* frame);
-    bool GetDataDecVideo(AVFrame* frame);
+    bool GetDataDecVideo(AVFrame& frame);
 
     bool PutDataAudio(AVPacket* pkt);
     bool GetDataAudio(AVPacket* pkt);
     bool PutDataDecAudio(AVFrame* frame);
-    bool GetDataDecAudio(AVFrame* frame);
+    bool GetDataDecAudio(AVFrame& frame);
 
     bool PutDataSubtitle(AVPacket* pkt);
     bool GetDataSubtitle(AVPacket* pkt);
     bool PutDataDecSubtitle(AVFrame* frame);
-    bool GetDataDecSubtitle(AVFrame* frame);
+    bool GetDataDecSubtitle(AVFrame& frame);
 private:
 
     const int m_nMaxNumFrameCache;//缓存帧数
@@ -93,7 +93,7 @@ private:
     QMutex m_mutexVDec;
     QMutex m_mutexADec;
     QMutex m_mutexSDec;
-    QList<AVFrame> m_ListVDec;
+    QList<AVFrame*> m_ListVDec;
     QList<AVFrame> m_ListADec;
     QList<AVFrame> m_ListSDec;
 

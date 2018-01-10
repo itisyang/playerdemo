@@ -4,11 +4,6 @@
 #include "videodataoprator.h"
 #include "videoctl.h"
 
-static unsigned sws_flags = SWS_BICUBIC;
-
-static SDL_Window *window;
-static SDL_Renderer *renderer;
-
 PlayThread::PlayThread()
 {
 
@@ -26,7 +21,7 @@ void PlayThread::OnStarPlay(WId wid)
 }
 
 
-static int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
+int PlayThread::realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
 {
 	Uint32 format;
 	int access, w, h;
@@ -48,7 +43,8 @@ static int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_wid
 	return 0;
 }
 
-static int upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **img_convert_ctx) {
+int PlayThread::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **img_convert_ctx)
+{
 	int ret = 0;
 	switch (frame->format) {
 	case AV_PIX_FMT_YUV420P:
@@ -72,7 +68,7 @@ static int upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **
 		/* This should only happen if we are not using avfilter... */
 		*img_convert_ctx = sws_getCachedContext(*img_convert_ctx,
 			frame->width, frame->height, (AVPixelFormat)frame->format, frame->width, frame->height,
-			AV_PIX_FMT_BGRA, sws_flags, NULL, NULL, NULL);
+			AV_PIX_FMT_BGRA, SWS_BICUBIC, NULL, NULL, NULL);
 		if (*img_convert_ctx != NULL) {
 			uint8_t *pixels[4];
 			int pitch[4];

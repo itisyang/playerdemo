@@ -1,5 +1,7 @@
 ﻿
 #include <QDebug>
+#include <QTime>
+
 #include "videodec.h"
 #include "videoctl.h"
 #include "videodataoprator.h"
@@ -28,6 +30,9 @@ void VideoDec::run()
 	SwsContext *pSwsContext = NULL;
     while (m_bRunning)
     {
+		QTime t;
+		t.start();
+
         if (pVideoDataOprator->GetData(pkt, VIDEO_DATA) == false)
         {
             msleep(10);
@@ -43,7 +48,7 @@ void VideoDec::run()
 		{
 			pVideoDataOprator->PutDataDec(frame, VIDEO_DATA);
 		}
-
+		qDebug("解码一帧消耗: %d ms", t.elapsed());
 # if 0
 		int nWidth = frame->width;
 		int nHeight = frame->height;

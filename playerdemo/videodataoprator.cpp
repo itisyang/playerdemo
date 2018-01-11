@@ -169,12 +169,12 @@ bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 
 bool VideoDataOprator::GetDataDecVideo(AVFrame& frame)
 {
-	if (m_mutexVDec.tryLock(100))
+	//if (m_mutexVDec.tryLock(100))
 	{
 		if (m_listV.size() > 0)
 		{
 			AVFrame* pAVFrame = m_ListVDec.takeFirst();
-			m_mutexVDec.unlock();
+			//m_mutexVDec.unlock();
 
 			memcpy(&frame, pAVFrame, sizeof(AVFrame));
 			delete pAVFrame;
@@ -184,7 +184,7 @@ bool VideoDataOprator::GetDataDecVideo(AVFrame& frame)
 		}
 		else
 		{
-			m_mutexVDec.unlock();
+			//m_mutexVDec.unlock();
 			return false;
 		}
 	}

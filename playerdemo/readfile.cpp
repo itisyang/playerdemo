@@ -1,5 +1,5 @@
 ﻿#include <QDebug>
-
+#include <QTime>
 #include "readfile.h"
 #include "videoctl.h"
 
@@ -85,6 +85,9 @@ void ReadFile::run()
 
     while (m_bRunning)
     {
+		QTime t;
+		t.start();
+
         //按帧读取
         ret = av_read_frame(ic, pkt);
         if (ret < 0)
@@ -116,6 +119,7 @@ void ReadFile::run()
             av_packet_unref(pkt);
         }
 
+		qDebug("读取一帧消耗: %d ms", t.elapsed());
         //break;
     }
 }

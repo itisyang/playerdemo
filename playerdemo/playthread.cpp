@@ -23,8 +23,8 @@ void PlayThread::OnStarPlay(WId wid)
 
 int PlayThread::realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
 {
-	Uint32 format;
-	int access, w, h;
+	Uint32 format = 0;
+	int access = 0, w = 0, h = 0;
 	if (SDL_QueryTexture(*texture, &format, &access, &w, &h) < 0 || new_width != w || new_height != h || new_format != format) {
 		void *pixels;
 		int pitch;

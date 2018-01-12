@@ -48,6 +48,7 @@ void VideoDec::run()
 		{
 			pVideoDataOprator->PutDataDec(frame, VIDEO_DATA);
 		}
+
 		qDebug("解码一帧消耗: %d ms", t.elapsed());
 # if 0
 		int nWidth = frame->width;

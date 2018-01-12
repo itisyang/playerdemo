@@ -1,4 +1,5 @@
 ﻿#include <QDebug>
+#include <QTime>
 
 #include "playthread.h"
 #include "videodataoprator.h"
@@ -6,7 +7,15 @@
 
 PlayThread::PlayThread()
 {
+	window = nullptr;
+	renderer = nullptr;
 
+	vid_texture = nullptr;
+
+	m_WId = 0;
+
+
+	img_convert_ctx = nullptr;
 }
 
 
@@ -25,7 +34,10 @@ int PlayThread::realloc_texture(SDL_Texture **texture, Uint32 new_format, int ne
 {
 	Uint32 format = 0;
 	int access = 0, w = 0, h = 0;
-	if (SDL_QueryTexture(*texture, &format, &access, &w, &h) < 0 || new_width != w || new_height != h || new_format != format) {
+
+	int nRet = 0;
+	nRet = SDL_QueryTexture(*texture, &format, &access, &w, &h);
+	if (nRet < 0 || new_width != w || new_height != h || new_format != format) {
 		void *pixels;
 		int pitch;
 		SDL_DestroyTexture(*texture);
@@ -143,9 +155,11 @@ void PlayThread::run()
 		return;
 	}
 
-
+	QTime t;
 	while (m_bRunning)
 	{
+		t.restart();
+
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
@@ -168,7 +182,7 @@ void PlayThread::run()
 
 		SDL_RenderPresent(renderer);
 
-		//msleep(10);
+		msleep(40);//30fps
 	}
 	
 

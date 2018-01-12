@@ -86,67 +86,68 @@ bool VideoDataOprator::GetDataDec(AVFrame &frame, DATA_TYPE type)
 		return GetDataDecSubtitle(frame);
 
     default:
-        break;
+		return false;
     }
 
-    return true;
+    
 }
 
 bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
 {
-    if (m_mutexV.tryLock())
-    {
-        if (m_listV.size() < m_nMaxNumFrameCache)
-        {
+	if (m_listV.size() < m_nMaxNumFrameCache)
+	{
+		if (m_mutexV.tryLock())
+		{
 			AVPacket *pAVPacket = new AVPacket;
 			memcpy(pAVPacket, pkt, sizeof(AVPacket));
-            m_listV.append(pAVPacket);
-            m_mutexV.unlock();
-        }
-        else
-        {
-            m_mutexV.unlock();
+			m_listV.append(pAVPacket);
+			m_mutexV.unlock();
+		}
+		else
+		{
 			return false;
-        }
-    }
-    else
-    {
+		}
+
+	}
+	else
+	{
 		return false;
-    }
+	}
 
     return true;
 }
 
 bool VideoDataOprator::GetDataVideo(AVPacket& pkt)
 {
-    if (m_mutexV.tryLock())
+    if (m_listV.size() > 0)
     {
-        if (m_listV.size() > 0)
-        {
+		if (m_mutexV.tryLock())
+		{
 			AVPacket* pAVPacket = m_listV.takeFirst();
 			m_mutexV.unlock();
 
 			memcpy(&pkt, pAVPacket, sizeof(AVPacket));
 			delete pAVPacket;
 			pAVPacket = NULL;
-            
-            return true;
-        }
-        else
-        {
-            m_mutexV.unlock();
-            return false;
-        }
+		}
+		else
+		{
+			return false;
+		}
+    }
+    else
+    {
+        return false;
     }
 
-    return false;
+	return true;
 }
 
 bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 {
-	if (m_mutexVDec.tryLock())
+	if (m_ListVDec.size() < m_nMaxNumFrameCache)
 	{
-		if (m_ListVDec.size() < m_nMaxNumFrameCache)
+		if (m_mutexVDec.tryLock())
 		{
 			AVFrame *pAVFrame = new AVFrame;
 			memcpy(pAVFrame, frame, sizeof(AVFrame));
@@ -155,7 +156,6 @@ bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 		}
 		else
 		{
-			m_mutexVDec.unlock();
 			return false;
 		}
 	}
@@ -169,27 +169,28 @@ bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 
 bool VideoDataOprator::GetDataDecVideo(AVFrame& frame)
 {
-	//if (m_mutexVDec.tryLock(100))
+	if (m_listV.size() > 0)
 	{
-		if (m_listV.size() > 0)
+		if (m_mutexVDec.tryLock())
 		{
 			AVFrame* pAVFrame = m_ListVDec.takeFirst();
-			//m_mutexVDec.unlock();
+			m_mutexVDec.unlock();
 
 			memcpy(&frame, pAVFrame, sizeof(AVFrame));
 			delete pAVFrame;
 			pAVFrame = NULL;
-
-			return true;
 		}
 		else
 		{
-			//m_mutexVDec.unlock();
 			return false;
 		}
 	}
+	else
+	{
+		return false;
+	}
 
-	return false;
+	return true;
 }
 
 bool VideoDataOprator::PutDataAudio(AVPacket *pkt)

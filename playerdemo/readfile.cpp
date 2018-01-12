@@ -106,7 +106,7 @@ void ReadFile::run()
 				}
 				else
 				{
-					usleep(1000 * 500);
+					msleep(10);
 				}
 			}
             

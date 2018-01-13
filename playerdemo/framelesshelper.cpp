@@ -170,7 +170,7 @@ WidgetData::WidgetData(FramelessHelperPrivate *_d, QWidget *pTopLevelWidget)
     m_bLeftButtonPressed = false;
     m_bCursorShapeChanged = false;
     m_bLeftButtonTitlePressed = false;
-    m_pRubberBand = NULL;
+    m_pRubberBand = nullptr;
 
     m_windowFlags = m_pWidget->windowFlags();
     m_pWidget->setMouseTracking(true);
@@ -186,7 +186,7 @@ WidgetData::~WidgetData()
     m_pWidget->setAttribute(Qt::WA_Hover, false);
 
     delete m_pRubberBand;
-    m_pRubberBand = NULL;
+    m_pRubberBand = nullptr;
 }
 
 QWidget* WidgetData::widget()
@@ -222,13 +222,13 @@ void WidgetData::updateRubberBandStatus()
 {
     if (d->m_bRubberBandOnMove || d->m_bRubberBandOnResize)
     {
-        if (NULL == m_pRubberBand)
+        if (nullptr == m_pRubberBand)
             m_pRubberBand = new QRubberBand(QRubberBand::Rectangle);
     }
     else
     {
         delete m_pRubberBand;
-        m_pRubberBand = NULL;
+        m_pRubberBand = nullptr;
     }
 }
 

@@ -94,7 +94,7 @@ VideoCtl *VideoCtl::GetInstance()
 {
     if (false == m_pInstance->Init())
     {
-        return NULL;
+        return nullptr;
     }
     return m_pInstance;
 }
@@ -150,20 +150,20 @@ VideoDataOprator *VideoCtl::GetVideoDataOprator()
 bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex)
 {
     AVFormatContext *ic = VideoCtl::GetInstance()->GetAVFormatCtx();
-    AVCodecContext *avctx;
+    AVCodecContext *avctx = nullptr;
     AVCodec *codec;
 
     if (nVideoStreamIndex >= 0)
     {
         //初始化结构体
-        avctx = avcodec_alloc_context3(NULL);
+        avctx = avcodec_alloc_context3(nullptr);
         if (!avctx)
             return false;
         avcodec_parameters_to_context(avctx, ic->streams[nVideoStreamIndex]->codecpar);
         av_codec_set_pkt_timebase(avctx, ic->streams[nVideoStreamIndex]->time_base);
         //寻找解码器
         codec = avcodec_find_decoder(avctx->codec_id);
-        avcodec_open2(avctx, codec, NULL);
+        avcodec_open2(avctx, codec, nullptr);
 
         m_VideoDec.video_stream = nVideoStreamIndex;
         m_VideoDec.video_st = ic->streams[nVideoStreamIndex];

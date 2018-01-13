@@ -96,14 +96,14 @@ bool VideoDataOprator::GetDataDec(AVFrame &frame, DATA_TYPE type)
 
 bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
 {
-	if (m_listV.size() < m_nMaxNumFrameCache)
+	if (m_listAVPacketV.size() < m_nMaxNumFrameCache)
 	{
-		if (m_mutexV.tryLock())
+		if (m_mutexAVPacketV.tryLock())
 		{
 			AVPacket *pAVPacket = new AVPacket;
 			memcpy(pAVPacket, pkt, sizeof(AVPacket));
-			m_listV.append(pAVPacket);
-			m_mutexV.unlock();
+			m_listAVPacketV.append(pAVPacket);
+			m_mutexAVPacketV.unlock();
 		}
 		else
 		{
@@ -121,16 +121,18 @@ bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
 
 bool VideoDataOprator::GetDataVideo(AVPacket& pkt)
 {
-    if (m_listV.size() > 0)
+    if (m_listAVPacketV.size() > 0)
     {
-		if (m_mutexV.tryLock())
+		if (m_mutexAVPacketV.tryLock())
 		{
-			AVPacket* pAVPacket = m_listV.takeFirst();
-			m_mutexV.unlock();
+			//qDebug() << "m_listAVPacketV.takeFirst0";
+			AVPacket* pAVPacket = m_listAVPacketV.takeFirst();
+			//qDebug() << "m_listAVPacketV.takeFirst1";
+			m_mutexAVPacketV.unlock();
 
 			memcpy(&pkt, pAVPacket, sizeof(AVPacket));
 			delete pAVPacket;
-			pAVPacket = NULL;
+			pAVPacket = nullptr;
 		}
 		else
 		{
@@ -147,14 +149,14 @@ bool VideoDataOprator::GetDataVideo(AVPacket& pkt)
 
 bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 {
-	if (m_ListVDec.size() < m_nMaxNumFrameCache)
+	if (m_ListAVFrameV.size() < m_nMaxNumFrameCache)
 	{
-		if (m_mutexVDec.tryLock())
+		if (m_mutexAVFrameV.tryLock())
 		{
 			AVFrame *pAVFrame = new AVFrame;
 			memcpy(pAVFrame, frame, sizeof(AVFrame));
-			m_ListVDec.append(pAVFrame);
-			m_mutexVDec.unlock();
+			m_ListAVFrameV.append(pAVFrame);
+			m_mutexAVFrameV.unlock();
 		}
 		else
 		{
@@ -171,16 +173,18 @@ bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
 
 bool VideoDataOprator::GetDataDecVideo(AVFrame& frame)
 {
-	if (m_listV.size() > 0)
+	if (m_ListAVFrameV.size() > 0)
 	{
-		if (m_mutexVDec.tryLock())
+		if (m_mutexAVFrameV.tryLock())
 		{
-			AVFrame* pAVFrame = m_ListVDec.takeFirst();
-			m_mutexVDec.unlock();
+			//qDebug() << "m_ListAVFrameV.takeFirst0";
+			AVFrame* pAVFrame = m_ListAVFrameV.takeFirst();
+			//qDebug() << "m_ListAVFrameV.takeFirst1";
+			m_mutexAVFrameV.unlock();
 
 			memcpy(&frame, pAVFrame, sizeof(AVFrame));
 			delete pAVFrame;
-			pAVFrame = NULL;
+			pAVFrame = nullptr;
 		}
 		else
 		{

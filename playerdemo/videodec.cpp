@@ -22,12 +22,12 @@ void VideoDec::run()
     VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
 
 //    AVRational tb = video_st->time_base;
-//    AVRational frame_rate = av_guess_frame_rate(ic, video_st, NULL);
+//    AVRational frame_rate = av_guess_frame_rate(ic, video_st, nullptr);
 
 	AVFrame *frame = av_frame_alloc();
 	AVPacket pkt;
 	AVFrame *picture = av_frame_alloc();
-	SwsContext *pSwsContext = NULL;
+	SwsContext *pSwsContext = nullptr;
     while (m_bRunning)
     {
 // 		QTime t;
@@ -46,9 +46,10 @@ void VideoDec::run()
 
 		if (got_frame != 0)
 		{
+			//pVideoDataOprator->PutDataDec(frame, VIDEO_DATA);
 			while (pVideoDataOprator->PutDataDec(frame, VIDEO_DATA) == false)
 			{
-				msleep(10);
+				msleep(40);
 			}
 		}
 
@@ -63,7 +64,7 @@ void VideoDec::run()
 		}
 
 
-		uint8_t *out_buffer = NULL;
+		uint8_t *out_buffer = nullptr;
 		try
 		{
 			out_buffer = new uint8_t[av_image_get_buffer_size(AV_PIX_FMT_RGB24,
@@ -85,7 +86,7 @@ void VideoDec::run()
 
 		pSwsContext = sws_getCachedContext(pSwsContext,
 			nWidth, nHeight, (AVPixelFormat)frame->format, nWidth, nHeight,
-			AV_PIX_FMT_RGB24, SWS_BICUBIC, NULL, NULL, NULL);
+			AV_PIX_FMT_RGB24, SWS_BICUBIC, nullptr, nullptr, nullptr);
 		//第一个参数为sws_getContext函数返回的值
 		//第四个参数为从输入图像数据的第多少列开始逐行扫描，通常设为0
 		//第五个参数为需要扫描多少行，通常为输入图像数据的高度
@@ -100,9 +101,9 @@ void VideoDec::run()
 		//emit SigPlayMsg("发送一帧");
 		//pix.detach();
 		delete image;
-		image = NULL;
+		image = nullptr;
 		delete out_buffer;
-		out_buffer = NULL;
+		out_buffer = nullptr;
 
         
 		//qDebug() << video_avctx->framerate.num << video_avctx->framerate.den;

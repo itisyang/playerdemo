@@ -46,7 +46,7 @@ int PlayThread::realloc_texture(SDL_Texture **texture, Uint32 new_format, int ne
 		if (SDL_SetTextureBlendMode(*texture, blendmode) < 0)
 			return -1;
 		if (init_texture) {
-			if (SDL_LockTexture(*texture, NULL, &pixels, &pitch) < 0)
+			if (SDL_LockTexture(*texture, nullptr, &pixels, &pitch) < 0)
 				return -1;
 			memset(pixels, 0, pitch * new_height);
 			SDL_UnlockTexture(*texture);
@@ -61,37 +61,37 @@ int PlayThread::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsConte
 	switch (frame->format) {
 	case AV_PIX_FMT_YUV420P:
 		if (frame->linesize[0] < 0 || frame->linesize[1] < 0 || frame->linesize[2] < 0) {
-			av_log(NULL, AV_LOG_ERROR, "Negative linesize is not supported for YUV.\n");
+			av_log(nullptr, AV_LOG_ERROR, "Negative linesize is not supported for YUV.\n");
 			return -1;
 		}
-		ret = SDL_UpdateYUVTexture(tex, NULL, frame->data[0], frame->linesize[0],
+		ret = SDL_UpdateYUVTexture(tex, nullptr, frame->data[0], frame->linesize[0],
 			frame->data[1], frame->linesize[1],
 			frame->data[2], frame->linesize[2]);
 		break;
 	case AV_PIX_FMT_BGRA:
 		if (frame->linesize[0] < 0) {
-			ret = SDL_UpdateTexture(tex, NULL, frame->data[0] + frame->linesize[0] * (frame->height - 1), -frame->linesize[0]);
+			ret = SDL_UpdateTexture(tex, nullptr, frame->data[0] + frame->linesize[0] * (frame->height - 1), -frame->linesize[0]);
 		}
 		else {
-			ret = SDL_UpdateTexture(tex, NULL, frame->data[0], frame->linesize[0]);
+			ret = SDL_UpdateTexture(tex, nullptr, frame->data[0], frame->linesize[0]);
 		}
 		break;
 	default:
 		/* This should only happen if we are not using avfilter... */
 		*img_convert_ctx = sws_getCachedContext(*img_convert_ctx,
 			frame->width, frame->height, (AVPixelFormat)frame->format, frame->width, frame->height,
-			AV_PIX_FMT_BGRA, SWS_BICUBIC, NULL, NULL, NULL);
-		if (*img_convert_ctx != NULL) {
+			AV_PIX_FMT_BGRA, SWS_BICUBIC, nullptr, nullptr, nullptr);
+		if (*img_convert_ctx != nullptr) {
 			uint8_t *pixels[4];
 			int pitch[4];
-			if (!SDL_LockTexture(tex, NULL, (void **)pixels, pitch)) {
+			if (!SDL_LockTexture(tex, nullptr, (void **)pixels, pitch)) {
 				sws_scale(*img_convert_ctx, (const uint8_t * const *)frame->data, frame->linesize,
 					0, frame->height, pixels, pitch);
 				SDL_UnlockTexture(tex);
 			}
 		}
 		else {
-			av_log(NULL, AV_LOG_FATAL, "Cannot initialize the conversion context\n");
+			av_log(nullptr, AV_LOG_FATAL, "Cannot initialize the conversion context\n");
 			ret = -1;
 		}
 		break;
@@ -117,7 +117,7 @@ void PlayThread::run()
 
 	VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
 
-	AVFrame avframe;
+	AVFrame *pAVframe = new AVFrame;
 
 	//SDL初始化
 	int flags;
@@ -137,7 +137,7 @@ void PlayThread::run()
 		renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		if (!renderer)
 		{
-			av_log(NULL, AV_LOG_WARNING, "Failed to initialize a hardware accelerated renderer: %s\n", SDL_GetError());
+			av_log(nullptr, AV_LOG_WARNING, "Failed to initialize a hardware accelerated renderer: %s\n", SDL_GetError());
 			renderer = SDL_CreateRenderer(window, -1, 0);
 		}
 		if (renderer)
@@ -150,13 +150,13 @@ void PlayThread::run()
 
 	if (!window || !renderer) 
 	{
-		av_log(NULL, AV_LOG_FATAL, "SDL: could not set video mode - exiting\n");
+		av_log(nullptr, AV_LOG_FATAL, "SDL: could not set video mode - exiting\n");
 		qDebug() << "Window could not be created! SDL_Error:" << SDL_GetError();
 		return;
 	}
 
 
-
+	
 	QTime t;
 	while (m_bRunning)
 	{
@@ -165,26 +165,31 @@ void PlayThread::run()
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		bRet = pVideoDataOprator->GetDataDec(avframe, VIDEO_DATA);
+		bRet = pVideoDataOprator->GetDataDec(*pAVframe, VIDEO_DATA);
 		if (bRet == false)
 		{
 			continue;
 		}
 
-		int sdl_pix_fmt = avframe.format == AV_PIX_FMT_YUV420P ? SDL_PIXELFORMAT_YV12 : SDL_PIXELFORMAT_ARGB8888;
 
-		if (realloc_texture(&vid_texture, sdl_pix_fmt, avframe.width, avframe.height, SDL_BLENDMODE_NONE, 0) < 0)
+		int sdl_pix_fmt = pAVframe->format == AV_PIX_FMT_YUV420P ? SDL_PIXELFORMAT_YV12 : SDL_PIXELFORMAT_ARGB8888;
+
+		if (realloc_texture(&vid_texture, sdl_pix_fmt, pAVframe->width, pAVframe->height, SDL_BLENDMODE_NONE, 0) < 0)
 			return;
-		if (upload_texture(vid_texture, &avframe, &img_convert_ctx) < 0)
+		if (upload_texture(vid_texture, pAVframe, &img_convert_ctx) < 0)
 			return;
 
-		int flip_v = avframe.linesize[0] < 0;
-		SDL_RenderCopyEx(renderer, vid_texture, NULL, NULL, 0, NULL, (flip_v ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
+		int flip_v = pAVframe->linesize[0] < 0;
+
+		
+
+		SDL_RenderCopyEx(renderer, vid_texture, nullptr, nullptr, 0, nullptr, (flip_v ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
 
 		SDL_RenderPresent(renderer);
 
 		msleep(33 - t.elapsed());//30fps
 	}
 	
-
+	delete pAVframe;
+	pAVframe = nullptr;
 }

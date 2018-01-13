@@ -83,17 +83,17 @@ private:
 
     // V-Video  A-Audio S-Subtitle
     //解码前
-    QMutex m_mutexV;
+    QMutex m_mutexAVPacketV;
     QMutex m_mutexA;
     QMutex m_mutexS;
-    QList<AVPacket*> m_listV;
+    QList<AVPacket*> m_listAVPacketV;
     QList<AVPacket> m_listA;
     QList<AVPacket> m_listS;
     //解码后
-    QMutex m_mutexVDec;
+    QMutex m_mutexAVFrameV;
     QMutex m_mutexADec;
     QMutex m_mutexSDec;
-    QList<AVFrame*> m_ListVDec;
+    QList<AVFrame*> m_ListAVFrameV;
     QList<AVFrame> m_ListADec;
     QList<AVFrame> m_ListSDec;
 

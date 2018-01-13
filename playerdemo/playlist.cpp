@@ -1,9 +1,11 @@
-﻿#include "playlist.h"
+﻿#include <QDebug>
+
+#include "playlist.h"
 #include "ui_playlist.h"
 
 #include "globalhelper.h"
 
-#include <QDebug>
+
 
 Playlist::Playlist(QWidget *parent) :
     QWidget(parent),

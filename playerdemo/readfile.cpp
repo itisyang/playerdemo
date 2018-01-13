@@ -7,7 +7,7 @@
 
 ReadFile::ReadFile()
 {
-    m_pFormatCtx = NULL;
+    m_pFormatCtx = nullptr;
 }
 
 void ReadFile::run()
@@ -16,7 +16,7 @@ void ReadFile::run()
     int nVideoIndex = -1;
     int nAudioIndex = -1;
     int nSubtitleIndex = -1;
-    AVFormatContext *ic = NULL;
+    AVFormatContext *ic = nullptr;
 
     AVPacket pkt1, *pkt = &pkt1;
 
@@ -35,13 +35,13 @@ void ReadFile::run()
         return;
     }
 
-    err = avformat_open_input(&ic, m_strFilePath.toUtf8().data(), NULL, NULL);
+    err = avformat_open_input(&ic, m_strFilePath.toUtf8().data(), nullptr, nullptr);
     if (err < 0)
     {
         emit SigPlayMsg(m_strFilePath + " open fail, err = " + QString::number(err));
         return;
     }
-    if (avformat_find_stream_info(ic, NULL) < 0)
+    if (avformat_find_stream_info(ic, nullptr) < 0)
     {
         emit SigPlayMsg("Couldn't find stream information.");
         return ;

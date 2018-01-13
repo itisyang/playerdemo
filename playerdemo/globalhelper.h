@@ -29,7 +29,7 @@ enum DATA_TYPE
 
 #include <QString>
 #include <QPushButton>
-
+#include <QDebug>
 class GlobalHelper
 {
 public:

@@ -56,40 +56,42 @@ bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
 //存放解码数据
 bool VideoDataOprator::PutDataDec(AVFrame *frame, DATA_TYPE type)
 {
+	bool bRet = false;
     switch (type) {
     case VIDEO_DATA:
-        PutDataDecVideo(frame);
-        break;
+		bRet = PutDataDecVideo(frame);
+		break;
     case AUDIO_DATA:
-        PutDataDecAudio(frame);
-        break;
+		bRet = PutDataDecAudio(frame);
+		break;
     case SUBTITLE_DATA:
-        PutDataDecSubtitle(frame);
+		bRet = PutDataDecSubtitle(frame);
         break;
     default:
         break;
     }
 
-    return true;
+    return bRet;
 }
 //获取解码数据
 bool VideoDataOprator::GetDataDec(AVFrame &frame, DATA_TYPE type)
 {
+	bool bRet = false;
     switch (type) {
     case VIDEO_DATA:
-        return GetDataDecVideo(frame);
-
+		bRet = GetDataDecVideo(frame);
+		break;
     case AUDIO_DATA:
-		return GetDataDecAudio(frame);
-
+		bRet = GetDataDecAudio(frame);
+		break;
     case SUBTITLE_DATA:
-		return GetDataDecSubtitle(frame);
-
+		bRet = GetDataDecSubtitle(frame);
+		break;
     default:
 		return false;
     }
 
-    
+	return bRet;
 }
 
 bool VideoDataOprator::PutDataVideo(AVPacket *pkt)

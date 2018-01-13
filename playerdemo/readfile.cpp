@@ -85,8 +85,8 @@ void ReadFile::run()
 
     while (m_bRunning)
     {
-		QTime t;
-		t.start();
+// 		QTime t;
+// 		t.start();
 
         //按帧读取
         ret = av_read_frame(ic, pkt);
@@ -119,7 +119,7 @@ void ReadFile::run()
             av_packet_unref(pkt);
         }
 
-		qDebug("读取一帧消耗: %d ms", t.elapsed());
+		//qDebug("读取一帧消耗: %d ms", t.elapsed());
         //break;
     }
 }

@@ -50,7 +50,7 @@ protected:
 private:
 
     //连接信号槽
-    void ConnectSignalSlots();
+    bool ConnectSignalSlots();
 
 private slots:
     //关闭、最小化、最大化按钮响应

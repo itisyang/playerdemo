@@ -30,8 +30,8 @@ void VideoDec::run()
 	SwsContext *pSwsContext = NULL;
     while (m_bRunning)
     {
-		QTime t;
-		t.start();
+// 		QTime t;
+// 		t.start();
 
         if (pVideoDataOprator->GetData(pkt, VIDEO_DATA) == false)
         {
@@ -46,10 +46,13 @@ void VideoDec::run()
 
 		if (got_frame != 0)
 		{
-			pVideoDataOprator->PutDataDec(frame, VIDEO_DATA);
+			while (pVideoDataOprator->PutDataDec(frame, VIDEO_DATA) == false)
+			{
+				msleep(10);
+			}
 		}
 
-		qDebug("解码一帧消耗: %d ms", t.elapsed());
+		//qDebug("解码一帧消耗: %d ms", t.elapsed());
 # if 0
 		int nWidth = frame->width;
 		int nHeight = frame->height;

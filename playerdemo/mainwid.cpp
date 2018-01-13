@@ -152,17 +152,42 @@ void MainWid::leaveEvent(QEvent *event)
 //    }
 }
 
-void MainWid::ConnectSignalSlots()
+bool MainWid::ConnectSignalSlots()
 {
-    connect(m_pTitle, SIGNAL(SigCloseBtnClicked()), this, SLOT(OnCloseBtnClicked()));
-    connect(m_pTitle, SIGNAL(SigMaxBtnClicked()), this, SLOT(OnMaxBtnClicked()));
-    connect(m_pTitle, SIGNAL(SigMinBtnClicked()), this, SLOT(OnMinBtnClicked()));
-    connect(m_pTitle, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
-    connect(this, SIGNAL(SigShowMax(bool)), m_pTitle, SLOT(OnChangeMaxBtnStyle(bool)));
-    connect(m_pPlaylist, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
+	QList<bool> listRet;
+	bool bRet;
 
-    connect(m_pDisplay, SIGNAL(SigAddFile(QString)), m_pPlaylist, SLOT(OnAddFile(QString)));
-    connect(m_pPlaylistCtrlBar, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
+	bRet = connect(m_pTitle, SIGNAL(SigCloseBtnClicked()), this, SLOT(OnCloseBtnClicked()));
+	listRet.append(bRet);
+	bRet = connect(m_pTitle, SIGNAL(SigMaxBtnClicked()), this, SLOT(OnMaxBtnClicked()));
+	listRet.append(bRet);
+	bRet = connect(m_pTitle, SIGNAL(SigMinBtnClicked()), this, SLOT(OnMinBtnClicked()));
+	listRet.append(bRet);
+	bRet = connect(m_pTitle, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
+	listRet.append(bRet);
+	bRet = connect(this, SIGNAL(SigShowMax(bool)), m_pTitle, SLOT(OnChangeMaxBtnStyle(bool)));
+	listRet.append(bRet);
+	bRet = connect(m_pPlaylist, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
+	listRet.append(bRet);
+	bRet = connect(m_pPlaylist, SIGNAL(SigPlay(QString)), m_pDisplay, SIGNAL(SigPlay(QString)));
+	listRet.append(bRet);
+	
+
+	bRet = connect(m_pDisplay, SIGNAL(SigAddFile(QString)), m_pPlaylist, SLOT(OnAddFile(QString)));
+	listRet.append(bRet);
+	bRet = connect(m_pPlaylistCtrlBar, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
+	listRet.append(bRet);
+
+
+	for (bool bReturn : listRet)
+	{
+		if (bReturn == false)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void MainWid::OnAdjustUi()

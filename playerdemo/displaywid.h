@@ -29,7 +29,10 @@ class DisplayWid : public QWidget
 public:
     explicit DisplayWid(QWidget *parent = 0);
     ~DisplayWid();
-
+	/**
+	 * @brief	初始化
+	 */
+	bool Init();
 protected:
 	/**
 	 * @brief	拖拽释放事件
@@ -47,26 +50,30 @@ protected:
     void dragEnterEvent(QDragEnterEvent *event);
 private slots:
 	/**
-	 * @brief	接收一帧图像
-	 * 
-	 * @param	img 一帧图像
-	 * @note 	
-	 */
-    void OnImage(QPixmap& img);
-	/**
 	 * @brief	显示信息
 	 * 
 	 * @param	strMsg 信息内容
 	 * @note 	
 	 */
 	void OnDisplayMsg(QString strMsg);
+	/**
+	* @brief	播放
+	*
+	* @param	strFile 文件名
+	* @note
+	*/
+	void OnPlay(QString strFile);
+
+private:
+	//连接信号槽
+	bool ConnectSignalSlots();
 signals:
     void SigAddFile(QString strFileName);///< 增加视频文件
-	void SigAddFile(QString strFileName, WId widPlayWid);
+	void SigPlay(QString strFile); ///<播放
 private:
     Ui::DisplayWid *ui;
 
-    VideoCtl *m_VideoCtl;	//< 视频控制
+    VideoCtl *m_VideoCtl;	///< 视频控制
 };
 
 #endif // DISPLAY_H

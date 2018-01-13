@@ -155,6 +155,8 @@ void PlayThread::run()
 		return;
 	}
 
+
+
 	QTime t;
 	while (m_bRunning)
 	{
@@ -162,7 +164,6 @@ void PlayThread::run()
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
-
 
 		bRet = pVideoDataOprator->GetDataDec(avframe, VIDEO_DATA);
 		if (bRet == false)
@@ -182,7 +183,7 @@ void PlayThread::run()
 
 		SDL_RenderPresent(renderer);
 
-		msleep(40);//30fps
+		msleep(33 - t.elapsed());//30fps
 	}
 	
 

@@ -1,19 +1,29 @@
-#include "playlist.h"
+﻿#include "playlist.h"
 #include "ui_playlist.h"
 
 #include "globalhelper.h"
+
+#include <QDebug>
 
 Playlist::Playlist(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Playlist)
 {
     ui->setupUi(this);
-    InitUi();
+	Init();
 }
 
 Playlist::~Playlist()
 {
     delete ui;
+}
+
+bool Playlist::Init()
+{
+	InitUi();
+	ConnectSignalSlots();
+
+	return true;
 }
 
 bool Playlist::InitUi()
@@ -25,7 +35,33 @@ bool Playlist::InitUi()
 
     ui->List->clear();
 
+
+	ui->List->addItem("D:/Downloads/建军大业.The.Founding.of.an.Army.2017.BD720P.X264.AAC-homefei.mkv");
+
     return true;
+}
+
+bool Playlist::ConnectSignalSlots()
+{
+	QList<bool> listRet;
+	bool bRet;
+
+
+	for (bool bReturn : listRet)
+	{
+		if (bReturn == false)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+void Playlist::on_List_itemDoubleClicked(QListWidgetItem *item)
+{
+	qDebug() << "双击播放：" << item->text();
+	emit SigPlay(item->text());
 }
 
 bool Playlist::GetPlaylistStatus()
@@ -40,5 +76,9 @@ bool Playlist::GetPlaylistStatus()
 
 void Playlist::OnAddFile(QString strFileName)
 {
-    ui->List->addItem(strFileName);
+	QList<QListWidgetItem *> listItem = ui->List->findItems(strFileName, Qt::MatchExactly);
+	if (listItem.isEmpty())
+	{
+		ui->List->addItem(strFileName);
+	}
 }

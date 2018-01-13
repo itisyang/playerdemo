@@ -17,14 +17,21 @@ DisplayWid::DisplayWid(QWidget *parent) :
     setAcceptDrops(true);
 
     m_VideoCtl = VideoCtl::GetInstance();
-	qRegisterMetaType<QPixmap>("QPixmap&");
-    connect(m_VideoCtl, SIGNAL(SigImage(QPixmap&)), this, SLOT(OnImage(QPixmap&)), Qt::DirectConnection);
-	connect(m_VideoCtl, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnDisplayMsg(QString)));
+
+	Init();
+
 }
 
 DisplayWid::~DisplayWid()
 {
     delete ui;
+}
+
+bool DisplayWid::Init()
+{
+	ConnectSignalSlots();
+
+	return true;
 }
 
 void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
@@ -36,19 +43,42 @@ void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
     event->acceptProposedAction();
 }
 
-void DisplayWid::OnImage(QPixmap& pix)
-{
-	//qDebug() << pix.width() << pix.height() << pix.size();
-	pix = pix.scaled(ui->label->width(), ui->label->height(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-	
-    ui->label->setPixmap(pix);//播放一帧
-	//qDebug() << "播放一帧";
-	//qDebug() << "获取样式失败" << "播放一帧 ";
-}
-
 void DisplayWid::OnDisplayMsg(QString strMsg)
 {
 	qDebug() << "DisplayWid::OnDisplayMsg " << strMsg;
+}
+
+void DisplayWid::OnPlay(QString strFile)
+{
+	if (m_VideoCtl)
+	{
+		m_VideoCtl->StartPlay(strFile, ui->label->winId());
+	}
+}
+
+bool DisplayWid::ConnectSignalSlots()
+{
+	QList<bool> listRet;
+	bool bRet;
+
+	qRegisterMetaType<QPixmap>("QPixmap&");
+	bRet = connect(m_VideoCtl, SIGNAL(SigImage(QPixmap&)), this, SLOT(OnImage(QPixmap&)), Qt::DirectConnection);
+	listRet.append(bRet);
+	bRet = connect(m_VideoCtl, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnDisplayMsg(QString)));
+	listRet.append(bRet);
+	bRet = connect(this, SIGNAL(SigPlay(QString)), this, SLOT(OnPlay(QString)));
+	listRet.append(bRet);
+
+
+	for (bool bReturn : listRet)
+	{
+		if (bReturn == false)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void DisplayWid::dropEvent(QDropEvent *event)
@@ -67,12 +97,6 @@ void DisplayWid::dropEvent(QDropEvent *event)
         break;
     }
 
-    if (m_VideoCtl)
-    {
-        //m_VideoCtl->StartPlay(urls.first().toLocalFile());
-		m_VideoCtl->StartPlay(urls.first().toLocalFile(), ui->label->winId());
-    }
-
-
+	emit SigPlay(urls.first().toLocalFile());
 
 }

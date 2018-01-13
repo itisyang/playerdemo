@@ -12,7 +12,7 @@
 #define PLAYLIST_H
 
 #include <QWidget>
-
+#include <QListWidgetItem>
 namespace Ui {
 class Playlist;
 }
@@ -25,7 +25,9 @@ public:
     explicit Playlist(QWidget *parent = 0);
     ~Playlist();
 
-    bool InitUi();
+	bool Init();
+
+
 	/**
 	 * @brief	获取播放列表状态
 	 * 
@@ -43,6 +45,13 @@ public slots:
     void OnAddFile(QString strFileName);
 signals:
     void SigUpdateUi();	//< 界面排布更新
+	void SigPlay(QString strFile); //< 播放文件
+private:
+	bool InitUi();
+	bool ConnectSignalSlots();
+private slots:
+	void on_List_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     Ui::Playlist *ui;
 };

@@ -17,11 +17,30 @@
 #include <QByteArray>
 #include "globalhelper.h"
 
+
+#define VIDEO_PICTURE_QUEUE_SIZE 3
+#define SUBPICTURE_QUEUE_SIZE 16
+#define SAMPLE_QUEUE_SIZE 9
+#define FRAME_QUEUE_SIZE FFMAX(SAMPLE_QUEUE_SIZE, FFMAX(VIDEO_PICTURE_QUEUE_SIZE, SUBPICTURE_QUEUE_SIZE))
+
+
 class VideoDataOprator : public QObject
 {
     Q_OBJECT
 public:
     explicit VideoDataOprator(QObject *parent = nullptr);
+
+
+	/**
+	 * @brief	初始化
+	 * 
+	 * @param	
+	 * @return	
+	 * @note 	
+	 */
+
+	bool Init();
+
 	/**
 	 * @brief	存放原始数据
 	 * 
@@ -86,6 +105,8 @@ private:
     QMutex m_mutexAVPacketV;
     QMutex m_mutexA;
     QMutex m_mutexS;
+	QVector<AVPacket*> m_VectorAVPacketV;
+
     QList<AVPacket*> m_listAVPacketV;
     QList<AVPacket> m_listA;
     QList<AVPacket> m_listS;

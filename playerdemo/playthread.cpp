@@ -187,7 +187,11 @@ void PlayThread::run()
 
 		SDL_RenderPresent(renderer);
 
-		msleep(33 - t.elapsed());//30fps
+		int remaining_time = t.elapsed();
+		if (remaining_time < 33 && remaining_time > 0)
+		{
+			msleep(33 - t.elapsed());//30fps
+		}
 	}
 	
 	delete pAVframe;

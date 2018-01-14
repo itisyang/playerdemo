@@ -24,7 +24,6 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     //网络格式初始化
     avformat_network_init();
 
-
 }
 
 bool VideoCtl::Init()

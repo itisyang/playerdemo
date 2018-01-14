@@ -6,6 +6,16 @@ VideoDataOprator::VideoDataOprator(QObject *parent) : QObject(parent),
 
 }
 
+bool VideoDataOprator::Init()
+{
+	for (int i = 0; i < m_nMaxNumFrameCache; i++)
+	{
+
+	}
+
+	return true;
+}
+
 bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
 {
     switch (type) {

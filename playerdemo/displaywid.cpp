@@ -31,6 +31,8 @@ bool DisplayWid::Init()
 {
 	ConnectSignalSlots();
 
+	//ui->label->setUpdatesEnabled(false);
+
 	return true;
 }
 

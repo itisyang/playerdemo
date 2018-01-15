@@ -16,6 +16,8 @@ PlayThread::PlayThread()
 
 
 	img_convert_ctx = nullptr;
+
+	m_bIsFullScreen = false;
 }
 
 
@@ -29,6 +31,19 @@ void PlayThread::OnStarPlay(WId wid)
 	StartThread();
 }
 
+
+void PlayThread::OnFullScreen()
+{
+	m_bIsFullScreen = !m_bIsFullScreen;
+	if (SDL_SetWindowFullscreen(window, m_bIsFullScreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) == 0)
+	{
+		qDebug() << "全屏成功";
+	}
+	else
+	{
+		qDebug() << "全屏失败";
+	}
+}
 
 int PlayThread::realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
 {

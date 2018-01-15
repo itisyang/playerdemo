@@ -51,7 +51,8 @@ private:
 
     //连接信号槽
     bool ConnectSignalSlots();
-
+	//按键事件
+	void keyPressEvent(QKeyEvent *event);
 private slots:
     //关闭、最小化、最大化按钮响应
     void OnCloseBtnClicked();
@@ -65,6 +66,8 @@ private slots:
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
+	//全屏播放
+	void SigFullScreen();
 private:
     Ui::MainWid *ui;
 

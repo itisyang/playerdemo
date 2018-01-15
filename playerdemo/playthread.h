@@ -26,6 +26,11 @@ public slots:
 	 * @brief	开始播放
 	 */
 	void OnStarPlay(WId wid);
+private slots:
+	/**
+	 * @brief	全屏
+	 */
+	void OnFullScreen();
 private:
 	/**
 	* @brief	线程入口
@@ -51,5 +56,8 @@ private:
 
 
 	SwsContext *img_convert_ctx;
+
+
+	bool m_bIsFullScreen;//< 是否全屏
 };
 

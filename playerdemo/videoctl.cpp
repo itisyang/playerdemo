@@ -11,7 +11,6 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     m_bInited = false;
     m_pAVFormatContext = nullptr;
 
-
 #if CONFIG_AVDEVICE
     //注册所有设备
     avdevice_register_all();
@@ -75,6 +74,8 @@ bool VideoCtl::ConnectSignalSlots()
 	//开始播放信号
 	qRegisterMetaType<WId>("WId");
 	bRet = connect(this, SIGNAL(SigStartPlay(WId)), &m_PlayThread, SLOT(OnStarPlay(WId)));
+	listRet.append(bRet);
+	bRet = connect(this, SIGNAL(SigFullScreen()), &m_PlayThread, SLOT(OnFullScreen()));
 	listRet.append(bRet);
 
     for (bool bReturn : listRet)

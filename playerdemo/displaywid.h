@@ -70,6 +70,8 @@ private:
 signals:
     void SigAddFile(QString strFileName);///< 增加视频文件
 	void SigPlay(QString strFile); ///<播放
+								   
+	void SigFullScreen();//全屏播放
 private:
     Ui::DisplayWid *ui;
 

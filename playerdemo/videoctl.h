@@ -71,11 +71,14 @@ public:
 
 signals:
     void SigStartDec();				//< 开始解码信号
-	void SigStartPlay(WId wid);			//< 开始播放显示信号
+	void SigStartPlay(WId wid);		//< 开始播放显示信号
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigImage(QPixmap& img);	//< 一帧图像
+	void SigFullScreen();			//< 全屏播放
 public slots:
     void OnPlayMsg(QString strMsg); //< 播放消息
+private slots:
+
 private:
     explicit VideoCtl(QObject *parent = nullptr);
 	/**
@@ -116,6 +119,8 @@ private:
     static const QString strProgrameBirthYear;//< 程序初始创建年
 
     AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
+
+
 };
 
 #endif // VIDEOCTL_H

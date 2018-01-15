@@ -178,6 +178,8 @@ bool MainWid::ConnectSignalSlots()
 	bRet = connect(m_pPlaylistCtrlBar, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
 	listRet.append(bRet);
 
+	bRet = connect(this, SIGNAL(SigFullScreen()), m_pDisplay, SIGNAL(SigFullScreen()));
+	listRet.append(bRet);
 
 	for (bool bReturn : listRet)
 	{
@@ -188,6 +190,25 @@ bool MainWid::ConnectSignalSlots()
 	}
 
 	return true;
+}
+
+void MainWid::keyPressEvent(QKeyEvent *event)
+{
+// 	    // 是否按下Ctrl键      特殊按键
+//     if(event->modifiers() == Qt::ControlModifier){
+//         // 是否按下M键    普通按键  类似
+//         if(event->key() == Qt::Key_M)
+//             ···
+//     }
+
+	switch (event->key())
+	{
+	case Qt::Key_F://全屏
+		emit SigFullScreen();
+		break;
+	default:
+		break;
+	}
 }
 
 void MainWid::OnAdjustUi()

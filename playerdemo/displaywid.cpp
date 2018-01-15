@@ -65,6 +65,8 @@ bool DisplayWid::ConnectSignalSlots()
 	bRet = connect(this, SIGNAL(SigPlay(QString)), this, SLOT(OnPlay(QString)));
 	listRet.append(bRet);
 
+	bRet = connect(this, SIGNAL(SigFullScreen()), m_VideoCtl, SIGNAL(SigFullScreen()));
+	listRet.append(bRet);
 
 	for (bool bReturn : listRet)
 	{

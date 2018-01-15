@@ -68,6 +68,7 @@ public:
 	 * @note 	
 	 */
     bool StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
+
 signals:
     void SigStartDec();				//< 开始解码信号
 	void SigStartPlay(WId wid);			//< 开始播放显示信号
@@ -115,16 +116,6 @@ private:
     static const QString strProgrameBirthYear;//< 程序初始创建年
 
     AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
-
-
-    int audio_stream;			//< 音频流序号
-    AVStream *audio_st;			//< 音频流结构体
-    AVCodecContext *audio_avctx;//< 音频解码器结构体
-
-    int subtitle_stream;			//< 字幕流序号
-    AVStream *subtitle_st;			//< 字幕流结构体
-    AVCodecContext *subtitle_avctx;	//< 字幕解码器结构体
-
 };
 
 #endif // VIDEOCTL_H

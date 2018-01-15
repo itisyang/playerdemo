@@ -52,10 +52,7 @@ void DisplayWid::OnDisplayMsg(QString strMsg)
 
 void DisplayWid::OnPlay(QString strFile)
 {
-	if (m_VideoCtl)
-	{
-		m_VideoCtl->StartPlay(strFile, ui->label->winId());
-	}
+	VideoCtl::GetInstance()->StartPlay(strFile, ui->label->winId());
 }
 
 bool DisplayWid::ConnectSignalSlots()
@@ -63,9 +60,6 @@ bool DisplayWid::ConnectSignalSlots()
 	QList<bool> listRet;
 	bool bRet;
 
-	qRegisterMetaType<QPixmap>("QPixmap&");
-	bRet = connect(m_VideoCtl, SIGNAL(SigImage(QPixmap&)), this, SLOT(OnImage(QPixmap&)), Qt::DirectConnection);
-	listRet.append(bRet);
 	bRet = connect(m_VideoCtl, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnDisplayMsg(QString)));
 	listRet.append(bRet);
 	bRet = connect(this, SIGNAL(SigPlay(QString)), this, SLOT(OnPlay(QString)));

@@ -11,6 +11,7 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     m_bInited = false;
     m_pAVFormatContext = nullptr;
 
+
 #if CONFIG_AVDEVICE
     //注册所有设备
     avdevice_register_all();

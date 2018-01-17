@@ -34,11 +34,14 @@ void ReadFile::run()
     {
         return;
     }
-
+	
     err = avformat_open_input(&ic, m_strFilePath.toUtf8().data(), nullptr, nullptr);
     if (err < 0)
     {
         emit SigPlayMsg(m_strFilePath + " open fail, err = " + QString::number(err));
+		char buf[1024];
+		av_strerror(err, buf, 1024);
+		qDebug() << buf;
         return;
     }
     if (avformat_find_stream_info(ic, nullptr) < 0)

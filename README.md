@@ -13,5 +13,3 @@ A simple video player demo
 - email: itisyang@126.com or itisyang@gmail.com
 
 ## error log
-20180118:
-今天莫名运行程序的时候遇到了0xc000007b错误，暂时不知道怎么解决，有可能是电脑驱动出问题了

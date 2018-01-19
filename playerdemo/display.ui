@@ -6,40 +6,29 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>492</width>
-    <height>333</height>
+    <width>603</width>
+    <height>398</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>80</y>
+     <width>411</width>
+     <height>231</height>
+    </rect>
    </property>
-   <property name="topMargin">
-    <number>0</number>
+   <property name="text">
+    <string/>
    </property>
-   <property name="rightMargin">
-    <number>0</number>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <property name="spacing">
-    <number>0</number>
-   </property>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>

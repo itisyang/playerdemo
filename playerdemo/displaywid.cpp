@@ -36,6 +36,31 @@ bool DisplayWid::Init()
 	return true;
 }
 
+void DisplayWid::AdjustDisplay(int nFrameWidth, int nFrameHeight)
+{
+	if (width() * nFrameHeight >= height() * nFrameWidth)//当前供显示的区域，宽偏小，以宽为标准，宽全部占满
+	{
+		int nShowWidth = width();
+		int nShowHeight = width() * nFrameHeight / nFrameWidth;
+		
+		int nY = height() / 2 - nShowHeight / 2;
+		int nX = 0;
+		
+		ui->label->setGeometry(nX, nY, nShowWidth, nShowHeight);
+
+	}
+	else
+	{
+// 		int nShowWidth = width();
+// 		int nShowHeight = width() * nFrameHeight / nFrameWidth;
+// 
+// 		int nY = height() / 2 - nShowHeight / 2;
+// 		int nX = 0;
+// 
+// 		ui->label->setGeometry(nX, nY, nShowWidth, nShowHeight);
+	}
+}
+
 void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
 {
 //    if(event->mimeData()->hasFormat("text/uri-list"))

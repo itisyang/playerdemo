@@ -33,6 +33,15 @@ public:
 	 * @brief	初始化
 	 */
 	bool Init();
+	/**
+	 * @brief	调整显示画面的宽高，使画面保持原比例
+	 * 
+	 * @param	nFrameWidth 视频宽
+	 * @param	nFrameWHeight 视频高
+	 * @return	
+	 * @note 	
+	 */
+	void AdjustDisplay(int nFrameWidth, int nFrameHeight);
 protected:
 	/**
 	 * @brief	拖拽释放事件

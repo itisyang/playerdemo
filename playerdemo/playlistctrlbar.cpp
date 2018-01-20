@@ -6,6 +6,8 @@ PlaylistCtrlBar::PlaylistCtrlBar(QWidget *parent) :
     ui(new Ui::PlaylistCtrlBar)
 {
     ui->setupUi(this);
+    setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
+    setAttribute(Qt::WA_TranslucentBackground);
 }
 
 PlaylistCtrlBar::~PlaylistCtrlBar()

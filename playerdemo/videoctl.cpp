@@ -163,7 +163,10 @@ bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex,
         //初始化结构体
         avctx = avcodec_alloc_context3(nullptr);
         if (!avctx)
+        {
             return false;
+        }
+            
         avcodec_parameters_to_context(avctx, ic->streams[nVideoStreamIndex]->codecpar);
         av_codec_set_pkt_timebase(avctx, ic->streams[nVideoStreamIndex]->time_base);
         //寻找解码器

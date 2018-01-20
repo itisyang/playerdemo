@@ -24,6 +24,7 @@ MainWid::MainWid(QWidget *parent) :
     //qDebug() << qss;
     setStyleSheet(qss);
 
+
     m_pTitle = new Title(this);
     m_pDisplay = new DisplayWid(this);
     m_pPlaylist = new Playlist(this);
@@ -241,16 +242,16 @@ void MainWid::OnAdjustUi()
     if (m_pPlaylist->GetPlaylistStatus())//播放列表显示
     {
         m_pPlaylistCtrlBar->move(width() - nPlaylistWidth - m_nShadowWidth - m_pPlaylistCtrlBar->width(),
-                                 m_pTitle->height() + m_nShadowWidth);
+                                 m_pTitle->height() + m_nShadowWidth + nDisplayH/2);
 
     }
     else
     {
         m_pPlaylistCtrlBar->move(width() - m_nShadowWidth - m_pPlaylistCtrlBar->width(),
-                                 m_pTitle->height() + m_nShadowWidth);
+                                 m_pTitle->height() + m_nShadowWidth + nDisplayH / 2);
     }
 
-    m_pPlaylistCtrlBar->setFixedHeight(m_pPlaylist->height());
+    m_pPlaylistCtrlBar->setFixedHeight(70);
 
 
     //播放控制面板位置

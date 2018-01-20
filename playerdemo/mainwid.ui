@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>920</width>
-    <height>582</height>
+    <width>659</width>
+    <height>532</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -19,18 +19,113 @@
   <property name="windowTitle">
    <string>MainWidget</string>
   </property>
-  <widget class="QWidget" name="widget" native="true">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>921</width>
-     <height>41</height>
-    </rect>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
    </property>
-  </widget>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="Title" name="TitleWid" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>50</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="Show" name="ShowWid" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="Playlist" name="PlaylistWid" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>400</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>150</width>
+         <height>16777215</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="CtrlBar" name="CtrlBarWid" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>80</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>Title</class>
+   <extends>QWidget</extends>
+   <header>title.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Show</class>
+   <extends>QWidget</extends>
+   <header>show.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>CtrlBar</class>
+   <extends>QWidget</extends>
+   <header>ctrlbar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Playlist</class>
+   <extends>QWidget</extends>
+   <header>playlist.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

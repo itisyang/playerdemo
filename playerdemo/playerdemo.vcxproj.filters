@@ -69,12 +69,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ctrlbar.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_displaywid.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_displaywid.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_framelesshelper.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -132,9 +126,6 @@
     <ClCompile Include="ctrlbar.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="displaywid.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="framelesshelper.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -174,6 +165,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_playthread.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_show.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_show.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="show.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwid.ui">
@@ -188,9 +188,6 @@
     <CustomBuild Include="ctrlbar.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="display.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="playlist.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
@@ -201,9 +198,6 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ctrlbar.h">
-      <Filter>UI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="displaywid.h">
       <Filter>UI</Filter>
     </CustomBuild>
     <CustomBuild Include="framelesshelper.h">
@@ -239,6 +233,12 @@
     <CustomBuild Include="playthread.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="show.h">
+      <Filter>UI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="show.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_mainwid.h">
@@ -253,9 +253,6 @@
     <ClInclude Include="GeneratedFiles\ui_ctrlbar.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_display.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_playlist.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -263,6 +260,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_title.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_show.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

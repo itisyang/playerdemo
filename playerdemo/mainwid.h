@@ -15,13 +15,6 @@
 #include <QMouseEvent>
 #include <QDragEnterEvent>
 
-#include "ctrlbar.h"
-#include "playlist.h"
-#include "title.h"
-#include "displaywid.h"
-#include "playlistctrlbar.h"
-
-
 namespace Ui {
 class MainWid;
 }
@@ -73,11 +66,11 @@ private:
 
     bool m_bPlaying; ///< 正在播放
 
-    CtrlBar     *m_pCtrlBar;    ///< 播放控制面板
-    Playlist    *m_pPlaylist;   ///< 播放列表面板
-    Title       *m_pTitle;      ///< 标题栏面板
-    DisplayWid  *m_pDisplay;    ///< 显示区域
-    PlaylistCtrlBar *m_pPlaylistCtrlBar; ///< 播放列表控制按钮
+//     CtrlBar     *m_pCtrlBar;    ///< 播放控制面板
+//     Playlist    *m_pPlaylist;   ///< 播放列表面板
+//     Title       *m_pTitle;      ///< 标题栏面板
+//     DisplayWid  *m_pDisplay;    ///< 显示区域
+//     PlaylistCtrlBar *m_pPlaylistCtrlBar; ///< 播放列表控制按钮
 
     const int m_nShadowWidth; ///< 阴影宽度
 };

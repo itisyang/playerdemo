@@ -19,16 +19,16 @@
 #include "videoctl.h"
 
 namespace Ui {
-class DisplayWid;
+class Show;
 }
 
-class DisplayWid : public QWidget
+class Show : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit DisplayWid(QWidget *parent = 0);
-    ~DisplayWid();
+    explicit Show(QWidget *parent = 0);
+    ~Show();
 	/**
 	 * @brief	初始化
 	 */
@@ -100,7 +100,7 @@ signals:
 								   
 	void SigFullScreen();//全屏播放
 private:
-    Ui::DisplayWid *ui;
+    Ui::Show *ui;
 
     VideoCtl *m_VideoCtl;	///< 视频控制
 

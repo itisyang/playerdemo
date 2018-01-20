@@ -1,14 +1,14 @@
 ﻿#include <QDebug>
-#include "displaywid.h"
-#include "ui_display.h"
+#include "show.h"
+#include "ui_show.h"
 
 #include "globalhelper.h"
 
 # pragma execution_character_set("utf-8")
 
-DisplayWid::DisplayWid(QWidget *parent) :
+Show::Show(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::DisplayWid)
+    ui(new Ui::Show)
 {
     ui->setupUi(this);
 
@@ -24,12 +24,12 @@ DisplayWid::DisplayWid(QWidget *parent) :
     m_nLastFrameHeight = 0;
 }
 
-DisplayWid::~DisplayWid()
+Show::~Show()
 {
     delete ui;
 }
 
-bool DisplayWid::Init()
+bool Show::Init()
 {
 	ConnectSignalSlots();
 
@@ -38,11 +38,11 @@ bool DisplayWid::Init()
 	return true;
 }
 
-void DisplayWid::AdjustDisplay(int nFrameWidth, int nFrameHeight)
+void Show::AdjustDisplay(int nFrameWidth, int nFrameHeight)
 {
     m_nLastFrameWidth = nFrameWidth;
     m_nLastFrameHeight = nFrameHeight;
-    qDebug() << "DisplayWid::AdjustDisplay" << nFrameWidth << nFrameHeight;
+    qDebug() << "Show::AdjustDisplay" << nFrameWidth << nFrameHeight;
     if (nFrameWidth == 0 || nFrameHeight == 0)
     {
         qDebug() << "nFrameWidth == 0 || nFrameHeight == 0";
@@ -72,7 +72,7 @@ void DisplayWid::AdjustDisplay(int nFrameWidth, int nFrameHeight)
 	}
 }
 
-void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
+void Show::dragEnterEvent(QDragEnterEvent *event)
 {
 //    if(event->mimeData()->hasFormat("text/uri-list"))
 //    {
@@ -81,29 +81,29 @@ void DisplayWid::dragEnterEvent(QDragEnterEvent *event)
     event->acceptProposedAction();
 }
 
-void DisplayWid::resizeEvent(QResizeEvent *event)
+void Show::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
 
     AdjustDisplay(m_nLastFrameWidth, m_nLastFrameHeight);
 }
 
-void DisplayWid::OnDisplayMsg(QString strMsg)
+void Show::OnDisplayMsg(QString strMsg)
 {
-	qDebug() << "DisplayWid::OnDisplayMsg " << strMsg;
+	qDebug() << "Show::OnDisplayMsg " << strMsg;
 }
 
-void DisplayWid::OnPlay(QString strFile)
+void Show::OnPlay(QString strFile)
 {
 	VideoCtl::GetInstance()->StartPlay(strFile, ui->label->winId());
 }
 
-void DisplayWid::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
+void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
 {
     AdjustDisplay(nFrameWidth, nFrameHeight);
 }
 
-bool DisplayWid::ConnectSignalSlots()
+bool Show::ConnectSignalSlots()
 {
 	QList<bool> listRet;
 	bool bRet;
@@ -130,7 +130,7 @@ bool DisplayWid::ConnectSignalSlots()
 	return true;
 }
 
-void DisplayWid::dropEvent(QDropEvent *event)
+void Show::dropEvent(QDropEvent *event)
 {
     QList<QUrl> urls = event->mimeData()->urls();
     if(urls.isEmpty())

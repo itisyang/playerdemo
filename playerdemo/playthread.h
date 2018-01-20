@@ -46,6 +46,8 @@ private:
 	 */
 	int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture);
 	int upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **img_convert_ctx);
+signals:
+	void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
 private:
 	SDL_Window *window;
 	SDL_Renderer *renderer;

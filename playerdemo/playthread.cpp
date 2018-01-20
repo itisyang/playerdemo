@@ -171,7 +171,8 @@ void PlayThread::run()
 	}
 
 
-	
+	int nLastFrameWidth = 0;
+	int nLastFrameHeight = 0;
 	QTime t;
 	while (m_bRunning)
 	{
@@ -186,13 +187,29 @@ void PlayThread::run()
 			continue;
 		}
 
+		int nFrameWidth = pAVframe->width;
+		int nFrameHeight = pAVframe->height;
+		if (nLastFrameWidth != nFrameWidth || nLastFrameHeight != nFrameHeight)
+		{
+			nLastFrameWidth = nFrameWidth;
+			nLastFrameHeight = nFrameHeight;
+
+			emit SigFrameDimensionsChanged(nLastFrameWidth, nLastFrameHeight);
+		}
+
 
 		int sdl_pix_fmt = pAVframe->format == AV_PIX_FMT_YUV420P ? SDL_PIXELFORMAT_YV12 : SDL_PIXELFORMAT_ARGB8888;
 
-		if (realloc_texture(&vid_texture, sdl_pix_fmt, pAVframe->width, pAVframe->height, SDL_BLENDMODE_NONE, 0) < 0)
+		if (realloc_texture(&vid_texture, sdl_pix_fmt, nFrameWidth, nFrameHeight, SDL_BLENDMODE_NONE, 0) < 0)
+		{
 			return;
+		}
+
 		if (upload_texture(vid_texture, pAVframe, &img_convert_ctx) < 0)
+		{
 			return;
+		}
+
 
 		int flip_v = pAVframe->linesize[0] < 0;
 
@@ -205,7 +222,7 @@ void PlayThread::run()
 		int remaining_time = t.elapsed();
 		if (remaining_time < 33 && remaining_time > 0)
 		{
-			msleep(33 - t.elapsed());//30fps
+            msleep(33 - t.elapsed());//30fps
 		}
 	}
 	

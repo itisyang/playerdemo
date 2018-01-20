@@ -78,6 +78,10 @@ bool VideoCtl::ConnectSignalSlots()
 	bRet = connect(this, SIGNAL(SigFullScreen()), &m_PlayThread, SLOT(OnFullScreen()));
 	listRet.append(bRet);
 
+    bRet = connect(&m_PlayThread, SIGNAL(SigFrameDimensionsChanged(int, int)), this, SIGNAL(SigFrameDimensionsChanged(int, int)));
+    listRet.append(bRet);
+    
+
     for (bool bReturn : listRet)
     {
         if (bReturn == false)

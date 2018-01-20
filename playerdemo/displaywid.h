@@ -33,15 +33,7 @@ public:
 	 * @brief	初始化
 	 */
 	bool Init();
-	/**
-	 * @brief	调整显示画面的宽高，使画面保持原比例
-	 * 
-	 * @param	nFrameWidth 视频宽
-	 * @param	nFrameWHeight 视频高
-	 * @return	
-	 * @note 	
-	 */
-	void AdjustDisplay(int nFrameWidth, int nFrameHeight);
+
 protected:
 	/**
 	 * @brief	拖拽释放事件
@@ -57,6 +49,13 @@ protected:
 	 * @note
 	 */
     void dragEnterEvent(QDragEnterEvent *event);
+    /**
+     * @brief	窗口大小变化事件
+     * 
+     * @param	event 事件指针
+     * @note
+     */
+    void resizeEvent(QResizeEvent *event);
 private slots:
 	/**
 	 * @brief	显示信息
@@ -72,10 +71,29 @@ private slots:
 	* @note
 	*/
 	void OnPlay(QString strFile);
-
+    /**
+     * @brief	视频宽高发生变化
+     * 
+     * @param	nFrameWidth 宽
+     * @param	nFrameHeight 高
+     * @return	
+     * @note 	
+     */
+    void OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight);
 private:
-	//连接信号槽
+	/**
+	 * @brief	连接信号槽	
+	 */
 	bool ConnectSignalSlots();
+    /**
+    * @brief	调整显示画面的宽高，使画面保持原比例
+    *
+    * @param	nFrameWidth 视频宽
+    * @param	nFrameWHeight 视频高
+    * @return
+    * @note
+    */
+    void AdjustDisplay(int nFrameWidth, int nFrameHeight);
 signals:
     void SigAddFile(QString strFileName);///< 增加视频文件
 	void SigPlay(QString strFile); ///<播放
@@ -85,6 +103,9 @@ private:
     Ui::DisplayWid *ui;
 
     VideoCtl *m_VideoCtl;	///< 视频控制
+
+    int m_nLastFrameWidth; ///< 记录视频宽高
+    int m_nLastFrameHeight;
 };
 
 #endif // DISPLAY_H

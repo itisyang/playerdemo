@@ -28,6 +28,8 @@ void VideoDec::run()
 	AVPacket pkt;
 	AVFrame *picture = av_frame_alloc();
 	SwsContext *pSwsContext = nullptr;
+
+
     while (m_bRunning)
     {
 // 		QTime t;
@@ -58,11 +60,19 @@ void VideoDec::run()
 		int nWidth = frame->width;
 		int nHeight = frame->height;
 
+
 		if (nWidth == 0 || nHeight == 0)
 		{
 			continue;
 		}
 
+		if (nLastFrameWidth != nWidth || nLastFrameHeight != nHeight)
+		{
+			nLastFrameWidth = nWidth;
+			nLastFrameHeight = nHeight;
+
+			emit SigFrameDimensionsChanged(nLastFrameWidth, nLastFrameHeight);
+		}
 
 		uint8_t *out_buffer = nullptr;
 		try

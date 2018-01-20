@@ -13,6 +13,7 @@ CtrlBar::CtrlBar(QWidget *parent) :
     ui->setupUi(this);
 
     InitUi();
+    ConnectSignalSlots();
 }
 
 CtrlBar::~CtrlBar()
@@ -27,10 +28,32 @@ bool CtrlBar::InitUi()
     GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
     GlobalHelper::SetIcon(ui->StopBtn, 12, QChar(0xf04d));
     GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
-    GlobalHelper::SetIcon(ui->MenuBtn, 12, QChar(0xf038));
+    GlobalHelper::SetIcon(ui->PlaylistCtrlBtn, 12, QChar(0xf038));
     GlobalHelper::SetIcon(ui->ForwardBtn, 12, QChar(0xf051));
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
 
     return true;
 
+}
+
+bool CtrlBar::ConnectSignalSlots()
+{
+    QList<bool> listRet;
+    bool bRet;
+
+
+    bRet = connect(ui->PlaylistCtrlBtn, SIGNAL(clicked()), this, SIGNAL(SigShowOrHidePlaylist()));
+    listRet.append(bRet);
+
+
+
+    for (bool bReturn : listRet)
+    {
+        if (bReturn == false)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }

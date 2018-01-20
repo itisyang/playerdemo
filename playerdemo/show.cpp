@@ -42,7 +42,7 @@ void Show::AdjustDisplay(int nFrameWidth, int nFrameHeight)
 {
     m_nLastFrameWidth = nFrameWidth;
     m_nLastFrameHeight = nFrameHeight;
-    qDebug() << "Show::AdjustDisplay" << nFrameWidth << nFrameHeight;
+    
     if (nFrameWidth == 0 || nFrameHeight == 0)
     {
         qDebug() << "nFrameWidth == 0 || nFrameHeight == 0";
@@ -50,8 +50,6 @@ void Show::AdjustDisplay(int nFrameWidth, int nFrameHeight)
     }
 	else if (nFrameHeight * width() >= nFrameWidth * height())
 	{   //当前供显示的区域，高偏小，以高为标准，高全部显示
-        qDebug() << "width() * nFrameHeight >= height() * nFrameWidth";
-
         int nShowHeight = height();
         int nShowWidth = height() * nFrameWidth / nFrameHeight;
 		

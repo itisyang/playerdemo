@@ -31,7 +31,16 @@ public:
 	 * @note 	
 	 */
     bool InitUi();
-
+    /**
+     * @brief	连接信号槽
+     * 
+     * @param	
+     * @return	
+     * @note 	
+     */
+    bool ConnectSignalSlots();
+signals:
+    void SigShowOrHidePlaylist();	//< 显示或隐藏信号
 private:
     Ui::CtrlBar *ui;
 };

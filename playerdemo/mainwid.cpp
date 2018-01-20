@@ -178,11 +178,14 @@ bool MainWid::ConnectSignalSlots()
 
 	bRet = connect(ui->ShowWid, SIGNAL(SigAddFile(QString)), ui->PlaylistWid, SLOT(OnAddFile(QString)));
 	listRet.append(bRet);
-// 	bRet = connect(m_pPlaylistCtrlBar, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
-// 	listRet.append(bRet);
+
 
 	bRet = connect(this, SIGNAL(SigFullScreen()), ui->ShowWid, SIGNAL(SigFullScreen()));
 	listRet.append(bRet);
+
+	bRet = connect(ui->CtrlBarWid, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
+	listRet.append(bRet);
+    
 
 	for (bool bReturn : listRet)
 	{
@@ -298,6 +301,6 @@ void MainWid::OnShowOrHidePlaylist()
          ui->PlaylistWid->hide();
      }
 
-     OnAdjustUi();
+     //OnAdjustUi();
 }
 

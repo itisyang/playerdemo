@@ -1,17 +1,15 @@
 # playerdemo
-A simple video player demo
+一个全功能的播放器demo
 
-## introduction
-- based on FFmpeg 3.3.3
-- developed by VS2017 and Qt5.9.3 64bit
-- powered by itisyang
+## 简介
+- 使用FFmpeg解码，SDL2渲染
+- 在Windows下使用VS2017和Qt5.9.3开发(X64)
 
-## usage
-- This project has .sln and .pro file, .sln for Windows, .pro for Linux
-- If you need to compile the code，in addition to install VS+Qt，you have to download FFmpeg's DLL and SDL2's DLL(64bit)
-- Put your DLL on the .\bin directory
+## 使用
+- 工程中包含.sln和.pro文件,其中.sln用于Windows环境,.pro用于Linux环境
+- 如果要编译工程代码，在Windows下除了安装VS+Qt，还需要下载FFmpeg和SDL2的动态库(64bit)，将这些动态库文件放在.\bin目录下面
 
-## contact way
-- email: itisyang@126.com or itisyang@gmail.com
+## 沟通
+- 邮件: itisyang@gmail.com
 
-## error log
+## 错误记录

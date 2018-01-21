@@ -1,10 +1,21 @@
-﻿#include "VideoCtl.h"
+﻿/*
+ * @file 	videoctl.cpp
+ * @date 	2018/01/21 12:15
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	视频控制类
+ * @note
+ */
+
 #include <QThread>
 #include <QDebug>
 
+#include "VideoCtl.h"
+
 # pragma execution_character_set("utf-8")
 
-const QString VideoCtl::strProgrameBirthYear = "2017";
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
 {
@@ -154,7 +165,6 @@ VideoDataOprator *VideoCtl::GetVideoDataOprator()
 
 bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex)
 {
-    AVFormatContext *ic = VideoCtl::GetInstance()->GetAVFormatCtx();
     AVCodecContext *avctx = nullptr;
     AVCodec *codec;
 
@@ -167,14 +177,14 @@ bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex,
             return false;
         }
             
-        avcodec_parameters_to_context(avctx, ic->streams[nVideoStreamIndex]->codecpar);
-        av_codec_set_pkt_timebase(avctx, ic->streams[nVideoStreamIndex]->time_base);
+        avcodec_parameters_to_context(avctx, m_pAVFormatContext->streams[nVideoStreamIndex]->codecpar);
+        av_codec_set_pkt_timebase(avctx, m_pAVFormatContext->streams[nVideoStreamIndex]->time_base);
         //寻找解码器
         codec = avcodec_find_decoder(avctx->codec_id);
         avcodec_open2(avctx, codec, nullptr);
 
         m_VideoDec.video_stream = nVideoStreamIndex;
-        m_VideoDec.video_st = ic->streams[nVideoStreamIndex];
+        m_VideoDec.video_st = m_pAVFormatContext->streams[nVideoStreamIndex];
         m_VideoDec.video_avctx = avctx;
     }
 

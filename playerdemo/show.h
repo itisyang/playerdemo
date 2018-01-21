@@ -27,7 +27,7 @@ class Show : public QWidget
     Q_OBJECT
 
 public:
-    explicit Show(QWidget *parent = 0);
+    Show(QWidget *parent);
     ~Show();
 	/**
 	 * @brief	初始化

@@ -2,9 +2,9 @@
     <qresource prefix="/">
         <file>Resources/fontawesome-webfont.ttf</file>
         <file>Resources/qss/ctrlbar.css</file>
-        <file>Resources/qss/displaywid.css</file>
         <file>Resources/qss/mainwid.css</file>
         <file>Resources/qss/playlist.css</file>
         <file>Resources/qss/title.css</file>
+        <file>Resources/qss/show.css</file>
     </qresource>
 </RCC>

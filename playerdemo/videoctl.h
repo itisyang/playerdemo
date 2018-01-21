@@ -18,13 +18,12 @@
 
 #include "globalhelper.h"
 
-
 #include "readfile.h"
 #include "videodec.h"
 #include "audiodec.h"
 #include "subtitledec.h"
 #include "videodataoprator.h"
-#include <playthread.h>
+#include "playthread.h"
 
 //单例模式
 class VideoCtl : public QObject
@@ -118,10 +117,8 @@ private:
 
 	PlayThread m_PlayThread;	//< 播放线程
 
-    static const QString strProgrameBirthYear;//< 程序初始创建年
 
     AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
-
 
 };
 

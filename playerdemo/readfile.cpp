@@ -44,6 +44,8 @@ void ReadFile::run()
 		qDebug() << buf;
         return;
     }
+    av_format_inject_global_side_data(ic);
+
     if (avformat_find_stream_info(ic, nullptr) < 0)
     {
         emit SigPlayMsg("Couldn't find stream information.");

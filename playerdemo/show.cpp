@@ -13,7 +13,7 @@ Show::Show(QWidget *parent) :
     ui->setupUi(this);
 
     //加载样式
-    setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/displaywid.css"));
+    setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/show.css"));
     setAcceptDrops(true);
 
     m_VideoCtl = VideoCtl::GetInstance();

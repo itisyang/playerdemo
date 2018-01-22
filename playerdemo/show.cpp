@@ -1,4 +1,15 @@
-﻿#include <QDebug>
+﻿/*
+ * @file 	show.cpp
+ * @date 	2018/01/22 23:07
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	显示控件
+ * @note
+ */
+
+#include <QDebug>
 #include "show.h"
 #include "ui_show.h"
 

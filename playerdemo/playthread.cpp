@@ -1,4 +1,15 @@
-﻿#include <QDebug>
+﻿/*
+ * @file 	playthread.cpp
+ * @date 	2018/01/22 23:07
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	播放渲染线程
+ * @note
+ */
+
+#include <QDebug>
 #include <QTime>
 
 #include "playthread.h"
@@ -35,6 +46,7 @@ void PlayThread::OnStarPlay(WId wid)
 void PlayThread::OnFullScreen()
 {
 	m_bIsFullScreen = !m_bIsFullScreen;
+    //SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	if (SDL_SetWindowFullscreen(window, m_bIsFullScreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) == 0)
 	{
 		qDebug() << "全屏成功";

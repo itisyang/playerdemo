@@ -5,7 +5,7 @@
  * @author 	itisyang
  * @Contact	itisyang@gmail.com
  *
- * @brief 	标题栏控件
+ * @brief 	播放器标题栏
  * @note
  */
 #ifndef MAINWIDTITLE_H

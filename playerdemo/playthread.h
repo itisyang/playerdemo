@@ -5,7 +5,7 @@
  * @author 	itisyang
  * @Contact	itisyang@gmail.com
  *
- * @brief 	控制播放进度
+ * @brief 	播放渲染线程
  * @note
  */
 

@@ -1,3 +1,14 @@
+/*
+ * @file 	title.cpp
+ * @date 	2018/01/22 23:08
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	播放器标题栏
+ * @note
+ */
+
 #include <QPainter>
 
 #include "title.h"

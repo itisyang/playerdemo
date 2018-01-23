@@ -56,6 +56,15 @@ protected:
      * @note
      */
     void resizeEvent(QResizeEvent *event);
+
+    /**
+     * @brief	按键事件
+     * 
+     * @param	
+     * @return	
+     * @note 	
+     */
+    void keyPressEvent(QKeyEvent *event);
 private slots:
 	/**
 	 * @brief	显示信息

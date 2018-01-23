@@ -27,10 +27,7 @@ public slots:
 	 */
 	void OnStarPlay(WId wid);
 private slots:
-	/**
-	 * @brief	全屏
-	 */
-	void OnFullScreen();
+
 private:
 	/**
 	* @brief	线程入口

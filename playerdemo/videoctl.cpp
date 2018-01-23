@@ -86,8 +86,6 @@ bool VideoCtl::ConnectSignalSlots()
 	qRegisterMetaType<WId>("WId");
 	bRet = connect(this, SIGNAL(SigStartPlay(WId)), &m_PlayThread, SLOT(OnStarPlay(WId)));
 	listRet.append(bRet);
-	bRet = connect(this, SIGNAL(SigFullScreen()), &m_PlayThread, SLOT(OnFullScreen()));
-	listRet.append(bRet);
 
     bRet = connect(&m_PlayThread, SIGNAL(SigFrameDimensionsChanged(int, int)), this, SIGNAL(SigFrameDimensionsChanged(int, int)));
     listRet.append(bRet);
@@ -168,6 +166,7 @@ bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex,
     AVCodecContext *avctx = nullptr;
     AVCodec *codec;
 
+    qDebug() << "StreamComponentOpen" << nVideoStreamIndex << nAudioStreamIndex << nSubtitleStreamIndex;
     if (nVideoStreamIndex >= 0)
     {
         //初始化结构体
@@ -176,7 +175,8 @@ bool VideoCtl::StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex,
         {
             return false;
         }
-            
+//         avformat_match_stream_specifier
+//         av_find_best_stream
         avcodec_parameters_to_context(avctx, m_pAVFormatContext->streams[nVideoStreamIndex]->codecpar);
         av_codec_set_pkt_timebase(avctx, m_pAVFormatContext->streams[nVideoStreamIndex]->time_base);
         //寻找解码器

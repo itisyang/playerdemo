@@ -40,12 +40,14 @@ protected:
     //void dragEnterEvent(QDragEnterEvent *event);
     //void dragMoveEvent(QDragMoveEvent *event);
     //void dropEvent(QDropEvent *event);
+
+    //按键事件
+    void keyPressEvent(QKeyEvent *event);
 private:
 
     //连接信号槽
     bool ConnectSignalSlots();
-	//按键事件
-	void keyPressEvent(QKeyEvent *event);
+
 private slots:
     //关闭、最小化、最大化按钮响应
     void OnCloseBtnClicked();
@@ -56,6 +58,11 @@ private slots:
 
     //调整窗口模块
     void OnAdjustUi();
+
+    /**
+    * @brief	全屏播放
+    */
+    void OnFullScreenPlay();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -73,6 +80,8 @@ private:
 //     PlaylistCtrlBar *m_pPlaylistCtrlBar; ///< 播放列表控制按钮
 
     const int m_nShadowWidth; ///< 阴影宽度
+
+    bool m_bFullScreenPlay; ///< 全屏播放标志
 };
 
 #endif // MainWid_H

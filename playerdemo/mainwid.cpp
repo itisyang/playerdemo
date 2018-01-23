@@ -69,6 +69,7 @@ MainWid::MainWid(QWidget *parent) :
 
     m_bPlaying = false;
 
+    m_bFullScreenPlay = false;
 
 }
 
@@ -179,6 +180,9 @@ bool MainWid::ConnectSignalSlots()
 	bRet = connect(ui->ShowWid, SIGNAL(SigAddFile(QString)), ui->PlaylistWid, SLOT(OnAddFile(QString)));
 	listRet.append(bRet);
 
+    bRet = connect(ui->ShowWid, SIGNAL(SigFullScreen()), this, SLOT(OnFullScreenPlay()));
+    listRet.append(bRet);
+
 
 	bRet = connect(this, SIGNAL(SigFullScreen()), ui->ShowWid, SIGNAL(SigFullScreen()));
 	listRet.append(bRet);
@@ -198,6 +202,7 @@ bool MainWid::ConnectSignalSlots()
 	return true;
 }
 
+
 void MainWid::keyPressEvent(QKeyEvent *event)
 {
 // 	    // 是否按下Ctrl键      特殊按键
@@ -210,7 +215,8 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 	switch (event->key())
 	{
 	case Qt::Key_F://全屏
-		emit SigFullScreen();
+/*		emit SigFullScreen();*/
+        OnFullScreenPlay();
 		break;
 	default:
 		break;
@@ -264,6 +270,22 @@ void MainWid::OnAdjustUi()
     m_pCtrlBar->move(m_nShadowWidth, height() - 80 - m_nShadowWidth);
     m_pCtrlBar->setFixedSize(width() - m_nShadowWidth * 2, 80);
 #endif
+}
+
+void MainWid::OnFullScreenPlay()
+{
+    if (m_bFullScreenPlay == false)
+    {
+        m_bFullScreenPlay = true;
+        ui->ShowWid->setWindowFlags(Qt::Window);
+        ui->ShowWid->showFullScreen();
+    }
+    else
+    {
+        m_bFullScreenPlay = false;
+        ui->ShowWid->setWindowFlags(Qt::SubWindow);
+        ui->ShowWid->showFullScreen();
+    }
 }
 
 void MainWid::OnCloseBtnClicked()

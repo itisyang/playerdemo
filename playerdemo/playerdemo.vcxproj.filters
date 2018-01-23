@@ -81,12 +81,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_playlist.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_playlistctrlbar.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_playlistctrlbar.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_readfile.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -133,9 +127,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="playlist.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="playlistctrlbar.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="title.cpp">
@@ -191,9 +182,6 @@
     <CustomBuild Include="playlist.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="playlistctrlbar.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="title.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
@@ -207,9 +195,6 @@
       <Filter>UI</Filter>
     </CustomBuild>
     <CustomBuild Include="playlist.h">
-      <Filter>UI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="playlistctrlbar.h">
       <Filter>UI</Filter>
     </CustomBuild>
     <CustomBuild Include="title.h">
@@ -254,9 +239,6 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_playlist.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_playlistctrlbar.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_title.h">

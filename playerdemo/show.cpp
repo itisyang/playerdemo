@@ -54,9 +54,9 @@ void Show::AdjustDisplay(int nFrameWidth, int nFrameHeight)
     m_nLastFrameWidth = nFrameWidth;
     m_nLastFrameHeight = nFrameHeight;
     
+    //qDebug() << nFrameWidth << nFrameHeight;
     if (nFrameWidth == 0 || nFrameHeight == 0)
     {
-        qDebug() << "nFrameWidth == 0 || nFrameHeight == 0";
         ui->label->setGeometry(0, 0, width(), height());
     }
 	else if (nFrameHeight * width() >= nFrameWidth * height())
@@ -97,6 +97,18 @@ void Show::resizeEvent(QResizeEvent *event)
     AdjustDisplay(m_nLastFrameWidth, m_nLastFrameHeight);
 }
 
+void Show::keyPressEvent(QKeyEvent *event)
+{
+    switch (event->key())
+    {
+    case Qt::Key_F://全屏
+        emit SigFullScreen();
+        break;
+    default:
+        break;
+    }
+}
+
 void Show::OnDisplayMsg(QString strMsg)
 {
 	qDebug() << "Show::OnDisplayMsg " << strMsg;
@@ -125,8 +137,8 @@ bool Show::ConnectSignalSlots()
 	bRet = connect(this, SIGNAL(SigPlay(QString)), this, SLOT(OnPlay(QString)));
 	listRet.append(bRet);
 
-	bRet = connect(this, SIGNAL(SigFullScreen()), m_VideoCtl, SIGNAL(SigFullScreen()));
-	listRet.append(bRet);
+	//bRet = connect(this, SIGNAL(SigFullScreen()), m_VideoCtl, SIGNAL(SigFullScreen()));
+	//listRet.append(bRet);
 
 	for (bool bReturn : listRet)
 	{

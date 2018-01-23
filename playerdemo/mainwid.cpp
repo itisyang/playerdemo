@@ -183,10 +183,6 @@ bool MainWid::ConnectSignalSlots()
     bRet = connect(ui->ShowWid, SIGNAL(SigFullScreen()), this, SLOT(OnFullScreenPlay()));
     listRet.append(bRet);
 
-
-	bRet = connect(this, SIGNAL(SigFullScreen()), ui->ShowWid, SIGNAL(SigFullScreen()));
-	listRet.append(bRet);
-
 	bRet = connect(ui->CtrlBarWid, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
 	listRet.append(bRet);
     
@@ -215,7 +211,7 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 	switch (event->key())
 	{
 	case Qt::Key_F://全屏
-/*		emit SigFullScreen();*/
+
         OnFullScreenPlay();
 		break;
 	default:
@@ -274,6 +270,7 @@ void MainWid::OnAdjustUi()
 
 void MainWid::OnFullScreenPlay()
 {
+    qDebug() << "MainWid::OnFullScreenPlay()";
     if (m_bFullScreenPlay == false)
     {
         m_bFullScreenPlay = true;

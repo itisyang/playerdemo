@@ -73,7 +73,6 @@ signals:
 	void SigStartPlay(WId wid);		//< 开始播放显示信号
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigImage(QPixmap& img);	//< 一帧图像
-	void SigFullScreen();			//< 全屏播放
 
     void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
 public slots:

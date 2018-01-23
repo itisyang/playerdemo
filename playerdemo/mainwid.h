@@ -66,8 +66,6 @@ private slots:
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
-	//全屏播放
-	void SigFullScreen();
 private:
     Ui::MainWid *ui;
 

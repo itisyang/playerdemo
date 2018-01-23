@@ -4,7 +4,7 @@
 #include "videoctl.h"
 
 # pragma execution_character_set("utf-8")
-
+f
 ReadFile::ReadFile()
 {
     m_pFormatCtx = nullptr;
@@ -13,12 +13,15 @@ ReadFile::ReadFile()
 void ReadFile::run()
 {
     int err, i, ret;
-    int nVideoIndex = -1;
-    int nAudioIndex = -1;
-    int nSubtitleIndex = -1;
+
     AVFormatContext *ic = nullptr;
 
     AVPacket pkt1, *pkt = &pkt1;
+
+    int st_index[AVMEDIA_TYPE_NB];
+
+    qDebug() << sizeof(st_index);
+    memset(st_index, -1, sizeof(st_index));
 
     qDebug() << "ReadFile Thread ID:" << QThread::currentThreadId();
 
@@ -51,37 +54,42 @@ void ReadFile::run()
         emit SigPlayMsg("Couldn't find stream information.");
         return ;
     }
-    for (i = 0; i< ic->nb_streams; i++)
-    {
-        if(ic->streams[i]->codec->codec_type==AVMEDIA_TYPE_VIDEO)
-        {
-            nVideoIndex=i;
-        }
-        else if(ic->streams[i]->codec->codec_type==AVMEDIA_TYPE_AUDIO)
-        {
-            nAudioIndex=i;
-        }
-        else if(ic->streams[i]->codec->codec_type==AVMEDIA_TYPE_SUBTITLE)
-        {
-            nSubtitleIndex=i;
-        }
-    }
 
-    emit SigPlayMsg("stream info:" + QString::number(nVideoIndex)
-                    + " " + QString::number(nAudioIndex)
-                    + " " + QString::number(nSubtitleIndex));
+    //获得视频、音频、字幕的流索引
+    st_index[AVMEDIA_TYPE_VIDEO] =
+        av_find_best_stream(ic, AVMEDIA_TYPE_VIDEO,
+            st_index[AVMEDIA_TYPE_VIDEO], -1, NULL, 0);
+    st_index[AVMEDIA_TYPE_AUDIO] =
+        av_find_best_stream(ic, AVMEDIA_TYPE_AUDIO,
+            st_index[AVMEDIA_TYPE_AUDIO],
+            st_index[AVMEDIA_TYPE_VIDEO],
+            NULL, 0);
+    st_index[AVMEDIA_TYPE_SUBTITLE] =
+        av_find_best_stream(ic, AVMEDIA_TYPE_SUBTITLE,
+            st_index[AVMEDIA_TYPE_SUBTITLE],
+            (st_index[AVMEDIA_TYPE_AUDIO] >= 0 ?
+                st_index[AVMEDIA_TYPE_AUDIO] :
+                st_index[AVMEDIA_TYPE_VIDEO]),
+            NULL, 0);
 
-    VideoCtl::GetInstance()->StreamComponentOpen(nVideoIndex, nAudioIndex, nSubtitleIndex);
+
+    emit SigPlayMsg("stream info:" + QString::number(st_index[AVMEDIA_TYPE_VIDEO])
+                    + " " + QString::number(st_index[AVMEDIA_TYPE_AUDIO])
+                    + " " + QString::number(st_index[AVMEDIA_TYPE_SUBTITLE]));
+
+    VideoCtl::GetInstance()->StreamComponentOpen(st_index[AVMEDIA_TYPE_VIDEO], 
+        st_index[AVMEDIA_TYPE_AUDIO], 
+        st_index[AVMEDIA_TYPE_SUBTITLE]);
     // 发送解码信号
-    if (nVideoIndex >= 0)
+    if (st_index[AVMEDIA_TYPE_VIDEO] >= 0)
     {
         emit SigStartVideoDec();
     }
-    if (nAudioIndex >= 0)
+    if (st_index[AVMEDIA_TYPE_AUDIO] >= 0)
     {
         emit SigStartAudioDec();
     }
-    if (nSubtitleIndex >= 0)
+    if (st_index[AVMEDIA_TYPE_SUBTITLE] >= 0)
     {
         emit SigStartSubtitleDec();
     }
@@ -101,7 +109,7 @@ void ReadFile::run()
         }
 
         //按数据帧的类型存放至对应队列
-        if (pkt->stream_index == nVideoIndex) {
+        if (pkt->stream_index == st_index[AVMEDIA_TYPE_VIDEO]) {
 			while (1)
 			{
 				if (pVideoDataOprator->PutData(pkt, VIDEO_DATA) == true)

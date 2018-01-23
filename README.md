@@ -1,5 +1,5 @@
 # playerdemo
-一个全功能的播放器demo
+开源版potplayer
 
 ## 简介
 - 使用FFmpeg解码，SDL2渲染

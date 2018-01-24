@@ -30,6 +30,9 @@ Show::Show(QWidget *parent) :
     m_VideoCtl = VideoCtl::GetInstance();
 
 	Init();
+    //防止过度刷新显示
+    this->setAttribute(Qt::WA_OpaquePaintEvent);
+    //ui->label->setAttribute(Qt::WA_OpaquePaintEvent);
 
     m_nLastFrameWidth = 0; ///< 记录视频宽高
     m_nLastFrameHeight = 0;

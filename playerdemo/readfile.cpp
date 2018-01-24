@@ -4,7 +4,7 @@
 #include "videoctl.h"
 
 # pragma execution_character_set("utf-8")
-f
+
 ReadFile::ReadFile()
 {
     m_pFormatCtx = nullptr;

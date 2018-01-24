@@ -15,6 +15,7 @@
 #include <QObject>
 #include <QMutex>
 #include <QByteArray>
+#include <QWaitCondition> 
 #include "globalhelper.h"
 
 
@@ -103,6 +104,7 @@ private:
     // V-Video  A-Audio S-Subtitle
     //解码前
     QMutex m_mutexAVPacketV;
+    QWaitCondition m_condAVPacketV;
     QMutex m_mutexA;
     QMutex m_mutexS;
 	QVector<AVPacket*> m_VectorAVPacketV;
@@ -112,6 +114,7 @@ private:
     QList<AVPacket> m_listS;
     //解码后
     QMutex m_mutexAVFrameV;
+    QWaitCondition m_condAVFrameV;
     QMutex m_mutexADec;
     QMutex m_mutexSDec;
     QList<AVFrame*> m_ListAVFrameV;

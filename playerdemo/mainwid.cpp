@@ -5,6 +5,7 @@
 #include <QAbstractItemView>
 #include <QMimeData>
 #include <QSizeGrip>
+#include <QWindow>
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
@@ -275,6 +276,8 @@ void MainWid::OnFullScreenPlay()
     {
         m_bFullScreenPlay = true;
         ui->ShowWid->setWindowFlags(Qt::Window);
+        //多屏情况下，在当前屏幕全屏
+        ui->ShowWid->windowHandle()->setScreen(qApp->screens().last());
         ui->ShowWid->showFullScreen();
     }
     else

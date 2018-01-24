@@ -104,7 +104,7 @@ void Show::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key())
     {
-    case Qt::Key_F://全屏
+    case Qt::Key_Return://全屏
         emit SigFullScreen();
         break;
     default:

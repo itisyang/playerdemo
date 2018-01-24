@@ -83,20 +83,7 @@ signals:
 
 public slots:
 private:
-    bool PutDataVideo(AVPacket* pkt);
-    bool GetDataVideo(AVPacket& pkt);
-    bool PutDataDecVideo(AVFrame* frame);
-    bool GetDataDecVideo(AVFrame& frame);
 
-    bool PutDataAudio(AVPacket* pkt);
-    bool GetDataAudio(AVPacket* pkt);
-    bool PutDataDecAudio(AVFrame* frame);
-    bool GetDataDecAudio(AVFrame& frame);
-
-    bool PutDataSubtitle(AVPacket* pkt);
-    bool GetDataSubtitle(AVPacket* pkt);
-    bool PutDataDecSubtitle(AVFrame* frame);
-    bool GetDataDecSubtitle(AVFrame& frame);
 private:
 
     const int m_nMaxNumFrameCache;//缓存帧数

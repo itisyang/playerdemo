@@ -18,44 +18,67 @@ bool VideoDataOprator::Init()
 
 bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
 {
+    bool bRet = true;
+
     switch (type) {
     case VIDEO_DATA:
-		if (PutDataVideo(pkt) == false)
-		{
-			return false;
-		}
+        if (m_listAVPacketV.size() < m_nMaxNumFrameCache)
+        {
+            m_mutexAVPacketV.lock();
+
+            AVPacket *pAVPacket = new AVPacket;
+            memcpy(pAVPacket, pkt, sizeof(AVPacket));
+            m_listAVPacketV.append(pAVPacket);
+
+            m_condAVPacketV.wakeOne();
+
+            m_mutexAVPacketV.unlock();
+        }
+        else
+        {
+            bRet = false;
+        }
         break;
     case AUDIO_DATA:
-        if (PutDataAudio(pkt) == false)
-		{
-			return false;
-		}
+
         break;
     case SUBTITLE_DATA:
-        if (PutDataSubtitle(pkt) == false)
-		{
-			return false;
-		}
+
         break;
     default:
         break;
     }
 
-    return true;
+    return bRet;
 }
 
 bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
 {
-	bool bRet = false;
+	bool bRet = true;
     switch (type) {
     case VIDEO_DATA:
-		bRet = GetDataVideo(pkt);
+        //获取视频数据帧
+    {
+        m_mutexAVPacketV.lock();
+        if (m_listAVPacketV.size() <= 0)
+        {
+            m_condAVPacketV.wait(&m_mutexAVPacketV);
+        }
+
+        AVPacket* pAVPacket = m_listAVPacketV.takeFirst();
+        m_mutexAVPacketV.unlock();
+
+        memcpy(&pkt, pAVPacket, sizeof(AVPacket));
+        delete pAVPacket;
+        pAVPacket = nullptr;
+    }
+
         break;
     case AUDIO_DATA:
-        //GetDataAudio(pkt);
+        
         break;
     case SUBTITLE_DATA:
-        //GetDataSubtitle(pkt);
+        
         break;
     default:
         break;
@@ -66,16 +89,36 @@ bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
 //存放解码数据
 bool VideoDataOprator::PutDataDec(AVFrame *frame, DATA_TYPE type)
 {
-	bool bRet = false;
+	bool bRet = true;
     switch (type) {
     case VIDEO_DATA:
-		bRet = PutDataDecVideo(frame);
-		break;
+    {
+        if (m_ListAVFrameV.size() < m_nMaxNumFrameCache)
+        {
+            m_mutexAVFrameV.lock();
+
+            AVFrame *pAVFrame = new AVFrame;
+            memcpy(pAVFrame, frame, sizeof(AVFrame));
+            m_ListAVFrameV.append(pAVFrame);
+
+            m_condAVFrameV.wakeOne();
+
+            m_mutexAVFrameV.unlock();
+
+        }
+        else
+        {
+            bRet = false;
+        }
+    }
+    
+    break;
+    
     case AUDIO_DATA:
-		bRet = PutDataDecAudio(frame);
-		break;
+	
+        break;
     case SUBTITLE_DATA:
-		bRet = PutDataDecSubtitle(frame);
+		
         break;
     default:
         break;
@@ -86,223 +129,36 @@ bool VideoDataOprator::PutDataDec(AVFrame *frame, DATA_TYPE type)
 //获取解码数据
 bool VideoDataOprator::GetDataDec(AVFrame &frame, DATA_TYPE type)
 {
-	bool bRet = false;
+	bool bRet = true;
     switch (type) {
     case VIDEO_DATA:
-		bRet = GetDataDecVideo(frame);
-		break;
+    {
+        //取出解码后的视频帧
+        m_mutexAVFrameV.lock();
+        if (m_ListAVFrameV.size() <= 0)
+        {
+            m_condAVFrameV.wait(&m_mutexAVFrameV);
+        }
+
+        AVFrame* pAVFrame = m_ListAVFrameV.takeFirst();
+        m_mutexAVFrameV.unlock();
+
+        memcpy(&frame, pAVFrame, sizeof(AVFrame));
+        delete pAVFrame;
+        pAVFrame = nullptr;
+    }
+
+    break;
+    
     case AUDIO_DATA:
-		bRet = GetDataDecAudio(frame);
+		
 		break;
     case SUBTITLE_DATA:
-		bRet = GetDataDecSubtitle(frame);
+		
 		break;
     default:
 		return false;
     }
 
 	return bRet;
-}
-
-bool VideoDataOprator::PutDataVideo(AVPacket *pkt)
-{
-	if (m_listAVPacketV.size() < m_nMaxNumFrameCache)
-	{
-        m_mutexAVPacketV.lock();
-
-        AVPacket *pAVPacket = new AVPacket;
-        memcpy(pAVPacket, pkt, sizeof(AVPacket));
-        m_listAVPacketV.append(pAVPacket);
-		
-        m_condAVPacketV.wakeOne();
-
-        m_mutexAVPacketV.unlock();
-	}
-	else
-	{
-		return false;
-	}
-
-    return true;
-}
-
-bool VideoDataOprator::GetDataVideo(AVPacket& pkt)
-{
-    m_mutexAVPacketV.lock();
-    if (m_listAVPacketV.size() <= 0)
-    {
-        m_condAVPacketV.wait(&m_mutexAVPacketV);
-    }
-    //qDebug() << "m_listAVPacketV.takeFirst0";
-    AVPacket* pAVPacket = m_listAVPacketV.takeFirst();
-    //qDebug() << "m_listAVPacketV.takeFirst1";
-    m_mutexAVPacketV.unlock();
-
-    memcpy(&pkt, pAVPacket, sizeof(AVPacket));
-    delete pAVPacket;
-    pAVPacket = nullptr;
-
-	return true;
-}
-
-bool VideoDataOprator::PutDataDecVideo(AVFrame *frame)
-{
-	if (m_ListAVFrameV.size() < m_nMaxNumFrameCache)
-	{
-        m_mutexAVFrameV.lock();
-
-        AVFrame *pAVFrame = new AVFrame;
-        memcpy(pAVFrame, frame, sizeof(AVFrame));
-        m_ListAVFrameV.append(pAVFrame);
-
-        m_condAVFrameV.wakeOne();
-
-        m_mutexAVFrameV.unlock();
-
-	}
-	else
-	{
-		return false;
-	}
-
-    return true;
-}
-
-bool VideoDataOprator::GetDataDecVideo(AVFrame& frame)
-{
-    m_mutexAVFrameV.lock();
-    if (m_ListAVFrameV.size() <= 0)
-    {
-        m_condAVFrameV.wait(&m_mutexAVFrameV);
-    }
-	//qDebug() << "m_ListAVFrameV.takeFirst0";
-    AVFrame* pAVFrame = m_ListAVFrameV.takeFirst();
-	//qDebug() << "m_ListAVFrameV.takeFirst1";
-	m_mutexAVFrameV.unlock();
-
-	memcpy(&frame, pAVFrame, sizeof(AVFrame));
-	delete pAVFrame;
-	pAVFrame = nullptr;
-    
-	return true;
-}
-
-bool VideoDataOprator::PutDataAudio(AVPacket *pkt)
-{
-    if (m_mutexA.tryLock())
-    {
-        if (m_listA.size() < m_nMaxNumFrameCache)
-        {
-            m_listA.append(*pkt);
-        }
-
-        m_mutexA.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::GetDataAudio(AVPacket *pkt)
-{
-    if (m_mutexA.tryLock())
-    {
-        if (m_listA.size() > 0)
-        {
-            *pkt = m_listA.takeFirst();
-        }
-
-        m_mutexA.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::PutDataDecAudio(AVFrame *frame)
-{
-    if (m_mutexADec.tryLock())
-    {
-        if (m_ListADec.size() < m_nMaxNumFrameCache)
-        {
-            m_ListADec.append(*frame);
-        }
-
-        m_mutexADec.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::GetDataDecAudio(AVFrame &frame)
-{
-    if (m_mutexADec.tryLock())
-    {
-        if (m_ListADec.size() > 0)
-        {
-            frame = m_ListADec.takeFirst();
-        }
-
-        m_mutexADec.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::PutDataSubtitle(AVPacket *pkt)
-{
-    if (m_mutexS.tryLock())
-    {
-        if (m_listS.size() < m_nMaxNumFrameCache)
-        {
-            m_listS.append(*pkt);
-        }
-
-        m_mutexS.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::GetDataSubtitle(AVPacket *pkt)
-{
-    if (m_mutexS.tryLock())
-    {
-        if (m_listS.size() > 0)
-        {
-            *pkt = m_listS.takeFirst();
-        }
-
-        m_mutexS.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::PutDataDecSubtitle(AVFrame *frame)
-{
-    if (m_mutexSDec.tryLock())
-    {
-        if (m_ListSDec.size() < m_nMaxNumFrameCache)
-        {
-            m_ListSDec.append(*frame);
-        }
-
-        m_mutexSDec.unlock();
-    }
-
-    return true;
-}
-
-bool VideoDataOprator::GetDataDecSubtitle(AVFrame& frame)
-{
-    if (m_mutexSDec.tryLock())
-    {
-        if (m_ListSDec.size() > 0)
-        {
-            frame = m_ListSDec.takeFirst();
-        }
-
-        m_mutexSDec.unlock();
-    }
-
-    return true;
 }

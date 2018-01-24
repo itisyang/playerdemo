@@ -178,7 +178,7 @@ void PlayThread::run()
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		bRet = pVideoDataOprator->GetDataDec(*pAVframe, VIDEO_DATA);
+		bRet = pVideoDataOprator->GetAVFrameData(*pAVframe, VIDEO_DATA);
 		if (bRet == false)
 		{
 			continue;

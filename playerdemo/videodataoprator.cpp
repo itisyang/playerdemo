@@ -16,7 +16,7 @@ bool VideoDataOprator::Init()
 	return true;
 }
 
-bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
+bool VideoDataOprator::PutAVPacketData(AVPacket *pkt, DATA_TYPE type)
 {
     bool bRet = true;
 
@@ -52,7 +52,7 @@ bool VideoDataOprator::PutData(AVPacket *pkt, DATA_TYPE type)
     return bRet;
 }
 
-bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
+bool VideoDataOprator::GetAVPacketData(AVPacket& pkt, DATA_TYPE type)
 {
 	bool bRet = true;
     switch (type) {
@@ -87,7 +87,7 @@ bool VideoDataOprator::GetData(AVPacket& pkt, DATA_TYPE type)
     return bRet;
 }
 //存放解码数据
-bool VideoDataOprator::PutDataDec(AVFrame *frame, DATA_TYPE type)
+bool VideoDataOprator::PutAVFrameData(AVFrame *frame, DATA_TYPE type)
 {
 	bool bRet = true;
     switch (type) {
@@ -127,7 +127,7 @@ bool VideoDataOprator::PutDataDec(AVFrame *frame, DATA_TYPE type)
     return bRet;
 }
 //获取解码数据
-bool VideoDataOprator::GetDataDec(AVFrame &frame, DATA_TYPE type)
+bool VideoDataOprator::GetAVFrameData(AVFrame &frame, DATA_TYPE type)
 {
 	bool bRet = true;
     switch (type) {

@@ -35,7 +35,7 @@ void VideoDec::run()
 // 		QTime t;
 // 		t.start();
 
-        if (pVideoDataOprator->GetData(pkt, VIDEO_DATA) == false)
+        if (pVideoDataOprator->GetAVPacketData(pkt, VIDEO_DATA) == false)
         {
             msleep(10);
             continue;
@@ -48,8 +48,8 @@ void VideoDec::run()
 
 		if (got_frame != 0)
 		{
-			//pVideoDataOprator->PutDataDec(frame, VIDEO_DATA);
-			while (pVideoDataOprator->PutDataDec(frame, VIDEO_DATA) == false)
+			//pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA);
+			while (pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA) == false)
 			{
 				msleep(40);
 			}

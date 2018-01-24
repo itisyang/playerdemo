@@ -50,7 +50,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool PutData(AVPacket* pkt, DATA_TYPE type);
+    bool PutAVPacketData(AVPacket* pkt, DATA_TYPE type);
 	/**
 	 * @brief	获取原始数据
 	 * 
@@ -59,7 +59,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool GetData(AVPacket& pkt, DATA_TYPE type);
+    bool GetAVPacketData(AVPacket& pkt, DATA_TYPE type);
 	/**
 	 * @brief	存放解码数据
 	 * 
@@ -68,7 +68,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool PutDataDec(AVFrame* frame, DATA_TYPE type);
+    bool PutAVFrameData(AVFrame* frame, DATA_TYPE type);
 	/**
 	 * @brief	获取解码数据
 	 * 
@@ -77,7 +77,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool GetDataDec(AVFrame& frame, DATA_TYPE type);
+    bool GetAVFrameData(AVFrame& frame, DATA_TYPE type);
 
 signals:
 

@@ -112,7 +112,7 @@ void ReadFile::run()
         if (pkt->stream_index == st_index[AVMEDIA_TYPE_VIDEO]) {
 			while (1)
 			{
-				if (pVideoDataOprator->PutData(pkt, VIDEO_DATA) == true)
+				if (pVideoDataOprator->PutAVPacketData(pkt, VIDEO_DATA) == true)
 				{
 					//qDebug() << "读取一帧";
 					break;
@@ -125,9 +125,9 @@ void ReadFile::run()
             
             //emit SigPlayMsg("一帧");
 //        } else if (pkt->stream_index == nAudioIndex) {
-//            pVideoDataOprator->PutData(pkt, AUDIO_DATA);
+//            pVideoDataOprator->PutAVPacketData(pkt, AUDIO_DATA);
 //        } else if (pkt->stream_index == nSubtitleIndex) {
-//            pVideoDataOprator->PutData(pkt, SUBTITLE_DATA);
+//            pVideoDataOprator->PutAVPacketData(pkt, SUBTITLE_DATA);
         } else {
             av_packet_unref(pkt);
         }

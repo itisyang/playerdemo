@@ -6,6 +6,7 @@
 #include <QMimeData>
 #include <QSizeGrip>
 #include <QWindow>
+#include <QDesktopWidget>
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
@@ -170,6 +171,8 @@ bool MainWid::ConnectSignalSlots()
 	listRet.append(bRet);
 	bRet = connect(ui->TitleWid, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
 	listRet.append(bRet);
+    bRet = connect(ui->TitleWid, SIGNAL(SigFullScreenBtnClicked()), this, SLOT(OnFullScreenPlay()));
+    listRet.append(bRet);
 	bRet = connect(this, SIGNAL(SigShowMax(bool)), ui->TitleWid, SLOT(OnChangeMaxBtnStyle(bool)));
 	listRet.append(bRet);
 	bRet = connect(ui->PlaylistWid, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
@@ -277,8 +280,10 @@ void MainWid::OnFullScreenPlay()
         m_bFullScreenPlay = true;
         ui->ShowWid->setWindowFlags(Qt::Window);
         //多屏情况下，在当前屏幕全屏
-        ui->ShowWid->windowHandle()->setScreen(qApp->screens().last());
+        ui->ShowWid->windowHandle()->setScreen(qApp->screens().at(qApp->desktop()->screenNumber(this)));
+        
         ui->ShowWid->showFullScreen();
+
     }
     else
     {

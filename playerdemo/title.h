@@ -43,6 +43,8 @@ signals:
     void SigMinBtnClicked();	//< 点击最小化按钮
     void SigMaxBtnClicked();	//< 点击最大化按钮
     void SigDoubleClicked();	//< 双击标题栏
+
+    void SigFullScreenBtnClicked(); ///< 点击全屏按钮
 private:
     Ui::Title *ui;
 

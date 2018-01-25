@@ -25,6 +25,7 @@ Title::Title(QWidget *parent) :
     connect(ui->CloseBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigCloseBtnClicked()));
     connect(ui->MinBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMinBtnClicked()));
     connect(ui->MaxBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMaxBtnClicked()));
+    connect(ui->FullScreenBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigFullScreenBtnClicked()));
 
     InitUi();
 }
@@ -47,6 +48,7 @@ bool Title::InitUi()
     GlobalHelper::SetIcon(ui->MinBtn, 9, QChar(0xf2d1));
     GlobalHelper::SetIcon(ui->CloseBtn, 9, QChar(0xf00d));
 
+    GlobalHelper::SetIcon(ui->FullScreenBtn, 9, QChar(0xf065));
     return true;
 }
 

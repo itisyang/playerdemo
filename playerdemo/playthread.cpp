@@ -115,16 +115,6 @@ int PlayThread::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsConte
 
 void PlayThread::run()
 {
-	qDebug() << "PlayThread::run";
-	//SDL_CreateWindowFrom
-	//SDL_GetWindowSize
-	//SDL_DestroyWindow
-
-	//SDL_UpdateYUVTexture
-	//SDL_UpdateTexture
-	//SDL_RenderCopyEx
-	//SDL_RenderCopy
-
 	bool bRet;
 
 	VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
@@ -173,7 +163,7 @@ void PlayThread::run()
 	QTime t;
 	while (m_bRunning)
 	{
-		t.restart();
+
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
@@ -214,13 +204,15 @@ void PlayThread::run()
 
 		SDL_RenderCopyEx(renderer, vid_texture, nullptr, nullptr, 0, nullptr, (flip_v ? SDL_FLIP_VERTICAL : SDL_FLIP_NONE));
 
-		SDL_RenderPresent(renderer);
-
-		int remaining_time = t.elapsed();
+        int remaining_time = t.elapsed();
 		if (remaining_time < 33 && remaining_time > 0)
 		{
             msleep(33 - t.elapsed());//30fps
 		}
+		SDL_RenderPresent(renderer);
+        t.restart();
+
+
 	}
 	
 	delete pAVframe;

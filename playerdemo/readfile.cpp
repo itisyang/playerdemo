@@ -96,6 +96,7 @@ void ReadFile::run()
 
 	VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
 
+
     while (m_bRunning)
     {
 // 		QTime t;
@@ -109,20 +110,12 @@ void ReadFile::run()
         }
 
         //按数据帧的类型存放至对应队列
-        if (pkt->stream_index == st_index[AVMEDIA_TYPE_VIDEO]) {
-			while (1)
-			{
-				if (pVideoDataOprator->PutAVPacketData(pkt, VIDEO_DATA) == true)
-				{
-					//qDebug() << "读取一帧";
-					break;
-				}
-				else
-				{
-					msleep(10);
-				}
-			}
-            
+        if (pkt->stream_index == st_index[AVMEDIA_TYPE_VIDEO]) 
+        {
+            while (pVideoDataOprator->PutAVPacketData(pkt, VIDEO_DATA) == false)
+            {
+                msleep(10);
+            }
             //emit SigPlayMsg("一帧");
 //        } else if (pkt->stream_index == nAudioIndex) {
 //            pVideoDataOprator->PutAVPacketData(pkt, AUDIO_DATA);

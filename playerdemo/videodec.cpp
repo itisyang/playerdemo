@@ -49,78 +49,15 @@ void VideoDec::run()
 		if (got_frame != 0)
 		{
 			//pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA);
+            //pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA);
 			while (pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA) == false)
 			{
-				msleep(40);
+                //qDebug() << "PutAVFrameData 失败";
+				msleep(10);
 			}
 		}
 
 		//qDebug("解码一帧消耗: %d ms", t.elapsed());
-# if 0
-		int nWidth = frame->width;
-		int nHeight = frame->height;
-
-
-		if (nWidth == 0 || nHeight == 0)
-		{
-			continue;
-		}
-
-		if (nLastFrameWidth != nWidth || nLastFrameHeight != nHeight)
-		{
-			nLastFrameWidth = nWidth;
-			nLastFrameHeight = nHeight;
-
-			emit SigFrameDimensionsChanged(nLastFrameWidth, nLastFrameHeight);
-		}
-
-		uint8_t *out_buffer = nullptr;
-		try
-		{
-			out_buffer = new uint8_t[av_image_get_buffer_size(AV_PIX_FMT_RGB24,
-				nWidth, nHeight, 1)];
-		}
-		catch (const std::exception& e)
-		{
-			qDebug() << e.what();
-			return;
-		}
-
-		ret = av_image_fill_arrays(picture->data, picture->linesize,
-			out_buffer, AV_PIX_FMT_RGB24, nWidth, nHeight, 1);
-
-		//图像缩放规则
-// 		pSwsContext = sws_getContext(nWidth, nHeight, AV_PIX_FMT_YUV420P,
-// 			nWidth, nHeight, AV_PIX_FMT_RGB24,
-// 			SWS_BICUBIC, 0, 0, 0);
-
-		pSwsContext = sws_getCachedContext(pSwsContext,
-			nWidth, nHeight, (AVPixelFormat)frame->format, nWidth, nHeight,
-			AV_PIX_FMT_RGB24, SWS_BICUBIC, nullptr, nullptr, nullptr);
-		//第一个参数为sws_getContext函数返回的值
-		//第四个参数为从输入图像数据的第多少列开始逐行扫描，通常设为0
-		//第五个参数为需要扫描多少行，通常为输入图像数据的高度
-		ret = sws_scale(pSwsContext, (const uint8_t* const *)frame->data,
-			frame->linesize, 0, nHeight, picture->data, picture->linesize);
-
-        QImage* image = new QImage(picture->data[0],
-			nWidth, nHeight, QImage::Format_RGB888);
-
-		QPixmap pix = QPixmap::fromImage(*image);
-		emit SigImage(pix);
-		//emit SigPlayMsg("发送一帧");
-		//pix.detach();
-		delete image;
-		image = nullptr;
-		delete out_buffer;
-		out_buffer = nullptr;
-
-        
-		//qDebug() << video_avctx->framerate.num << video_avctx->framerate.den;
-		//msleep(1000/(video_avctx->framerate.num/ video_avctx->framerate.den));
-//        qDebug() << "VideoDec Thread ID:" << QThread::currentThreadId();
-//        break;
-#endif
     }
 
 	//sws_freeContext(pSwsContext);

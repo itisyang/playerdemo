@@ -1,7 +1,7 @@
 #include "videodataoprator.h"
 
 VideoDataOprator::VideoDataOprator(QObject *parent) : QObject(parent),
-  m_nMaxNumFrameCache(10)
+  m_nMaxNumFrameCache(60)
 {
 
 }

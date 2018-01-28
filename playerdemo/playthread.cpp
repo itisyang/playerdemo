@@ -161,6 +161,7 @@ void PlayThread::run()
 	int nLastFrameWidth = 0;
 	int nLastFrameHeight = 0;
 	QTime t;
+    int nLastPktPos = 0;
 	while (m_bRunning)
 	{
 
@@ -173,7 +174,13 @@ void PlayThread::run()
 		{
 			continue;
 		}
+        if (nLastPktPos > pAVframe->pkt_pos)
+        {
+            continue;
+        }
 
+        nLastPktPos = pAVframe->pkt_pos;
+        //qDebug() << "pAVframe->pkt_pos:" << pAVframe->pkt_pos;
 		int nFrameWidth = pAVframe->width;
 		int nFrameHeight = pAVframe->height;
 		if (nLastFrameWidth != nFrameWidth || nLastFrameHeight != nFrameHeight)
@@ -207,7 +214,7 @@ void PlayThread::run()
         int remaining_time = t.elapsed();
 		if (remaining_time < 33 && remaining_time > 0)
 		{
-            msleep(33 - t.elapsed());//30fps
+            msleep(33 - remaining_time);//30fps
 		}
 		SDL_RenderPresent(renderer);
         t.restart();

@@ -49,6 +49,14 @@ bool VideoCtl::Init()
         return false;
     }
 
+    m_pAVFormatContext = avformat_alloc_context();
+    if (!m_pAVFormatContext)
+    {
+        emit SigPlayMsg("Could not allocate context.");
+        return false;
+    }
+
+
     m_bInited = true;
 
     return true;
@@ -144,15 +152,6 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 
 AVFormatContext *VideoCtl::GetAVFormatCtx()
 {
-    if (m_pAVFormatContext == nullptr)
-    {
-        m_pAVFormatContext = avformat_alloc_context();
-        if (!m_pAVFormatContext)
-        {
-            emit SigPlayMsg("Could not allocate context.");
-        }
-    }
-
     return m_pAVFormatContext;
 }
 

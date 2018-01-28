@@ -66,7 +66,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool StreamComponentOpen(int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
+    bool StreamComponentOpen(AVFormatContext *ic, int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
 
 signals:
     void SigStartDec();				//< 开始解码信号

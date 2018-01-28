@@ -77,7 +77,7 @@ void ReadFile::run()
                     + " " + QString::number(st_index[AVMEDIA_TYPE_AUDIO])
                     + " " + QString::number(st_index[AVMEDIA_TYPE_SUBTITLE]));
 
-    VideoCtl::GetInstance()->StreamComponentOpen(st_index[AVMEDIA_TYPE_VIDEO], 
+    VideoCtl::GetInstance()->StreamComponentOpen(ic, st_index[AVMEDIA_TYPE_VIDEO],
         st_index[AVMEDIA_TYPE_AUDIO], 
         st_index[AVMEDIA_TYPE_SUBTITLE]);
     // 发送解码信号

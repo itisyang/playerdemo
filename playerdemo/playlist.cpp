@@ -38,7 +38,7 @@ bool Playlist::InitUi()
     ui->List->clear();
 
 
-	ui->List->addItem("D:/Downloads/建军大业.The.Founding.of.an.Army.2017.BD720P.X264.AAC-homefei.mkv");
+	ui->List->addItem("D:/Downloads/地球：神奇的一天.mkv");
 
     return true;
 }

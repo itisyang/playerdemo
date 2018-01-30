@@ -119,7 +119,9 @@ void PlayThread::run()
 
 	VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
 
-	AVFrame *pAVframe = new AVFrame;
+	//AVFrame *pAVframe = new AVFrame;
+
+    Frame *pframe = new Frame;
 
 	//SDL初始化
 	int flags;
@@ -169,20 +171,14 @@ void PlayThread::run()
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
 
-		bRet = pVideoDataOprator->GetAVFrameData(*pAVframe, VIDEO_DATA);
+		bRet = pVideoDataOprator->GetAVFrameData(*pframe, VIDEO_DATA);
 		if (bRet == false)
 		{
 			continue;
 		}
-        if (nLastPktPos > pAVframe->pkt_pos)
-        {
-            continue;
-        }
 
-        nLastPktPos = pAVframe->pkt_pos;
-        //qDebug() << "pAVframe->pkt_pos:" << pAVframe->pkt_pos;
-		int nFrameWidth = pAVframe->width;
-		int nFrameHeight = pAVframe->height;
+		int nFrameWidth = pframe->frame.width;
+		int nFrameHeight = pframe->frame.height;
 		if (nLastFrameWidth != nFrameWidth || nLastFrameHeight != nFrameHeight)
 		{
 			nLastFrameWidth = nFrameWidth;
@@ -192,20 +188,20 @@ void PlayThread::run()
 		}
 
 
-		int sdl_pix_fmt = pAVframe->format == AV_PIX_FMT_YUV420P ? SDL_PIXELFORMAT_YV12 : SDL_PIXELFORMAT_ARGB8888;
+		int sdl_pix_fmt = pframe->frame.format == AV_PIX_FMT_YUV420P ? SDL_PIXELFORMAT_YV12 : SDL_PIXELFORMAT_ARGB8888;
 
 		if (realloc_texture(&vid_texture, sdl_pix_fmt, nFrameWidth, nFrameHeight, SDL_BLENDMODE_NONE, 0) < 0)
 		{
 			return;
 		}
 
-		if (upload_texture(vid_texture, pAVframe, &img_convert_ctx) < 0)
+		if (upload_texture(vid_texture, &pframe->frame, &img_convert_ctx) < 0)
 		{
 			return;
 		}
 
 
-		int flip_v = pAVframe->linesize[0] < 0;
+		int flip_v = pframe->frame.linesize[0] < 0;
 
 		
 
@@ -222,6 +218,6 @@ void PlayThread::run()
 
 	}
 	
-	delete pAVframe;
-	pAVframe = nullptr;
+	delete pframe;
+    pframe = nullptr;
 }

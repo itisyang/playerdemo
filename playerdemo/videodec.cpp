@@ -21,14 +21,24 @@ void VideoDec::run()
     AVFormatContext *ic = VideoCtl::GetInstance()->GetAVFormatCtx();
     VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
 
-//    AVRational tb = video_st->time_base;
-//    AVRational frame_rate = av_guess_frame_rate(ic, video_st, nullptr);
+    AVRational tb = video_st->time_base;
+    AVRational frame_rate = av_guess_frame_rate(ic, video_st, nullptr);
+
+    double pts;
+    double duration;
+
+    AVRational frame_rate_t;
+    frame_rate_t.num = frame_rate.den;
+    frame_rate_t.den = frame_rate.num;
+
+    duration = (frame_rate.num && frame_rate.den ? av_q2d(frame_rate_t) : 0);
 
 	AVFrame *frame = av_frame_alloc();
 	AVPacket pkt;
 	AVFrame *picture = av_frame_alloc();
 	SwsContext *pSwsContext = nullptr;
 
+ 
 
     while (m_bRunning)
     {
@@ -48,11 +58,16 @@ void VideoDec::run()
 
 		if (got_frame != 0)
 		{
-			//pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA);
-            //pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA);
-			while (pVideoDataOprator->PutAVFrameData(frame, VIDEO_DATA) == false)
+            pts = (frame->pts == AV_NOPTS_VALUE) ? NAN : frame->pts * av_q2d(tb);
+
+            Frame stFrame;
+            stFrame.pts = pts;
+            stFrame.pos = av_frame_get_pkt_pos(frame);
+            stFrame.duration = duration;
+            memcpy(&stFrame.frame, frame, sizeof (AVFrame));
+            
+			while (pVideoDataOprator->PutAVFrameData(&stFrame, VIDEO_DATA) == false)
 			{
-                //qDebug() << "PutAVFrameData 失败";
 				msleep(10);
 			}
 		}

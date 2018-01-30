@@ -68,7 +68,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool PutAVFrameData(AVFrame* frame, DATA_TYPE type);
+    bool PutAVFrameData(Frame* frame, DATA_TYPE type);
 	/**
 	 * @brief	获取解码数据
 	 * 
@@ -77,7 +77,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool GetAVFrameData(AVFrame& frame, DATA_TYPE type);
+    bool GetAVFrameData(Frame& frame, DATA_TYPE type);
 
 signals:
 
@@ -104,7 +104,7 @@ private:
     QWaitCondition m_condAVFrameV;
     QMutex m_mutexADec;
     QMutex m_mutexSDec;
-    QList<AVFrame*> m_ListAVFrameV;
+    QList<Frame*> m_ListAVFrameV;
     QList<AVFrame> m_ListADec;
     QList<AVFrame> m_ListSDec;
 

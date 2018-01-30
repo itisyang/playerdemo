@@ -87,9 +87,9 @@ bool VideoDataOprator::GetAVPacketData(AVPacket& pkt, DATA_TYPE type)
     return bRet;
 }
 //存放解码数据
-bool VideoDataOprator::PutAVFrameData(AVFrame *frame, DATA_TYPE type)
+bool VideoDataOprator::PutAVFrameData(Frame* frame, DATA_TYPE type)
 {
-	bool bRet = true;
+    bool bRet = true;
     switch (type) {
     case VIDEO_DATA:
     {
@@ -97,9 +97,9 @@ bool VideoDataOprator::PutAVFrameData(AVFrame *frame, DATA_TYPE type)
         {
             m_mutexAVFrameV.lock();
 
-            AVFrame *pAVFrame = new AVFrame;
-            memcpy(pAVFrame, frame, sizeof(AVFrame));
-            m_ListAVFrameV.append(pAVFrame);
+            Frame *pFrame = new Frame;
+            memcpy(pFrame, frame, sizeof(Frame));
+            m_ListAVFrameV.append(pFrame);
 
             m_condAVFrameV.wakeOne();
 
@@ -111,14 +111,14 @@ bool VideoDataOprator::PutAVFrameData(AVFrame *frame, DATA_TYPE type)
             bRet = false;
         }
     }
-    
+
     break;
-    
+
     case AUDIO_DATA:
-	
+
         break;
     case SUBTITLE_DATA:
-		
+
         break;
     default:
         break;
@@ -126,8 +126,9 @@ bool VideoDataOprator::PutAVFrameData(AVFrame *frame, DATA_TYPE type)
 
     return bRet;
 }
+
 //获取解码数据
-bool VideoDataOprator::GetAVFrameData(AVFrame &frame, DATA_TYPE type)
+bool VideoDataOprator::GetAVFrameData(Frame &frame, DATA_TYPE type)
 {
 	bool bRet = true;
     switch (type) {
@@ -140,12 +141,12 @@ bool VideoDataOprator::GetAVFrameData(AVFrame &frame, DATA_TYPE type)
             m_condAVFrameV.wait(&m_mutexAVFrameV);
         }
 
-        AVFrame* pAVFrame = m_ListAVFrameV.takeFirst();
+        Frame* pFrame = m_ListAVFrameV.takeFirst();
         m_mutexAVFrameV.unlock();
 
-        memcpy(&frame, pAVFrame, sizeof(AVFrame));
-        delete pAVFrame;
-        pAVFrame = nullptr;
+        memcpy(&frame, pFrame, sizeof(Frame));
+        delete pFrame;
+        pFrame = nullptr;
     }
 
     break;

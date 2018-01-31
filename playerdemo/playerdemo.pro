@@ -7,13 +7,14 @@ TARGET = playerdemo
 DESTDIR = ../bin
 QT += core widgets gui
 CONFIG += debug
-DEFINES += _UNICODE WIN64 QT_DLL QT_WIDGETS_LIB
-INCLUDEPATH += ./lib/sdl/include \sss
+DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
+INCLUDEPATH += ./lib/sdl/include \
     ./lib/ffmpeg/include \
     ./GeneratedFiles \
     . \
     ./GeneratedFiles/Release
-LIBS += -L"./lib/ffmpeg/lib" \
+LIBS += -L"./lib/sdl/lib" \
+    -L"./lib/ffmpeg/lib" \
     -lavcodec \
     -lavdevice \
     -lavfilter \
@@ -21,7 +22,8 @@ LIBS += -L"./lib/ffmpeg/lib" \
     -lavutil \
     -lpostproc \
     -lswresample \
-    -lswscale
+    -lswscale \
+    -lSDL2
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/release
 OBJECTS_DIR += release
@@ -29,13 +31,13 @@ UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 HEADERS += ./customthread.h \
     ./globalhelper.h \
+    ./playthread.h \
     ./videodataoprator.h \
     ./mainwid.h \
     ./title.h \
-    ./playlistctrlbar.h \
     ./playlist.h \
     ./framelesshelper.h \
-    ./displaywid.h \
+    ./show.h \
     ./ctrlbar.h \
     ./videodec.h \
     ./videoctl.h \
@@ -45,13 +47,13 @@ HEADERS += ./customthread.h \
 SOURCES += ./customthread.cpp \
     ./globalhelper.cpp \
     ./main.cpp \
+    ./playthread.cpp \
     ./videodataoprator.cpp \
     ./ctrlbar.cpp \
-    ./displaywid.cpp \
     ./framelesshelper.cpp \
     ./mainwid.cpp \
     ./playlist.cpp \
-    ./playlistctrlbar.cpp \
+    ./show.cpp \
     ./title.cpp \
     ./audiodec.cpp \
     ./readfile.cpp \
@@ -60,8 +62,7 @@ SOURCES += ./customthread.cpp \
     ./videodec.cpp
 FORMS += ./mainwid.ui \
     ./ctrlbar.ui \
-    ./display.ui \
+    ./show.ui \
     ./playlist.ui \
-    ./playlistctrlbar.ui \
     ./title.ui
 RESOURCES += mainwid.qrc

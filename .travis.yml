@@ -1,17 +1,10 @@
 language: cpp
 
-before_install:
-  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq g++ qt5-qmake libqt5-dev qt5-qmake qtbase5-dev
+install:
+  - sudo apt-get update
+  - sudo apt-get install qt5-default qttools5-dev-tools
 
-script: 
-  - qmake -qt=qt5 -v
-  - qmake -qt=qt5
+script:
+  - qmake -project
+  - qmake ./playerdemo/playerdemo.pro
   - make
-  - make -k check
-  - make clean
-  - qmake -qt=qt5 -v
-  - qmake -qt=qt5
-  - make
-  - make -k check

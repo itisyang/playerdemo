@@ -1,4 +1,6 @@
 # playerdemo
+[![Build Status](https://travis-ci.org/itisyang/playerdemo.svg?branch=master)](https://travis-ci.org/itisyang/playerdemo)
+
 开源版potplayer
 
 ## 简介

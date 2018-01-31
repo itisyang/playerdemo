@@ -80,12 +80,6 @@ bool VideoCtl::ConnectSignalSlots()
     listRet.append(bRet);
 
     //开始解码信号槽连接
-//     bRet = connect(this, SIGNAL(SigStartDec()), &m_VideoDec, SLOT(OnStartDec()));
-//     listRet.append(bRet);
-//     bRet = connect(this, SIGNAL(SigStartDec()), &m_AudioDec, SLOT(OnStartDec()));
-//     listRet.append(bRet);
-//     bRet = connect(this, SIGNAL(SigStartDec()), &m_SubtitleDec, SLOT(OnStartDec()));
-//     listRet.append(bRet);
     bRet = connect(&m_ReadFile, SIGNAL(SigStartVideoDec()), &m_VideoDec, SLOT(OnStartDec()));
     listRet.append(bRet);
     bRet = connect(&m_ReadFile, SIGNAL(SigStartAudioDec()), &m_AudioDec, SLOT(OnStartDec()));
@@ -93,11 +87,6 @@ bool VideoCtl::ConnectSignalSlots()
     bRet = connect(&m_ReadFile, SIGNAL(SigStartSubtitleDec()), &m_SubtitleDec, SLOT(OnStartDec()));
     listRet.append(bRet);
 
-
-	qRegisterMetaType<QPixmap>("QPixmap&");
-	bRet = connect(&m_VideoDec, SIGNAL(SigImage(QPixmap&)), this, SIGNAL(SigImage(QPixmap&)));
-	listRet.append(bRet);
-	
 	//开始播放信号
 	qRegisterMetaType<WId>("WId");
 	bRet = connect(this, SIGNAL(SigStartPlay(WId)), &m_PlayThread, SLOT(OnStarPlay(WId)));

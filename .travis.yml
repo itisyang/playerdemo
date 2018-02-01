@@ -30,6 +30,7 @@ install:
 
 script:
   # Run qmake and make
+  - cd playerdemo
   - qmake
   - make
 

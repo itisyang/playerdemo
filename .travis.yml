@@ -17,19 +17,19 @@ branches:
 before_install:
   # Setup the repository. Qt 5.10 on linux.
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -r ppa:beineri/opt-qt-5.10.0-xenial -y; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt update -qq; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update -qq; fi
   # On linux also get a newer g++. The old one won't work.
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt update -qq; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get update -qq; fi
   
 install:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install -qq qt510base; source /opt/qt510/bin/qt510-env.sh; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -qq qt510base; source /opt/qt510/bin/qt510-env.sh; fi
   # On linux, install the new g++ version
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install -qq g++-7; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -qq g++-7; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90; fi
   # SDL2
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install libsdl2-2.0-0 libsdl2-dev; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install ffmpeg; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libsdl2-2.0-0 libsdl2-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install ffmpeg; fi
   
 script:
   # Run qmake and make

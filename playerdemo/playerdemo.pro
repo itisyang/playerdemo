@@ -18,6 +18,7 @@ INCLUDEPATH += ./lib/sdl/include \
     ./GeneratedFiles \
     . \
     ./GeneratedFiles/Release
+win32{
 LIBS += -L"./lib/sdl/lib" \
     -L"./lib/ffmpeg/lib" \
     -lavcodec \
@@ -29,6 +30,20 @@ LIBS += -L"./lib/sdl/lib" \
     -lswresample \
     -lswscale \
     -lSDL2
+}
+unix{
+LIBS += -L/usr/lib/x86_64-linux-gnu/ \
+    -lavcodec-ffmpeg \
+    -lavdevice \
+    -lavfilter \
+    -lavformat \
+    -lavutil \
+    -lpostproc \
+    -lswresample \
+    -lswscale \
+    -lSDL2
+
+}
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/release
 OBJECTS_DIR += release

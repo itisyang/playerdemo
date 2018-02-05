@@ -26,12 +26,14 @@ before_install:
 install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -qq qt57base; source /opt/qt57/bin/qt57-env.sh; fi
   #- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -qq qt58base; source /opt/qt58/bin/qt58-env.sh; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install build-essential; fi
   # On linux, install the new g++ version
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -qq g++-6; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90; fi
   # SDL2
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install libsdl2-2.0-0 libsdl2-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install ffmpeg; fi
+
   
 script:
   # Run qmake and make

@@ -7,7 +7,12 @@ TARGET = playerdemo
 DESTDIR = ../bin
 QT += core widgets gui
 CONFIG += debug
+win32 {
 DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
+}
+unix{
+
+}
 INCLUDEPATH += ./lib/sdl/include \
     ./lib/ffmpeg/include \
     ./GeneratedFiles \

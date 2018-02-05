@@ -12,7 +12,7 @@
 #include <QThread>
 #include <QDebug>
 
-#include "VideoCtl.h"
+#include "videoCtl.h"
 
 # pragma execution_character_set("utf-8")
 

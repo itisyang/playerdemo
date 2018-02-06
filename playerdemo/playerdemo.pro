@@ -32,8 +32,8 @@ LIBS += -L"./lib/sdl/lib" \
     -lSDL2
 }
 unix{
-LIBS += -L/usr/lib/x86_64-linux-gnu/ \
-    -lavcodec-ffmpeg \
+LIBS += \
+    -lavcodec \
     -lavdevice \
     -lavfilter \
     -lavformat \
@@ -42,7 +42,6 @@ LIBS += -L/usr/lib/x86_64-linux-gnu/ \
     -lswresample \
     -lswscale \
     -lSDL2
-
 }
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/release

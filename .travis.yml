@@ -30,9 +30,14 @@ install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90; fi
   # SDL2
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install libsdl2-2.0-0 libsdl2-dev; fi
+  # FFmpeg
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install ffmpeg; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install libavcodec-dev; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install libavdevice-dev; fi
+  # ubuntu上面的FFmpeg库比较老，工程中有的接口不支持
+  # 解决办法 1.上传相应版本的库至github，这样下载的时候回很慢 2.使用命令下载最新的FFmpeg源码编译安装，这样CI编译会很慢
+  #git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
+  
 
 script:
   # Run qmake and make

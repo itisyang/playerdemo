@@ -70,29 +70,29 @@ bool VideoCtl::ConnectSignalSlots()
     //错误信息信号槽连接
     //bRet = connect(this, SIGNAL(SigPlayMsg(QString)), SLOT(OnPlayMsg(QString)));
     //listRet.append(bRet);
-    bRet = connect(&m_ReadFile, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
+    bRet = connect(&m_ReadFile, &ReadFile::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
     listRet.append(bRet);
-    bRet = connect(&m_VideoDec, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
+    bRet = connect(&m_VideoDec, &VideoDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
     listRet.append(bRet);
-    bRet = connect(&m_AudioDec, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
+    bRet = connect(&m_AudioDec, &AudioDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
     listRet.append(bRet);
-    bRet = connect(&m_SubtitleDec, SIGNAL(SigPlayMsg(QString)), this, SIGNAL(SigPlayMsg(QString)));
+    bRet = connect(&m_SubtitleDec, &SubtitleDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
     listRet.append(bRet);
 
     //开始解码信号槽连接
-    bRet = connect(&m_ReadFile, SIGNAL(SigStartVideoDec()), &m_VideoDec, SLOT(OnStartDec()));
+    bRet = connect(&m_ReadFile, &ReadFile::SigStartVideoDec, &m_VideoDec, &VideoDec::OnStartDec);
     listRet.append(bRet);
-    bRet = connect(&m_ReadFile, SIGNAL(SigStartAudioDec()), &m_AudioDec, SLOT(OnStartDec()));
+    bRet = connect(&m_ReadFile, &ReadFile::SigStartAudioDec, &m_AudioDec, &AudioDec::OnStartDec);
     listRet.append(bRet);
-    bRet = connect(&m_ReadFile, SIGNAL(SigStartSubtitleDec()), &m_SubtitleDec, SLOT(OnStartDec()));
+    bRet = connect(&m_ReadFile, &ReadFile::SigStartSubtitleDec, &m_SubtitleDec, &SubtitleDec::OnStartDec);
     listRet.append(bRet);
 
 	//开始播放信号
 	qRegisterMetaType<WId>("WId");
-	bRet = connect(this, SIGNAL(SigStartPlay(WId)), &m_PlayThread, SLOT(OnStarPlay(WId)));
+	bRet = connect(this, &VideoCtl::SigStartPlay, &m_PlayThread, &PlayThread::OnStarPlay);
 	listRet.append(bRet);
 
-    bRet = connect(&m_PlayThread, SIGNAL(SigFrameDimensionsChanged(int, int)), this, SIGNAL(SigFrameDimensionsChanged(int, int)));
+    bRet = connect(&m_PlayThread, &PlayThread::SigFrameDimensionsChanged, this, &VideoCtl::SigFrameDimensionsChanged);
     listRet.append(bRet);
     
 

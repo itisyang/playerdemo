@@ -67,9 +67,6 @@ bool VideoCtl::ConnectSignalSlots()
     QList<bool> listRet;
     bool bRet;
 
-    //错误信息信号槽连接
-    //bRet = connect(this, SIGNAL(SigPlayMsg(QString)), SLOT(OnPlayMsg(QString)));
-    //listRet.append(bRet);
     bRet = connect(&m_ReadFile, &ReadFile::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
     listRet.append(bRet);
     bRet = connect(&m_VideoDec, &VideoDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);

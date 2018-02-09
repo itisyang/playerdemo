@@ -43,9 +43,8 @@ bool CtrlBar::ConnectSignalSlots()
     bool bRet;
 
 
-    bRet = connect(ui->PlaylistCtrlBtn, SIGNAL(clicked()), this, SIGNAL(SigShowOrHidePlaylist()));
+    bRet = connect(ui->PlaylistCtrlBtn, &QPushButton::clicked, this, &CtrlBar::SigShowOrHidePlaylist);
     listRet.append(bRet);
-
 
 
     for (bool bReturn : listRet)

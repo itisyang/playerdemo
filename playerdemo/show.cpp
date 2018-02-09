@@ -132,12 +132,12 @@ bool Show::ConnectSignalSlots()
 	QList<bool> listRet;
 	bool bRet;
 
-	bRet = connect(m_VideoCtl, SIGNAL(SigPlayMsg(QString)), this, SLOT(OnDisplayMsg(QString)));
+	bRet = connect(m_VideoCtl, &VideoCtl::SigPlayMsg, this, &Show::OnDisplayMsg);
 	listRet.append(bRet);
 
-    bRet = connect(m_VideoCtl, SIGNAL(SigFrameDimensionsChanged(int, int)), this, SLOT(OnFrameDimensionsChanged(int, int)));
+    bRet = connect(m_VideoCtl, &VideoCtl::SigFrameDimensionsChanged, this, &Show::OnFrameDimensionsChanged);
     listRet.append(bRet);
-	bRet = connect(this, SIGNAL(SigPlay(QString)), this, SLOT(OnPlay(QString)));
+	bRet = connect(this, &Show::SigPlay, this, &Show::OnPlay);
 	listRet.append(bRet);
 
 	for (bool bReturn : listRet)

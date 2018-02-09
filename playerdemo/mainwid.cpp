@@ -163,31 +163,31 @@ bool MainWid::ConnectSignalSlots()
 	QList<bool> listRet;
 	bool bRet;
 
-	bRet = connect(ui->TitleWid, SIGNAL(SigCloseBtnClicked()), this, SLOT(OnCloseBtnClicked()));
+	bRet = connect(ui->TitleWid, &Title::SigCloseBtnClicked, this, &MainWid::OnCloseBtnClicked);
 	listRet.append(bRet);
-	bRet = connect(ui->TitleWid, SIGNAL(SigMaxBtnClicked()), this, SLOT(OnMaxBtnClicked()));
+	bRet = connect(ui->TitleWid, &Title::SigMaxBtnClicked, this, &MainWid::OnMaxBtnClicked);
 	listRet.append(bRet);
-	bRet = connect(ui->TitleWid, SIGNAL(SigMinBtnClicked()), this, SLOT(OnMinBtnClicked()));
+	bRet = connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
 	listRet.append(bRet);
-	bRet = connect(ui->TitleWid, SIGNAL(SigDoubleClicked()), this, SLOT(OnMaxBtnClicked()));
+	bRet = connect(ui->TitleWid, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
 	listRet.append(bRet);
-    bRet = connect(ui->TitleWid, SIGNAL(SigFullScreenBtnClicked()), this, SLOT(OnFullScreenPlay()));
+    bRet = connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
     listRet.append(bRet);
-	bRet = connect(this, SIGNAL(SigShowMax(bool)), ui->TitleWid, SLOT(OnChangeMaxBtnStyle(bool)));
+	bRet = connect(this, &MainWid::SigShowMax, ui->TitleWid, &Title::OnChangeMaxBtnStyle);
 	listRet.append(bRet);
-	bRet = connect(ui->PlaylistWid, SIGNAL(SigUpdateUi()), this, SLOT(OnAdjustUi()));
+	bRet = connect(ui->PlaylistWid, &Playlist::SigUpdateUi, this, &MainWid::OnAdjustUi);
 	listRet.append(bRet);
-	bRet = connect(ui->PlaylistWid, SIGNAL(SigPlay(QString)), ui->ShowWid, SIGNAL(SigPlay(QString)));
+    bRet = connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 	listRet.append(bRet);
 	
 
-	bRet = connect(ui->ShowWid, SIGNAL(SigAddFile(QString)), ui->PlaylistWid, SLOT(OnAddFile(QString)));
+	bRet = connect(ui->ShowWid, &Show::SigAddFile, ui->PlaylistWid, &Playlist::OnAddFile);
 	listRet.append(bRet);
 
-    bRet = connect(ui->ShowWid, SIGNAL(SigFullScreen()), this, SLOT(OnFullScreenPlay()));
+    bRet = connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);
     listRet.append(bRet);
 
-	bRet = connect(ui->CtrlBarWid, SIGNAL(SigShowOrHidePlaylist()), this, SLOT(OnShowOrHidePlaylist()));
+	bRet = connect(ui->CtrlBarWid, &CtrlBar::SigShowOrHidePlaylist, this, &MainWid::OnShowOrHidePlaylist);
 	listRet.append(bRet);
     
 

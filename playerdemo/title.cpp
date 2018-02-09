@@ -22,10 +22,10 @@ Title::Title(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->CloseBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigCloseBtnClicked()));
-    connect(ui->MinBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMinBtnClicked()));
-    connect(ui->MaxBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigMaxBtnClicked()));
-    connect(ui->FullScreenBtn, SIGNAL(clicked(bool)), this, SIGNAL(SigFullScreenBtnClicked()));
+    connect(ui->CloseBtn, &QPushButton::clicked, this, &Title::SigCloseBtnClicked);
+    connect(ui->MinBtn, &QPushButton::clicked, this, &Title::SigMinBtnClicked);
+    connect(ui->MaxBtn, &QPushButton::clicked, this, &Title::SigMaxBtnClicked);
+    connect(ui->FullScreenBtn, &QPushButton::clicked, this, &Title::SigFullScreenBtnClicked);
 
     InitUi();
 }

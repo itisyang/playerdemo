@@ -16,3 +16,4 @@
 - 邮件: itisyang@gmail.com
 
 ## 错误记录
+20180210 Travis CI编译错误，因为FFmpeg版本低，不支持有的借口

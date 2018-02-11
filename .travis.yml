@@ -36,7 +36,10 @@ install:
   #- if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt install libavdevice-dev; fi
   # ubuntu上面的FFmpeg库比较老，工程中有的接口不支持
   # 解决办法 1.上传相应版本的库至github，这样下载的时候回很慢 2.使用命令下载最新的FFmpeg源码编译安装，这样CI编译会很慢
-  git clone -b release/3.4 https://github.com/FFmpeg/FFmpeg.git ffmpeg-3.4
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then git clone -b release/3.4 https://github.com/FFmpeg/FFmpeg.git ffmpeg-3.4; fi
+
+script:
+
   cd ffmpeg-3.4
   ./configure
   sudo apt-get install yasm
@@ -45,8 +48,7 @@ install:
   ffmpeg -version
   cd ..
   
-
-script:
+  
   # Run qmake and make
   - cd playerdemo
   - qmake

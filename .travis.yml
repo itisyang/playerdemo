@@ -10,9 +10,9 @@ compiler:
   - gcc
   
 # safelist
-branches:
-  except:
-    - gh-pages
+# branches:
+#  except:
+#    - gh-pages
     
 before_install:
   # Setup the repository. Qt 5.9 on linux.

@@ -16,6 +16,10 @@ QPushButton:hover{
 QPushButton:pressed {
     color:  CadetBlue;
 }
+
+QPushButton#PlaylistCtrlBtn{
+	border: 1px solid #363636;
+}
 QSlider::groove:horizontal {
 border: 1px solid #4A708B;
 background: #C0C0C0;

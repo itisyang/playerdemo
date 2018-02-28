@@ -18,7 +18,7 @@ QPushButton:pressed {
 }
 
 QPushButton#PlaylistCtrlBtn{
-	border: 1px solid #363636;
+	border: 2px solid black;
 }
 QSlider::groove:horizontal {
 border: 1px solid #4A708B;
@@ -51,7 +51,7 @@ QSlider::handle:horizontal
     background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,
     stop:0.6 #45ADED, stop:0.8 rgba(255, 255, 255, 255));
 
-    width: 11px;
+    width: 5px;
     margin-top: -3px;
     margin-bottom: -3px;
     border-radius: 5px;
@@ -61,7 +61,7 @@ QSlider::handle:horizontal:hover {
     background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 #2A8BDA,
     stop:0.8 rgba(255, 255, 255, 255));
 
-    width: 11px;
+    width: 5px;
     margin-top: -3px;
     margin-bottom: -3px;
     border-radius: 5px;

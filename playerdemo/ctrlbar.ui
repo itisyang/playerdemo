@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
-    <height>70</height>
+    <width>894</width>
+    <height>73</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -46,6 +46,12 @@
          </property>
          <item>
           <widget class="QSlider" name="horizontalSlider_2">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>12</height>
+            </size>
+           </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
@@ -85,14 +91,14 @@
              <widget class="QPushButton" name="VolumeBtn">
               <property name="minimumSize">
                <size>
-                <width>30</width>
-                <height>30</height>
+                <width>20</width>
+                <height>20</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>30</width>
-                <height>30</height>
+                <width>20</width>
+                <height>20</height>
                </size>
               </property>
               <property name="text">
@@ -111,7 +117,7 @@
               <property name="maximumSize">
                <size>
                 <width>80</width>
-                <height>16777215</height>
+                <height>12</height>
                </size>
               </property>
               <property name="orientation">

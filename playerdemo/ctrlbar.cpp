@@ -31,6 +31,7 @@ bool CtrlBar::InitUi()
     GlobalHelper::SetIcon(ui->PlaylistCtrlBtn, 12, QChar(0xf0ca));
     GlobalHelper::SetIcon(ui->ForwardBtn, 12, QChar(0xf051));
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
+    GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));
     
 
     return true;

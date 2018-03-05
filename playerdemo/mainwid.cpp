@@ -38,8 +38,8 @@ MainWid::MainWid(QWidget *parent) :
     pHelper->setTitleHeight(ui->TitleWid->height());  //设置窗体的标题栏高度
     pHelper->setWidgetMovable(true);  //设置窗体可移动
     pHelper->setWidgetResizable(true);  //设置窗体可缩放
-    pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
-    pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
+    //pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
+    //pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
 
     // 追踪鼠标
     //this->setMouseTracking(true);

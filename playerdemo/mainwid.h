@@ -26,6 +26,9 @@ class MainWid : public QWidget
 public:
     explicit MainWid(QWidget *parent = 0);
     ~MainWid();
+
+    //初始化
+    bool Init();
 protected:
     //绘制
     void paintEvent(QPaintEvent *event);

@@ -80,6 +80,17 @@ MainWid::~MainWid()
     delete ui;
 }
 
+bool MainWid::Init()
+{
+    //连接自定义信号与槽
+    if (ConnectSignalSlots() == false)
+    {
+        return false;
+    }
+
+    return true;
+}
+
 void MainWid::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);

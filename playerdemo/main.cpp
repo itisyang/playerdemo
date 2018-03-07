@@ -11,6 +11,10 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(":/Resources/fontawesome-webfont.ttf");
 
     MainWid w;
+    if (w.Init() == false)
+    {
+        return -1;
+    }
     w.show();
 
     return a.exec();

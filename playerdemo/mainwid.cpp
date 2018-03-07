@@ -50,8 +50,7 @@ MainWid::MainWid(QWidget *parent) :
 
 
 
-    //连接自定义信号与槽
-    ConnectSignalSlots();
+
 
     //接受放下事件
     //setAcceptDrops(true);

@@ -1,4 +1,4 @@
-#include "mainwid.h"
+﻿#include "mainwid.h"
 #include <QApplication>
 #include <QFontDatabase>
 
@@ -7,7 +7,8 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+    
+    //使用第三方字库，用来作为UI图片
     QFontDatabase::addApplicationFont(":/Resources/fontawesome-webfont.ttf");
 
     MainWid w;

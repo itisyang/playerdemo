@@ -1,4 +1,14 @@
-﻿#include <QDebug>
+﻿/*
+ * @file 	readfile.cpp
+ * @date 	2018/03/10 22:25
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	读取媒体文件
+ * @note
+ */
+#include <QDebug>
 #include <QTime>
 #include "readfile.h"
 #include "videoctl.h"

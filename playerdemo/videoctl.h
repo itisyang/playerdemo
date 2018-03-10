@@ -102,7 +102,7 @@ public:
 
 private:
 
-    static VideoCtl* m_pInstance;
+    static VideoCtl* m_pInstance; //< 单例指针
 
     bool m_bInited;	//< 初始化标志
 

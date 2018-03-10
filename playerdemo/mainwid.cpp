@@ -1,4 +1,14 @@
-﻿#include <QFile>
+﻿/*
+ * @file 	mainwid.cpp
+ * @date 	2018/03/10 22:26
+ *
+ * @author 	itisyang
+ * @Contact	itisyang@gmail.com
+ *
+ * @brief 	主窗口
+ * @note
+ */
+#include <QFile>
 #include <QPainter>
 #include <QtMath>
 #include <QDebug>

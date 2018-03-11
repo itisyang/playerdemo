@@ -13,8 +13,13 @@
 #include <QDebug>
 
 #include "videoctl.h"
+#include "globalhelper.h"
 
 # pragma execution_character_set("utf-8")
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
@@ -133,8 +138,52 @@ bool VideoCtl::StartPlay(QString strFileName)
     return true;
 }
 
+
+static int lockmgr(void **mtx, enum AVLockOp op)
+{
+    switch (op) {
+    case AV_LOCK_CREATE:
+        *mtx = SDL_CreateMutex();
+        if (!*mtx) {
+            av_log(NULL, AV_LOG_FATAL, "SDL_CreateMutex(): %s\n", SDL_GetError());
+            return 1;
+        }
+        return 0;
+    case AV_LOCK_OBTAIN:
+        return !!SDL_LockMutex(*mtx);
+    case AV_LOCK_RELEASE:
+        return !!SDL_UnlockMutex(*mtx);
+    case AV_LOCK_DESTROY:
+        SDL_DestroyMutex(*mtx);
+        return 0;
+    }
+    return 1;
+}
+static void do_exit(VideoState *is)
+{
+    if (is) {
+        stream_close(is);
+    }
+    if (renderer)
+        SDL_DestroyRenderer(renderer);
+    if (window)
+        SDL_DestroyWindow(window);
+    av_lockmgr_register(NULL);
+    uninit_opts();
+#if CONFIG_AVFILTER
+    av_freep(&vfilters_list);
+#endif
+    avformat_network_deinit();
+    if (show_status)
+        printf("\n");
+    SDL_Quit();
+    av_log(NULL, AV_LOG_QUIET, "%s", "");
+    exit(0);
+    }
+
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 {
+# if 0
 	if (NoError == m_ReadFile.StartRead(strFileName))
 	{
 		//emit SigStartDec();
@@ -142,6 +191,36 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 	}
 
 	return true;
+#else
+    int flags;
+    flags = SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER;
+    if (SDL_Init(flags)) {
+        av_log(NULL, AV_LOG_FATAL, "Could not initialize SDL - %s\n", SDL_GetError());
+        av_log(NULL, AV_LOG_FATAL, "(Did you set the DISPLAY variable?)\n");
+        exit(1);
+    }
+    SDL_EventState(SDL_SYSWMEVENT, SDL_IGNORE);
+    SDL_EventState(SDL_USEREVENT, SDL_IGNORE);
+
+    //注册自定义锁
+    if (av_lockmgr_register(lockmgr)) {
+        av_log(NULL, AV_LOG_FATAL, "Could not initialize lock manager!\n");
+        do_exit(1);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    return true;
+#endif
 }
 
 AVFormatContext *VideoCtl::GetAVFormatCtx()

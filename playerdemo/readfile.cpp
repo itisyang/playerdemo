@@ -22,6 +22,7 @@ ReadFile::ReadFile()
 
 void ReadFile::run()
 {
+#if 0
     int err, i, ret;
 
     AVFormatContext *ic = nullptr;
@@ -138,6 +139,7 @@ void ReadFile::run()
 		//qDebug("读取一帧消耗: %d ms", t.elapsed());
         //break;
     }
+#endif
 }
 
 int ReadFile::StartRead(QString strFilePath)

@@ -42,6 +42,7 @@ public:
 
 	bool Init();
 
+#if 0
 	/**
 	 * @brief	存放原始数据
 	 * 
@@ -78,7 +79,7 @@ public:
 	 * @note 	
 	 */
     bool GetAVFrameData(Frame& frame, DATA_TYPE type);
-
+#endif
 signals:
 
 public slots:
@@ -87,7 +88,7 @@ private:
 private:
 
     const int m_nMaxNumFrameCache;//缓存帧数
-
+#if 0
     // V-Video  A-Audio S-Subtitle
     //解码前
     QMutex m_mutexAVPacketV;
@@ -107,7 +108,7 @@ private:
     QList<Frame*> m_ListAVFrameV;
     QList<AVFrame> m_ListADec;
     QList<AVFrame> m_ListSDec;
-
+#endif
 };
 
 #endif // VIDEODATAOPRATOR_H

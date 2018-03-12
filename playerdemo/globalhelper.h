@@ -83,13 +83,13 @@ extern "C"{
 
 
 
-typedef struct Frame
-{
-    AVFrame frame;
-    double pts;           /* presentation timestamp for the frame */
-    double duration;      /* estimated duration of the frame */
-    int64_t pos;          /* byte position of the frame in the input file */
-}Frame;
+// typedef struct Frame
+// {
+//     AVFrame frame;
+//     double pts;           /* presentation timestamp for the frame */
+//     double duration;      /* estimated duration of the frame */
+//     int64_t pos;          /* byte position of the frame in the input file */
+// }Frame;
 
 
 #endif // GLOBALHELPER_H

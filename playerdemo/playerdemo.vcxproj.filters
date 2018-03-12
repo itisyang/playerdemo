@@ -247,5 +247,17 @@
     <ClInclude Include="GeneratedFiles\ui_show.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="depends\compat\os2threads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="depends\compat\va_copy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="depends\compat\w32dlfcn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="depends\compat\w32pthreads.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

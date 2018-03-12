@@ -115,6 +115,7 @@ int PlayThread::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsConte
 
 void PlayThread::run()
 {
+#if 0
 	bool bRet;
 
 	VideoDataOprator *pVideoDataOprator = VideoCtl::GetInstance()->GetVideoDataOprator();
@@ -220,4 +221,5 @@ void PlayThread::run()
 	
 	delete pframe;
     pframe = nullptr;
+#endif
 }

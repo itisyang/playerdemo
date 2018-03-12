@@ -197,6 +197,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="customthread.h" />
+    <ClInclude Include="depends\compat\os2threads.h" />
+    <ClInclude Include="depends\compat\va_copy.h" />
+    <ClInclude Include="depends\compat\w32dlfcn.h" />
+    <ClInclude Include="depends\compat\w32pthreads.h" />
     <ClInclude Include="GeneratedFiles\ui_ctrlbar.h" />
     <ClInclude Include="GeneratedFiles\ui_playlist.h" />
     <ClInclude Include="GeneratedFiles\ui_show.h" />

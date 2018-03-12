@@ -39,7 +39,7 @@ void VideoDec::run()
 	SwsContext *pSwsContext = nullptr;
 
  
-
+# if 0
     while (m_bRunning)
     {
 // 		QTime t;
@@ -74,7 +74,7 @@ void VideoDec::run()
 
 		//qDebug("解码一帧消耗: %d ms", t.elapsed());
     }
-
+#endif
 	//sws_freeContext(pSwsContext);
 
 	av_frame_free(&frame);

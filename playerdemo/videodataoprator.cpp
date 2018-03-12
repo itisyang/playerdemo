@@ -15,7 +15,7 @@ bool VideoDataOprator::Init()
 
 	return true;
 }
-
+#if 0
 bool VideoDataOprator::PutAVPacketData(AVPacket *pkt, DATA_TYPE type)
 {
     bool bRet = true;
@@ -163,3 +163,4 @@ bool VideoDataOprator::GetAVFrameData(Frame &frame, DATA_TYPE type)
 
 	return bRet;
 }
+#endif

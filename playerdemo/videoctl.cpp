@@ -19,7 +19,8 @@
 
 
 
-
+#include <windows.h>
+#include <objbase.h>
 
 //#include "config.h"
 #include <inttypes.h>
@@ -368,6 +369,9 @@ static AVPacket flush_pkt;
 
 static SDL_Window *window;
 static SDL_Renderer *renderer;
+
+
+WId play_wid;//播放窗口
 
 #if CONFIG_AVFILTER
 static int opt_add_vfilter(void *optctx, const char *opt, const char *arg)
@@ -1020,7 +1024,7 @@ static void video_audio_display(VideoState *s)
     channels = s->audio_tgt.channels;
     nb_display_channels = channels;
     if (!s->paused) {
-        int data_used = s->show_mode == ShowMode::SHOW_MODE_WAVES ? s->width : (2 * nb_freq);
+        int data_used = s->show_mode == SHOW_MODE_WAVES ? s->width : (2 * nb_freq);
         n = 2 * channels;
         delay = s->audio_write_buf_size;
         delay /= n;
@@ -1304,7 +1308,8 @@ static int video_open(VideoState *is)
             flags |= SDL_WINDOW_BORDERLESS;
         else
             flags |= SDL_WINDOW_RESIZABLE;
-        window = SDL_CreateWindow(window_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+        //window = SDL_CreateWindow(window_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+        window = SDL_CreateWindowFrom((void *)play_wid);
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
         if (window) {
             SDL_RendererInfo info;
@@ -3723,6 +3728,11 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     m_bInited = false;
     m_pAVFormatContext = nullptr;
 
+    CoInitialize(NULL);
+    //初始化动态库加载目录
+    //SetDllDirectory("");
+
+
 #if CONFIG_AVDEVICE
     //注册所有设备
     avdevice_register_all();
@@ -3735,7 +3745,7 @@ VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
     av_register_all();
     //网络格式初始化
     avformat_network_init();
-
+    
 }
 
 bool VideoCtl::Init()
@@ -3846,6 +3856,9 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 
 	return true;
 #else
+
+    play_wid = widPlayWid;
+
     VideoState *is;
 
     int flags;

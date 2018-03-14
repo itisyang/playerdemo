@@ -16,5 +16,5 @@
 - 邮件: itisyang@gmail.com
 
 ## 错误记录
-- 20180210 Travis CI编译错误，因为FFmpeg版本低，不支持有的借口。待解决
-- 20180212 在CI中使用git下载FFmpeg源码编译，会导致rake错误。待解决
+- ~~20180210 Travis CI编译错误，因为FFmpeg版本低，不支持有的借口。待解决~~
+- ~~20180212 在CI中使用git下载FFmpeg源码编译，会导致rake错误。待解决~~

@@ -2523,11 +2523,7 @@ static int audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb
         }
         wanted_channel_layout = av_get_default_channel_layout(wanted_spec.channels);
     }
-    if (spec.format != AUDIO_S16SYS) {
-        av_log(NULL, AV_LOG_ERROR,
-            "SDL advised audio format %d is not supported!\n", spec.format);
-        return -1;
-    }
+
     if (spec.channels != wanted_spec.channels) {
         wanted_channel_layout = av_get_default_channel_layout(spec.channels);
         if (!wanted_channel_layout) {
@@ -2537,7 +2533,35 @@ static int audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb
         }
     }
 
-    audio_hw_params->fmt = AV_SAMPLE_FMT_S16;
+//     if (spec.format != AUDIO_S16SYS) {
+//         av_log(NULL, AV_LOG_ERROR,
+//             "SDL advised audio format %d is not supported!\n", spec.format);
+//         return -1;
+//     }
+
+    switch (spec.format)
+    {
+    case AUDIO_U8:
+        audio_hw_params->fmt = AV_SAMPLE_FMT_U8;
+        break;
+    case AUDIO_S16LSB:
+    case AUDIO_S16MSB:
+        audio_hw_params->fmt = AV_SAMPLE_FMT_S16;
+        break;
+    case AUDIO_S32LSB:
+    case AUDIO_S32MSB:
+        audio_hw_params->fmt = AV_SAMPLE_FMT_S32;
+        break;
+    case AUDIO_F32LSB:
+    case AUDIO_F32MSB:
+        audio_hw_params->fmt = AV_SAMPLE_FMT_FLT;
+        break;
+    default:
+        audio_hw_params->fmt = AV_SAMPLE_FMT_U8;
+        break;
+    }
+    //audio_hw_params->fmt = AV_SAMPLE_FMT_FLT;
+
     audio_hw_params->freq = spec.freq;
     audio_hw_params->channel_layout = wanted_channel_layout;
     audio_hw_params->channels = spec.channels;

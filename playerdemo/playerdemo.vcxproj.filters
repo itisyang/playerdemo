@@ -31,9 +31,6 @@
     <Filter Include="UI">
       <UniqueIdentifier>{32498620-46a0-4818-a002-691d7da35bfe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Decoder">
-      <UniqueIdentifier>{04e1880e-2971-4a73-a388-027d5887913c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -54,15 +51,6 @@
     <ClCompile Include="globalhelper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="videodataoprator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_audiodec.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_audiodec.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ctrlbar.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -81,40 +69,10 @@
     <ClCompile Include="GeneratedFiles\Release\moc_playlist.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_readfile.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_readfile.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_subtitledec.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_subtitledec.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_title.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_title.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_videoctl.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_videoctl.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_videodataoprator.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_videodataoprator.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_videodec.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_videodec.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="ctrlbar.cpp">
@@ -132,30 +90,6 @@
     <ClCompile Include="title.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="videodec.cpp">
-      <Filter>Decoder</Filter>
-    </ClCompile>
-    <ClCompile Include="videoctl.cpp">
-      <Filter>Decoder</Filter>
-    </ClCompile>
-    <ClCompile Include="subtitledec.cpp">
-      <Filter>Decoder</Filter>
-    </ClCompile>
-    <ClCompile Include="readfile.cpp">
-      <Filter>Decoder</Filter>
-    </ClCompile>
-    <ClCompile Include="audiodec.cpp">
-      <Filter>Decoder</Filter>
-    </ClCompile>
-    <ClCompile Include="playthread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_playthread.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_playthread.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_show.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -165,6 +99,15 @@
     <ClCompile Include="show.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="videoctl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_videoctl.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_videoctl.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwid.ui">
@@ -172,9 +115,6 @@
     </CustomBuild>
     <CustomBuild Include="mainwid.qrc">
       <Filter>Resource Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="videodataoprator.h">
-      <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ctrlbar.ui">
       <Filter>Form Files</Filter>
@@ -200,29 +140,14 @@
     <CustomBuild Include="title.h">
       <Filter>UI</Filter>
     </CustomBuild>
-    <CustomBuild Include="audiodec.h">
-      <Filter>Decoder</Filter>
-    </CustomBuild>
-    <CustomBuild Include="readfile.h">
-      <Filter>Decoder</Filter>
-    </CustomBuild>
-    <CustomBuild Include="subtitledec.h">
-      <Filter>Decoder</Filter>
-    </CustomBuild>
-    <CustomBuild Include="videodec.h">
-      <Filter>Decoder</Filter>
-    </CustomBuild>
-    <CustomBuild Include="videoctl.h">
-      <Filter>Decoder</Filter>
-    </CustomBuild>
-    <CustomBuild Include="playthread.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="show.h">
       <Filter>UI</Filter>
     </CustomBuild>
     <CustomBuild Include="show.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="videoctl.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

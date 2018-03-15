@@ -3750,7 +3750,6 @@ static int lockmgr(void **mtx, enum AVLockOp op)
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
 {
     m_bInited = false;
-    m_pAVFormatContext = nullptr;
 
     CoInitialize(NULL);
     //初始化动态库加载目录
@@ -3784,13 +3783,22 @@ bool VideoCtl::Init()
         return false;
     }
 
-    m_pAVFormatContext = avformat_alloc_context();
-    if (!m_pAVFormatContext)
+
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) 
     {
-        emit SigPlayMsg("Could not allocate context.");
+        av_log(NULL, AV_LOG_FATAL, "Could not initialize SDL - %s\n", SDL_GetError());
+        av_log(NULL, AV_LOG_FATAL, "(Did you set the DISPLAY variable?)\n");
         return false;
     }
+    SDL_EventState(SDL_SYSWMEVENT, SDL_IGNORE);
+    SDL_EventState(SDL_USEREVENT, SDL_IGNORE);
 
+    //注册自定义锁
+    if (av_lockmgr_register(lockmgr)) 
+    {
+        av_log(NULL, AV_LOG_FATAL, "Could not initialize lock manager!\n");
+        return false;
+    }
 
     m_bInited = true;
 
@@ -3802,31 +3810,6 @@ bool VideoCtl::ConnectSignalSlots()
     QList<bool> listRet;
     bool bRet;
 
-    bRet = connect(&m_ReadFile, &ReadFile::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
-    listRet.append(bRet);
-    bRet = connect(&m_VideoDec, &VideoDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
-    listRet.append(bRet);
-    bRet = connect(&m_AudioDec, &AudioDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
-    listRet.append(bRet);
-    bRet = connect(&m_SubtitleDec, &SubtitleDec::SigPlayMsg, this, &VideoCtl::SigPlayMsg);
-    listRet.append(bRet);
-
-    //开始解码信号槽连接
-    bRet = connect(&m_ReadFile, &ReadFile::SigStartVideoDec, &m_VideoDec, &VideoDec::OnStartDec);
-    listRet.append(bRet);
-    bRet = connect(&m_ReadFile, &ReadFile::SigStartAudioDec, &m_AudioDec, &AudioDec::OnStartDec);
-    listRet.append(bRet);
-    bRet = connect(&m_ReadFile, &ReadFile::SigStartSubtitleDec, &m_SubtitleDec, &SubtitleDec::OnStartDec);
-    listRet.append(bRet);
-
-	//开始播放信号
-	qRegisterMetaType<WId>("WId");
-	bRet = connect(this, &VideoCtl::SigStartPlay, &m_PlayThread, &PlayThread::OnStarPlay);
-	listRet.append(bRet);
-
-    bRet = connect(&m_PlayThread, &PlayThread::SigFrameDimensionsChanged, this, &VideoCtl::SigFrameDimensionsChanged);
-    listRet.append(bRet);
-    
 
     for (bool bReturn : listRet)
     {
@@ -3855,51 +3838,14 @@ void VideoCtl::ReleaseInstance()
 
 }
 
-bool VideoCtl::StartPlay(QString strFileName)
-{
-    qDebug() << "VideoCtl Thread ID:" << QThread::currentThreadId();
-
-    if (NoError == m_ReadFile.StartRead(strFileName))
-    {
-        //emit SigStartDec();
-		//emit SigStartPlay();
-    }
-
-    return true;
-}
-
 
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 {
-# if 0
-	if (NoError == m_ReadFile.StartRead(strFileName))
-	{
-		//emit SigStartDec();
-		emit SigStartPlay(widPlayWid);
-	}
-
-	return true;
-#else
-
     play_wid = widPlayWid;
 
     VideoState *is;
 
-    int flags;
-    flags = SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER;
-    if (SDL_Init(flags)) {
-        av_log(NULL, AV_LOG_FATAL, "Could not initialize SDL - %s\n", SDL_GetError());
-        av_log(NULL, AV_LOG_FATAL, "(Did you set the DISPLAY variable?)\n");
-        exit(1);
-    }
-    SDL_EventState(SDL_SYSWMEVENT, SDL_IGNORE);
-    SDL_EventState(SDL_USEREVENT, SDL_IGNORE);
 
-    //注册自定义锁
-    if (av_lockmgr_register(lockmgr)) {
-        av_log(NULL, AV_LOG_FATAL, "Could not initialize lock manager!\n");
-        do_exit((VideoState *)1);
-    }
 
 
 
@@ -3924,56 +3870,6 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     event_loop(is);
 
 
-
-
-
-
     return true;
-#endif
-}
-
-AVFormatContext *VideoCtl::GetAVFormatCtx()
-{
-    return m_pAVFormatContext;
-}
-
-VideoDataOprator *VideoCtl::GetVideoDataOprator()
-{
-    return &m_VideoDataOprator;
-}
-
-bool VideoCtl::StreamComponentOpen(AVFormatContext *ic, int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex)
-{
-    AVCodecContext *avctx = nullptr;
-    AVCodec *codec;
-
-    qDebug() << "StreamComponentOpen" << nVideoStreamIndex << nAudioStreamIndex << nSubtitleStreamIndex;
-    if (nVideoStreamIndex >= 0)
-    {
-        //初始化结构体
-        avctx = avcodec_alloc_context3(nullptr);
-        if (!avctx)
-        {
-            return false;
-        }
-//         avformat_match_stream_specifier
-//         av_find_best_stream
-        avcodec_parameters_to_context(avctx, ic->streams[nVideoStreamIndex]->codecpar);
-        av_codec_set_pkt_timebase(avctx, ic->streams[nVideoStreamIndex]->time_base);
-        //寻找解码器
-        codec = avcodec_find_decoder(avctx->codec_id);
-        avcodec_open2(avctx, codec, nullptr);
-
-        m_VideoDec.video_stream = nVideoStreamIndex;
-        m_VideoDec.video_st = ic->streams[nVideoStreamIndex];
-        m_VideoDec.video_avctx = avctx;
-    }
-
-    return true;
-}
-
-void VideoCtl::OnPlayMsg(QString strMsg)
-{
-    qDebug() << strMsg;
 }
 

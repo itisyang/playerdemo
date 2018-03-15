@@ -13,17 +13,10 @@
 
 #include <QObject>
 #include <QThread>
-#include <QPixmap>
 #include <QString>
 
 #include "globalhelper.h"
 
-#include "readfile.h"
-#include "videodec.h"
-#include "audiodec.h"
-#include "subtitledec.h"
-#include "videodataoprator.h"
-#include "playthread.h"
 
 //单例模式
 class VideoCtl : public QObject
@@ -35,14 +28,7 @@ public:
 
     static VideoCtl* GetInstance();
     static void ReleaseInstance();
-	/**
-	 * @brief	开始播放
-	 * 
-	 * @param	strFileName 文件完整路径
-	 * @return	true 成功 false 失败
-	 * @note 	
-	 */
-    bool StartPlay(QString strFileName);
+
 	/**
 	* @brief	开始播放
 	*
@@ -53,30 +39,10 @@ public:
 	*/
 	bool StartPlay(QString strFileName, WId widPlayWid);
 
-    AVFormatContext* GetAVFormatCtx();
-
-    VideoDataOprator* GetVideoDataOprator();
-
-	/**
-	 * @brief	打开流
-	 * 
-	 * @param	nVideoStreamIndex 视频流序号
-	 * @param	nAudioStreamIndex 音频流序号
-	 * @param	nSubtitleStreamIndex 字幕流序号
-	 * @return	true 成功 false 失败
-	 * @note 	
-	 */
-    bool StreamComponentOpen(AVFormatContext *ic, int nVideoStreamIndex, int nAudioStreamIndex, int nSubtitleStreamIndex);
-
 signals:
-    void SigStartDec();				//< 开始解码信号
-	void SigStartPlay(WId wid);		//< 开始播放显示信号
     void SigPlayMsg(QString strMsg);//< 错误信息
-    void SigImage(QPixmap& img);	//< 一帧图像
-
     void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
-public slots:
-    void OnPlayMsg(QString strMsg); //< 播放消息
+
 private slots:
 
 private:
@@ -105,19 +71,6 @@ private:
     static VideoCtl* m_pInstance; //< 单例指针
 
     bool m_bInited;	//< 初始化标志
-
-    ReadFile m_ReadFile;//< 文件读取
-
-    VideoDataOprator m_VideoDataOprator;//< 数据处理
-
-    VideoDec m_VideoDec;		//< 视频解码
-    AudioDec m_AudioDec;		//< 音频解码
-    SubtitleDec m_SubtitleDec;	//< 字幕解码
-
-	PlayThread m_PlayThread;	//< 播放线程
-
-
-    AVFormatContext *m_pAVFormatContext; //< FFmpeg视频文件格式解析结构体
 
 };
 

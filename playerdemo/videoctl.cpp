@@ -3803,9 +3803,6 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     VideoState *is;
 
 
-
-
-
     //初始化清理包
     av_init_packet(&flush_pkt);
     flush_pkt.data = (uint8_t *)&flush_pkt;

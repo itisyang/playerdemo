@@ -283,7 +283,6 @@ public:
     //explicit VideoCtl(QObject *parent = nullptr);
 
     static VideoCtl* GetInstance();
-    static void ReleaseInstance();
 
 	/**
 	* @brief	开始播放

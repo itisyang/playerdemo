@@ -1,6 +1,10 @@
 *{
-    background-color: #171717;
+    background-color: #202129;
     color:white;
+}
+
+QWidget#ShowCtrlBarPlaylistBgWidget{
+    border: 1px solid black;
 }
 
 /*****菜单*****/

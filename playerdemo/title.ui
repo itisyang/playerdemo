@@ -58,17 +58,17 @@
      </property>
      <property name="font">
       <font>
-       <family>华文彩云</family>
+       <family>Yu Gothic UI Semibold</family>
        <pointsize>18</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
+       <weight>50</weight>
+       <bold>false</bold>
       </font>
      </property>
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
      <property name="text">
-      <string>Player</string>
+      <string>PotPlayer</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

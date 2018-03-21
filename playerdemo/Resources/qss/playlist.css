@@ -1,7 +1,8 @@
 
 *{
-    background:transparent;
+    background:#2e2f37;
     color:white;
+    
 }
 
 QPushButton{
@@ -17,7 +18,7 @@ QPushButton:pressed {
 /*****列表*******/
 QListWidget{
     /*background:#222930;*/
-    border: 0px solid Cyan;
+    border: 1px solid Black;
 }
 QListWidget::item:hover{
     /*background: Cyan;*/

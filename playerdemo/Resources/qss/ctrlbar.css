@@ -18,7 +18,7 @@ QPushButton:pressed {
 }
 
 QPushButton#PlaylistCtrlBtn{
-	border: 2px solid black;
+	border: 1px solid black;
 }
 QSlider::groove:horizontal {
 border: 1px solid #4A708B;

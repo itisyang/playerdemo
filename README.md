@@ -10,7 +10,6 @@
 
 ![初始画面](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/0.png)
 ![播放画面1](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/1.png)
-![播放画面2](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/2.png)
 
 
 

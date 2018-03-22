@@ -1,10 +1,18 @@
+
+
 *{
     background-color: #202129;
     color:white;
 }
 
+QWidget#BgWidget{
+    border: 1px solid black;
+    /*border-radius: 10px;*/
+}
+
 QWidget#ShowCtrlBarPlaylistBgWidget{
     border: 1px solid black;
+    border-top:none;
 }
 
 /*****菜单*****/

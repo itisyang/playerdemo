@@ -13,12 +13,22 @@ QWidget#BgWidget{
 QPushButton:hover{
     color:  Cyan;
 }
-QPushButton:pressed {
+QPushButton:pressed{
     color:  CadetBlue;
 }
 
 QPushButton#PlaylistCtrlBtn{
-	border: 1px solid black;
+    border: 1px solid black;
+    border-top:none;
+    color:white;
+}
+QPushButton#PlaylistCtrlBtn:hover{
+    background-color:#41414e;
+    color:white;
+}
+QPushButton#PlaylistCtrlBtn:pressed{
+    background-color:#1a1a20;
+    color:white;
 }
 QSlider::groove:horizontal {
 border: 1px solid #4A708B;

@@ -31,29 +31,29 @@ QPushButton#PlaylistCtrlBtn:pressed{
     color:white;
 }
 QSlider::groove:horizontal {
-border: 1px solid #4A708B;
-background: #C0C0C0;
-height: 5px;
-border-radius: 2px;
-padding-left:-1px;
-padding-right:-1px;
+    border: 1px solid #4A708B;
+    background: #C0C0C0;
+    height: 5px;
+    border-radius: 2px;
+    padding-left:-1px;
+    padding-right:-1px;
 }
 
 QSlider::sub-page:horizontal {
-background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-    stop:0 #B1B1B1, stop:1 #c4c4c4);
-background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
-    stop: 0 #5DCCFF, stop: 1 #1874CD);
-border: 1px solid #4A708B;
-height: 10px;
-border-radius: 2px;
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+        stop:0 #B1B1B1, stop:1 #c4c4c4);
+    background: qlineargradient(x1: 0, y1: 0.2, x2: 1, y2: 1,
+        stop: 0 #5DCCFF, stop: 1 #1874CD);
+    border: 1px solid #4A708B;
+    height: 10px;
+    border-radius: 2px;
 }
 
 QSlider::add-page:horizontal {
-background: #575757;
-border: 0px solid #777;
-height: 10px;
-border-radius: 2px;
+    background: #575757;
+    border: 0px solid #777;
+    height: 10px;
+    border-radius: 2px;
 }
 
 QSlider::handle:horizontal
@@ -78,17 +78,17 @@ QSlider::handle:horizontal:hover {
 }
 
 QSlider::sub-page:horizontal:disabled {
-background: #00009C;
-border-color: #999;
+    background: #00009C;
+    border-color: #999;
 }
 
 QSlider::add-page:horizontal:disabled {
-background: #eee;
-border-color: #999;
+    background: #eee;
+    border-color: #999;
 }
 
 QSlider::handle:horizontal:disabled {
-background: #eee;
-border: 1px solid #aaa;
-border-radius: 4px;
+    background: #eee;
+    border: 1px solid #aaa;
+    border-radius: 4px;
 }

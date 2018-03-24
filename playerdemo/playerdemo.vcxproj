@@ -155,6 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="customthread.h" />
+    <ClInclude Include="datactl.h" />
     <ClInclude Include="GeneratedFiles\ui_ctrlbar.h" />
     <ClInclude Include="GeneratedFiles\ui_playlist.h" />
     <ClInclude Include="GeneratedFiles\ui_show.h" />

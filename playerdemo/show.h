@@ -111,8 +111,6 @@ signals:
 private:
     Ui::Show *ui;
 
-    VideoCtl *m_VideoCtl;	///< 视频控制
-
     int m_nLastFrameWidth; ///< 记录视频宽高
     int m_nLastFrameHeight;
 };

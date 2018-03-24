@@ -27,7 +27,6 @@ Show::Show(QWidget *parent) :
     setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/show.css"));
     setAcceptDrops(true);
 
-    m_VideoCtl = VideoCtl::GetInstance();
 
 	Init();
     //防止过度刷新显示
@@ -132,11 +131,6 @@ bool Show::ConnectSignalSlots()
 	QList<bool> listRet;
 	bool bRet;
 
-	bRet = connect(m_VideoCtl, &VideoCtl::SigPlayMsg, this, &Show::OnDisplayMsg);
-	listRet.append(bRet);
-
-    bRet = connect(m_VideoCtl, &VideoCtl::SigFrameDimensionsChanged, this, &Show::OnFrameDimensionsChanged);
-    listRet.append(bRet);
 	bRet = connect(this, &Show::SigPlay, this, &Show::OnPlay);
 	listRet.append(bRet);
 

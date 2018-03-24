@@ -172,5 +172,8 @@
     <ClInclude Include="GeneratedFiles\ui_show.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="datactl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

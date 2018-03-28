@@ -259,3 +259,11 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+playerdemo/.qmake.stash
+playerdemo/GeneratedFiles/qrc_mainwid.cpp
+playerdemo/GeneratedFiles/ui_show.h
+playerdemo/GeneratedFiles/ui_playlist.h
+playerdemo/GeneratedFiles/ui_ctrlbar.h
+playerdemo/Makefile
+playerdemo/GeneratedFiles/ui_title.h
+playerdemo/GeneratedFiles/ui_mainwid.h

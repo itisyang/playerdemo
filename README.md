@@ -15,7 +15,8 @@
 
 ## 使用
 - 工程中包含.sln和.pro文件,其中.sln用于Windows环境,.pro用于Linux环境
-- 如果要编译工程代码，在Windows下除了安装VS+Qt，还需要下载FFmpeg和SDL2的动态库(64bit)，将这些动态库文件放在.\bin目录下面
+- 若要编译工程代码，在Windows下除了安装VS+Qt，还需要下载FFmpeg和SDL2的动态库(64bit)，将这些动态库文件放在.\bin目录下面
+- 若运行不了，可以将lib目录下的*.lib换成和bin目录下dll一致的版本
 
 ## 沟通
 - 邮件: itisyang@gmail.com

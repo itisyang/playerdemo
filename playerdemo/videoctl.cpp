@@ -15,7 +15,7 @@
 #include <thread>
 
 #include "videoctl.h"
-#include "datactl.h"
+
 
 # pragma execution_character_set("utf-8")
 
@@ -2199,7 +2199,7 @@ static void seek_chapter(VideoState *is, int incr)
 }
 
 /* handle an event sent by the GUI */
-static void event_loop(VideoState *cur_stream)
+void VideoCtl::ThreadLoop(VideoState *cur_stream)
 {
     SDL_Event event;
     double incr, pos, frac;
@@ -2507,8 +2507,8 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     //事件循环
     //event_loop(is);
 
-    std::thread ThreadLoop(event_loop, is);
-    ThreadLoop.detach();
+    std::thread t(&VideoCtl::ThreadLoop, this, is);
+    t.detach();
 
 
     return true;

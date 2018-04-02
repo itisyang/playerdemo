@@ -16,7 +16,7 @@
 #include <QString>
 
 #include "globalhelper.h"
-
+#include "datactl.h"
 
 
 
@@ -63,6 +63,8 @@ private:
 	 * @note 	
 	 */
     bool ConnectSignalSlots();
+
+    void ThreadLoop(VideoState *CurStream);
 
 public:
 

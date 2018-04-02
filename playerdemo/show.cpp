@@ -60,7 +60,10 @@ void Show::AdjustDisplay(int nFrameWidth, int nFrameHeight)
     //qDebug() << nFrameWidth << nFrameHeight;
     if (nFrameWidth == 0 || nFrameHeight == 0)
     {
-        ui->label->setGeometry(0, 0, width(), height());
+        return;
+//         int w = width();
+//         int h = height();
+//         ui->label->setGeometry(0, 0, w, h);
     }
 	else if (nFrameHeight * width() >= nFrameWidth * height())
 	{   //当前供显示的区域，高偏小，以高为标准，高全部显示
@@ -120,6 +123,7 @@ void Show::OnDisplayMsg(QString strMsg)
 void Show::OnPlay(QString strFile)
 {
 	VideoCtl::GetInstance()->StartPlay(strFile, ui->label->winId());
+    //VideoCtl::GetInstance()->StartPlay(strFile, this->winId());
 }
 
 void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)

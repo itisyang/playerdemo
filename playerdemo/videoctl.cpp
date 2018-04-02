@@ -9,8 +9,10 @@
  * @note
  */
 
-#include <QThread>
+
 #include <QDebug>
+
+#include <thread>
 
 #include "videoctl.h"
 #include "datactl.h"
@@ -2503,7 +2505,11 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     }
 
     //事件循环
-    event_loop(is);
+    //event_loop(is);
+
+    std::thread ThreadLoop(event_loop, is);
+    ThreadLoop.detach();
+
 
     return true;
 }

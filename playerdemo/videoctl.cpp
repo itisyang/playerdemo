@@ -472,7 +472,8 @@ static void stream_close(VideoState *is)
 {
     /* XXX: use a special url_shutdown call to abort parse cleanly */
     is->abort_request = 1;
-    SDL_WaitThread(is->read_tid, NULL);
+    //SDL_WaitThread(, NULL);
+    is->read_tid.join();
 
     /* close each stream */
     if (is->audio_stream >= 0)
@@ -1666,9 +1667,9 @@ static int is_realtime(AVFormatContext *s)
 
 /* this thread gets the stream from the disk or the network */
 //读取线程
-static int read_thread(void *arg)
+void VideoCtl::ReadThread(VideoState *is)
 {
-    VideoState *is = (VideoState *)arg;
+    //VideoState *is = (VideoState *)arg;
     AVFormatContext *ic = NULL;
     int err, i, ret;
     int st_index[AVMEDIA_TYPE_NB];
@@ -1712,6 +1713,8 @@ static int read_thread(void *arg)
     }
 
     is->ic = ic;
+
+
 
     if (genpts)
         ic->flags |= AVFMT_FLAG_GENPTS;
@@ -1765,6 +1768,8 @@ static int read_thread(void *arg)
 
     if (show_status)
         av_dump_format(ic, 0, is->filename, 0);
+    emit SigVideoSeconds(ic->duration / 1000000LL);
+
 
     for (i = 0; i < ic->nb_streams; i++) {
         AVStream *st = ic->streams[i];
@@ -1990,10 +1995,10 @@ fail:
         SDL_PushEvent(&event);
     }
     SDL_DestroyMutex(wait_mutex);
-    return 0;
+    return ;
 }
 
-static VideoState *stream_open(const char *filename, AVInputFormat *iformat)
+VideoState* VideoCtl::stream_open(const char *filename, AVInputFormat *iformat)
 {
     VideoState *is;
     //构造视频状态类
@@ -2045,14 +2050,18 @@ static VideoState *stream_open(const char *filename, AVInputFormat *iformat)
     is->muted = 0;
     is->av_sync_type = av_sync_type;
     //构建读取线程
-    is->read_tid = SDL_CreateThread(read_thread, "read_thread", is);
-    if (!is->read_tid) {
-        av_log(NULL, AV_LOG_FATAL, "SDL_CreateThread(): %s\n", SDL_GetError());
+    is->read_tid = std::thread(&VideoCtl::ReadThread, this, is);
+//     if (!is->read_tid) {
+//         av_log(NULL, AV_LOG_FATAL, "SDL_CreateThread(): %s\n", SDL_GetError());
+//     fail:
+//         stream_close(is);
+//         return NULL;
+//     }
+    return is;
+
     fail:
         stream_close(is);
         return NULL;
-    }
-    return is;
 }
 
 static void stream_cycle_channel(VideoState *is, int codec_type)
@@ -2199,7 +2208,7 @@ static void seek_chapter(VideoState *is, int incr)
 }
 
 /* handle an event sent by the GUI */
-void VideoCtl::ThreadLoop(VideoState *cur_stream)
+void VideoCtl::LoopThread(VideoState *cur_stream)
 {
     SDL_Event event;
     double incr, pos, frac;
@@ -2352,7 +2361,7 @@ void VideoCtl::ThreadLoop(VideoState *cur_stream)
                 int64_t ts;
                 int ns, hh, mm, ss;
                 int tns, thh, tmm, tss;
-                tns = cur_stream->ic->duration / 1000000LL;
+                tns = cur_stream->ic->duration / 1000000LL;//AV_TIME_BASE
                 thh = tns / 3600;
                 tmm = (tns % 3600) / 60;
                 tss = (tns % 60);
@@ -2504,10 +2513,9 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
         do_exit(NULL);
     }
 
-    //事件循环
-    //event_loop(is);
 
-    std::thread t(&VideoCtl::ThreadLoop, this, is);
+    //事件循环
+    std::thread t(&VideoCtl::LoopThread, this, is);
     t.detach();
 
 

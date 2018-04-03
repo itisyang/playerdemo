@@ -39,6 +39,10 @@ public:
      * @note 	
      */
     bool ConnectSignalSlots();
+public slots:
+    void OnVideoTotalSeconds(int nSeconds);
+    void OnVideoPlaySeconds(int nSeconds);
+
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
 private:

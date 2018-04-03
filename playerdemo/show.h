@@ -65,6 +65,14 @@ protected:
      * @note 	
      */
     void keyPressEvent(QKeyEvent *event);
+public slots:
+    /**
+    * @brief	播放
+    *
+    * @param	strFile 文件名
+    * @note
+    */
+    void OnPlay(QString strFile);
 private slots:
 	/**
 	 * @brief	显示信息
@@ -73,13 +81,7 @@ private slots:
 	 * @note 	
 	 */
 	void OnDisplayMsg(QString strMsg);
-	/**
-	* @brief	播放
-	*
-	* @param	strFile 文件名
-	* @note
-	*/
-	void OnPlay(QString strFile);
+
     /**
      * @brief	视频宽高发生变化
      * 

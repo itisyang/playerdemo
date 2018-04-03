@@ -22,6 +22,7 @@
 #include "ui_mainwid.h"
 #include "framelesshelper.h"
 #include "globalhelper.h"
+#include "videoctl.h"
 
 MainWid::MainWid(QWidget *parent) :
     QWidget(parent),
@@ -209,6 +210,11 @@ bool MainWid::ConnectSignalSlots()
 
 	bRet = connect(ui->CtrlBarWid, &CtrlBar::SigShowOrHidePlaylist, this, &MainWid::OnShowOrHidePlaylist);
 	listRet.append(bRet);
+
+
+    bRet = connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoSeconds, ui->CtrlBarWid, &CtrlBar::OnVideoTotalSeconds);
+    listRet.append(bRet);
+    
     
 
 	for (bool bReturn : listRet)

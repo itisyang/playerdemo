@@ -16,6 +16,7 @@
 
 #include <windows.h>
 #include <objbase.h>
+#include <thread>
 
 //#include "config.h"
 #include <inttypes.h>
@@ -210,7 +211,7 @@ enum ShowMode {
 };
 //视频状态，管理所有的视频信息及数据
 typedef struct VideoState {
-    SDL_Thread *read_tid;
+    std::thread read_tid;
     AVInputFormat *iformat;
     int abort_request;
     int force_refresh;

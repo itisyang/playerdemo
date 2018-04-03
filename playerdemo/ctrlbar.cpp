@@ -9,7 +9,7 @@
  * @note
  */
 #include <QDebug>
-#include <QSizeGrip>
+#include <QTime>
 
 #include "ctrlbar.h"
 #include "ui_ctrlbar.h"
@@ -67,4 +67,27 @@ bool CtrlBar::ConnectSignalSlots()
     }
 
     return true;
+}
+
+void CtrlBar::OnVideoTotalSeconds(int nSeconds)
+{
+    int thh, tmm, tss;
+    thh = nSeconds / 3600;
+    tmm = (nSeconds % 3600) / 60;
+    tss = (nSeconds % 60);
+    QTime TotalTime(thh, tmm, tss);
+
+    ui->VideoTotalTimeTimeEdit->setTime(TotalTime);
+}
+
+
+void CtrlBar::OnVideoPlaySeconds(int nSeconds)
+{
+    int thh, tmm, tss;
+    thh = nSeconds / 3600;
+    tmm = (nSeconds % 3600) / 60;
+    tss = (nSeconds % 60);
+    QTime TotalTime(thh, tmm, tss);
+
+    ui->VideoPlayTimeTimeEdit->setTime(TotalTime);
 }

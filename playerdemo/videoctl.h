@@ -44,6 +44,8 @@ signals:
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
 
+    void SigVideoSeconds(int nSeconds);
+
 private slots:
 
 private:
@@ -64,8 +66,9 @@ private:
 	 */
     bool ConnectSignalSlots();
 
-    void ThreadLoop(VideoState *CurStream);
-
+    void ReadThread(VideoState *CurStream);
+    void LoopThread(VideoState *CurStream);
+    VideoState *stream_open(const char *filename, AVInputFormat *iformat);
 public:
 
 

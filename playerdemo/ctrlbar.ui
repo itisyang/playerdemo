@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>346</width>
+    <width>652</width>
     <height>60</height>
    </rect>
   </property>
@@ -163,8 +163,40 @@
      <property name="spacing">
       <number>0</number>
      </property>
+     <item row="0" column="7">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
      <item row="0" column="1">
       <widget class="QPushButton" name="StopBtn">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QPushButton" name="SettingBtn">
        <property name="minimumSize">
         <size>
          <width>30</width>
@@ -201,13 +233,6 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="4">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>00:00</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="3">
       <widget class="QPushButton" name="ForwardBtn">
        <property name="minimumSize">
@@ -226,26 +251,6 @@
         <string/>
        </property>
       </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>/00:00</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
      </item>
      <item row="0" column="0">
       <widget class="QPushButton" name="PlayOrPauseBtn">
@@ -266,22 +271,66 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="7">
-      <widget class="QPushButton" name="SettingBtn">
-       <property name="minimumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
+     <item row="0" column="6">
+      <widget class="QTimeEdit" name="VideoTotalTimeTimeEdit">
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="keyboardTracking">
+        <bool>true</bool>
+       </property>
+       <property name="displayFormat">
+        <string>HH:mm:ss</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QTimeEdit" name="VideoPlayTimeTimeEdit">
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="displayFormat">
+        <string>HH:mm:ss</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="5">
+      <widget class="QLabel" name="label">
+       <property name="maximumSize">
+        <size>
+         <width>8</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="text">
-        <string/>
+        <string>/</string>
        </property>
       </widget>
      </item>

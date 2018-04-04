@@ -91,3 +91,8 @@ void CtrlBar::OnVideoPlaySeconds(int nSeconds)
 
     ui->VideoPlayTimeTimeEdit->setTime(TotalTime);
 }
+
+void CtrlBar::on_PlaySlider_sliderPressed()
+{
+    qDebug() << 0;
+}

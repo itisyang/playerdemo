@@ -181,49 +181,33 @@ void MainWid::leaveEvent(QEvent *event)
 
 bool MainWid::ConnectSignalSlots()
 {
-	QList<bool> listRet;
 	bool bRet;
 
-	bRet = connect(ui->TitleWid, &Title::SigCloseBtnClicked, this, &MainWid::OnCloseBtnClicked);
-	listRet.append(bRet);
-	bRet = connect(ui->TitleWid, &Title::SigMaxBtnClicked, this, &MainWid::OnMaxBtnClicked);
-	listRet.append(bRet);
-	bRet = connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
-	listRet.append(bRet);
-	bRet = connect(ui->TitleWid, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
-	listRet.append(bRet);
-    bRet = connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
-    listRet.append(bRet);
-	bRet = connect(this, &MainWid::SigShowMax, ui->TitleWid, &Title::OnChangeMaxBtnStyle);
-	listRet.append(bRet);
-	bRet = connect(ui->PlaylistWid, &Playlist::SigUpdateUi, this, &MainWid::OnAdjustUi);
-	listRet.append(bRet);
-    bRet = connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
-	listRet.append(bRet);
+	connect(ui->TitleWid, &Title::SigCloseBtnClicked, this, &MainWid::OnCloseBtnClicked);
 	
-
-	bRet = connect(ui->ShowWid, &Show::SigAddFile, ui->PlaylistWid, &Playlist::OnAddFile);
-	listRet.append(bRet);
-
-    bRet = connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);
-    listRet.append(bRet);
-
-	bRet = connect(ui->CtrlBarWid, &CtrlBar::SigShowOrHidePlaylist, this, &MainWid::OnShowOrHidePlaylist);
-	listRet.append(bRet);
-
-
-    bRet = connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoSeconds, ui->CtrlBarWid, &CtrlBar::OnVideoTotalSeconds);
-    listRet.append(bRet);
+	connect(ui->TitleWid, &Title::SigMaxBtnClicked, this, &MainWid::OnMaxBtnClicked);
+	
+	connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
+	
+	connect(ui->TitleWid, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
+	
+    connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
     
-    
+	connect(this, &MainWid::SigShowMax, ui->TitleWid, &Title::OnChangeMaxBtnStyle);
+	
+	connect(ui->PlaylistWid, &Playlist::SigUpdateUi, this, &MainWid::OnAdjustUi);
+	
+    connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 
-	for (bool bReturn : listRet)
-	{
-		if (bReturn == false)
-		{
-			return false;
-		}
-	}
+	connect(ui->ShowWid, &Show::SigAddFile, ui->PlaylistWid, &Playlist::OnAddFile);
+
+    connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);
+
+	connect(ui->CtrlBarWid, &CtrlBar::SigShowOrHidePlaylist, this, &MainWid::OnShowOrHidePlaylist);
+
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoSeconds, ui->CtrlBarWid, &CtrlBar::OnVideoTotalSeconds);
+
+    connect(ui->CtrlBarWid, &CtrlBar::SigPlaySeek, VideoCtl::GetInstance(), &VideoCtl::OnPlaySeek);
 
 	return true;
 }

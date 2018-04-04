@@ -54,17 +54,8 @@ bool CtrlBar::ConnectSignalSlots()
     bool bRet;
 
 
-    bRet = connect(ui->PlaylistCtrlBtn, &QPushButton::clicked, this, &CtrlBar::SigShowOrHidePlaylist);
-    listRet.append(bRet);
-
-
-    for (bool bReturn : listRet)
-    {
-        if (bReturn == false)
-        {
-            return false;
-        }
-    }
+    connect(ui->PlaylistCtrlBtn, &QPushButton::clicked, this, &CtrlBar::SigShowOrHidePlaylist);
+    connect(ui->PlaySlider, &CustomSlider::SigCustomSliderClicked, this, &CtrlBar::OnPlaySliderClicked);
 
     return true;
 }
@@ -92,7 +83,9 @@ void CtrlBar::OnVideoPlaySeconds(int nSeconds)
     ui->VideoPlayTimeTimeEdit->setTime(TotalTime);
 }
 
-void CtrlBar::on_PlaySlider_sliderPressed()
+void CtrlBar::OnPlaySliderClicked()
 {
-    qDebug() << 0;
+    double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();
+    emit SigPlaySeek(dPercent);
 }
+

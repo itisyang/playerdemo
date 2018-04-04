@@ -60,7 +60,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QSlider" name="PlaySlider">
+       <widget class="CustomSlider" name="PlaySlider">
         <property name="maximum">
          <number>65536</number>
         </property>
@@ -347,6 +347,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustomSlider</class>
+   <extends>QSlider</extends>
+   <header>CustomSlider.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

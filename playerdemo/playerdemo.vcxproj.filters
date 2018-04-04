@@ -108,6 +108,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_videoctl.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CustomSlider.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CustomSlider.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomSlider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwid.ui">
@@ -147,6 +156,9 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="videoctl.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CustomSlider.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

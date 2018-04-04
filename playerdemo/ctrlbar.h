@@ -12,6 +12,7 @@
 #define CTRLBAR_H
 
 #include <QWidget>
+#include "CustomSlider.h"
 
 namespace Ui {
 class CtrlBar;
@@ -43,9 +44,10 @@ public slots:
     void OnVideoTotalSeconds(int nSeconds);
     void OnVideoPlaySeconds(int nSeconds);
 private slots:
-    void on_PlaySlider_sliderPressed();
+    void OnPlaySliderClicked();
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
+    void SigPlaySeek(double dPercent); ///< 调整播放进度
 private:
     Ui::CtrlBar *ui;
 };

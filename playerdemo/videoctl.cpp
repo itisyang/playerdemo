@@ -2424,6 +2424,14 @@ static int lockmgr(void **mtx, enum AVLockOp op)
 }
 
 
+void VideoCtl::OnPlaySeek(double dPercent)
+{
+    int64_t ts = dPercent * m_CurStream->ic->duration;
+    if (m_CurStream->ic->start_time != AV_NOPTS_VALUE)
+        ts += m_CurStream->ic->start_time;
+    stream_seek(m_CurStream, ts, 0, 0);
+}
+
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
 {
     m_bInited = false;
@@ -2513,6 +2521,7 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
         do_exit(NULL);
     }
 
+    m_CurStream = is;
 
     //事件循环
     std::thread t(&VideoCtl::LoopThread, this, is);

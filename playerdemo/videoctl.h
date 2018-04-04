@@ -45,7 +45,8 @@ signals:
     void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
 
     void SigVideoSeconds(int nSeconds);
-
+public slots:
+    void OnPlaySeek(double dPercent);
 private slots:
 
 private:
@@ -78,6 +79,7 @@ private:
 
     bool m_bInited;	//< 初始化标志
 
+    VideoState* m_CurStream;
 };
 
 #endif // VIDEOCTL_H

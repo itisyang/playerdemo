@@ -44,7 +44,7 @@ public slots:
     void OnVideoTotalSeconds(int nSeconds);
     void OnVideoPlaySeconds(int nSeconds);
 private slots:
-    void OnPlaySliderClicked();
+    void OnPlaySliderValueChanged();
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
     void SigPlaySeek(double dPercent); ///< 调整播放进度

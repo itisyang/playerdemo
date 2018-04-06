@@ -205,7 +205,9 @@ bool MainWid::ConnectSignalSlots()
 
 	connect(ui->CtrlBarWid, &CtrlBar::SigShowOrHidePlaylist, this, &MainWid::OnShowOrHidePlaylist);
 
-    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoSeconds, ui->CtrlBarWid, &CtrlBar::OnVideoTotalSeconds);
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoTotalSeconds, ui->CtrlBarWid, &CtrlBar::OnVideoTotalSeconds);
+
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoPlaySeconds, ui->CtrlBarWid, &CtrlBar::OnVideoPlaySeconds);
 
     connect(ui->CtrlBarWid, &CtrlBar::SigPlaySeek, VideoCtl::GetInstance(), &VideoCtl::OnPlaySeek);
 

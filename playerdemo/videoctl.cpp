@@ -814,7 +814,7 @@ static void update_video_pts(VideoState *is, double pts, int64_t pos, int serial
 }
 
 /* called to display each frame */
-static void video_refresh(void *opaque, double *remaining_time)
+void VideoCtl::video_refresh(void *opaque, double *remaining_time)
 {
     VideoState *is = (VideoState *)opaque;
     double time;
@@ -972,6 +972,8 @@ static void video_refresh(void *opaque, double *remaining_time)
             last_time = cur_time;
         }
     }
+
+    emit SigVideoPlaySeconds(get_master_clock(is));
 }
 
 static int queue_picture(VideoState *is, AVFrame *src_frame, double pts, double duration, int64_t pos, int serial)
@@ -1768,7 +1770,7 @@ void VideoCtl::ReadThread(VideoState *is)
 
     if (show_status)
         av_dump_format(ic, 0, is->filename, 0);
-    emit SigVideoSeconds(ic->duration / 1000000LL);
+    emit SigVideoTotalSeconds(ic->duration / 1000000LL);
 
 
     for (i = 0; i < ic->nb_streams; i++) {
@@ -2163,7 +2165,7 @@ static void toggle_audio_display(VideoState *is)
     }
 }
 
-static void refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
+void VideoCtl::refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
     double remaining_time = 0.0;
     SDL_PumpEvents();
     while (!SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT)) {

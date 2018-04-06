@@ -44,7 +44,8 @@ signals:
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
 
-    void SigVideoSeconds(int nSeconds);
+    void SigVideoTotalSeconds(int nSeconds);
+    void SigVideoPlaySeconds(int nSeconds);
 public slots:
     void OnPlaySeek(double dPercent);
 private slots:
@@ -70,6 +71,9 @@ private:
     void ReadThread(VideoState *CurStream);
     void LoopThread(VideoState *CurStream);
     VideoState *stream_open(const char *filename, AVInputFormat *iformat);
+
+    void refresh_loop_wait_event(VideoState *is, SDL_Event *event);
+    void video_refresh(void *opaque, double *remaining_time);
 public:
 
 

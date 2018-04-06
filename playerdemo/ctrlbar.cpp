@@ -43,6 +43,7 @@ bool CtrlBar::InitUi()
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
     GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));
     
+    ui->PlaySlider->setMaximum(MAX_SLIDER_VALUE);
 
     return true;
 
@@ -62,6 +63,8 @@ bool CtrlBar::ConnectSignalSlots()
 
 void CtrlBar::OnVideoTotalSeconds(int nSeconds)
 {
+    m_nTotalPlaySeconds = nSeconds;
+
     int thh, tmm, tss;
     thh = nSeconds / 3600;
     tmm = (nSeconds % 3600) / 60;
@@ -81,6 +84,8 @@ void CtrlBar::OnVideoPlaySeconds(int nSeconds)
     QTime TotalTime(thh, tmm, tss);
 
     ui->VideoPlayTimeTimeEdit->setTime(TotalTime);
+
+    ui->PlaySlider->setValue(nSeconds * 1.0 / m_nTotalPlaySeconds * MAX_SLIDER_VALUE);
 }
 
 void CtrlBar::OnPlaySliderValueChanged()

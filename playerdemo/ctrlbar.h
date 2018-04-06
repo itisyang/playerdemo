@@ -50,6 +50,8 @@ signals:
     void SigPlaySeek(double dPercent); ///< 调整播放进度
 private:
     Ui::CtrlBar *ui;
+
+    int m_nTotalPlaySeconds;
 };
 
 #endif // CTRLBAR_H

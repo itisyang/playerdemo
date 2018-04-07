@@ -113,7 +113,7 @@
           </widget>
          </item>
          <item row="0" column="1">
-          <widget class="QSlider" name="horizontalSlider">
+          <widget class="CustomSlider" name="VolumeSlider">
            <property name="minimumSize">
             <size>
              <width>80</width>

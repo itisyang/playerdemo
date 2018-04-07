@@ -211,6 +211,10 @@ bool MainWid::ConnectSignalSlots()
 
     connect(ui->CtrlBarWid, &CtrlBar::SigPlaySeek, VideoCtl::GetInstance(), &VideoCtl::OnPlaySeek);
 
+    connect(ui->CtrlBarWid, &CtrlBar::SigPlayVolume, VideoCtl::GetInstance(), &VideoCtl::OnPlayVolume);
+
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoStartupVolume, ui->CtrlBarWid, &CtrlBar::OnVideoStartupVolume);
+
 	return true;
 }
 

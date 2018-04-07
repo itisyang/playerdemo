@@ -2049,6 +2049,9 @@ VideoState* VideoCtl::stream_open(const char *filename, AVInputFormat *iformat)
     startup_volume = av_clip(startup_volume, 0, 100);
     startup_volume = av_clip(SDL_MIX_MAXVOLUME * startup_volume / 100, 0, SDL_MIX_MAXVOLUME);
     is->audio_volume = startup_volume;
+    
+    emit SigVideoStartupVolume(startup_volume * 1.0 / SDL_MIX_MAXVOLUME);
+
     is->muted = 0;
     is->av_sync_type = av_sync_type;
     //构建读取线程
@@ -2432,6 +2435,11 @@ void VideoCtl::OnPlaySeek(double dPercent)
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE)
         ts += m_CurStream->ic->start_time;
     stream_seek(m_CurStream, ts, 0, 0);
+}
+
+void VideoCtl::OnPlayVolume(double dPercent)
+{
+    m_CurStream->audio_volume = dPercent * SDL_MIX_MAXVOLUME;
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)

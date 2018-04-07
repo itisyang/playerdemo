@@ -1,8 +1,10 @@
 ﻿#include "CustomSlider.h"
+#include "globalhelper.h"
 
 CustomSlider::CustomSlider(QWidget *parent)
     : QSlider(parent)
 {
+    this->setMaximum(MAX_SLIDER_VALUE);
 }
 
 CustomSlider::~CustomSlider()

@@ -10,6 +10,7 @@
  */
 #include <QDebug>
 #include <QTime>
+#include <QSettings>
 
 #include "ctrlbar.h"
 #include "ui_ctrlbar.h"
@@ -43,7 +44,7 @@ bool CtrlBar::InitUi()
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
     GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));
     
-    ui->PlaySlider->setMaximum(MAX_SLIDER_VALUE);
+
 
     return true;
 
@@ -57,7 +58,8 @@ bool CtrlBar::ConnectSignalSlots()
 
     connect(ui->PlaylistCtrlBtn, &QPushButton::clicked, this, &CtrlBar::SigShowOrHidePlaylist);
     connect(ui->PlaySlider, &CustomSlider::SigCustomSliderValueChanged, this, &CtrlBar::OnPlaySliderValueChanged);
-
+    connect(ui->VolumeSlider, &CustomSlider::SigCustomSliderValueChanged, this, &CtrlBar::OnVolumeSliderValueChanged);
+    
     return true;
 }
 
@@ -88,9 +90,20 @@ void CtrlBar::OnVideoPlaySeconds(int nSeconds)
     ui->PlaySlider->setValue(nSeconds * 1.0 / m_nTotalPlaySeconds * MAX_SLIDER_VALUE);
 }
 
+void CtrlBar::OnVideoStartupVolume(double dPercent)
+{
+    ui->VolumeSlider->setValue(dPercent * MAX_SLIDER_VALUE);
+}
+
 void CtrlBar::OnPlaySliderValueChanged()
 {
     double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();
     emit SigPlaySeek(dPercent);
+}
+
+void CtrlBar::OnVolumeSliderValueChanged()
+{
+    double dPercent = ui->VolumeSlider->value()*1.0 / ui->VolumeSlider->maximum();
+    emit SigPlayVolume(dPercent);
 }
 

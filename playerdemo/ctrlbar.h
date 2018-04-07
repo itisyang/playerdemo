@@ -43,11 +43,14 @@ public:
 public slots:
     void OnVideoTotalSeconds(int nSeconds);
     void OnVideoPlaySeconds(int nSeconds);
+    void OnVideoStartupVolume(double dPercent);
 private slots:
     void OnPlaySliderValueChanged();
+    void OnVolumeSliderValueChanged();
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
     void SigPlaySeek(double dPercent); ///< 调整播放进度
+    void SigPlayVolume(double dPercent);
 private:
     Ui::CtrlBar *ui;
 

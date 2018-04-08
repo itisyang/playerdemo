@@ -11,7 +11,7 @@
 #include <QDebug>
 #include <QTime>
 #include <QSettings>
-
+ 
 #include "ctrlbar.h"
 #include "ui_ctrlbar.h"
 
@@ -105,5 +105,18 @@ void CtrlBar::OnVolumeSliderValueChanged()
 {
     double dPercent = ui->VolumeSlider->value()*1.0 / ui->VolumeSlider->maximum();
     emit SigPlayVolume(dPercent);
+}
+
+void CtrlBar::on_PlayOrPauseBtn_clicked()
+{
+    //GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));//
+    if (ui->PlayOrPauseBtn->text() == QChar(0xf04b))
+    {
+        GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04c));
+    }
+    else
+    {
+        GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+    }
 }
 

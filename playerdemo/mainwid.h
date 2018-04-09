@@ -33,10 +33,10 @@ protected:
     //绘制
     void paintEvent(QPaintEvent *event);
 
-    //窗口大小变化事件
-    void resizeEvent(QResizeEvent *event);
-    //窗口移动事件
-    void moveEvent(QMoveEvent *event);
+//     //窗口大小变化事件
+//     void resizeEvent(QResizeEvent *event);
+//     //窗口移动事件
+//     void moveEvent(QMoveEvent *event);
 
     void enterEvent(QEvent *event);
     void leaveEvent(QEvent *event);
@@ -59,8 +59,6 @@ private slots:
     //显示、隐藏播放列表
     void OnShowOrHidePlaylist();
 
-    //调整窗口模块
-    void OnAdjustUi();
 
     /**
     * @brief	全屏播放
@@ -73,6 +71,7 @@ signals:
     void SigSeekBack();
     void SigAddVolume();
     void SigSubVolume();
+    void SigPause();
 private:
     Ui::MainWid *ui;
 

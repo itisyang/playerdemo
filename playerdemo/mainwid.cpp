@@ -95,20 +95,6 @@ void MainWid::paintEvent(QPaintEvent *event)
 }
 
 
-void MainWid::resizeEvent(QResizeEvent *event)
-{
-    Q_UNUSED(event);
-
-    OnAdjustUi();
-}
-
-void MainWid::moveEvent(QMoveEvent *event)
-{
-    Q_UNUSED(event);
-
-    OnAdjustUi();
-}
-
 void MainWid::enterEvent(QEvent *event)
 {
     Q_UNUSED(event);
@@ -136,8 +122,6 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
     
 	connect(this, &MainWid::SigShowMax, ui->TitleWid, &Title::OnChangeMaxBtnStyle);
-	
-	connect(ui->PlaylistWid, &Playlist::SigUpdateUi, this, &MainWid::OnAdjustUi);
 	
     connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 
@@ -197,10 +181,6 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 	}
 }
 
-void MainWid::OnAdjustUi()
-{
-
-}
 
 void MainWid::OnFullScreenPlay()
 {

@@ -2233,14 +2233,6 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
             case SDLK_m:
                 toggle_mute(cur_stream);
                 break;
-            case SDLK_KP_MULTIPLY:
-            case SDLK_0:
-                update_volume(cur_stream, 1, SDL_VOLUME_STEP);
-                break;
-            case SDLK_KP_DIVIDE:
-            case SDLK_9:
-                update_volume(cur_stream, -1, SDL_VOLUME_STEP);
-                break;
             case SDLK_s: // S: Step to next frame
                 step_to_next_frame(cur_stream);
                 break;
@@ -2370,12 +2362,12 @@ void VideoCtl::OnSeekBack()
 
 void VideoCtl::OnAddVolume()
 {
-
+    update_volume(m_CurStream, 1, SDL_VOLUME_STEP);
 }
 
 void VideoCtl::OnSubVolume()
 {
-
+    update_volume(m_CurStream, -1, SDL_VOLUME_STEP);
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)

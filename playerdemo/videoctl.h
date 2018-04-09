@@ -51,6 +51,10 @@ signals:
 public slots:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);
+    void OnSeekForward();
+    void OnSeekBack();
+    void OnAddVolume();
+    void OnSubVolume();
 private slots:
 
 private:

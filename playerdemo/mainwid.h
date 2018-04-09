@@ -69,6 +69,10 @@ private slots:
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
+    void SigSeekForward();
+    void SigSeekBack();
+    void SigAddVolume();
+    void SigSubVolume();
 private:
     Ui::MainWid *ui;
 

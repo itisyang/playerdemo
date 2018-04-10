@@ -599,12 +599,7 @@ static void toggle_mute(VideoState *is)
     is->muted = !is->muted;
 }
 
-static void update_volume(VideoState *is, int sign, double step)
-{
-    double volume_level = is->audio_volume ? (20 * log(is->audio_volume / (double)SDL_MIX_MAXVOLUME) / log(10)) : -1000.0;
-    int new_volume = lrint(SDL_MIX_MAXVOLUME * pow(10.0, (volume_level + sign * step) / 20.0));
-    is->audio_volume = av_clip(is->audio_volume == new_volume ? (is->audio_volume + sign) : new_volume, 0, SDL_MIX_MAXVOLUME);
-}
+
 
 static void step_to_next_frame(VideoState *is)
 {
@@ -1183,15 +1178,7 @@ static int audio_decode_frame(VideoState *is)
     else
         is->audio_clock = NAN;
     is->audio_clock_serial = af->serial;
-#ifdef DEBUG
-    {
-        static double last_clock;
-        printf("audio: delay=%0.3f clock=%0.3f clock0=%0.3f\n",
-            is->audio_clock - last_clock,
-            is->audio_clock, audio_clock0);
-        last_clock = is->audio_clock;
-    }
-#endif
+
     return resampled_data_size;
 }
 
@@ -1296,12 +1283,7 @@ static int audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb
         }
     }
 
-//     if (spec.format != AUDIO_S16SYS) {
-//         av_log(NULL, AV_LOG_ERROR,
-//             "SDL advised audio format %d is not supported!\n", spec.format);
-//         return -1;
-//     }
-
+    //设定音频播放参数
     switch (spec.format)
     {
     case AUDIO_U8:
@@ -1706,16 +1688,7 @@ void VideoCtl::ReadThread(VideoState *is)
             else
                 av_read_play(ic);
         }
-#if CONFIG_RTSP_DEMUXER || CONFIG_MMSH_PROTOCOL
-        if (is->paused &&
-            (!strcmp(ic->iformat->name, "rtsp") ||
-            (ic->pb && !strncmp(input_filename, "mmsh:", 5)))) {
-            /* wait 10 ms to avoid trying to get another packet */
-            /* XXX: horrible */
-            SDL_Delay(10);
-            continue;
-        }
-#endif
+
         if (is->seek_req) {
             int64_t seek_target = is->seek_pos;
             int64_t seek_min = is->seek_rel > 0 ? seek_target - is->seek_rel + 2 : INT64_MIN;
@@ -2209,16 +2182,23 @@ void VideoCtl::OnSeekBack()
     stream_seek(m_CurStream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
 }
 
+void VideoCtl::UpdateVolume(int sign, double step)
+{
+    double volume_level = m_CurStream->audio_volume ? (20 * log(m_CurStream->audio_volume / (double)SDL_MIX_MAXVOLUME) / log(10)) : -1000.0;
+    int new_volume = lrint(SDL_MIX_MAXVOLUME * pow(10.0, (volume_level + sign * step) / 20.0));
+    m_CurStream->audio_volume = av_clip(m_CurStream->audio_volume == new_volume ? (m_CurStream->audio_volume + sign) : new_volume, 0, SDL_MIX_MAXVOLUME);
+    
+    emit SigVideoVolume(m_CurStream->audio_volume * 1.0 / SDL_MIX_MAXVOLUME);
+}
+
 void VideoCtl::OnAddVolume()
 {
-    update_volume(m_CurStream, 1, SDL_VOLUME_STEP);
-    emit SigVideoVolume(m_CurStream->audio_volume * 1.0 / SDL_MIX_MAXVOLUME);
+    UpdateVolume(1, SDL_VOLUME_STEP);
 }
 
 void VideoCtl::OnSubVolume()
 {
-    update_volume(m_CurStream, -1, SDL_VOLUME_STEP);
-    emit SigVideoVolume(m_CurStream->audio_volume * 1.0/ SDL_MIX_MAXVOLUME);
+    UpdateVolume(-1, SDL_VOLUME_STEP);
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)

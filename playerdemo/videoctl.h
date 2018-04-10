@@ -81,6 +81,8 @@ private:
 
     void refresh_loop_wait_event(VideoState *is, SDL_Event *event);
     void video_refresh(void *opaque, double *remaining_time);
+    //更新音量
+    void UpdateVolume(int sign, double step);
 public:
 
 

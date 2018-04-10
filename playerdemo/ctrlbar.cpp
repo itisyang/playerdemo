@@ -90,7 +90,7 @@ void CtrlBar::OnVideoPlaySeconds(int nSeconds)
     ui->PlaySlider->setValue(nSeconds * 1.0 / m_nTotalPlaySeconds * MAX_SLIDER_VALUE);
 }
 
-void CtrlBar::OnVideoStartupVolume(double dPercent)
+void CtrlBar::OnVideopVolume(double dPercent)
 {
     ui->VolumeSlider->setValue(dPercent * MAX_SLIDER_VALUE);
 }

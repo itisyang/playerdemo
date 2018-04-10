@@ -47,7 +47,7 @@ signals:
     void SigVideoTotalSeconds(int nSeconds);
     void SigVideoPlaySeconds(int nSeconds);
 
-    void SigVideoStartupVolume(double dPercent);
+    void SigVideoVolume(double dPercent);
 public slots:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);

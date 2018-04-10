@@ -139,7 +139,7 @@ bool MainWid::ConnectSignalSlots()
 
     connect(ui->CtrlBarWid, &CtrlBar::SigPlayVolume, VideoCtl::GetInstance(), &VideoCtl::OnPlayVolume);
 
-    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoStartupVolume, ui->CtrlBarWid, &CtrlBar::OnVideoStartupVolume);
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoVolume, ui->CtrlBarWid, &CtrlBar::OnVideopVolume);
 
     connect(this, &MainWid::SigSeekForward, VideoCtl::GetInstance(), &VideoCtl::OnSeekForward);
     connect(this, &MainWid::SigSeekBack, VideoCtl::GetInstance(), &VideoCtl::OnSeekBack);

@@ -43,7 +43,7 @@ public:
 public slots:
     void OnVideoTotalSeconds(int nSeconds);
     void OnVideoPlaySeconds(int nSeconds);
-    void OnVideoStartupVolume(double dPercent);
+    void OnVideopVolume(double dPercent);
 private slots:
     void OnPlaySliderValueChanged();
     void OnVolumeSliderValueChanged();

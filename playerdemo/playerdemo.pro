@@ -5,20 +5,14 @@
 TEMPLATE = app
 TARGET = playerdemo
 DESTDIR = ../bin
-QT += core widgets gui
+QT += core gui widgets
 CONFIG += debug
-win32 {
 DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
-}
-unix{
-
-}
 INCLUDEPATH += ./lib/sdl/include \
     ./lib/ffmpeg/include \
     ./GeneratedFiles \
     . \
-    ./GeneratedFiles/Release
-win32{
+    ./GeneratedFiles/$(ConfigurationName)
 LIBS += -L"./lib/sdl/lib" \
     -L"./lib/ffmpeg/lib" \
     -lavcodec \
@@ -30,55 +24,33 @@ LIBS += -L"./lib/sdl/lib" \
     -lswresample \
     -lswscale \
     -lSDL2
-}
-unix{
-LIBS += \
-    -lavcodec \
-    -lavdevice \
-    -lavfilter \
-    -lavformat \
-    -lavutil \
-    -lpostproc \
-    -lswresample \
-    -lswscale \
-    -lSDL2
-}
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/release
+MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
 OBJECTS_DIR += release
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 HEADERS += ./customthread.h \
+    ./datactl.h \
     ./globalhelper.h \
-    ./playthread.h \
-    ./videodataoprator.h \
+    ./CustomSlider.h \
+    ./videoctl.h \
     ./mainwid.h \
     ./title.h \
     ./playlist.h \
     ./framelesshelper.h \
     ./show.h \
-    ./ctrlbar.h \
-    ./videodec.h \
-    ./videoctl.h \
-    ./subtitledec.h \
-    ./readfile.h \
-    ./audiodec.h
-SOURCES += ./customthread.cpp \
+    ./ctrlbar.h
+SOURCES += ./CustomSlider.cpp \
+    ./customthread.cpp \
     ./globalhelper.cpp \
     ./main.cpp \
-    ./playthread.cpp \
-    ./videodataoprator.cpp \
+    ./videoctl.cpp \
     ./ctrlbar.cpp \
     ./framelesshelper.cpp \
     ./mainwid.cpp \
     ./playlist.cpp \
     ./show.cpp \
-    ./title.cpp \
-    ./audiodec.cpp \
-    ./readfile.cpp \
-    ./subtitledec.cpp \
-    ./videoctl.cpp \
-    ./videodec.cpp
+    ./title.cpp
 FORMS += ./mainwid.ui \
     ./ctrlbar.ui \
     ./show.ui \

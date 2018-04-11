@@ -1,7 +1,7 @@
 # playerdemo
 ![Build Status](https://travis-ci.org/itisyang/playerdemo.svg?branch=master)
 
-开源版potplayer
+一个视频播放器，开源版potplayer
 
 ## 简介
 - 使用FFmpeg解码，SDL2渲染

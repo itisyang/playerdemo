@@ -23,6 +23,8 @@ CtrlBar::CtrlBar(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    m_dLastVolumePercent = 1.0;
+
     InitUi();
     ConnectSignalSlots();
 }
@@ -93,18 +95,48 @@ void CtrlBar::OnVideoPlaySeconds(int nSeconds)
 void CtrlBar::OnVideopVolume(double dPercent)
 {
     ui->VolumeSlider->setValue(dPercent * MAX_SLIDER_VALUE);
+    m_dLastVolumePercent = dPercent;
+
+    if (m_dLastVolumePercent == 0)
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf026));
+    }
+    else
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
+    }
 }
 
 void CtrlBar::OnPlaySliderValueChanged()
 {
     double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();
     emit SigPlaySeek(dPercent);
+    m_dLastVolumePercent = dPercent;
+
+    if (m_dLastVolumePercent == 0)
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf026));
+    }
+    else
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
+    }
 }
 
 void CtrlBar::OnVolumeSliderValueChanged()
 {
     double dPercent = ui->VolumeSlider->value()*1.0 / ui->VolumeSlider->maximum();
     emit SigPlayVolume(dPercent);
+    m_dLastVolumePercent = dPercent;
+
+    if (m_dLastVolumePercent == 0)
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf026));
+    }
+    else
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
+    }
 }
 
 void CtrlBar::on_PlayOrPauseBtn_clicked()
@@ -117,6 +149,23 @@ void CtrlBar::on_PlayOrPauseBtn_clicked()
     else
     {
         GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+    }
+}
+
+void CtrlBar::on_VolumeBtn_clicked()
+{
+    if (ui->VolumeBtn->text() == QChar(0xf028))
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf026));
+        ui->VolumeSlider->setValue(0);
+        emit SigPlayVolume(0);
+    }
+    else
+    {
+        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
+        ui->VolumeSlider->setValue(m_dLastVolumePercent * MAX_SLIDER_VALUE);
+        OnVideopVolume(m_dLastVolumePercent);
+        emit SigPlayVolume(m_dLastVolumePercent);
     }
 }
 

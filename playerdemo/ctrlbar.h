@@ -48,6 +48,7 @@ private slots:
     void OnPlaySliderValueChanged();
     void OnVolumeSliderValueChanged();
     void on_PlayOrPauseBtn_clicked();
+    void on_VolumeBtn_clicked();
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
     void SigPlaySeek(double dPercent); ///< 调整播放进度
@@ -56,6 +57,7 @@ private:
     Ui::CtrlBar *ui;
 
     int m_nTotalPlaySeconds;
+    double m_dLastVolumePercent;
 };
 
 #endif // CTRLBAR_H

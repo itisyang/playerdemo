@@ -594,10 +594,7 @@ static void toggle_pause(VideoState *is)
     is->step = 0;
 }
 
-static void toggle_mute(VideoState *is)
-{
-    is->muted = !is->muted;
-}
+
 
 
 
@@ -1208,11 +1205,11 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
         len1 = is->audio_buf_size - is->audio_buf_index;
         if (len1 > len)
             len1 = len;
-        if (!is->muted && is->audio_buf && is->audio_volume == SDL_MIX_MAXVOLUME)
+        if (is->audio_buf && is->audio_volume == SDL_MIX_MAXVOLUME)
             memcpy(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1);
         else {
             memset(stream, 0, len1);
-            if (!is->muted && is->audio_buf)
+            if (is->audio_buf)
                 SDL_MixAudio(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1, is->audio_volume);
         }
         len -= len1;
@@ -1875,7 +1872,6 @@ VideoState* VideoCtl::stream_open(const char *filename, AVInputFormat *iformat)
     
     emit SigVideoVolume(startup_volume * 1.0 / SDL_MIX_MAXVOLUME);
 
-    is->muted = 0;
     is->av_sync_type = av_sync_type;
     //构建读取线程
     is->read_tid = std::thread(&VideoCtl::ReadThread, this, is);
@@ -1973,18 +1969,6 @@ the_end:
 }
 
 
-static void toggle_audio_display(VideoState *is)
-{
-    int next = is->show_mode;
-    do {
-        next = (next + 1) % SHOW_MODE_NB;
-    } while (next != is->show_mode && (next == SHOW_MODE_VIDEO && !is->video_st || next != SHOW_MODE_VIDEO && !is->audio_st));
-    if (is->show_mode != next) {
-        is->force_refresh = 1;
-        is->show_mode = (ShowMode)next;
-    }
-}
-
 void VideoCtl::refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
     double remaining_time = 0.0;
     SDL_PumpEvents();
@@ -2053,9 +2037,6 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
             case SDLK_SPACE:
                 toggle_pause(cur_stream);
                 break;
-            case SDLK_m:
-                toggle_mute(cur_stream);
-                break;
             case SDLK_s: // S: Step to next frame
                 step_to_next_frame(cur_stream);
                 break;
@@ -2072,9 +2053,6 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
                 break;
             case SDLK_t:
                 stream_cycle_channel(cur_stream, AVMEDIA_TYPE_SUBTITLE);
-                break;
-            case SDLK_w:
-                toggle_audio_display(cur_stream);
                 break;
 
             default:

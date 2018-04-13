@@ -71,11 +71,11 @@ void Title::OnChangeMaxBtnStyle(bool bIfMax)
 {
     if (bIfMax)
     {
-        ui->MaxBtn->setText(QChar(0xf2d2));
+        GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d2));
     }
     else
     {
-        ui->MaxBtn->setText(QChar(0xf2d0));
+        GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d0));
     }
 }
 

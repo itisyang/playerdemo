@@ -39,7 +39,7 @@ static const char* wanted_stream_spec[AVMEDIA_TYPE_NB] = { 0 };
 static int seek_by_bytes = -1;
 static int display_disable;
 static int borderless;
-static int startup_volume = 100;
+static int startup_volume = 30;
 static int show_status = 1;
 static int av_sync_type = AV_SYNC_AUDIO_MASTER;
 static int64_t start_time = AV_NOPTS_VALUE;
@@ -1871,16 +1871,12 @@ VideoState* VideoCtl::stream_open(const char *filename, AVInputFormat *iformat)
     is->audio_volume = startup_volume;
     
     emit SigVideoVolume(startup_volume * 1.0 / SDL_MIX_MAXVOLUME);
+    emit SigPauseStat(is->paused);
 
     is->av_sync_type = av_sync_type;
     //构建读取线程
     is->read_tid = std::thread(&VideoCtl::ReadThread, this, is);
-//     if (!is->read_tid) {
-//         av_log(NULL, AV_LOG_FATAL, "SDL_CreateThread(): %s\n", SDL_GetError());
-//     fail:
-//         stream_close(is);
-//         return NULL;
-//     }
+
     return is;
 
     fail:
@@ -2033,10 +2029,7 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
             case SDLK_q:
                 do_exit(cur_stream);
                 break;
-            case SDLK_p:
-            case SDLK_SPACE:
-                toggle_pause(cur_stream);
-                break;
+
             case SDLK_s: // S: Step to next frame
                 step_to_next_frame(cur_stream);
                 break;
@@ -2177,6 +2170,12 @@ void VideoCtl::OnAddVolume()
 void VideoCtl::OnSubVolume()
 {
     UpdateVolume(-1, SDL_VOLUME_STEP);
+}
+
+void VideoCtl::OnPause()
+{
+    toggle_pause(m_CurStream);
+    emit SigPauseStat(m_CurStream->paused);
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)

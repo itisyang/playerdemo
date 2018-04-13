@@ -48,6 +48,7 @@ signals:
     void SigVideoPlaySeconds(int nSeconds);
 
     void SigVideoVolume(double dPercent);
+    void SigPauseStat(bool bPaused);
 public slots:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);
@@ -55,6 +56,7 @@ public slots:
     void OnSeekBack();
     void OnAddVolume();
     void OnSubVolume();
+    void OnPause();
 private slots:
 
 private:

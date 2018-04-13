@@ -107,6 +107,18 @@ void CtrlBar::OnVideopVolume(double dPercent)
     }
 }
 
+void CtrlBar::OnPauseStat(bool bPaused)
+{
+    if (bPaused)
+    {
+        GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+    }
+    else
+    {
+        GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04c));
+    }
+}
+
 void CtrlBar::OnPlaySliderValueChanged()
 {
     double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();
@@ -141,15 +153,7 @@ void CtrlBar::OnVolumeSliderValueChanged()
 
 void CtrlBar::on_PlayOrPauseBtn_clicked()
 {
-    //GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));//
-    if (ui->PlayOrPauseBtn->text() == QChar(0xf04b))
-    {
-        GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04c));
-    }
-    else
-    {
-        GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
-    }
+    emit SigPause();
 }
 
 void CtrlBar::on_VolumeBtn_clicked()

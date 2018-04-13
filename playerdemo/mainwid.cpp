@@ -139,12 +139,19 @@ bool MainWid::ConnectSignalSlots()
 
     connect(ui->CtrlBarWid, &CtrlBar::SigPlayVolume, VideoCtl::GetInstance(), &VideoCtl::OnPlayVolume);
 
+    connect(ui->CtrlBarWid, &CtrlBar::SigPause, this, &MainWid::SigPause);
+
     connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoVolume, ui->CtrlBarWid, &CtrlBar::OnVideopVolume);
 
     connect(this, &MainWid::SigSeekForward, VideoCtl::GetInstance(), &VideoCtl::OnSeekForward);
     connect(this, &MainWid::SigSeekBack, VideoCtl::GetInstance(), &VideoCtl::OnSeekBack);
     connect(this, &MainWid::SigAddVolume, VideoCtl::GetInstance(), &VideoCtl::OnAddVolume);
     connect(this, &MainWid::SigSubVolume, VideoCtl::GetInstance(), &VideoCtl::OnSubVolume);
+    connect(this, &MainWid::SigPause, VideoCtl::GetInstance(), &VideoCtl::OnPause);
+    
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigPauseStat, ui->CtrlBarWid, &CtrlBar::OnPauseStat);
+    
+
 	return true;
 }
 
@@ -175,7 +182,10 @@ void MainWid::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Down://减少10音量
         emit SigSubVolume();
         break;
-
+    case Qt::Key_Space://减少10音量
+        emit SigPause();
+        break;
+        
 	default:
 		break;
 	}

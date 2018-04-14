@@ -2118,6 +2118,10 @@ static int lockmgr(void **mtx, enum AVLockOp op)
 
 void VideoCtl::OnPlaySeek(double dPercent)
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     int64_t ts = dPercent * m_CurStream->ic->duration;
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE)
         ts += m_CurStream->ic->start_time;
@@ -2126,11 +2130,19 @@ void VideoCtl::OnPlaySeek(double dPercent)
 
 void VideoCtl::OnPlayVolume(double dPercent)
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     m_CurStream->audio_volume = dPercent * SDL_MIX_MAXVOLUME;
 }
 
 void VideoCtl::OnSeekForward()
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     double incr = 5.0;
     double pos = get_master_clock(m_CurStream);
     if (isnan(pos))
@@ -2143,6 +2155,10 @@ void VideoCtl::OnSeekForward()
 
 void VideoCtl::OnSeekBack()
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     double incr = -5.0;
     double pos = get_master_clock(m_CurStream);
     if (isnan(pos))
@@ -2155,6 +2171,10 @@ void VideoCtl::OnSeekBack()
 
 void VideoCtl::UpdateVolume(int sign, double step)
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     double volume_level = m_CurStream->audio_volume ? (20 * log(m_CurStream->audio_volume / (double)SDL_MIX_MAXVOLUME) / log(10)) : -1000.0;
     int new_volume = lrint(SDL_MIX_MAXVOLUME * pow(10.0, (volume_level + sign * step) / 20.0));
     m_CurStream->audio_volume = av_clip(m_CurStream->audio_volume == new_volume ? (m_CurStream->audio_volume + sign) : new_volume, 0, SDL_MIX_MAXVOLUME);
@@ -2164,16 +2184,28 @@ void VideoCtl::UpdateVolume(int sign, double step)
 
 void VideoCtl::OnAddVolume()
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     UpdateVolume(1, SDL_VOLUME_STEP);
 }
 
 void VideoCtl::OnSubVolume()
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     UpdateVolume(-1, SDL_VOLUME_STEP);
 }
 
 void VideoCtl::OnPause()
 {
+    if (m_CurStream == nullptr)
+    {
+        return;
+    }
     toggle_pause(m_CurStream);
     emit SigPauseStat(m_CurStream->paused);
 }
@@ -2181,6 +2213,8 @@ void VideoCtl::OnPause()
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
 {
     m_bInited = false;
+
+    m_CurStream = nullptr;
 
     //注册所有复用器、编码器
     av_register_all();

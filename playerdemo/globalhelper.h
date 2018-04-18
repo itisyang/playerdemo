@@ -24,6 +24,8 @@ enum ERROR_CODE
 #include <QString>
 #include <QPushButton>
 #include <QDebug>
+#include <QStringList>
+
 class GlobalHelper
 {
 public:
@@ -44,7 +46,11 @@ public:
 	 * @param	iconSize 图标大小
 	 * @param	icon 图标字符
 	 */
-    static void    SetIcon(QPushButton* btn, int iconSize, QChar icon);
+    static void SetIcon(QPushButton* btn, int iconSize, QChar icon);
+
+
+    static void SavePlaylist(QStringList& playList);
+    static void GetPlaylist(QStringList& playList);
 };
 
 //必须加以下内容,否则编译不能通过,为了兼容C和C99标准

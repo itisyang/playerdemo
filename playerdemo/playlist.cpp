@@ -17,6 +17,13 @@ Playlist::Playlist(QWidget *parent) :
 
 Playlist::~Playlist()
 {
+    QStringList strListPlayList;
+    for (int i = 0; i < ui->List->count(); i++)
+    {
+        strListPlayList.append(ui->List->item(i)->text());
+    }
+    GlobalHelper::SavePlaylist(strListPlayList);
+
     delete ui;
 }
 
@@ -37,8 +44,11 @@ bool Playlist::InitUi()
 
     ui->List->clear();
 
+    QStringList strListPlaylist;
+    GlobalHelper::GetPlaylist(strListPlaylist);
 
-	ui->List->addItem("D:/Downloads/地球：神奇的一天.mkv");
+    ui->List->addItems(strListPlaylist);
+
 
     return true;
 }

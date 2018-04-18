@@ -1,7 +1,10 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QSettings>
 #include "globalhelper.h"
+
+const QString PLAYER_CONFIG = "player_config.ini";
 
 GlobalHelper::GlobalHelper()
 {
@@ -33,3 +36,29 @@ void GlobalHelper::SetIcon(QPushButton* btn, int iconSize, QChar icon)
     btn->setFont(font);
     btn->setText(icon);
 }
+
+void GlobalHelper::SavePlaylist(QStringList& playList)
+{
+    QSettings settings(PLAYER_CONFIG, QSettings::IniFormat);
+    settings.beginWriteArray("playlist");
+    for (int i = 0; i < playList.size(); ++i)
+    {
+        settings.setArrayIndex(i);
+        settings.setValue("movie", playList.at(i));
+    }
+    settings.endArray();
+}
+
+void GlobalHelper::GetPlaylist(QStringList& playList)
+{
+    QSettings settings(PLAYER_CONFIG, QSettings::IniFormat);
+
+    int size = settings.beginReadArray("playlist");
+    for (int i = 0; i < size; ++i) 
+    {
+        settings.setArrayIndex(i);
+        playList.append(settings.value("movie").toString());
+    }
+    settings.endArray();
+}
+

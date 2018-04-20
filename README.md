@@ -8,8 +8,7 @@
 - 在Windows下使用VS2017和Qt5.9.3开发(X64)
 - 项目目录下的.pro文件，支持在Windows和Linux下打开编译
 
-![初始画面](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/0.png)
-![播放画面1](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/1.png)
+![运行画面](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/0.png)
 
 
 

@@ -1,4 +1,5 @@
 ﻿#include <QDebug>
+#include <QDir>
 
 #include "playlist.h"
 #include "ui_playlist.h"
@@ -20,7 +21,7 @@ Playlist::~Playlist()
     QStringList strListPlayList;
     for (int i = 0; i < ui->List->count(); i++)
     {
-        strListPlayList.append(ui->List->item(i)->text());
+        strListPlayList.append(ui->List->item(i)->toolTip());
     }
     GlobalHelper::SavePlaylist(strListPlayList);
 
@@ -31,6 +32,8 @@ bool Playlist::Init()
 {
 	InitUi();
 	ConnectSignalSlots();
+
+    setAcceptDrops(true);
 
 	return true;
 }
@@ -47,7 +50,17 @@ bool Playlist::InitUi()
     QStringList strListPlaylist;
     GlobalHelper::GetPlaylist(strListPlaylist);
 
-    ui->List->addItems(strListPlaylist);
+    for (QString strVideoFile : strListPlaylist)
+    {
+        QFileInfo fileInfo(strVideoFile);
+
+        QListWidgetItem *pItem = new QListWidgetItem(ui->List);
+        pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
+        pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
+        pItem->setToolTip(fileInfo.filePath());
+        ui->List->addItem(pItem);
+    }
+    //ui->List->addItems(strListPlaylist);
 
 
     return true;
@@ -72,8 +85,7 @@ bool Playlist::ConnectSignalSlots()
 
 void Playlist::on_List_itemDoubleClicked(QListWidgetItem *item)
 {
-	qDebug() << "双击播放：" << item->text();
-	emit SigPlay(item->text());
+	emit SigPlay(item->data(Qt::UserRole).toString());
 }
 
 bool Playlist::GetPlaylistStatus()
@@ -88,9 +100,40 @@ bool Playlist::GetPlaylistStatus()
 
 void Playlist::OnAddFile(QString strFileName)
 {
-	QList<QListWidgetItem *> listItem = ui->List->findItems(strFileName, Qt::MatchExactly);
+    QFileInfo fileInfo(strFileName);
+	QList<QListWidgetItem *> listItem = ui->List->findItems(fileInfo.fileName(), Qt::MatchExactly);
 	if (listItem.isEmpty())
 	{
-		ui->List->addItem(strFileName);
+        QListWidgetItem *pItem = new QListWidgetItem(ui->List);
+        pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
+        pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
+        pItem->setToolTip(fileInfo.filePath());
+        ui->List->addItem(pItem);
 	}
+}
+
+void Playlist::dropEvent(QDropEvent *event)
+{
+    QList<QUrl> urls = event->mimeData()->urls();
+    if (urls.isEmpty())
+    {
+        return;
+    }
+
+    for (QUrl url : urls)
+    {
+        QString strFileName = url.toLocalFile();
+        QFileInfo fileInfo(strFileName);
+
+        QListWidgetItem *pItem = new QListWidgetItem(ui->List);
+        pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
+        pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
+        pItem->setToolTip(fileInfo.filePath());
+        ui->List->addItem(pItem);
+    }
+}
+
+void Playlist::dragEnterEvent(QDragEnterEvent *event)
+{
+    event->acceptProposedAction();
 }

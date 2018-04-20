@@ -36,14 +36,14 @@ public:
 
 protected:
 	/**
-	 * @brief	拖拽释放事件
+	 * @brief	放下事件
 	 * 
 	 * @param	event 事件指针
 	 * @note 	
 	 */
     void dropEvent(QDropEvent *event);
 	/**
-	 * @brief	拖拽事件
+	 * @brief	拖动事件
 	 *
 	 * @param	event 事件指针
 	 * @note

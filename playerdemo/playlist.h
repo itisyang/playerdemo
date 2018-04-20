@@ -13,6 +13,10 @@
 
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QDropEvent>
+#include <QDragEnterEvent>
+#include <QMimeData>
+
 namespace Ui {
 class Playlist;
 }
@@ -43,6 +47,21 @@ public slots:
 	 * @note 	
 	 */
     void OnAddFile(QString strFileName);
+protected:
+    /**
+    * @brief	放下事件
+    *
+    * @param	event 事件指针
+    * @note
+    */
+    void dropEvent(QDropEvent *event);
+    /**
+    * @brief	拖动事件
+    *
+    * @param	event 事件指针
+    * @note
+    */
+    void dragEnterEvent(QDragEnterEvent *event);
 signals:
     void SigUpdateUi();	//< 界面排布更新
 	void SigPlay(QString strFile); //< 播放文件

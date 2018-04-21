@@ -141,6 +141,8 @@ bool MainWid::ConnectSignalSlots()
 
     connect(ui->CtrlBarWid, &CtrlBar::SigPause, this, &MainWid::SigPause);
 
+    connect(ui->CtrlBarWid, &CtrlBar::SigStop, VideoCtl::GetInstance(), &VideoCtl::OnStop);
+
     connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoVolume, ui->CtrlBarWid, &CtrlBar::OnVideopVolume);
 
     connect(this, &MainWid::SigSeekForward, VideoCtl::GetInstance(), &VideoCtl::OnSeekForward);
@@ -151,6 +153,7 @@ bool MainWid::ConnectSignalSlots()
     
     connect(VideoCtl::GetInstance(), &VideoCtl::SigPauseStat, ui->CtrlBarWid, &CtrlBar::OnPauseStat);
     
+ 
 
 	return true;
 }

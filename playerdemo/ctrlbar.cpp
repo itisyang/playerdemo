@@ -173,3 +173,8 @@ void CtrlBar::on_VolumeBtn_clicked()
     }
 }
 
+void CtrlBar::on_StopBtn_clicked()
+{
+    emit SigStop();
+}
+

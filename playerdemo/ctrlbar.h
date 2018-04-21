@@ -50,11 +50,13 @@ private slots:
     void OnVolumeSliderValueChanged();
     void on_PlayOrPauseBtn_clicked();
     void on_VolumeBtn_clicked();
+    void on_StopBtn_clicked();
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
     void SigPlaySeek(double dPercent); ///< 调整播放进度
     void SigPlayVolume(double dPercent);
     void SigPause();
+    void SigStop();
 private:
     Ui::CtrlBar *ui;
 

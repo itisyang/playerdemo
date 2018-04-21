@@ -359,25 +359,6 @@ static void stream_close(VideoState *is)
     av_free(is);
 }
 
-static void do_exit(VideoState *is)
-{
-    if (is) {
-        stream_close(is);
-    }
-    if (renderer)
-        SDL_DestroyRenderer(renderer);
-    if (window)
-        SDL_DestroyWindow(window);
-    av_lockmgr_register(NULL);
-
-    avformat_network_deinit();
-    if (show_status)
-        printf("\n");
-    SDL_Quit();
-    av_log(NULL, AV_LOG_QUIET, "%s", "");
-    exit(0);
-}
-
 static void sigterm_handler(int sig)
 {
     exit(123);
@@ -391,72 +372,6 @@ static void set_default_window_size(int width, int height, AVRational sar)
     default_height = rect.h;
 }
 
-static int video_open(VideoState *is)
-{
-    int w, h;
-
-    if (screen_width) {
-        w = screen_width;
-        h = screen_height;
-    }
-    else {
-        w = default_width;
-        h = default_height;
-    }
-
-    if (!window) {
-        int flags = SDL_WINDOW_SHOWN;
-        if (!window_title)
-            window_title = input_filename;
-        if (is_full_screen)
-            flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-        if (borderless)
-            flags |= SDL_WINDOW_BORDERLESS;
-        else
-            flags |= SDL_WINDOW_RESIZABLE;
-        //window = SDL_CreateWindow(window_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
-        window = SDL_CreateWindowFrom((void *)play_wid);
-        SDL_GetWindowSize(window, &w, &h);//初始宽高设置为显示控件宽高
-        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-        if (window) {
-            SDL_RendererInfo info;
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-            if (!renderer) {
-                av_log(NULL, AV_LOG_WARNING, "Failed to initialize a hardware accelerated renderer: %s\n", SDL_GetError());
-                renderer = SDL_CreateRenderer(window, -1, 0);
-            }
-            if (renderer) {
-                if (!SDL_GetRendererInfo(renderer, &info))
-                    av_log(NULL, AV_LOG_VERBOSE, "Initialized %s renderer.\n", info.name);
-            }
-        }
-    }
-    else {
-        SDL_SetWindowSize(window, w, h);
-    }
-
-    if (!window || !renderer) {
-        av_log(NULL, AV_LOG_FATAL, "SDL: could not set video mode - exiting\n");
-        do_exit(is);
-    }
-
-    is->width = w;
-    is->height = h;
-
-    return 0;
-}
-
-/* display the current picture, if any */
-static void video_display(VideoState *is)
-{
-    if (!window)
-        video_open(is);
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-    video_image_display(is);
-    SDL_RenderPresent(renderer);
-}
 
 static double get_clock(Clock *c)
 {
@@ -1968,7 +1883,7 @@ the_end:
 void VideoCtl::refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
     double remaining_time = 0.0;
     SDL_PumpEvents();
-    while (!SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT)) {
+    while (!SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT) && m_bPlayLoop) {
         if (!cursor_hidden && av_gettime_relative() - cursor_last_shown > CURSOR_HIDE_DELAY) {
             SDL_ShowCursor(0);
             cursor_hidden = 1;
@@ -2015,21 +1930,15 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
     SDL_Event event;
     double incr, pos, frac;
 
-    for (;;) {
+    m_bPlayLoop = true;
+
+    while (m_bPlayLoop)
+    {
         double x;
         refresh_loop_wait_event(cur_stream, &event);
         switch (event.type) {
         case SDL_KEYDOWN:
-            if (exit_on_keydown) {
-                do_exit(cur_stream);
-                break;
-            }
             switch (event.key.keysym.sym) {
-            case SDLK_ESCAPE:
-            case SDLK_q:
-                do_exit(cur_stream);
-                break;
-
             case SDLK_s: // S: Step to next frame
                 step_to_next_frame(cur_stream);
                 break;
@@ -2054,6 +1963,7 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
             break;
 
         case SDL_MOUSEMOTION:
+            //播放画面上显示鼠标
             if (cursor_hidden) {
                 SDL_ShowCursor(1);
                 cursor_hidden = 0;
@@ -2072,6 +1982,7 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
 
             break;
         case SDL_WINDOWEVENT:
+            //窗口大小改变事件
             switch (event.window.event) {
             case SDL_WINDOWEVENT_RESIZED:
                 screen_width = cur_stream->width = event.window.data1;
@@ -2092,6 +2003,9 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
             break;
         }
     }
+
+
+    do_exit(m_CurStream);
 }
 
 static int lockmgr(void **mtx, enum AVLockOp op)
@@ -2182,6 +2096,93 @@ void VideoCtl::UpdateVolume(int sign, double step)
     emit SigVideoVolume(m_CurStream->audio_volume * 1.0 / SDL_MIX_MAXVOLUME);
 }
 
+/* display the current picture, if any */
+void VideoCtl::video_display(VideoState *is)
+{
+    if (!window)
+        video_open(is);
+
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+    video_image_display(is);
+    SDL_RenderPresent(renderer);
+}
+
+int VideoCtl::video_open(VideoState *is)
+{
+    int w, h;
+
+    if (screen_width) {
+        w = screen_width;
+        h = screen_height;
+    }
+    else {
+        w = default_width;
+        h = default_height;
+    }
+
+    if (!window) {
+        int flags = SDL_WINDOW_SHOWN;
+        if (!window_title)
+            window_title = input_filename;
+        if (is_full_screen)
+            flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
+        if (borderless)
+            flags |= SDL_WINDOW_BORDERLESS;
+        else
+            flags |= SDL_WINDOW_RESIZABLE;
+        //window = SDL_CreateWindow(window_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+        window = SDL_CreateWindowFrom((void *)play_wid);
+        SDL_GetWindowSize(window, &w, &h);//初始宽高设置为显示控件宽高
+        SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+        if (window) {
+            SDL_RendererInfo info;
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            if (!renderer) {
+                av_log(NULL, AV_LOG_WARNING, "Failed to initialize a hardware accelerated renderer: %s\n", SDL_GetError());
+                renderer = SDL_CreateRenderer(window, -1, 0);
+            }
+            if (renderer) {
+                if (!SDL_GetRendererInfo(renderer, &info))
+                    av_log(NULL, AV_LOG_VERBOSE, "Initialized %s renderer.\n", info.name);
+            }
+        }
+    }
+    else {
+        SDL_SetWindowSize(window, w, h);
+    }
+
+    if (!window || !renderer) {
+        av_log(NULL, AV_LOG_FATAL, "SDL: could not set video mode - exiting\n");
+        do_exit(is);
+    }
+
+    is->width = w;
+    is->height = h;
+
+    return 0;
+}
+
+void VideoCtl::do_exit(VideoState *is)
+{
+    if (is)
+    {
+        stream_close(is);
+        is = nullptr;
+    }
+    if (renderer)
+    {
+        SDL_DestroyRenderer(renderer);
+        renderer = nullptr;
+    }
+
+    if (window)
+    {
+        //SDL_DestroyWindow(window);
+        window = nullptr;
+    }
+}
+
 void VideoCtl::OnAddVolume()
 {
     if (m_CurStream == nullptr)
@@ -2208,6 +2209,11 @@ void VideoCtl::OnPause()
     }
     toggle_pause(m_CurStream);
     emit SigPauseStat(m_CurStream->paused);
+}
+
+void VideoCtl::OnStop()
+{
+    m_bPlayLoop = false;
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
@@ -2252,21 +2258,14 @@ bool VideoCtl::Init()
 
     m_bInited = true;
 
+    m_bPlayLoop = false;
+
     return true;
 }
 
 bool VideoCtl::ConnectSignalSlots()
 {
-    QList<bool> listRet;
-    bool bRet;
-
-    for (bool bReturn : listRet)
-    {
-        if (bReturn == false)
-        {
-            return false;
-        }
-    }
+    connect(this, &VideoCtl::SigStop, &VideoCtl::OnStop);
 
     return true;
 }
@@ -2283,13 +2282,20 @@ VideoCtl *VideoCtl::GetInstance()
     return m_pInstance;
 }
 
+VideoCtl::~VideoCtl()
+{
+    av_lockmgr_register(NULL);
+
+    avformat_network_deinit();
+
+    SDL_Quit();
+}
+
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 {
     play_wid = widPlayWid;
 
     VideoState *is;
-
-
 
     char file_name[1024];
     memset(file_name, 0, 1024);

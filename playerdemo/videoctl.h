@@ -29,7 +29,7 @@ public:
     //explicit VideoCtl(QObject *parent = nullptr);
 
     static VideoCtl* GetInstance();
-
+    ~VideoCtl();
 	/**
 	* @brief	开始播放
 	*
@@ -49,6 +49,8 @@ signals:
 
     void SigVideoVolume(double dPercent);
     void SigPauseStat(bool bPaused);
+
+    void SigStop();
 public slots:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);
@@ -57,6 +59,7 @@ public slots:
     void OnAddVolume();
     void OnSubVolume();
     void OnPause();
+    void OnStop();
 private slots:
 
 private:
@@ -85,6 +88,10 @@ private:
     void video_refresh(void *opaque, double *remaining_time);
     //更新音量
     void UpdateVolume(int sign, double step);
+
+    void video_display(VideoState *is);
+    int video_open(VideoState *is);
+    void do_exit(VideoState *is);
 public:
 
 
@@ -93,6 +100,7 @@ private:
     static VideoCtl* m_pInstance; //< 单例指针
 
     bool m_bInited;	//< 初始化标志
+    bool m_bPlayLoop; //刷新循环标志
 
     VideoState* m_CurStream;
 };

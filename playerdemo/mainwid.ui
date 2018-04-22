@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="mouseTracking">
-   <bool>false</bool>
+   <bool>true</bool>
   </property>
   <property name="focusPolicy">
    <enum>Qt::WheelFocus</enum>

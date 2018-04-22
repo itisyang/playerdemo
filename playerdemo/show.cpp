@@ -34,6 +34,11 @@ Show::Show(QWidget *parent) :
     this->setAttribute(Qt::WA_OpaquePaintEvent);
     //ui->label->setAttribute(Qt::WA_OpaquePaintEvent);
 
+
+    //this->setMouseTracking(true);
+    connect(&timerShowCursor, &QTimer::timeout, this, &Show::OnTimerShowCursorUpdate);
+
+
     m_nLastFrameWidth = 0; ///< 记录视频宽高
     m_nLastFrameHeight = 0;
 }
@@ -115,6 +120,13 @@ void Show::keyPressEvent(QKeyEvent *event)
     }
 }
 
+// void Show::mouseMoveEvent(QMouseEvent *event)
+// {
+//     qDebug() << "Show::mouseMoveEvent";
+//     setCursor(Qt::ArrowCursor);
+//     timerShowCursor.start(1000 * 2);
+// }
+
 void Show::OnDisplayMsg(QString strMsg)
 {
 	qDebug() << "Show::OnDisplayMsg " << strMsg;
@@ -129,6 +141,11 @@ void Show::OnPlay(QString strFile)
 void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
 {
     AdjustDisplay(nFrameWidth, nFrameHeight);
+}
+
+void Show::OnTimerShowCursorUpdate()
+{
+    setCursor(Qt::BlankCursor);
 }
 
 bool Show::ConnectSignalSlots()

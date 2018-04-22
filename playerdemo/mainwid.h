@@ -46,6 +46,8 @@ protected:
 
     //按键事件
     void keyPressEvent(QKeyEvent *event);
+
+    void mouseMoveEvent(QMouseEvent *event);
 private:
 
     //连接信号槽

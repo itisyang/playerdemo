@@ -45,8 +45,10 @@ MainWid::MainWid(QWidget *parent) :
     pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
     pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
 
-    // 追踪鼠标
-    //this->setMouseTracking(true);
+    // 追踪鼠标 用于播放时隐藏鼠标
+    this->setMouseTracking(true);
+
+    ui->ShowWid->setMouseTracking(true);
 
     //保证窗口不被绘制上的部分透明
     //setAttribute(Qt::WA_TranslucentBackground);
@@ -194,6 +196,11 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 	}
 }
 
+
+void MainWid::mouseMoveEvent(QMouseEvent *event)
+{
+    qDebug() << "MainWid::mouseMoveEvent";
+}
 
 void MainWid::OnFullScreenPlay()
 {

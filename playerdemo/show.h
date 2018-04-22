@@ -12,9 +12,11 @@
 #define DISPLAY_H
 
 #include <QWidget>
-#include <QDropEvent>
 #include <QMimeData>
 #include <QDebug>
+#include <QTimer>
+#include <QDragEnterEvent>
+#include <QKeyEvent>
 
 #include "videoctl.h"
 
@@ -65,6 +67,8 @@ protected:
      * @note 	
      */
     void keyPressEvent(QKeyEvent *event);
+
+    //void mouseMoveEvent(QMouseEvent *event);
 public slots:
     /**
     * @brief	播放
@@ -91,6 +95,8 @@ private slots:
      * @note 	
      */
     void OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight);
+
+    void OnTimerShowCursorUpdate();
 private:
 	/**
 	 * @brief	连接信号槽	
@@ -115,6 +121,8 @@ private:
 
     int m_nLastFrameWidth; ///< 记录视频宽高
     int m_nLastFrameHeight;
+
+    QTimer timerShowCursor;
 };
 
 #endif // DISPLAY_H

@@ -28,8 +28,6 @@ static unsigned sws_flags = SWS_BICUBIC;
 static AVInputFormat *file_iformat;
 static const char *input_filename;
 static const char *window_title;
-static int default_width = 640;
-static int default_height = 480;
 static int screen_width = 0;
 static int screen_height = 0;
 static int audio_disable;
@@ -362,14 +360,6 @@ static void stream_close(VideoState *is)
 static void sigterm_handler(int sig)
 {
     exit(123);
-}
-
-static void set_default_window_size(int width, int height, AVRational sar)
-{
-    SDL_Rect rect;
-    calculate_display_rect(&rect, 0, 0, INT_MAX, height, width, height, sar);
-    default_width = rect.w;
-    default_height = rect.h;
 }
 
 
@@ -751,8 +741,6 @@ static int queue_picture(VideoState *is, AVFrame *src_frame, double pts, double 
     vp->duration = duration;
     vp->pos = pos;
     vp->serial = serial;
-
-    set_default_window_size(vp->width, vp->height, vp->sar);
 
     av_frame_move_ref(vp->frame, src_frame);
     frame_queue_push(&is->pictq);
@@ -1557,8 +1545,6 @@ void VideoCtl::ReadThread(VideoState *is)
         AVStream *st = ic->streams[st_index[AVMEDIA_TYPE_VIDEO]];
         AVCodecParameters *codecpar = st->codecpar;
         AVRational sar = av_guess_sample_aspect_ratio(ic, st, NULL);
-        if (codecpar->width)
-            set_default_window_size(codecpar->width, codecpar->height, sar);
     }
 
     /* open the streams */
@@ -2089,14 +2075,8 @@ int VideoCtl::video_open(VideoState *is)
 {
     int w, h;
 
-    if (screen_width) {
-        w = screen_width;
-        h = screen_height;
-    }
-    else {
-        w = default_width;
-        h = default_height;
-    }
+    w = screen_width;
+    h = screen_height;
 
     if (!window) {
         int flags = SDL_WINDOW_SHOWN;

@@ -77,17 +77,6 @@ static SDL_Renderer *renderer;
 WId play_wid;//播放窗口
 
 
-static inline void fill_rectangle(int x, int y, int w, int h)
-{
-    SDL_Rect rect;
-    rect.x = x;
-    rect.y = y;
-    rect.w = w;
-    rect.h = h;
-    if (w && h)
-        SDL_RenderFillRect(renderer, &rect);
-}
-
 static int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
 {
     Uint32 format;
@@ -256,10 +245,6 @@ static void video_image_display(VideoState *is)
     }
 }
 
-static inline int compute_mod(int a, int b)
-{
-    return a < 0 ? a % b + b : a % b;
-}
 
 //关闭流对应的解码器等
 static void stream_component_close(VideoState *is, int stream_index)
@@ -356,12 +341,6 @@ static void stream_close(VideoState *is)
         SDL_DestroyTexture(is->sub_texture);
     av_free(is);
 }
-
-static void sigterm_handler(int sig)
-{
-    exit(123);
-}
-
 
 static double get_clock(Clock *c)
 {

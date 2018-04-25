@@ -25,20 +25,13 @@
 static unsigned sws_flags = SWS_BICUBIC;
 
 /* options specified by the user */
-static AVInputFormat *file_iformat;
-static const char *input_filename;
-static const char *window_title;
 static int screen_width = 0;
 static int screen_height = 0;
-static int audio_disable;
-static int video_disable;
-static int subtitle_disable;
+
+
 static const char* wanted_stream_spec[AVMEDIA_TYPE_NB] = { 0 };
 static int seek_by_bytes = -1;
-static int display_disable;
-static int borderless;
 static int startup_volume = 30;
-static int show_status = 1;
 static int av_sync_type = AV_SYNC_AUDIO_MASTER;
 static int64_t start_time = AV_NOPTS_VALUE;
 static int64_t duration = AV_NOPTS_VALUE;
@@ -46,31 +39,18 @@ static int fast = 0;
 static int genpts = 0;
 static int lowres = 0;
 
-static int autoexit;
-static int exit_on_keydown;
-static int exit_on_mousedown;
 static int loop = 1;
 static int framedrop = -1;
 static int infinite_buffer = -1;
 static enum ShowMode show_mode = SHOW_MODE_NONE;
-static const char *audio_codec_name;
-static const char *subtitle_codec_name;
-static const char *video_codec_name;
 double rdftspeed = 0.02;
-static int64_t cursor_last_shown;
-static int cursor_hidden = 0;
 
-static int autorotate = 1;
-
-/* current context */
-static int is_full_screen;
 static int64_t audio_callback_time;
 
 
 
 #define FF_QUIT_EVENT    (SDL_USEREVENT + 2)
 
-static SDL_Window *window;
 static SDL_Renderer *renderer;
 
 
@@ -550,7 +530,7 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
     if (!is->paused && get_master_sync_type(is) == AV_SYNC_EXTERNAL_CLOCK && is->realtime)
         check_external_clock_speed(is);
 
-    if (!display_disable && is->show_mode != SHOW_MODE_VIDEO && is->audio_st) {
+    if (is->show_mode != SHOW_MODE_VIDEO && is->audio_st) {
         time = av_gettime_relative() / 1000000.0;
         if (is->force_refresh || is->last_vis_time + rdftspeed < time) {
             video_display(is);
@@ -655,49 +635,10 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
         }
     display:
         /* display picture */
-        if (!display_disable && is->force_refresh && is->show_mode == SHOW_MODE_VIDEO && is->pictq.rindex_shown)
+        if (is->force_refresh && is->show_mode == SHOW_MODE_VIDEO && is->pictq.rindex_shown)
             video_display(is);
     }
     is->force_refresh = 0;
-    if (show_status) {
-        static int64_t last_time;
-        int64_t cur_time;
-        int aqsize, vqsize, sqsize;
-        double av_diff;
-
-        cur_time = av_gettime_relative();
-        if (!last_time || (cur_time - last_time) >= 30000) {
-            aqsize = 0;
-            vqsize = 0;
-            sqsize = 0;
-            if (is->audio_st)
-                aqsize = is->audioq.size;
-            if (is->video_st)
-                vqsize = is->videoq.size;
-            if (is->subtitle_st)
-                sqsize = is->subtitleq.size;
-            av_diff = 0;
-            if (is->audio_st && is->video_st)
-                av_diff = get_clock(&is->audclk) - get_clock(&is->vidclk);
-            else if (is->video_st)
-                av_diff = get_master_clock(is) - get_clock(&is->vidclk);
-            else if (is->audio_st)
-                av_diff = get_master_clock(is) - get_clock(&is->audclk);
-//             av_log(NULL, AV_LOG_INFO,
-//                 "%7.2f %s:%7.3f fd=%4d aq=%5dKB vq=%5dKB sq=%5dB f=%"PRId64"/%"PRId64"   \r",
-//                 get_master_clock(is),
-//                 (is->audio_st && is->video_st) ? "A-V" : (is->video_st ? "M-V" : (is->audio_st ? "M-A" : "   ")),
-//                 av_diff,
-//                 is->frame_drops_early + is->frame_drops_late,
-//                 aqsize / 1024,
-//                 vqsize / 1024,
-//                 sqsize,
-//                 is->video_st ? is->viddec.avctx->pts_correction_num_faulty_dts : 0,
-//                 is->video_st ? is->viddec.avctx->pts_correction_num_faulty_pts : 0);
-            fflush(stdout);
-            last_time = cur_time;
-        }
-    }
 
     emit SigVideoPlaySeconds(get_master_clock(is));
 }
@@ -1229,20 +1170,9 @@ static int stream_component_open(VideoState *is, int stream_index)
     codec = avcodec_find_decoder(avctx->codec_id);
 
     switch (avctx->codec_type) {
-    case AVMEDIA_TYPE_AUDIO: is->last_audio_stream = stream_index; forced_codec_name = audio_codec_name; break;
-    case AVMEDIA_TYPE_SUBTITLE: is->last_subtitle_stream = stream_index; forced_codec_name = subtitle_codec_name; break;
-    case AVMEDIA_TYPE_VIDEO: is->last_video_stream = stream_index; forced_codec_name = video_codec_name; break;
-    }
-    //按解码器名称寻找解码器
-    if (forced_codec_name)
-        codec = avcodec_find_decoder_by_name(forced_codec_name);
-    if (!codec) {
-        if (forced_codec_name) av_log(NULL, AV_LOG_WARNING,
-            "No codec could be found with name '%s'\n", forced_codec_name);
-        else                   av_log(NULL, AV_LOG_WARNING,
-            "No codec could be found with id %d\n", avctx->codec_id);
-        ret = AVERROR(EINVAL);
-        goto fail;
+    case AVMEDIA_TYPE_AUDIO: is->last_audio_stream = stream_index; break;
+    case AVMEDIA_TYPE_SUBTITLE: is->last_subtitle_stream = stream_index; break;
+    case AVMEDIA_TYPE_VIDEO: is->last_video_stream = stream_index; break;
     }
 
     avctx->codec_id = codec->id;
@@ -1458,9 +1388,6 @@ void VideoCtl::ReadThread(VideoState *is)
 
     is->max_frame_duration = (ic->iformat->flags & AVFMT_TS_DISCONT) ? 10.0 : 3600.0;
 
-    if (!window_title && (t = av_dict_get(ic->metadata, "title", NULL, 0)))
-        window_title = av_asprintf("%s - %s", t->value, input_filename);
-
     /* if seeking requested, we execute it */
     //如果有跳转参数，则按设定时间跳转
     if (start_time != AV_NOPTS_VALUE) {
@@ -1479,8 +1406,7 @@ void VideoCtl::ReadThread(VideoState *is)
 
     is->realtime = is_realtime(ic);
 
-    if (show_status)
-        av_dump_format(ic, 0, is->filename, 0);
+
     emit SigVideoTotalSeconds(ic->duration / 1000000LL);
 
 
@@ -1500,18 +1426,18 @@ void VideoCtl::ReadThread(VideoState *is)
     }
 
     //获得视频、音频、字幕的流索引
-    if (!video_disable)
-        st_index[AVMEDIA_TYPE_VIDEO] =
+
+    st_index[AVMEDIA_TYPE_VIDEO] =
         av_find_best_stream(ic, AVMEDIA_TYPE_VIDEO,
             st_index[AVMEDIA_TYPE_VIDEO], -1, NULL, 0);
-    if (!audio_disable)
-        st_index[AVMEDIA_TYPE_AUDIO] =
+
+    st_index[AVMEDIA_TYPE_AUDIO] =
         av_find_best_stream(ic, AVMEDIA_TYPE_AUDIO,
             st_index[AVMEDIA_TYPE_AUDIO],
             st_index[AVMEDIA_TYPE_VIDEO],
             NULL, 0);
-    if (!video_disable && !subtitle_disable)
-        st_index[AVMEDIA_TYPE_SUBTITLE] =
+
+    st_index[AVMEDIA_TYPE_SUBTITLE] =
         av_find_best_stream(ic, AVMEDIA_TYPE_SUBTITLE,
             st_index[AVMEDIA_TYPE_SUBTITLE],
             (st_index[AVMEDIA_TYPE_AUDIO] >= 0 ?
@@ -1633,10 +1559,6 @@ void VideoCtl::ReadThread(VideoState *is)
             if (loop != 1 && (!loop || --loop)) {
                 stream_seek(is, start_time != AV_NOPTS_VALUE ? start_time : 0, 0, 0);
             }
-            else if (autoexit) {
-                ret = AVERROR_EOF;
-                goto fail;
-            }
         }
         //按帧读取
         ret = av_read_frame(ic, pkt);
@@ -1700,7 +1622,7 @@ fail:
     return ;
 }
 
-VideoState* VideoCtl::stream_open(const char *filename, AVInputFormat *iformat)
+VideoState* VideoCtl::stream_open(const char *filename)
 {
     VideoState *is;
     //构造视频状态类
@@ -1712,7 +1634,6 @@ VideoState* VideoCtl::stream_open(const char *filename, AVInputFormat *iformat)
     if (!is->filename)
         goto fail;
     //指定输入格式
-    is->iformat = iformat;
     is->ytop = 0;
     is->xleft = 0;
 
@@ -2059,15 +1980,8 @@ int VideoCtl::video_open(VideoState *is)
 
     if (!window) {
         int flags = SDL_WINDOW_SHOWN;
-        if (!window_title)
-            window_title = input_filename;
-        if (is_full_screen)
-            flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
-        if (borderless)
-            flags |= SDL_WINDOW_BORDERLESS;
-        else
-            flags |= SDL_WINDOW_RESIZABLE;
-        //window = SDL_CreateWindow(window_title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, w, h, flags);
+        flags |= SDL_WINDOW_RESIZABLE;
+
         window = SDL_CreateWindowFrom((void *)play_wid);
         SDL_GetWindowSize(window, &w, &h);//初始宽高设置为显示控件宽高
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
@@ -2237,7 +2151,7 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     memset(file_name, 0, 1024);
     sprintf(file_name, "%s", strFileName.toLocal8Bit().data());
     //打开流
-    is = stream_open(file_name, file_iformat);
+    is = stream_open(file_name);
     if (!is) {
         av_log(NULL, AV_LOG_FATAL, "Failed to initialize VideoState!\n");
         do_exit(NULL);

@@ -82,7 +82,7 @@ private:
 
     void ReadThread(VideoState *CurStream);
     void LoopThread(VideoState *CurStream);
-    VideoState *stream_open(const char *filename, AVInputFormat *iformat);
+    VideoState *stream_open(const char *filename);
 
     void refresh_loop_wait_event(VideoState *is, SDL_Event *event);
     void video_refresh(void *opaque, double *remaining_time);
@@ -103,6 +103,8 @@ private:
     bool m_bPlayLoop; //刷新循环标志
 
     VideoState* m_CurStream;
+
+    SDL_Window *window;
 };
 
 #endif // VIDEOCTL_H

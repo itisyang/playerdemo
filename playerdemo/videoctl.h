@@ -105,6 +105,8 @@ private:
     VideoState* m_CurStream;
 
     SDL_Window *window;
+
+    WId play_wid;//播放窗口
 };
 
 #endif // VIDEOCTL_H

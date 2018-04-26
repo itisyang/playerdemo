@@ -54,7 +54,7 @@ static int64_t audio_callback_time;
 static SDL_Renderer *renderer;
 
 
-WId play_wid;//播放窗口
+
 
 
 static int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)

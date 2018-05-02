@@ -16,39 +16,16 @@
 
 #include "videoctl.h"
 
-
 # pragma execution_character_set("utf-8")
 
-
-
-
-static unsigned sws_flags = SWS_BICUBIC;
-
-
-
-static const char* wanted_stream_spec[AVMEDIA_TYPE_NB] = { 0 };
-
-static int av_sync_type = AV_SYNC_AUDIO_MASTER;
 static int64_t start_time = AV_NOPTS_VALUE;
 static int64_t duration = AV_NOPTS_VALUE;
-static int fast = 0;
-static int genpts = 0;
-static int lowres = 0;
 
 static int framedrop = -1;
 static int infinite_buffer = -1;
-static enum ShowMode show_mode = SHOW_MODE_NONE;
-double rdftspeed = 0.02;
-
 static int64_t audio_callback_time;
 
-
-
 #define FF_QUIT_EVENT    (SDL_USEREVENT + 2)
-
-
-
-
 
 int VideoCtl::realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
 {
@@ -127,7 +104,7 @@ int VideoCtl::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext
         /* This should only happen if we are not using avfilter... */
         *img_convert_ctx = sws_getCachedContext(*img_convert_ctx,
             frame->width, frame->height, (AVPixelFormat)frame->format, frame->width, frame->height,
-            AV_PIX_FMT_BGRA, sws_flags, NULL, NULL, NULL);
+            AV_PIX_FMT_BGRA, SWS_BICUBIC, NULL, NULL, NULL);
         if (*img_convert_ctx != NULL) {
             uint8_t *pixels[4];
             int pitch[4];
@@ -517,6 +494,8 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
     double time;
 
     Frame *sp, *sp2;
+
+    double rdftspeed = 0.02;
 
     if (!is->paused && get_master_sync_type(is) == AV_SYNC_EXTERNAL_CLOCK && is->realtime)
         check_external_clock_speed(is);
@@ -1134,7 +1113,7 @@ int VideoCtl::stream_component_open(VideoState *is, int stream_index)
     int sample_rate, nb_channels;
     int64_t channel_layout;
     int ret = 0;
-    int stream_lowres = lowres;
+    int stream_lowres = 0;
 
     if (stream_index < 0 || stream_index >= ic->nb_streams)
         return -1;
@@ -1168,8 +1147,7 @@ int VideoCtl::stream_component_open(VideoState *is, int stream_index)
 #if FF_API_EMU_EDGE
     if (stream_lowres) avctx->flags |= CODEC_FLAG_EMU_EDGE;
 #endif
-    if (fast)
-        avctx->flags2 |= AV_CODEC_FLAG2_FAST;
+
 #if FF_API_EMU_EDGE
     if (codec->capabilities & AV_CODEC_CAP_DR1)
         avctx->flags |= CODEC_FLAG_EMU_EDGE;
@@ -1308,6 +1286,8 @@ void VideoCtl::ReadThread(VideoState *is)
     int scan_all_pmts_set = 0;
     int64_t pkt_ts;
 
+    const char* wanted_stream_spec[AVMEDIA_TYPE_NB] = { 0 };
+
     if (!wait_mutex) {
         av_log(NULL, AV_LOG_FATAL, "SDL_CreateMutex(): %s\n", SDL_GetError());
         ret = AVERROR(ENOMEM);
@@ -1339,10 +1319,6 @@ void VideoCtl::ReadThread(VideoState *is)
 
     is->ic = ic;
 
-
-
-    if (genpts)
-        ic->flags |= AVFMT_FLAG_GENPTS;
 
     av_format_inject_global_side_data(ic);
 
@@ -1424,7 +1400,7 @@ void VideoCtl::ReadThread(VideoState *is)
                 st_index[AVMEDIA_TYPE_VIDEO]),
             NULL, 0);
 
-    is->show_mode = show_mode;
+    is->show_mode = SHOW_MODE_NONE;
     if (st_index[AVMEDIA_TYPE_VIDEO] >= 0) {
         AVStream *st = ic->streams[st_index[AVMEDIA_TYPE_VIDEO]];
         AVCodecParameters *codecpar = st->codecpar;
@@ -1656,7 +1632,7 @@ VideoState* VideoCtl::stream_open(const char *filename)
     emit SigVideoVolume(startup_volume * 1.0 / SDL_MIX_MAXVOLUME);
     emit SigPauseStat(is->paused);
 
-    is->av_sync_type = av_sync_type;
+    is->av_sync_type = AV_SYNC_AUDIO_MASTER;
     //构建读取线程
     is->read_tid = std::thread(&VideoCtl::ReadThread, this, is);
 
@@ -1946,11 +1922,14 @@ void VideoCtl::video_display(VideoState *is)
 {
     if (!window)
         video_open(is);
+    if (renderer)
+    {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_RenderClear(renderer);
+        video_image_display(is);
+        SDL_RenderPresent(renderer);
+    }
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-    video_image_display(is);
-    SDL_RenderPresent(renderer);
 }
 
 int VideoCtl::video_open(VideoState *is)

@@ -107,6 +107,12 @@ private:
     SDL_Window *window;
 
     WId play_wid;//播放窗口
+
+
+    /* options specified by the user */
+    int screen_width;
+    int screen_height;
+
 };
 
 #endif // VIDEOCTL_H

@@ -24,9 +24,6 @@
 
 static unsigned sws_flags = SWS_BICUBIC;
 
-/* options specified by the user */
-static int screen_width = 0;
-static int screen_height = 0;
 
 
 static const char* wanted_stream_spec[AVMEDIA_TYPE_NB] = { 0 };
@@ -2066,12 +2063,9 @@ void VideoCtl::OnStop()
     m_bPlayLoop = false;
 }
 
-VideoCtl::VideoCtl(QObject *parent) : QObject(parent)
+VideoCtl::VideoCtl(QObject *parent) : QObject(parent), 
+m_bInited(false), m_CurStream(nullptr), m_bPlayLoop(false), screen_width(0), screen_height(0)
 {
-    m_bInited = false;
-
-    m_CurStream = nullptr;
-
     //注册所有复用器、编码器
     av_register_all();
     //网络格式初始化
@@ -2107,8 +2101,6 @@ bool VideoCtl::Init()
     }
 
     m_bInited = true;
-
-    m_bPlayLoop = false;
 
     return true;
 }

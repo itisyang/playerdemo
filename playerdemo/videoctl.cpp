@@ -27,8 +27,7 @@ static unsigned sws_flags = SWS_BICUBIC;
 
 
 static const char* wanted_stream_spec[AVMEDIA_TYPE_NB] = { 0 };
-static int seek_by_bytes = -1;
-static int startup_volume = 30;
+
 static int av_sync_type = AV_SYNC_AUDIO_MASTER;
 static int64_t start_time = AV_NOPTS_VALUE;
 static int64_t duration = AV_NOPTS_VALUE;
@@ -36,7 +35,6 @@ static int fast = 0;
 static int genpts = 0;
 static int lowres = 0;
 
-static int loop = 1;
 static int framedrop = -1;
 static int infinite_buffer = -1;
 static enum ShowMode show_mode = SHOW_MODE_NONE;
@@ -48,13 +46,11 @@ static int64_t audio_callback_time;
 
 #define FF_QUIT_EVENT    (SDL_USEREVENT + 2)
 
-static SDL_Renderer *renderer;
 
 
 
 
-
-static int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
+int VideoCtl::realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture)
 {
     Uint32 format;
     int access, w, h;
@@ -76,7 +72,7 @@ static int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_wid
     return 0;
 }
 
-static void calculate_display_rect(SDL_Rect *rect,
+void VideoCtl::calculate_display_rect(SDL_Rect *rect,
     int scr_xleft, int scr_ytop, int scr_width, int scr_height,
     int pic_width, int pic_height, AVRational pic_sar)
 {
@@ -107,7 +103,7 @@ static void calculate_display_rect(SDL_Rect *rect,
     rect->h = FFMAX(height, 1);
 }
 
-static int upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **img_convert_ctx) {
+int VideoCtl::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **img_convert_ctx) {
     int ret = 0;
     switch (frame->format) {
     case AV_PIX_FMT_YUV420P:
@@ -151,7 +147,7 @@ static int upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **
 }
 
 //显示视频画面
-static void video_image_display(VideoState *is)
+void VideoCtl::video_image_display(VideoState *is)
 {
     Frame *vp;
     Frame *sp = NULL;
@@ -224,7 +220,7 @@ static void video_image_display(VideoState *is)
 
 
 //关闭流对应的解码器等
-static void stream_component_close(VideoState *is, int stream_index)
+void VideoCtl::stream_component_close(VideoState *is, int stream_index)
 {
     AVFormatContext *ic = is->ic;
     AVCodecParameters *codecpar;
@@ -281,7 +277,7 @@ static void stream_component_close(VideoState *is, int stream_index)
     }
 }
 //关闭流
-static void stream_close(VideoState *is)
+void VideoCtl::stream_close(VideoState *is)
 {
     /* XXX: use a special url_shutdown call to abort parse cleanly */
     is->abort_request = 1;
@@ -319,7 +315,7 @@ static void stream_close(VideoState *is)
     av_free(is);
 }
 
-static double get_clock(Clock *c)
+double VideoCtl::get_clock(Clock *c)
 {
     if (*c->queue_serial != c->serial)
         return NAN;
@@ -332,7 +328,7 @@ static double get_clock(Clock *c)
     }
 }
 
-static void set_clock_at(Clock *c, double pts, int serial, double time)
+void VideoCtl::set_clock_at(Clock *c, double pts, int serial, double time)
 {
     c->pts = pts;
     c->last_updated = time;
@@ -340,19 +336,19 @@ static void set_clock_at(Clock *c, double pts, int serial, double time)
     c->serial = serial;
 }
 
-static void set_clock(Clock *c, double pts, int serial)
+void VideoCtl::set_clock(Clock *c, double pts, int serial)
 {
     double time = av_gettime_relative() / 1000000.0;
     set_clock_at(c, pts, serial, time);
 }
 
-static void set_clock_speed(Clock *c, double speed)
+void VideoCtl::set_clock_speed(Clock *c, double speed)
 {
     set_clock(c, get_clock(c), c->serial);
     c->speed = speed;
 }
 
-static void init_clock(Clock *c, int *queue_serial)
+void VideoCtl::init_clock(Clock *c, int *queue_serial)
 {
     c->speed = 1.0;
     c->paused = 0;
@@ -360,7 +356,7 @@ static void init_clock(Clock *c, int *queue_serial)
     set_clock(c, NAN, -1);
 }
 
-static void sync_clock_to_slave(Clock *c, Clock *slave)
+void VideoCtl::sync_clock_to_slave(Clock *c, Clock *slave)
 {
     double clock = get_clock(c);
     double slave_clock = get_clock(slave);
@@ -368,7 +364,7 @@ static void sync_clock_to_slave(Clock *c, Clock *slave)
         set_clock(c, slave_clock, slave->serial);
 }
 
-static int get_master_sync_type(VideoState *is) {
+int VideoCtl::get_master_sync_type(VideoState *is) {
     if (is->av_sync_type == AV_SYNC_VIDEO_MASTER) {
         if (is->video_st)
             return AV_SYNC_VIDEO_MASTER;
@@ -387,7 +383,7 @@ static int get_master_sync_type(VideoState *is) {
 }
 
 /* get the current master clock value */
-static double get_master_clock(VideoState *is)
+double VideoCtl::get_master_clock(VideoState *is)
 {
     double val;
 
@@ -405,7 +401,7 @@ static double get_master_clock(VideoState *is)
     return val;
 }
 
-static void check_external_clock_speed(VideoState *is) {
+void VideoCtl::check_external_clock_speed(VideoState *is) {
     if (is->video_stream >= 0 && is->videoq.nb_packets <= EXTERNAL_CLOCK_MIN_FRAMES ||
         is->audio_stream >= 0 && is->audioq.nb_packets <= EXTERNAL_CLOCK_MIN_FRAMES) {
         set_clock_speed(&is->extclk, FFMAX(EXTERNAL_CLOCK_SPEED_MIN, is->extclk.speed - EXTERNAL_CLOCK_SPEED_STEP));
@@ -422,21 +418,19 @@ static void check_external_clock_speed(VideoState *is) {
 }
 
 /* seek in the stream */
-static void stream_seek(VideoState *is, int64_t pos, int64_t rel, int seek_by_bytes)
+void VideoCtl::stream_seek(VideoState *is, int64_t pos, int64_t rel)
 {
     if (!is->seek_req) {
         is->seek_pos = pos;
         is->seek_rel = rel;
         is->seek_flags &= ~AVSEEK_FLAG_BYTE;
-        if (seek_by_bytes)
-            is->seek_flags |= AVSEEK_FLAG_BYTE;
         is->seek_req = 1;
         SDL_CondSignal(is->continue_read_thread);
     }
 }
 
 /* pause or resume the video */
-static void stream_toggle_pause(VideoState *is)
+void VideoCtl::stream_toggle_pause(VideoState *is)
 {
     if (is->paused) {
         is->frame_timer += av_gettime_relative() / 1000000.0 - is->vidclk.last_updated;
@@ -449,7 +443,7 @@ static void stream_toggle_pause(VideoState *is)
     is->paused = is->audclk.paused = is->vidclk.paused = is->extclk.paused = !is->paused;
 }
 
-static void toggle_pause(VideoState *is)
+void VideoCtl::toggle_pause(VideoState *is)
 {
     stream_toggle_pause(is);
     is->step = 0;
@@ -459,7 +453,7 @@ static void toggle_pause(VideoState *is)
 
 
 
-static void step_to_next_frame(VideoState *is)
+void VideoCtl::step_to_next_frame(VideoState *is)
 {
     /* if the stream is paused unpause it, then step */
     if (is->paused)
@@ -467,7 +461,7 @@ static void step_to_next_frame(VideoState *is)
     is->step = 1;
 }
 
-static double compute_target_delay(double delay, VideoState *is)
+double VideoCtl::compute_target_delay(double delay, VideoState *is)
 {
     double sync_threshold, diff = 0;
 
@@ -497,7 +491,7 @@ static double compute_target_delay(double delay, VideoState *is)
     return delay;
 }
 
-static double vp_duration(VideoState *is, Frame *vp, Frame *nextvp) {
+double VideoCtl::vp_duration(VideoState *is, Frame *vp, Frame *nextvp) {
     if (vp->serial == nextvp->serial) {
         double duration = nextvp->pts - vp->pts;
         if (isnan(duration) || duration <= 0 || duration > is->max_frame_duration)
@@ -510,7 +504,7 @@ static double vp_duration(VideoState *is, Frame *vp, Frame *nextvp) {
     }
 }
 
-static void update_video_pts(VideoState *is, double pts, int64_t pos, int serial) {
+void VideoCtl::update_video_pts(VideoState *is, double pts, int64_t pos, int serial) {
     /* update current video pts */
     set_clock(&is->vidclk, pts, serial);
     sync_clock_to_slave(&is->extclk, &is->vidclk);
@@ -640,7 +634,7 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
     emit SigVideoPlaySeconds(get_master_clock(is));
 }
 
-static int queue_picture(VideoState *is, AVFrame *src_frame, double pts, double duration, int64_t pos, int serial)
+int VideoCtl::queue_picture(VideoState *is, AVFrame *src_frame, double pts, double duration, int64_t pos, int serial)
 {
     Frame *vp;
 
@@ -665,7 +659,7 @@ static int queue_picture(VideoState *is, AVFrame *src_frame, double pts, double 
 }
 
 //从视频队列中获取数据，并解码数据，得到可显示的视频帧
-static int get_video_frame(VideoState *is, AVFrame *frame)
+int VideoCtl::get_video_frame(VideoState *is, AVFrame *frame)
 {
     int got_picture;
 
@@ -700,7 +694,7 @@ static int get_video_frame(VideoState *is, AVFrame *frame)
 }
 
 
-static int audio_thread(void *arg)
+int VideoCtl::audio_thread(void *arg)
 {
     VideoState *is = (VideoState *)arg;
     AVFrame *frame = av_frame_alloc();
@@ -739,19 +733,8 @@ the_end:
     return ret;
 }
 
-static int decoder_start(Decoder *d, int(*fn)(void *), void *arg)
-{
-    packet_queue_start(d->queue);
-    d->decoder_tid = SDL_CreateThread(fn, "decoder", arg);
-    if (!d->decoder_tid) {
-        av_log(NULL, AV_LOG_ERROR, "SDL_CreateThread(): %s\n", SDL_GetError());
-        return AVERROR(ENOMEM);
-    }
-    return 0;
-}
-
 //视频解码线程
-static int video_thread(void *arg)
+int VideoCtl::video_thread(void *arg)
 {
     VideoState *is = (VideoState *)arg;
     AVFrame *frame = av_frame_alloc();
@@ -788,7 +771,7 @@ the_end:
     return 0;
 }
 
-static int subtitle_thread(void *arg)
+int VideoCtl::subtitle_thread(void *arg)
 {
     VideoState *is = (VideoState *)arg;
     Frame *sp;
@@ -824,7 +807,7 @@ static int subtitle_thread(void *arg)
 }
 
 /* copy samples for viewing in editor window */
-static void update_sample_display(VideoState *is, short *samples, int samples_size)
+void VideoCtl::update_sample_display(VideoState *is, short *samples, int samples_size)
 {
     int size, len;
 
@@ -844,7 +827,7 @@ static void update_sample_display(VideoState *is, short *samples, int samples_si
 
 /* return the wanted number of samples to get better sync if sync_type is video
 * or external master clock */
-static int synchronize_audio(VideoState *is, int nb_samples)
+int VideoCtl::synchronize_audio(VideoState *is, int nb_samples)
 {
     int wanted_nb_samples = nb_samples;
 
@@ -894,7 +877,7 @@ static int synchronize_audio(VideoState *is, int nb_samples)
 * stored in is->audio_buf, with size in bytes given by the return
 * value.
 */
-static int audio_decode_frame(VideoState *is)
+int VideoCtl::audio_decode_frame(VideoState *is)
 {
     int data_size, resampled_data_size;
     int64_t dec_channel_layout;
@@ -1000,16 +983,18 @@ static int audio_decode_frame(VideoState *is)
 }
 
 /* prepare a new audio buffer */
-static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
+void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
 {
     VideoState *is = (VideoState *)opaque;
     int audio_size, len1;
+
+    VideoCtl *pVideoCtl = VideoCtl::GetInstance();
 
     audio_callback_time = av_gettime_relative();
 
     while (len > 0) {
         if (is->audio_buf_index >= is->audio_buf_size) {
-            audio_size = audio_decode_frame(is);
+            audio_size = pVideoCtl->audio_decode_frame(is);
             if (audio_size < 0) {
                 /* if error, just output silence */
                 is->audio_buf = NULL;
@@ -1017,7 +1002,7 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
             }
             else {
                 if (is->show_mode != SHOW_MODE_VIDEO)
-                    update_sample_display(is, (int16_t *)is->audio_buf, audio_size);
+                    pVideoCtl->update_sample_display(is, (int16_t *)is->audio_buf, audio_size);
                 is->audio_buf_size = audio_size;
             }
             is->audio_buf_index = 0;
@@ -1039,12 +1024,12 @@ static void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
     is->audio_write_buf_size = is->audio_buf_size - is->audio_buf_index;
     /* Let's assume the audio driver that is used by SDL has two periods. */
     if (!isnan(is->audio_clock)) {
-        set_clock_at(&is->audclk, is->audio_clock - (double)(2 * is->audio_hw_buf_size + is->audio_write_buf_size) / is->audio_tgt.bytes_per_sec, is->audio_clock_serial, audio_callback_time / 1000000.0);
-        sync_clock_to_slave(&is->extclk, &is->audclk);
+        pVideoCtl->set_clock_at(&is->audclk, is->audio_clock - (double)(2 * is->audio_hw_buf_size + is->audio_write_buf_size) / is->audio_tgt.bytes_per_sec, is->audio_clock_serial, audio_callback_time / 1000000.0);
+        pVideoCtl->sync_clock_to_slave(&is->extclk, &is->audclk);
     }
 }
 
-static int audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb_channels, int wanted_sample_rate, struct AudioParams *audio_hw_params)
+int VideoCtl::audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb_channels, int wanted_sample_rate, struct AudioParams *audio_hw_params)
 {
     SDL_AudioSpec wanted_spec, spec;
     const char *env;
@@ -1138,7 +1123,7 @@ static int audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb
 
 /* open a given stream. Return 0 if OK */
 //打开流
-static int stream_component_open(VideoState *is, int stream_index)
+int VideoCtl::stream_component_open(VideoState *is, int stream_index)
 {
     AVFormatContext *ic = is->ic;
     AVCodecContext *avctx;
@@ -1241,8 +1226,8 @@ static int stream_component_open(VideoState *is, int stream_index)
             is->auddec.start_pts = is->audio_st->start_time;
             is->auddec.start_pts_tb = is->audio_st->time_base;
         }
-        if ((ret = decoder_start(&is->auddec, audio_thread, is)) < 0)
-            goto out;
+        packet_queue_start(is->auddec.queue);
+        is->auddec.decode_thread = std::thread(&VideoCtl::audio_thread, this, is);
         SDL_PauseAudio(0);
         break;
     case AVMEDIA_TYPE_VIDEO:
@@ -1251,8 +1236,8 @@ static int stream_component_open(VideoState *is, int stream_index)
 
         //创建视频解码线程，开始视频解码
         decoder_init(&is->viddec, avctx, &is->videoq, is->continue_read_thread);
-        if ((ret = decoder_start(&is->viddec, video_thread, is)) < 0)
-            goto out;
+        packet_queue_start(is->viddec.queue);
+        is->viddec.decode_thread = std::thread(&VideoCtl::video_thread, this, is);
         is->queue_attachments_req = 1;
         break;
     case AVMEDIA_TYPE_SUBTITLE:
@@ -1260,8 +1245,8 @@ static int stream_component_open(VideoState *is, int stream_index)
         is->subtitle_st = ic->streams[stream_index];
         //创建字幕解码线程，开始字幕解码
         decoder_init(&is->subdec, avctx, &is->subtitleq, is->continue_read_thread);
-        if ((ret = decoder_start(&is->subdec, subtitle_thread, is)) < 0)
-            goto out;
+        packet_queue_start(is->subdec.queue);
+        is->subdec.decode_thread = std::thread(&VideoCtl::subtitle_thread, this, is);
         break;
     default:
         break;
@@ -1276,20 +1261,20 @@ out:
     return ret;
 }
 
-static int decode_interrupt_cb(void *ctx)
+int decode_interrupt_cb(void *ctx)
 {
     VideoState *is = (VideoState *)ctx;
     return is->abort_request;
 }
 
-static int stream_has_enough_packets(AVStream *st, int stream_id, PacketQueue *queue) {
+int VideoCtl::stream_has_enough_packets(AVStream *st, int stream_id, PacketQueue *queue) {
     return stream_id < 0 ||
         queue->abort_request ||
         (st->disposition & AV_DISPOSITION_ATTACHED_PIC) ||
         queue->nb_packets > MIN_FRAMES && (!queue->duration || av_q2d(st->time_base) * queue->duration > 1.0);
 }
 
-static int is_realtime(AVFormatContext *s)
+int VideoCtl::is_realtime(AVFormatContext *s)
 {
     if (!strcmp(s->iformat->name, "rtp")
         || !strcmp(s->iformat->name, "rtsp")
@@ -1379,9 +1364,6 @@ void VideoCtl::ReadThread(VideoState *is)
 
     if (ic->pb)
         ic->pb->eof_reached = 0; // FIXME hack, ffplay maybe should not use avio_feof() to test for the end
-
-    if (seek_by_bytes < 0)
-        seek_by_bytes = !!(ic->iformat->flags & AVFMT_TS_DISCONT) && strcmp("ogg", ic->iformat->name);
 
     is->max_frame_duration = (ic->iformat->flags & AVFMT_TS_DISCONT) ? 10.0 : 3600.0;
 
@@ -1553,9 +1535,12 @@ void VideoCtl::ReadThread(VideoState *is)
         if (!is->paused &&
             (!is->audio_st || (is->auddec.finished == is->audioq.serial && frame_queue_nb_remaining(&is->sampq) == 0)) &&
             (!is->video_st || (is->viddec.finished == is->videoq.serial && frame_queue_nb_remaining(&is->pictq) == 0))) {
-            if (loop != 1 && (!loop || --loop)) {
-                stream_seek(is, start_time != AV_NOPTS_VALUE ? start_time : 0, 0, 0);
-            }
+//             if (loop != 1 && (!loop || --loop)) {
+//                 stream_seek(is, start_time != AV_NOPTS_VALUE ? start_time : 0, 0);
+//             }
+            //播放结束
+            emit SigStop();
+            continue;
         }
         //按帧读取
         ret = av_read_frame(ic, pkt);
@@ -1682,7 +1667,7 @@ VideoState* VideoCtl::stream_open(const char *filename)
         return NULL;
 }
 
-static void stream_cycle_channel(VideoState *is, int codec_type)
+void VideoCtl::stream_cycle_channel(VideoState *is, int codec_type)
 {
     AVFormatContext *ic = is->ic;
     int start_index, stream_index;
@@ -1777,7 +1762,7 @@ void VideoCtl::refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
     }
 }
 
-static void seek_chapter(VideoState *is, int incr)
+void VideoCtl::seek_chapter(VideoState *is, int incr)
 {
     int64_t pos = get_master_clock(is) * AV_TIME_BASE;
     int i;
@@ -1801,7 +1786,7 @@ static void seek_chapter(VideoState *is, int incr)
 
     av_log(NULL, AV_LOG_VERBOSE, "Seeking to chapter %d.\n", i);
     stream_seek(is, av_rescale_q(is->ic->chapters[i]->start, is->ic->chapters[i]->time_base,
-        /*AV_TIME_BASE_Q*/{ 1, AV_TIME_BASE }), 0, 0);
+        /*AV_TIME_BASE_Q*/{ 1, AV_TIME_BASE }), 0);
 }
 
 /* handle an event sent by the GUI */
@@ -1868,7 +1853,7 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
     do_exit(m_CurStream);
 }
 
-static int lockmgr(void **mtx, enum AVLockOp op)
+int lockmgr(void **mtx, enum AVLockOp op)
 {
     switch (op) {
     case AV_LOCK_CREATE:
@@ -1899,7 +1884,7 @@ void VideoCtl::OnPlaySeek(double dPercent)
     int64_t ts = dPercent * m_CurStream->ic->duration;
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE)
         ts += m_CurStream->ic->start_time;
-    stream_seek(m_CurStream, ts, 0, 0);
+    stream_seek(m_CurStream, ts, 0);
 }
 
 void VideoCtl::OnPlayVolume(double dPercent)
@@ -1924,7 +1909,7 @@ void VideoCtl::OnSeekForward()
     pos += incr;
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE && pos < m_CurStream->ic->start_time / (double)AV_TIME_BASE)
         pos = m_CurStream->ic->start_time / (double)AV_TIME_BASE;
-    stream_seek(m_CurStream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
+    stream_seek(m_CurStream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE));
 }
 
 void VideoCtl::OnSeekBack()
@@ -1940,7 +1925,7 @@ void VideoCtl::OnSeekBack()
     pos += incr;
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE && pos < m_CurStream->ic->start_time / (double)AV_TIME_BASE)
         pos = m_CurStream->ic->start_time / (double)AV_TIME_BASE;
-    stream_seek(m_CurStream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE), 0);
+    stream_seek(m_CurStream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE));
 }
 
 void VideoCtl::UpdateVolume(int sign, double step)
@@ -2064,7 +2049,7 @@ void VideoCtl::OnStop()
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent), 
-m_bInited(false), m_CurStream(nullptr), m_bPlayLoop(false), screen_width(0), screen_height(0)
+m_bInited(false), m_CurStream(nullptr), m_bPlayLoop(false), screen_width(0), screen_height(0), startup_volume(30)
 {
     //注册所有复用器、编码器
     av_register_all();
@@ -2094,7 +2079,7 @@ bool VideoCtl::Init()
     SDL_EventState(SDL_USEREVENT, SDL_IGNORE);
 
     //注册自定义锁
-    if (av_lockmgr_register(lockmgr)) 
+    if (av_lockmgr_register(lockmgr))
     {
         av_log(NULL, AV_LOG_FATAL, "Could not initialize lock manager!\n");
         return false;

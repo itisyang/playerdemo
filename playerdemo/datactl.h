@@ -18,12 +18,12 @@
 #include <objbase.h>
 #include <thread>
 
-//#include "config.h"
 #include <inttypes.h>
 #include <math.h>
 #include <limits.h>
 #include <signal.h>
 #include <stdint.h>
+#include <assert.h>
 
 #include "libavutil/avstring.h"
 #include "libavutil/eval.h"
@@ -42,13 +42,8 @@
 #include "libavcodec/avfft.h"
 #include "libswresample/swresample.h"
 
-
 #include <SDL.h>
-#include <SDL_thread.h>
 
-//#include "cmdutils.h"
-
-#include <assert.h>
 
 
 
@@ -203,7 +198,7 @@ typedef struct Decoder {
     AVRational start_pts_tb;
     int64_t next_pts;
     AVRational next_pts_tb;
-    SDL_Thread *decoder_tid;
+    std::thread decode_thread;
 } Decoder;
 
 enum ShowMode {
@@ -727,7 +722,6 @@ static void decoder_abort(Decoder *d, FrameQueue *fq)
 {
     packet_queue_abort(d->queue);
     frame_queue_signal(fq);
-    SDL_WaitThread(d->decoder_tid, NULL);
-    d->decoder_tid = NULL;
+    d->decode_thread.join();
     packet_queue_flush(d->queue);
 }

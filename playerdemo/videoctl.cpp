@@ -18,9 +18,6 @@
 
 # pragma execution_character_set("utf-8")
 
-static int64_t start_time = AV_NOPTS_VALUE;
-static int64_t duration = AV_NOPTS_VALUE;
-
 static int framedrop = -1;
 static int infinite_buffer = -1;
 static int64_t audio_callback_time;
@@ -1343,22 +1340,6 @@ void VideoCtl::ReadThread(VideoState *is)
 
     is->max_frame_duration = (ic->iformat->flags & AVFMT_TS_DISCONT) ? 10.0 : 3600.0;
 
-    /* if seeking requested, we execute it */
-    //如果有跳转参数，则按设定时间跳转
-    if (start_time != AV_NOPTS_VALUE) {
-        int64_t timestamp;
-
-        timestamp = start_time;
-        /* add the stream start time */
-        if (ic->start_time != AV_NOPTS_VALUE)
-            timestamp += ic->start_time;
-        ret = avformat_seek_file(ic, -1, INT64_MIN, timestamp, INT64_MAX, 0);
-        if (ret < 0) {
-            av_log(NULL, AV_LOG_WARNING, "%s: could not seek to position %0.3f\n",
-                is->filename, (double)timestamp / AV_TIME_BASE);
-        }
-    }
-
     is->realtime = is_realtime(ic);
 
 
@@ -1511,9 +1492,7 @@ void VideoCtl::ReadThread(VideoState *is)
         if (!is->paused &&
             (!is->audio_st || (is->auddec.finished == is->audioq.serial && frame_queue_nb_remaining(&is->sampq) == 0)) &&
             (!is->video_st || (is->viddec.finished == is->videoq.serial && frame_queue_nb_remaining(&is->pictq) == 0))) {
-//             if (loop != 1 && (!loop || --loop)) {
-//                 stream_seek(is, start_time != AV_NOPTS_VALUE ? start_time : 0, 0);
-//             }
+
             //播放结束
             emit SigStop();
             continue;
@@ -1543,11 +1522,11 @@ void VideoCtl::ReadThread(VideoState *is)
         /* check if packet is in play range specified by user, then queue, otherwise discard */
         stream_start_time = ic->streams[pkt->stream_index]->start_time;
         pkt_ts = pkt->pts == AV_NOPTS_VALUE ? pkt->dts : pkt->pts;
-        pkt_in_play_range = duration == AV_NOPTS_VALUE ||
+        pkt_in_play_range = AV_NOPTS_VALUE == AV_NOPTS_VALUE ||
             (pkt_ts - (stream_start_time != AV_NOPTS_VALUE ? stream_start_time : 0)) *
             av_q2d(ic->streams[pkt->stream_index]->time_base) -
-            (double)(start_time != AV_NOPTS_VALUE ? start_time : 0) / 1000000
-            <= ((double)duration / 1000000);
+            (double)(0) / 1000000
+            <= ((double)AV_NOPTS_VALUE / 1000000);
         //按数据帧的类型存放至对应队列
         if (pkt->stream_index == is->audio_stream && pkt_in_play_range) {
             packet_queue_put(&is->audioq, pkt);

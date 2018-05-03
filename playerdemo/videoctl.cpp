@@ -1927,7 +1927,8 @@ int VideoCtl::video_open(VideoState *is)
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
         if (window) {
             SDL_RendererInfo info;
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            if (!renderer)
+                renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if (!renderer) {
                 av_log(NULL, AV_LOG_WARNING, "Failed to initialize a hardware accelerated renderer: %s\n", SDL_GetError());
                 renderer = SDL_CreateRenderer(window, -1, 0);
@@ -2007,7 +2008,7 @@ void VideoCtl::OnStop()
 }
 
 VideoCtl::VideoCtl(QObject *parent) : QObject(parent), 
-m_bInited(false), m_CurStream(nullptr), m_bPlayLoop(false), screen_width(0), screen_height(0), startup_volume(30)
+m_bInited(false), m_CurStream(nullptr), m_bPlayLoop(false), screen_width(0), screen_height(0), startup_volume(30), renderer(nullptr), window(nullptr)
 {
     //注册所有复用器、编码器
     av_register_all();

@@ -1,7 +1,7 @@
 # playerdemo
 ![Build Status](https://travis-ci.org/itisyang/playerdemo.svg?branch=master)
 
-一个视频播放器，开源版potplayer
+一个视频播放器，开源版potplayer，用于学习和交流
 
 ## 简介
 - 使用FFmpeg解码，SDL2渲染
@@ -18,7 +18,7 @@
 - 若运行不了，可以将lib目录下的*.lib换成和bin目录下dll一致的版本
 
 ## 沟通
-- 邮件: itisyang@gmail.com
+- 邮件: itisyang@gmail.com，一起探讨音视频相关技术
 
 ## 错误记录
 - ~~20180210 Travis CI编译错误，因为FFmpeg版本低，不支持有的借口。待解决~~

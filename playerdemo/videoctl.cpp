@@ -1744,7 +1744,7 @@ void VideoCtl::seek_chapter(VideoState *is, int incr)
         /*AV_TIME_BASE_Q*/{ 1, AV_TIME_BASE }), 0);
 }
 
-/* handle an event sent by the GUI */
+//播放控制循环
 void VideoCtl::LoopThread(VideoState *cur_stream)
 {
     SDL_Event event;

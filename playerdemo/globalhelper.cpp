@@ -1,7 +1,9 @@
-
 #include <QFile>
 #include <QDebug>
 #include <QSettings>
+#include <QCoreApplication>
+#include <QDir>
+
 #include "globalhelper.h"
 
 const QString PLAYER_CONFIG = "player_config.ini";
@@ -39,7 +41,8 @@ void GlobalHelper::SetIcon(QPushButton* btn, int iconSize, QChar icon)
 
 void GlobalHelper::SavePlaylist(QStringList& playList)
 {
-    QSettings settings(PLAYER_CONFIG, QSettings::IniFormat);
+    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
     settings.beginWriteArray("playlist");
     for (int i = 0; i < playList.size(); ++i)
     {
@@ -51,7 +54,8 @@ void GlobalHelper::SavePlaylist(QStringList& playList)
 
 void GlobalHelper::GetPlaylist(QStringList& playList)
 {
-    QSettings settings(PLAYER_CONFIG, QSettings::IniFormat);
+    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
 
     int size = settings.beginReadArray("playlist");
     for (int i = 0; i < size; ++i) 

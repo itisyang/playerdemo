@@ -4,7 +4,7 @@
 一个视频播放器，开源版potplayer，用于学习和交流
 
 ## 简介
-- 使用FFmpeg解码，SDL2渲染
+- 使用FFmpeg解码，SDL2渲染，ffmpeg-3.4，SDL2-2.0.7
 - 在Windows下使用VS2017和Qt5.9.3开发(X64)
 - 项目目录下的.pro文件，支持在Windows和Linux下打开编译
 

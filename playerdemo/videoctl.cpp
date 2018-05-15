@@ -1972,6 +1972,8 @@ void VideoCtl::do_exit(VideoState *is)
         //SDL_DestroyWindow(window);
         window = nullptr;
     }
+
+    emit SigStopFinished();
 }
 
 void VideoCtl::OnAddVolume()

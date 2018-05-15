@@ -138,6 +138,11 @@ void Show::OnPlay(QString strFile)
     //VideoCtl::GetInstance()->StartPlay(strFile, this->winId());
 }
 
+void Show::OnStopFinished()
+{
+    update();
+}
+
 void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
 {
     AdjustDisplay(nFrameWidth, nFrameHeight);

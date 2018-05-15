@@ -56,6 +56,8 @@ signals:
     void SigPauseStat(bool bPaused);
 
     void SigStop();
+
+    void SigStopFinished();//停止播放完成
 public slots:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);

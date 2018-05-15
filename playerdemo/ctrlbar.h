@@ -45,6 +45,7 @@ public slots:
     void OnVideoPlaySeconds(int nSeconds);
     void OnVideopVolume(double dPercent);
     void OnPauseStat(bool bPaused);
+    void OnStopFinished();
 private slots:
     void OnPlaySliderValueChanged();
     void OnVolumeSliderValueChanged();

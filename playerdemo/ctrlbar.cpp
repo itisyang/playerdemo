@@ -119,6 +119,11 @@ void CtrlBar::OnPauseStat(bool bPaused)
     }
 }
 
+void CtrlBar::OnStopFinished()
+{
+    ui->PlaySlider->setValue(0);
+}
+
 void CtrlBar::OnPlaySliderValueChanged()
 {
     double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();

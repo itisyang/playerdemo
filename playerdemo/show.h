@@ -77,6 +77,7 @@ public slots:
     * @note
     */
     void OnPlay(QString strFile);
+    void OnStopFinished();
 private slots:
 	/**
 	 * @brief	显示信息

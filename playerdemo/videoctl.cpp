@@ -1849,6 +1849,7 @@ void VideoCtl::OnPlayVolume(double dPercent)
         return;
     }
     m_CurStream->audio_volume = dPercent * SDL_MIX_MAXVOLUME;
+    startup_volume = m_CurStream->audio_volume;
 }
 
 void VideoCtl::OnSeekForward()

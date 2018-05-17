@@ -497,15 +497,6 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
     if (!is->paused && get_master_sync_type(is) == AV_SYNC_EXTERNAL_CLOCK && is->realtime)
         check_external_clock_speed(is);
 
-    if (is->show_mode != SHOW_MODE_VIDEO && is->audio_st) {
-        time = av_gettime_relative() / 1000000.0;
-        if (is->force_refresh || is->last_vis_time + rdftspeed < time) {
-            video_display(is);
-            is->last_vis_time = time;
-        }
-        *remaining_time = FFMIN(*remaining_time, is->last_vis_time + rdftspeed - time);
-    }
-
     if (is->video_st) {
     retry:
         if (frame_queue_nb_remaining(&is->pictq) == 0) {
@@ -602,7 +593,7 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
         }
     display:
         /* display picture */
-        if (is->force_refresh && is->show_mode == SHOW_MODE_VIDEO && is->pictq.rindex_shown)
+        if (is->force_refresh && is->pictq.rindex_shown)
             video_display(is);
     }
     is->force_refresh = 0;
@@ -977,8 +968,6 @@ void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
                 is->audio_buf_size = SDL_AUDIO_MIN_BUFFER_SIZE / is->audio_tgt.frame_size * is->audio_tgt.frame_size;
             }
             else {
-                if (is->show_mode != SHOW_MODE_VIDEO)
-                    pVideoCtl->update_sample_display(is, (int16_t *)is->audio_buf, audio_size);
                 is->audio_buf_size = audio_size;
             }
             is->audio_buf_index = 0;
@@ -1381,7 +1370,6 @@ void VideoCtl::ReadThread(VideoState *is)
                 st_index[AVMEDIA_TYPE_VIDEO]),
             NULL, 0);
 
-    is->show_mode = SHOW_MODE_NONE;
     if (st_index[AVMEDIA_TYPE_VIDEO] >= 0) {
         AVStream *st = ic->streams[st_index[AVMEDIA_TYPE_VIDEO]];
         AVCodecParameters *codecpar = st->codecpar;
@@ -1399,8 +1387,7 @@ void VideoCtl::ReadThread(VideoState *is)
     if (st_index[AVMEDIA_TYPE_VIDEO] >= 0) {
         ret = stream_component_open(is, st_index[AVMEDIA_TYPE_VIDEO]);
     }
-    if (is->show_mode == SHOW_MODE_NONE)
-        is->show_mode = ret >= 0 ? SHOW_MODE_VIDEO : SHOW_MODE_RDFT;
+
     //打开字幕流
     if (st_index[AVMEDIA_TYPE_SUBTITLE] >= 0) {
         stream_component_open(is, st_index[AVMEDIA_TYPE_SUBTITLE]);
@@ -1711,7 +1698,7 @@ void VideoCtl::refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
         if (remaining_time > 0.0)
             av_usleep((int64_t)(remaining_time * 1000000.0));
         remaining_time = REFRESH_RATE;
-        if (is->show_mode != SHOW_MODE_NONE && (!is->paused || is->force_refresh))
+        if (!is->paused || is->force_refresh)
             video_refresh(is, &remaining_time);
         SDL_PumpEvents();
     }

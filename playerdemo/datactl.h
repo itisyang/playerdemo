@@ -201,9 +201,6 @@ typedef struct Decoder {
     std::thread decode_thread;
 } Decoder;
 
-enum ShowMode {
-    SHOW_MODE_NONE = -1, SHOW_MODE_VIDEO = 0, SHOW_MODE_WAVES, SHOW_MODE_RDFT, SHOW_MODE_NB
-};
 //视频状态，管理所有的视频信息及数据
 typedef struct VideoState {
     std::thread read_tid;
@@ -261,7 +258,6 @@ typedef struct VideoState {
     int frame_drops_early;
     int frame_drops_late;
 
-    enum ShowMode  show_mode;
     int16_t sample_array[SAMPLE_ARRAY_SIZE];
     int sample_array_index;
     int last_i_start;

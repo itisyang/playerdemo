@@ -25,6 +25,8 @@
 #include <stdint.h>
 #include <assert.h>
 
+#include <SDL.h>
+
 #include "libavutil/avstring.h"
 #include "libavutil/eval.h"
 #include "libavutil/mathematics.h"
@@ -41,13 +43,6 @@
 #include "libavutil/opt.h"
 #include "libavcodec/avfft.h"
 #include "libswresample/swresample.h"
-
-#include <SDL.h>
-
-
-
-
-
 
 
 #define MAX_QUEUE_SIZE (15 * 1024 * 1024)

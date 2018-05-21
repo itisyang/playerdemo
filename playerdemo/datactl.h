@@ -91,12 +91,6 @@
 
 
 
-
-
-
-
-
-
 //数据包列表
 typedef struct MyAVPacketList {
     AVPacket pkt;
@@ -261,7 +255,7 @@ typedef struct VideoState {
     FFTSample *rdft_data;
     int xpos;
     double last_vis_time;
-    SDL_Texture *vis_texture;
+
     SDL_Texture *sub_texture;
     SDL_Texture *vid_texture;
 

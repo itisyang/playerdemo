@@ -280,8 +280,7 @@ void VideoCtl::stream_close(VideoState *is)
     sws_freeContext(is->img_convert_ctx);
     sws_freeContext(is->sub_convert_ctx);
     av_free(is->filename);
-    if (is->vis_texture)
-        SDL_DestroyTexture(is->vis_texture);
+
     if (is->vid_texture)
         SDL_DestroyTexture(is->vid_texture);
     if (is->sub_texture)
@@ -1774,10 +1773,6 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
             case SDL_WINDOWEVENT_RESIZED:
                 screen_width = cur_stream->width = event.window.data1;
                 screen_height = cur_stream->height = event.window.data2;
-                if (cur_stream->vis_texture) {
-                    SDL_DestroyTexture(cur_stream->vis_texture);
-                    cur_stream->vis_texture = NULL;
-                }
             case SDL_WINDOWEVENT_EXPOSED:
                 cur_stream->force_refresh = 1;
             }

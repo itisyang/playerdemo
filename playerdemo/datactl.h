@@ -192,9 +192,9 @@ typedef struct Decoder {
 
 //视频状态，管理所有的视频信息及数据
 typedef struct VideoState {
-    std::thread read_tid;
+    std::thread read_tid; //读取线程
     AVInputFormat *iformat;
-    int abort_request;
+    int abort_request; //停止读取标志
     int force_refresh;
     int paused;
     int last_paused;

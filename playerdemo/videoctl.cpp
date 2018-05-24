@@ -255,7 +255,6 @@ void VideoCtl::stream_close(VideoState *is)
 {
     /* XXX: use a special url_shutdown call to abort parse cleanly */
     is->abort_request = 1;
-    //SDL_WaitThread(, NULL);
     is->read_tid.join();
 
     /* close each stream */
@@ -2064,6 +2063,13 @@ VideoCtl::~VideoCtl()
 
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 {
+    m_bPlayLoop = false;
+    if (m_tPlayLoopThread.joinable())
+    {
+        m_tPlayLoopThread.join();
+    }
+
+
     play_wid = widPlayWid;
 
     VideoState *is;
@@ -2081,8 +2087,7 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     m_CurStream = is;
 
     //事件循环
-    std::thread t(&VideoCtl::LoopThread, this, is);
-    t.detach();
+    m_tPlayLoopThread = std::thread(&VideoCtl::LoopThread, this, is);
 
 
     return true;

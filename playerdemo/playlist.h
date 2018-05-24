@@ -47,6 +47,9 @@ public slots:
 	 * @note 	
 	 */
     void OnAddFile(QString strFileName);
+
+    void OnBackwardPlay();
+    void OnForwardPlay();
 protected:
     /**
     * @brief	放下事件
@@ -73,6 +76,8 @@ private slots:
 
 private:
     Ui::Playlist *ui;
+
+    int m_nCurrentPlayListIndex;
 };
 
 #endif // PLAYLIST_H

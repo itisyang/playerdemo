@@ -58,6 +58,8 @@ signals:
     void SigPlayVolume(double dPercent);
     void SigPause();
     void SigStop();
+    void SigForwardPlay();
+    void SigBackwardPlay();
 private:
     Ui::CtrlBar *ui;
 

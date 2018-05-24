@@ -157,6 +157,9 @@ private:
     int screen_width;
     int screen_height;
     int startup_volume;
+
+    //播放刷新循环线程
+    std::thread m_tPlayLoopThread;
 };
 
 #endif // VIDEOCTL_H

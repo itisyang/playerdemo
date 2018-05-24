@@ -86,6 +86,7 @@ bool Playlist::ConnectSignalSlots()
 void Playlist::on_List_itemDoubleClicked(QListWidgetItem *item)
 {
 	emit SigPlay(item->data(Qt::UserRole).toString());
+    m_nCurrentPlayListIndex = ui->List->row(item);
 }
 
 bool Playlist::GetPlaylistStatus()
@@ -110,6 +111,38 @@ void Playlist::OnAddFile(QString strFileName)
         pItem->setToolTip(fileInfo.filePath());
         ui->List->addItem(pItem);
 	}
+}
+
+void Playlist::OnBackwardPlay()
+{
+    if (m_nCurrentPlayListIndex == 0)
+    {
+        m_nCurrentPlayListIndex = ui->List->count() - 1;
+        on_List_itemDoubleClicked(ui->List->item(m_nCurrentPlayListIndex));
+        ui->List->setCurrentRow(m_nCurrentPlayListIndex);
+    }
+    else
+    {
+        m_nCurrentPlayListIndex--;
+        on_List_itemDoubleClicked(ui->List->item(m_nCurrentPlayListIndex));
+        ui->List->setCurrentRow(m_nCurrentPlayListIndex);
+    }
+}
+
+void Playlist::OnForwardPlay()
+{
+    if (m_nCurrentPlayListIndex == ui->List->count() - 1)
+    {
+        m_nCurrentPlayListIndex = 0;
+        on_List_itemDoubleClicked(ui->List->item(m_nCurrentPlayListIndex));
+        ui->List->setCurrentRow(m_nCurrentPlayListIndex);
+    }
+    else
+    {
+        m_nCurrentPlayListIndex++;
+        on_List_itemDoubleClicked(ui->List->item(m_nCurrentPlayListIndex));
+        ui->List->setCurrentRow(m_nCurrentPlayListIndex);
+    }
 }
 
 void Playlist::dropEvent(QDropEvent *event)

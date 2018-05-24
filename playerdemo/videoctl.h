@@ -112,7 +112,7 @@ private:
 
     void video_display(VideoState *is);
     int video_open(VideoState *is);
-    void do_exit(VideoState *is);
+    void do_exit(VideoState* &is);
 
     int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture);
     void calculate_display_rect(SDL_Rect *rect, int scr_xleft, int scr_ytop, int scr_width, int scr_height, int pic_width, int pic_height, AVRational pic_sar);

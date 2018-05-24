@@ -1787,6 +1787,7 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
 
 
     do_exit(m_CurStream);
+    //m_CurStream = nullptr;
 }
 
 int lockmgr(void **mtx, enum AVLockOp op)
@@ -1936,7 +1937,7 @@ int VideoCtl::video_open(VideoState *is)
     return 0;
 }
 
-void VideoCtl::do_exit(VideoState *is)
+void VideoCtl::do_exit(VideoState* &is)
 {
     if (is)
     {
@@ -2081,7 +2082,7 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     is = stream_open(file_name);
     if (!is) {
         av_log(NULL, AV_LOG_FATAL, "Failed to initialize VideoState!\n");
-        do_exit(NULL);
+        do_exit(m_CurStream);
     }
 
     m_CurStream = is;

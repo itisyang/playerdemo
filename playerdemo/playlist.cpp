@@ -107,7 +107,7 @@ void Playlist::OnAddFile(QString strFileName)
 	{
         QListWidgetItem *pItem = new QListWidgetItem(ui->List);
         pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
-        pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
+        pItem->setText(fileInfo.fileName());  // 显示文本
         pItem->setToolTip(fileInfo.filePath());
         ui->List->addItem(pItem);
 	}

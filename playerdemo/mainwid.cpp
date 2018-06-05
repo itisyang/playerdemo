@@ -118,6 +118,7 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
 
     connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
+    connect(ui->PlaylistWid, &Playlist::SigPlay, ui->TitleWid, &Title::OnPlay);
 
 	connect(ui->ShowWid, &Show::SigAddFile, ui->PlaylistWid, &Playlist::OnAddFile);
     connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);

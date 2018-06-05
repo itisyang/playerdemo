@@ -10,6 +10,7 @@
  */
 
 #include <QPainter>
+#include <QFileInfo>
 
 #include "title.h"
 #include "ui_title.h"
@@ -77,5 +78,11 @@ void Title::OnChangeMaxBtnStyle(bool bIfMax)
     {
         GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d0));
     }
+}
+
+void Title::OnPlay(QString strMovieName)
+{
+    QFileInfo fileInfo(strMovieName);
+    ui->MovieNameLab->setText(fileInfo.fileName());
 }
 

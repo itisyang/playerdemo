@@ -39,6 +39,7 @@ public slots:
 	 */
     void OnChangeMaxBtnStyle(bool bIfMax);
     void OnPlay(QString strMovieName);
+    void OnStopFinished();
 signals:
     void SigCloseBtnClicked();	//< 点击关闭按钮
     void SigMinBtnClicked();	//< 点击最小化按钮

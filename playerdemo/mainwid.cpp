@@ -127,7 +127,9 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->CtrlBarWid, &CtrlBar::SigPlaySeek, VideoCtl::GetInstance(), &VideoCtl::OnPlaySeek);
     connect(ui->CtrlBarWid, &CtrlBar::SigPlayVolume, VideoCtl::GetInstance(), &VideoCtl::OnPlayVolume);
     connect(ui->CtrlBarWid, &CtrlBar::SigPause, this, &MainWid::SigPause);
+
     connect(ui->CtrlBarWid, &CtrlBar::SigStop, VideoCtl::GetInstance(), &VideoCtl::OnStop);
+
     connect(ui->CtrlBarWid, &CtrlBar::SigBackwardPlay, ui->PlaylistWid, &Playlist::OnBackwardPlay);
     connect(ui->CtrlBarWid, &CtrlBar::SigForwardPlay, ui->PlaylistWid, &Playlist::OnForwardPlay);
 
@@ -144,6 +146,7 @@ bool MainWid::ConnectSignalSlots()
     connect(VideoCtl::GetInstance(), &VideoCtl::SigPauseStat, ui->CtrlBarWid, &CtrlBar::OnPauseStat);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->CtrlBarWid, &CtrlBar::OnStopFinished);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->ShowWid, &Show::OnStopFinished);
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->TitleWid, &Title::OnStopFinished);
 
 	return true;
 }

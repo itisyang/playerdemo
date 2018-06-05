@@ -1788,6 +1788,7 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
 
     do_exit(m_CurStream);
     //m_CurStream = nullptr;
+
 }
 
 int lockmgr(void **mtx, enum AVLockOp op)

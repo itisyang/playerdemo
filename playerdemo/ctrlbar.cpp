@@ -124,6 +124,9 @@ void CtrlBar::OnPauseStat(bool bPaused)
 void CtrlBar::OnStopFinished()
 {
     ui->PlaySlider->setValue(0);
+    QTime StopTime(0, 0, 0);
+    ui->VideoTotalTimeTimeEdit->setTime(StopTime);
+    ui->VideoPlayTimeTimeEdit->setTime(StopTime);
 }
 
 void CtrlBar::OnPlaySliderValueChanged()

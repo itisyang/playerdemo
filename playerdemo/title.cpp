@@ -86,3 +86,8 @@ void Title::OnPlay(QString strMovieName)
     ui->MovieNameLab->setText(fileInfo.fileName());
 }
 
+void Title::OnStopFinished()
+{
+    ui->MovieNameLab->clear();
+}
+

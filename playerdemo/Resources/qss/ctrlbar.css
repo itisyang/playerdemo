@@ -85,3 +85,12 @@ QSlider::handle:horizontal:hover {
     margin-top: -3px;
     margin-bottom: -2px;
 }
+
+QTimeEdit#VideoTotalTimeTimeEdit {
+    color: #c4c6d2;
+}
+
+QLabel#TimeSplitLabel {
+    color: #c4c6d2;
+}
+

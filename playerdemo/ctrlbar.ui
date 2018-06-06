@@ -331,7 +331,7 @@
       </widget>
      </item>
      <item row="0" column="5">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="TimeSplitLabel">
        <property name="maximumSize">
         <size>
          <width>8</width>

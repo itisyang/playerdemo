@@ -5,7 +5,7 @@
  * @author 	itisyang
  * @Contact	itisyang@gmail.com
  *
- * @brief 	鎾斁鍣ㄦ爣棰樻爮
+ * @brief 	播放器标题栏
  * @note
  */
 
@@ -17,7 +17,7 @@
 
 #include "globalhelper.h"
 
-# pragma execution_character_set("utf-8")
+#pragma execution_character_set("utf-8")
 
 Title::Title(QWidget *parent) :
     QWidget(parent),
@@ -42,7 +42,7 @@ bool Title::InitUi()
 {
     ui->MovieNameLab->clear();
 
-    //淇濊瘉绐楀彛涓嶈缁樺埗涓婄殑閮ㄥ垎閫忔槑
+    //保证窗口不被绘制上的部分透明
     setAttribute(Qt::WA_TranslucentBackground);
 
     setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/title.css"));
@@ -53,8 +53,7 @@ bool Title::InitUi()
 
     GlobalHelper::SetIcon(ui->FullScreenBtn, 9, QChar(0xf065));
     
-    ui->LogoLab->setToolTip("鑿滃崟");
-
+    ui->LogoLab->setToolTip("显示主菜单");
     return true;
 }
 

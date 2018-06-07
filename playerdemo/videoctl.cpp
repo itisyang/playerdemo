@@ -16,7 +16,7 @@
 
 #include "videoctl.h"
 
-# pragma execution_character_set("utf-8")
+#pragma execution_character_set("utf-8")
 
 static int framedrop = -1;
 static int infinite_buffer = -1;

@@ -20,7 +20,6 @@
 ## 沟通
 - 邮件: itisyang@gmail.com，一起探讨音视频相关技术
 - Issues: 欢迎给我提 Issues 
-## 错误记录
-- ~~20180210 Travis CI 编译错误，因为 FFmpeg 版本低，不支持有的借口。待解决~~
-- ~~20180212 在 CI 中使用 git 下载 FFmpeg 源码编译，会导致 rake 错误。待解决~~
+
+## [开发日志记录](https://github.com/itisyang/playerdemo/blob/master/note.md)
 

@@ -1,4 +1,4 @@
-#include <QFile>
+﻿#include <QFile>
 #include <QDebug>
 #include <QSettings>
 #include <QCoreApplication>
@@ -24,7 +24,7 @@ QString GlobalHelper::GetQssStr(QString strQssPath)
     }
     else
     {
-        qDebug() << "获取样式失败" << "样式表：" << strQssPath;
+        qDebug() << "鑾峰彇鏍峰紡澶辫触" << "鏍峰紡琛細" << strQssPath;
     }
     return strQss;
 }

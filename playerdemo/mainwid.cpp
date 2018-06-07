@@ -73,6 +73,7 @@ MainWid::MainWid(QWidget *parent) :
 
     m_bFullScreenPlay = false;
 
+
 }
 
 MainWid::~MainWid()

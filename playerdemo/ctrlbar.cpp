@@ -127,6 +127,8 @@ void CtrlBar::OnStopFinished()
     QTime StopTime(0, 0, 0);
     ui->VideoTotalTimeTimeEdit->setTime(StopTime);
     ui->VideoPlayTimeTimeEdit->setTime(StopTime);
+    GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+
 }
 
 void CtrlBar::OnPlaySliderValueChanged()

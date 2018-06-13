@@ -131,6 +131,9 @@
      <property name="text">
       <string>movie_name</string>
      </property>
+     <property name="margin">
+      <number>15</number>
+     </property>
     </widget>
    </item>
    <item row="0" column="5">

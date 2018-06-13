@@ -30,6 +30,8 @@ private:
     void paintEvent(QPaintEvent *event);
     //双击
     void mouseDoubleClickEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event);
+    void ChangeMovieNameShow();
 public slots:
 	/**
 	 * @brief	改变最大化按钮显示图标
@@ -50,6 +52,7 @@ signals:
 private:
     Ui::Title *ui;
 
+    QString m_strMovieName;
 };
 
 #endif // MAINWIDTITLE_H

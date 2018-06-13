@@ -11,6 +11,7 @@
 
 #include <QPainter>
 #include <QFileInfo>
+#include <QFontMetrics>
 
 #include "title.h"
 #include "ui_title.h"
@@ -61,7 +62,6 @@ bool Title::InitUi()
 void Title::paintEvent(QPaintEvent *event)
 {
     Q_UNUSED(event);
-
 }
 
 void Title::mouseDoubleClickEvent(QMouseEvent *event)
@@ -69,6 +69,22 @@ void Title::mouseDoubleClickEvent(QMouseEvent *event)
     if(event->button() == Qt::LeftButton)
     {
         emit SigDoubleClicked();
+    }
+}
+
+void Title::resizeEvent(QResizeEvent *event)
+{
+    //ChangeMovieNameShow();
+}
+
+void Title::ChangeMovieNameShow()
+{
+    QFontMetrics fontMetrics(ui->MovieNameLab->font());
+    int fontSize = fontMetrics.width(m_strMovieName);
+    if (fontSize > ui->MovieNameLab->width())
+    {
+        QString str = fontMetrics.elidedText(m_strMovieName, Qt::ElideRight, ui->MovieNameLab->width());//返回一个带有省略号的字符串
+        ui->MovieNameLab->setText(str);
     }
 }
 
@@ -87,7 +103,9 @@ void Title::OnChangeMaxBtnStyle(bool bIfMax)
 void Title::OnPlay(QString strMovieName)
 {
     QFileInfo fileInfo(strMovieName);
-    ui->MovieNameLab->setText(fileInfo.fileName());
+    m_strMovieName = fileInfo.fileName();
+    ui->MovieNameLab->setText(m_strMovieName);
+    //ChangeMovieNameShow();
 }
 
 void Title::OnStopFinished()

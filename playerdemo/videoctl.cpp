@@ -2070,7 +2070,7 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
     {
         m_tPlayLoopThread.join();
     }
-
+    emit SigStartPlay(strFileName);//正式播放，发送给标题栏
 
     play_wid = widPlayWid;
 

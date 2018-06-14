@@ -58,6 +58,8 @@ signals:
     void SigStop();
 
     void SigStopFinished();//停止播放完成
+
+    void SigStartPlay(QString strFileName);
 public slots:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);

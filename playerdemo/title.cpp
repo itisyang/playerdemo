@@ -81,10 +81,15 @@ void Title::ChangeMovieNameShow()
 {
     QFontMetrics fontMetrics(ui->MovieNameLab->font());
     int fontSize = fontMetrics.width(m_strMovieName);
-    if (fontSize > ui->MovieNameLab->width())
+    int showwidth = ui->MovieNameLab->width();
+    if (fontSize > showwidth)
     {
         QString str = fontMetrics.elidedText(m_strMovieName, Qt::ElideRight, ui->MovieNameLab->width());//返回一个带有省略号的字符串
         ui->MovieNameLab->setText(str);
+    }
+    else
+    {
+        ui->MovieNameLab->setText(m_strMovieName);
     }
 }
 

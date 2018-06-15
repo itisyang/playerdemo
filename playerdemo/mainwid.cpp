@@ -74,6 +74,7 @@ MainWid::MainWid(QWidget *parent) :
     m_bFullScreenPlay = false;
 
 
+    m_stMenu.addAction("测试");
 }
 
 MainWid::~MainWid()
@@ -192,6 +193,11 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 void MainWid::mouseMoveEvent(QMouseEvent *event)
 {
     qDebug() << "MainWid::mouseMoveEvent";
+}
+
+void MainWid::contextMenuEvent(QContextMenuEvent* event)
+{
+    m_stMenu.exec(event->globalPos());
 }
 
 void MainWid::OnFullScreenPlay()

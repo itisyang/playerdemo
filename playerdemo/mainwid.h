@@ -14,6 +14,7 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QDragEnterEvent>
+#include <QMenu>
 
 namespace Ui {
 class MainWid;
@@ -48,6 +49,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
     void mouseMoveEvent(QMouseEvent *event);
+
+    void contextMenuEvent(QContextMenuEvent* event);
 private:
 
     //连接信号槽
@@ -88,6 +91,8 @@ private:
     const int m_nShadowWidth; ///< 阴影宽度
 
     bool m_bFullScreenPlay; ///< 全屏播放标志
+
+    QMenu m_stMenu;
 };
 
 #endif // MainWid_H

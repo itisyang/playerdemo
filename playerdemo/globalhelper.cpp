@@ -24,7 +24,7 @@ QString GlobalHelper::GetQssStr(QString strQssPath)
     }
     else
     {
-        qDebug() << "鑾峰彇鏍峰紡澶辫触" << "鏍峰紡琛細" << strQssPath;
+        qDebug() << "读取样式表失败" << strQssPath;
     }
     return strQss;
 }

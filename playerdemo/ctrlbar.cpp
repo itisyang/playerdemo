@@ -25,7 +25,7 @@ CtrlBar::CtrlBar(QWidget *parent) :
 
     m_dLastVolumePercent = 1.0;
 
-    InitUi();
+    Init();
     ConnectSignalSlots();
 }
 
@@ -34,7 +34,7 @@ CtrlBar::~CtrlBar()
     delete ui;
 }
 
-bool CtrlBar::InitUi()
+bool CtrlBar::Init()
 {
     setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/ctrlbar.css"));
 
@@ -47,6 +47,13 @@ bool CtrlBar::InitUi()
     GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));
     
 
+    double dPercent = -1.0;
+    GlobalHelper::GetPlayVolume(dPercent);
+    if (dPercent != -1.0)
+    {
+        emit SigPlayVolume(dPercent);
+        OnVideopVolume(dPercent);
+    }
 
     return true;
 
@@ -107,6 +114,8 @@ void CtrlBar::OnVideopVolume(double dPercent)
     {
         GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
     }
+
+    GlobalHelper::SavePlayVolume(dPercent);
 }
 
 void CtrlBar::OnPauseStat(bool bPaused)
@@ -128,39 +137,20 @@ void CtrlBar::OnStopFinished()
     ui->VideoTotalTimeTimeEdit->setTime(StopTime);
     ui->VideoPlayTimeTimeEdit->setTime(StopTime);
     GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
-
 }
 
 void CtrlBar::OnPlaySliderValueChanged()
 {
     double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();
     emit SigPlaySeek(dPercent);
-    m_dLastVolumePercent = dPercent;
-
-    if (m_dLastVolumePercent == 0)
-    {
-        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf026));
-    }
-    else
-    {
-        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
-    }
 }
 
 void CtrlBar::OnVolumeSliderValueChanged()
 {
     double dPercent = ui->VolumeSlider->value()*1.0 / ui->VolumeSlider->maximum();
     emit SigPlayVolume(dPercent);
-    m_dLastVolumePercent = dPercent;
 
-    if (m_dLastVolumePercent == 0)
-    {
-        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf026));
-    }
-    else
-    {
-        GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
-    }
+    OnVideopVolume(dPercent);
 }
 
 void CtrlBar::on_PlayOrPauseBtn_clicked()
@@ -180,9 +170,9 @@ void CtrlBar::on_VolumeBtn_clicked()
     {
         GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
         ui->VolumeSlider->setValue(m_dLastVolumePercent * MAX_SLIDER_VALUE);
-        OnVideopVolume(m_dLastVolumePercent);
         emit SigPlayVolume(m_dLastVolumePercent);
     }
+
 }
 
 void CtrlBar::on_StopBtn_clicked()

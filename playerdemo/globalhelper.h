@@ -51,6 +51,8 @@ public:
 
     static void SavePlaylist(QStringList& playList);
     static void GetPlaylist(QStringList& playList);
+    static void SavePlayVolume(double& nVolume);
+    static void GetPlayVolume(double& nVolume);
 };
 
 //必须加以下内容,否则编译不能通过,为了兼容C和C99标准

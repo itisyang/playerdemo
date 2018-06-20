@@ -1827,12 +1827,12 @@ void VideoCtl::OnPlaySeek(double dPercent)
 
 void VideoCtl::OnPlayVolume(double dPercent)
 {
+    startup_volume = dPercent * SDL_MIX_MAXVOLUME;
     if (m_CurStream == nullptr)
     {
         return;
     }
-    m_CurStream->audio_volume = dPercent * SDL_MIX_MAXVOLUME;
-    startup_volume = m_CurStream->audio_volume;
+    m_CurStream->audio_volume = startup_volume;
 }
 
 void VideoCtl::OnSeekForward()
@@ -2061,6 +2061,7 @@ VideoCtl::~VideoCtl()
     avformat_network_deinit();
 
     SDL_Quit();
+
 }
 
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)

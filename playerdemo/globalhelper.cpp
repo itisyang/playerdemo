@@ -66,3 +66,18 @@ void GlobalHelper::GetPlaylist(QStringList& playList)
     settings.endArray();
 }
 
+void GlobalHelper::SavePlayVolume(double& nVolume)
+{
+    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
+    settings.setValue("volume/size", nVolume);
+}
+
+void GlobalHelper::GetPlayVolume(double& nVolume)
+{
+    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
+    QString str = settings.value("volume/size").toString();
+    nVolume = settings.value("volume/size", nVolume).toDouble();
+}
+

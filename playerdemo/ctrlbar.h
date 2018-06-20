@@ -31,7 +31,7 @@ public:
 	 * @return	true 成功 false 失败
 	 * @note 	
 	 */
-    bool InitUi();
+    bool Init();
     /**
      * @brief	连接信号槽
      * 

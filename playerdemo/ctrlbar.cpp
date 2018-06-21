@@ -25,8 +25,6 @@ CtrlBar::CtrlBar(QWidget *parent) :
 
     m_dLastVolumePercent = 1.0;
 
-    Init();
-    ConnectSignalSlots();
 }
 
 CtrlBar::~CtrlBar()
@@ -46,6 +44,7 @@ bool CtrlBar::Init()
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
     GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));
     
+    ConnectSignalSlots();
 
     double dPercent = -1.0;
     GlobalHelper::GetPlayVolume(dPercent);

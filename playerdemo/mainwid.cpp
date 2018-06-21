@@ -90,6 +90,11 @@ bool MainWid::Init()
         return false;
     }
 
+    if (ui->CtrlBarWid->Init() == false)
+    {
+        return false;
+    }
+
     return true;
 }
 

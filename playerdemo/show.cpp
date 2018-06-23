@@ -29,14 +29,14 @@ Show::Show(QWidget *parent) :
     setAcceptDrops(true);
 
 
-	Init();
+	
     //防止过度刷新显示
     this->setAttribute(Qt::WA_OpaquePaintEvent);
     //ui->label->setAttribute(Qt::WA_OpaquePaintEvent);
 
 
     //this->setMouseTracking(true);
-    connect(&timerShowCursor, &QTimer::timeout, this, &Show::OnTimerShowCursorUpdate);
+    
 
 
     m_nLastFrameWidth = 0; ///< 记录视频宽高
@@ -50,7 +50,10 @@ Show::~Show()
 
 bool Show::Init()
 {
-	ConnectSignalSlots();
+    if (ConnectSignalSlots() == false)
+    {
+        return false;
+    }
 
 	//ui->label->setUpdatesEnabled(false);
 
@@ -159,7 +162,10 @@ bool Show::ConnectSignalSlots()
 	bool bRet;
 
 	bRet = connect(this, &Show::SigPlay, this, &Show::OnPlay);
-	listRet.append(bRet);
+    listRet.append(bRet);
+
+    bRet = connect(&timerShowCursor, &QTimer::timeout, this, &Show::OnTimerShowCursorUpdate);
+    listRet.append(bRet);
 
 	for (bool bReturn : listRet)
 	{

@@ -39,7 +39,7 @@ public:
 	 * @note 	
 	 */
     bool GetPlaylistStatus();
-public slots:
+public:
 	/**
 	 * @brief	添加文件
 	 * 
@@ -65,13 +65,17 @@ protected:
     * @note
     */
     void dragEnterEvent(QDragEnterEvent *event);
+
 signals:
     void SigUpdateUi();	//< 界面排布更新
 	void SigPlay(QString strFile); //< 播放文件
+
 private:
-	bool InitUi();
-	bool ConnectSignalSlots();
+    bool InitUi();
+    bool ConnectSignalSlots();
+    
 private slots:
+
 	void on_List_itemDoubleClicked(QListWidgetItem *item);
 
 private:

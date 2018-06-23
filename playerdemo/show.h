@@ -69,7 +69,7 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
     //void mouseMoveEvent(QMouseEvent *event);
-public slots:
+public:
     /**
     * @brief	播放
     *
@@ -78,7 +78,7 @@ public slots:
     */
     void OnPlay(QString strFile);
     void OnStopFinished();
-private slots:
+private:
 	/**
 	 * @brief	显示信息
 	 * 

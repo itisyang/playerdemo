@@ -25,14 +25,16 @@ class Title : public QWidget
 public:
     explicit Title(QWidget *parent = 0);
     ~Title();
-    bool InitUi();
+    bool Init();
 private:
     void paintEvent(QPaintEvent *event);
     //双击
     void mouseDoubleClickEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
     void ChangeMovieNameShow();
-public slots:
+
+    bool InitUi();
+public:
 	/**
 	 * @brief	改变最大化按钮显示图标
 	 * 

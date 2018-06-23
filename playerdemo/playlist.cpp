@@ -13,7 +13,7 @@ Playlist::Playlist(QWidget *parent) :
     ui(new Ui::Playlist)
 {
     ui->setupUi(this);
-	Init();
+	
 }
 
 Playlist::~Playlist()
@@ -30,8 +30,15 @@ Playlist::~Playlist()
 
 bool Playlist::Init()
 {
-	InitUi();
-	ConnectSignalSlots();
+    if (InitUi() == false)
+    {
+        return false;
+    }
+
+    if (ConnectSignalSlots() == false)
+    {
+        return false;
+    }
 
     setAcceptDrops(true);
 

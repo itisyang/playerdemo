@@ -31,12 +31,22 @@ Title::Title(QWidget *parent) :
     connect(ui->MaxBtn, &QPushButton::clicked, this, &Title::SigMaxBtnClicked);
     connect(ui->FullScreenBtn, &QPushButton::clicked, this, &Title::SigFullScreenBtnClicked);
 
-    InitUi();
+    
 }
 
 Title::~Title()
 {
     delete ui;
+}
+
+bool Title::Init()
+{
+    if (InitUi() == false)
+    {
+        return false;
+    }
+
+    return true;
 }
 
 bool Title::InitUi()

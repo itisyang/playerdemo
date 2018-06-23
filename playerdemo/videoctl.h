@@ -60,7 +60,7 @@ signals:
     void SigStopFinished();//停止播放完成
 
     void SigStartPlay(QString strFileName);
-public slots:
+public:
     void OnPlaySeek(double dPercent);
     void OnPlayVolume(double dPercent);
     void OnSeekForward();
@@ -69,7 +69,6 @@ public slots:
     void OnSubVolume();
     void OnPause();
     void OnStop();
-private slots:
 
 private:
     explicit VideoCtl(QObject *parent = nullptr);

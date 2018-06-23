@@ -32,26 +32,29 @@ public:
 	 * @note 	
 	 */
     bool Init();
-    /**
-     * @brief	连接信号槽
-     * 
-     * @param	
-     * @return	
-     * @note 	
-     */
-    bool ConnectSignalSlots();
-public slots:
+
+public:
     void OnVideoTotalSeconds(int nSeconds);
     void OnVideoPlaySeconds(int nSeconds);
     void OnVideopVolume(double dPercent);
     void OnPauseStat(bool bPaused);
     void OnStopFinished();
-private slots:
+private:
     void OnPlaySliderValueChanged();
     void OnVolumeSliderValueChanged();
+private slots:
     void on_PlayOrPauseBtn_clicked();
     void on_VolumeBtn_clicked();
     void on_StopBtn_clicked();
+
+    /**
+    * @brief	连接信号槽
+    *
+    * @param
+    * @return
+    * @note
+    */
+    bool ConnectSignalSlots();
 signals:
     void SigShowOrHidePlaylist();	//< 显示或隐藏信号
     void SigPlaySeek(double dPercent); ///< 调整播放进度

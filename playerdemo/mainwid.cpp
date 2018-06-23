@@ -205,7 +205,7 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
 
 void MainWid::contextMenuEvent(QContextMenuEvent* event)
 {
-    m_stMenu.exec(event->globalPos());
+    //m_stMenu.exec(event->globalPos());
 }
 
 void MainWid::OnFullScreenPlay()

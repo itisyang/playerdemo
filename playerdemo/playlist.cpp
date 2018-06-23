@@ -96,6 +96,7 @@ void Playlist::on_List_itemDoubleClicked(QListWidgetItem *item)
 {
 	emit SigPlay(item->data(Qt::UserRole).toString());
     m_nCurrentPlayListIndex = ui->List->row(item);
+    ui->List->setCurrentRow(m_nCurrentPlayListIndex);
 }
 
 bool Playlist::GetPlaylistStatus()
@@ -112,14 +113,21 @@ void Playlist::OnAddFile(QString strFileName)
 {
     QFileInfo fileInfo(strFileName);
 	QList<QListWidgetItem *> listItem = ui->List->findItems(fileInfo.fileName(), Qt::MatchExactly);
+    QListWidgetItem *pItem = nullptr;
 	if (listItem.isEmpty())
 	{
-        QListWidgetItem *pItem = new QListWidgetItem(ui->List);
+        pItem = new QListWidgetItem(ui->List);
         pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
         pItem->setText(fileInfo.fileName());  // 显示文本
         pItem->setToolTip(fileInfo.filePath());
         ui->List->addItem(pItem);
 	}
+    else
+    {
+        pItem = listItem.at(0);
+    }
+
+    on_List_itemDoubleClicked(pItem);
 }
 
 void Playlist::OnBackwardPlay()

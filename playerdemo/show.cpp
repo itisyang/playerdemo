@@ -194,5 +194,5 @@ void Show::dropEvent(QDropEvent *event)
         break;
     }
 
-	emit SigPlay(urls.first().toLocalFile());
+	//emit SigPlay(urls.first().toLocalFile());
 }

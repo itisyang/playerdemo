@@ -60,12 +60,14 @@ bool Playlist::InitUi()
     for (QString strVideoFile : strListPlaylist)
     {
         QFileInfo fileInfo(strVideoFile);
-
-        QListWidgetItem *pItem = new QListWidgetItem(ui->List);
-        pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
-        pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
-        pItem->setToolTip(fileInfo.filePath());
-        ui->List->addItem(pItem);
+        if (fileInfo.exists())
+        {
+            QListWidgetItem *pItem = new QListWidgetItem(ui->List);
+            pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
+            pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
+            pItem->setToolTip(fileInfo.filePath());
+            ui->List->addItem(pItem);
+        }
     }
     //ui->List->addItems(strListPlaylist);
 

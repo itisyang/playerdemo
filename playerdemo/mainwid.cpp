@@ -84,6 +84,13 @@ MainWid::~MainWid()
 
 bool MainWid::Init()
 {
+
+    //连接自定义信号与槽
+    if (ConnectSignalSlots() == false)
+    {
+        return false;
+    }
+
     if (ui->CtrlBarWid->Init() == false || 
         ui->PlaylistWid->Init() == false || 
         ui->ShowWid->Init() == false || 
@@ -92,11 +99,7 @@ bool MainWid::Init()
         return false;
     }
 
-    //连接自定义信号与槽
-    if (ConnectSignalSlots() == false)
-    {
-        return false;
-    }
+
 
     return true;
 }

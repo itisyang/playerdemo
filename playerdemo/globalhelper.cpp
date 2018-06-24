@@ -6,6 +6,8 @@
 
 #include "globalhelper.h"
 
+const QString PLAYER_CONFIG_BASEDIR = QDir::tempPath();
+
 const QString PLAYER_CONFIG = "player_config.ini";
 
 GlobalHelper::GlobalHelper()
@@ -42,7 +44,7 @@ void GlobalHelper::SetIcon(QPushButton* btn, int iconSize, QChar icon)
 void GlobalHelper::SavePlaylist(QStringList& playList)
 {
     //QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
-    QString strPlayerConfigFileName = QDir::tempPath() + QDir::separator() + PLAYER_CONFIG;
+    QString strPlayerConfigFileName = PLAYER_CONFIG_BASEDIR + QDir::separator() + PLAYER_CONFIG;
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
     settings.beginWriteArray("playlist");
     for (int i = 0; i < playList.size(); ++i)
@@ -56,7 +58,7 @@ void GlobalHelper::SavePlaylist(QStringList& playList)
 void GlobalHelper::GetPlaylist(QStringList& playList)
 {
     //QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
-    QString strPlayerConfigFileName = QDir::tempPath() + QDir::separator() + PLAYER_CONFIG;
+    QString strPlayerConfigFileName = PLAYER_CONFIG_BASEDIR + QDir::separator() + PLAYER_CONFIG;
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
 
     int size = settings.beginReadArray("playlist");
@@ -70,14 +72,14 @@ void GlobalHelper::GetPlaylist(QStringList& playList)
 
 void GlobalHelper::SavePlayVolume(double& nVolume)
 {
-    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QString strPlayerConfigFileName = PLAYER_CONFIG_BASEDIR + QDir::separator() + PLAYER_CONFIG;
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
     settings.setValue("volume/size", nVolume);
 }
 
 void GlobalHelper::GetPlayVolume(double& nVolume)
 {
-    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QString strPlayerConfigFileName = PLAYER_CONFIG_BASEDIR + QDir::separator() + PLAYER_CONFIG;
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
     QString str = settings.value("volume/size").toString();
     nVolume = settings.value("volume/size", nVolume).toDouble();

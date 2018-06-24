@@ -41,7 +41,8 @@ void GlobalHelper::SetIcon(QPushButton* btn, int iconSize, QChar icon)
 
 void GlobalHelper::SavePlaylist(QStringList& playList)
 {
-    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    //QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QString strPlayerConfigFileName = QDir::tempPath() + QDir::separator() + PLAYER_CONFIG;
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
     settings.beginWriteArray("playlist");
     for (int i = 0; i < playList.size(); ++i)
@@ -54,7 +55,8 @@ void GlobalHelper::SavePlaylist(QStringList& playList)
 
 void GlobalHelper::GetPlaylist(QStringList& playList)
 {
-    QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    //QString strPlayerConfigFileName = QCoreApplication::applicationDirPath() + QDir::separator() + PLAYER_CONFIG;
+    QString strPlayerConfigFileName = QDir::tempPath() + QDir::separator() + PLAYER_CONFIG;
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
 
     int size = settings.beginReadArray("playlist");

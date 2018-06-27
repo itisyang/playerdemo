@@ -32,6 +32,8 @@ MainWid::MainWid(QWidget *parent) :
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
     setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
+    //设置任务栏图标
+    this->setWindowIcon(QIcon(":/Resources/player.png"));
     //加载样式
     QString qss = GlobalHelper::GetQssStr(":/Resources/qss/mainwid.css");
     setStyleSheet(qss);

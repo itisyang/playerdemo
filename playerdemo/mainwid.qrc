@@ -6,5 +6,7 @@
         <file>Resources/qss/playlist.css</file>
         <file>Resources/qss/title.css</file>
         <file>Resources/qss/show.css</file>
+        <file>Resources/Player.ico</file>
+        <file>Resources/player.png</file>
     </qresource>
 </RCC>

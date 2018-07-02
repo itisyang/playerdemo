@@ -27,7 +27,8 @@
 MainWid::MainWid(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWid),
-    m_nShadowWidth(0)
+    m_nShadowWidth(0),
+    m_stActionGroup(this)
 {
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
@@ -75,8 +76,12 @@ MainWid::MainWid(QWidget *parent) :
 
     m_bFullScreenPlay = false;
 
+    m_stActionGroup.addAction("最大化");
+    m_stActionGroup.addAction("最小化");
+    m_stActionGroup.addAction("全屏");
+    m_stActionGroup.addAction("关闭");
 
-    m_stMenu.addAction("测试");
+    m_stMenu.addActions(m_stActionGroup.actions());
 }
 
 MainWid::~MainWid()
@@ -163,6 +168,10 @@ bool MainWid::ConnectSignalSlots()
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->TitleWid, &Title::OnStopFinished, Qt::DirectConnection);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStartPlay, ui->TitleWid, &Title::OnPlay, Qt::DirectConnection);
 
+    //连接信号与槽
+
+    connect(&m_stActionGroup, &QActionGroup::triggered, this, &MainWid::OnActionsTriggered);
+
 	return true;
 }
 
@@ -210,7 +219,7 @@ void MainWid::mouseMoveEvent(QMouseEvent *event)
 
 void MainWid::contextMenuEvent(QContextMenuEvent* event)
 {
-    //m_stMenu.exec(event->globalPos());
+    m_stMenu.exec(event->globalPos());
 }
 
 void MainWid::OnFullScreenPlay()
@@ -268,5 +277,26 @@ void MainWid::OnShowOrHidePlaylist()
      {
          ui->PlaylistWid->hide();
      }
+}
+
+void MainWid::OnActionsTriggered(QAction *action)
+{
+    QString strAction = action->text();
+    if (strAction == "最大化")
+    {
+        OnMaxBtnClicked();
+    }
+    else if (strAction == "最小化")
+    {
+        OnMinBtnClicked();
+    }
+    else if (strAction == "全屏")
+    {
+        OnFullScreenPlay();
+    }
+    else if (strAction == "关闭")
+    {
+        OnCloseBtnClicked();
+    }
 }
 

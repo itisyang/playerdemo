@@ -15,6 +15,7 @@
 #include <QMouseEvent>
 #include <QDragEnterEvent>
 #include <QMenu>
+#include <QActionGroup>
 
 namespace Ui {
 class MainWid;
@@ -62,6 +63,7 @@ private:
     //显示、隐藏播放列表
     void OnShowOrHidePlaylist();
 
+    void OnActionsTriggered(QAction *action);
 
     /**
     * @brief	全屏播放
@@ -91,6 +93,7 @@ private:
     bool m_bFullScreenPlay; ///< 全屏播放标志
 
     QMenu m_stMenu;
+    QActionGroup m_stActionGroup;
 };
 
 #endif // MainWid_H

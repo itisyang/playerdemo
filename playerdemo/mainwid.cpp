@@ -28,7 +28,8 @@ MainWid::MainWid(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWid),
     m_nShadowWidth(0),
-    m_stActionGroup(this)
+    m_stActionGroup(this),
+    m_stMenu(this)
 {
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化

@@ -13,6 +13,9 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QMenu>
+#include <QActionGroup>
+#include <QAction>
 
 namespace Ui {
 class Title;
@@ -34,6 +37,9 @@ private:
     void ChangeMovieNameShow();
 
     bool InitUi();
+
+    void contextMenuEvent(QContextMenuEvent* event);
+    void OnActionsTriggered(QAction *action);
 public:
 	/**
 	 * @brief	改变最大化按钮显示图标
@@ -55,6 +61,9 @@ private:
     Ui::Title *ui;
 
     QString m_strMovieName;
+
+    QMenu m_stMenu;
+    QActionGroup m_stActionGroup;
 };
 
 #endif // MAINWIDTITLE_H

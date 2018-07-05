@@ -17,6 +17,9 @@
 #include <QTimer>
 #include <QDragEnterEvent>
 #include <QKeyEvent>
+#include <QMenu>
+#include <QActionGroup>
+#include <QAction>
 
 #include "videoctl.h"
 
@@ -69,6 +72,8 @@ protected:
     void keyPressEvent(QKeyEvent *event);
 
     //void mouseMoveEvent(QMouseEvent *event);
+
+    void contextMenuEvent(QContextMenuEvent* event);
 public:
     /**
     * @brief	播放
@@ -98,6 +103,8 @@ private:
     void OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight);
 
     void OnTimerShowCursorUpdate();
+
+    void OnActionsTriggered(QAction *action);
 private:
 	/**
 	 * @brief	连接信号槽	
@@ -124,6 +131,9 @@ private:
     int m_nLastFrameHeight;
 
     QTimer timerShowCursor;
+
+    QMenu m_stMenu;
+    QActionGroup m_stActionGroup;
 };
 
 #endif // DISPLAY_H

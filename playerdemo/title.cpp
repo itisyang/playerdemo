@@ -22,7 +22,9 @@
 
 Title::Title(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Title)
+    ui(new Ui::Title),
+    m_stActionGroup(this),
+    m_stMenu(this)
 {
     ui->setupUi(this);
 
@@ -30,8 +32,14 @@ Title::Title(QWidget *parent) :
     connect(ui->MinBtn, &QPushButton::clicked, this, &Title::SigMinBtnClicked);
     connect(ui->MaxBtn, &QPushButton::clicked, this, &Title::SigMaxBtnClicked);
     connect(ui->FullScreenBtn, &QPushButton::clicked, this, &Title::SigFullScreenBtnClicked);
-
+    connect(&m_stActionGroup, &QActionGroup::triggered, this, &Title::OnActionsTriggered);
     
+    m_stActionGroup.addAction("最大化");
+    m_stActionGroup.addAction("最小化");
+    m_stActionGroup.addAction("关闭");
+
+    m_stMenu.addActions(m_stActionGroup.actions());
+
 }
 
 Title::~Title()
@@ -65,9 +73,34 @@ bool Title::InitUi()
     GlobalHelper::SetIcon(ui->FullScreenBtn, 9, QChar(0xf065));
     
     ui->LogoLab->setToolTip("显示主菜单");
+
+
+
     return true;
 }
 
+
+void Title::contextMenuEvent(QContextMenuEvent* event)
+{
+    m_stMenu.exec(event->globalPos());
+}
+
+void Title::OnActionsTriggered(QAction *action)
+{
+    QString strAction = action->text();
+    if (strAction == "最大化")
+    {
+        emit SigMaxBtnClicked();
+    }
+    else if (strAction == "最小化")
+    {
+        emit SigMinBtnClicked();
+    }
+    else if (strAction == "关闭")
+    {
+        emit SigCloseBtnClicked();
+    }
+}
 
 void Title::paintEvent(QPaintEvent *event)
 {

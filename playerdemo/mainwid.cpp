@@ -77,12 +77,7 @@ MainWid::MainWid(QWidget *parent) :
 
     m_bFullScreenPlay = false;
 
-    m_stActionGroup.addAction("最大化");
-    m_stActionGroup.addAction("最小化");
-    m_stActionGroup.addAction("全屏");
-    m_stActionGroup.addAction("关闭");
 
-    m_stMenu.addActions(m_stActionGroup.actions());
 }
 
 MainWid::~MainWid()
@@ -290,10 +285,6 @@ void MainWid::OnActionsTriggered(QAction *action)
     else if (strAction == "最小化")
     {
         OnMinBtnClicked();
-    }
-    else if (strAction == "全屏")
-    {
-        OnFullScreenPlay();
     }
     else if (strAction == "关闭")
     {

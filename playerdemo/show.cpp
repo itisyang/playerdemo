@@ -20,14 +20,15 @@
 
 Show::Show(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::Show)
+    ui(new Ui::Show),
+    m_stActionGroup(this),
+    m_stMenu(this)
 {
     ui->setupUi(this);
 
     //加载样式
     setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/show.css"));
     setAcceptDrops(true);
-
 
 	
     //防止过度刷新显示
@@ -41,6 +42,10 @@ Show::Show(QWidget *parent) :
 
     m_nLastFrameWidth = 0; ///< 记录视频宽高
     m_nLastFrameHeight = 0;
+
+    m_stActionGroup.addAction("全屏");
+
+    m_stMenu.addActions(m_stActionGroup.actions());
 }
 
 Show::~Show()
@@ -56,6 +61,9 @@ bool Show::Init()
     }
 
 	//ui->label->setUpdatesEnabled(false);
+
+
+
 
 	return true;
 }
@@ -123,6 +131,11 @@ void Show::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void Show::contextMenuEvent(QContextMenuEvent* event)
+{
+    m_stMenu.exec(event->globalPos());
+}
+
 // void Show::mouseMoveEvent(QMouseEvent *event)
 // {
 //     qDebug() << "Show::mouseMoveEvent";
@@ -156,6 +169,15 @@ void Show::OnTimerShowCursorUpdate()
     setCursor(Qt::BlankCursor);
 }
 
+void Show::OnActionsTriggered(QAction *action)
+{
+    QString strAction = action->text();
+    if (strAction == "全屏")
+    {
+        emit SigFullScreen();
+    }
+}
+
 bool Show::ConnectSignalSlots()
 {
 	QList<bool> listRet;
@@ -166,6 +188,8 @@ bool Show::ConnectSignalSlots()
 
     bRet = connect(&timerShowCursor, &QTimer::timeout, this, &Show::OnTimerShowCursorUpdate);
     listRet.append(bRet);
+
+    connect(&m_stActionGroup, &QActionGroup::triggered, this, &Show::OnActionsTriggered);
 
 	for (bool bReturn : listRet)
 	{

@@ -35,16 +35,34 @@ QListWidget::item:selected {
     border: 1px solid Cyan;
 }
 
-/*QPushButton,QToolButton{
-    background-color:#222930;
-    padding: 5px;
-    border: none;
-    font-size:13px;
-    color:#FFFFFF;
+/**********菜单**********/
+QMenu {
+    border: 1px solid rgb(100, 100, 100);
+    background: rgb(68, 69, 73);
 }
-QPushButton::hover,QToolButton::hover{
-    background:#374040;
+QMenu::item {
+    height: 22px;
+    padding: 0px 25px 0px 20px;
 }
-QPushButton::pressed,QToolButton::pressed{
-    background:#363636;
-}*/
+QMenu::item:enabled {
+    color: rgb(225, 225, 225);
+}
+QMenu::item:!enabled {
+    color: rgb(155, 155, 155);
+}
+QMenu::item:enabled:selected {
+    color: rgb(230, 230, 230);
+    background: rgba(255, 255, 255, 40);
+}
+QMenu::separator {
+    height: 1px;
+    background: rgb(100, 100, 100);
+}
+QMenu::indicator {
+    width: 13px;
+    height: 13px;
+}
+QMenu::icon {
+    padding-left: 2px;
+    padding-right: 2px;
+}

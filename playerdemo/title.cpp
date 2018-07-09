@@ -12,6 +12,7 @@
 #include <QPainter>
 #include <QFileInfo>
 #include <QFontMetrics>
+#include <QMessageBox>
 
 #include "title.h"
 #include "ui_title.h"
@@ -37,6 +38,7 @@ Title::Title(QWidget *parent) :
     m_stActionGroup.addAction("最大化");
     m_stActionGroup.addAction("最小化");
     m_stActionGroup.addAction("关闭");
+    m_stActionGroup.addAction("关于");
 
     m_stMenu.addActions(m_stActionGroup.actions());
 
@@ -99,6 +101,10 @@ void Title::OnActionsTriggered(QAction *action)
     else if (strAction == "关闭")
     {
         emit SigCloseBtnClicked();
+    }
+    else if (strAction == "关于")
+    {
+        QMessageBox::about(this, "PlayerDemo 信息", "powered by itisyang\ncontact to itiayang@gmail.com");
     }
 }
 

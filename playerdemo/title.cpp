@@ -76,7 +76,10 @@ bool Title::InitUi()
     
     ui->LogoLab->setToolTip("显示主菜单");
 
-
+    if (about.Init() == false)
+    {
+        return false;
+    }
 
     return true;
 }
@@ -104,7 +107,7 @@ void Title::OnActionsTriggered(QAction *action)
     }
     else if (strAction == "关于")
     {
-        QMessageBox::about(this, "PlayerDemo 信息", "powered by itisyang\ncontact to itiayang@gmail.com");
+        about.show();
     }
 }
 

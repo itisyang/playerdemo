@@ -8,5 +8,6 @@
         <file>Resources/qss/show.css</file>
         <file>Resources/Player.ico</file>
         <file>Resources/player.png</file>
+        <file>Resources/qss/about.css</file>
     </qresource>
 </RCC>

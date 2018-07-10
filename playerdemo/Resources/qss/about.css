@@ -1,0 +1,35 @@
+*{
+    background-color:transparent;
+    color:white;
+}
+
+/**********页签项**********/
+QTabWidget::pane {
+    border: none;
+    border-top: 3px solid rgb(0, 160, 230);
+    background: rgb(57, 58, 60);
+}
+QTabWidget::tab-bar {
+    border: none;
+}
+
+QTabBar::tab {
+    border: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    color: rgb(175, 175, 175);
+    background: rgb(255, 255, 255, 30);
+    height: 28px;
+    min-width: 85px;
+    margin-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+QTabBar::tab:hover {
+    background: rgb(255, 255, 255, 40);
+}
+QTabBar::tab:selected {
+    color: white;
+    background: rgb(0, 160, 230);
+}
+

@@ -17,6 +17,8 @@
 #include <QActionGroup>
 #include <QAction>
 
+#include "about.h"
+
 namespace Ui {
 class Title;
 }
@@ -64,6 +66,8 @@ private:
 
     QMenu m_stMenu;
     QActionGroup m_stActionGroup;
+
+    About about;
 };
 
 #endif // MAINWIDTITLE_H

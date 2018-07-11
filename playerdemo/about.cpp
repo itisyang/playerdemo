@@ -3,6 +3,8 @@
 
 #include "globalhelper.h"
 
+
+
 About::About(QWidget *parent)
     : QWidget(parent)
 {
@@ -24,6 +26,10 @@ bool About::Init()
     ui->LogoLabel->setPixmap(QPixmap(":/Resources/player.png").scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     //setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/about.css"));
+
+    QString strVersion = QString("版本：%1\n时间：%2").arg(GlobalHelper::GetAppVersion()).arg(QString(__DATE__) + " " + QString(__TIME__));
+    ui->VersionLabel->setText(strVersion);
+
 
     return true;
 }

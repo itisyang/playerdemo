@@ -10,6 +10,8 @@ const QString PLAYER_CONFIG_BASEDIR = QDir::tempPath();
 
 const QString PLAYER_CONFIG = "player_config.ini";
 
+const QString APP_VERSION = "0.1.0";
+
 GlobalHelper::GlobalHelper()
 {
 
@@ -83,5 +85,10 @@ void GlobalHelper::GetPlayVolume(double& nVolume)
     QSettings settings(strPlayerConfigFileName, QSettings::IniFormat);
     QString str = settings.value("volume/size").toString();
     nVolume = settings.value("volume/size", nVolume).toDouble();
+}
+
+QString GlobalHelper::GetAppVersion()
+{
+    return APP_VERSION;
 }
 

@@ -22,7 +22,9 @@ bool About::Init()
 {
     this->setWindowModality(Qt::ApplicationModal); //弹出关于窗口，主窗口不可点击
 
-    //this->setWindowIcon(QIcon(":/Resources/player.ico"));
+    //this->setWindowFlags(Qt::Dialog);
+
+    this->setWindowIcon(QIcon(":/Resources/player.png"));
     ui->LogoLabel->setPixmap(QPixmap(":/Resources/player.png").scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     //setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/about.css"));

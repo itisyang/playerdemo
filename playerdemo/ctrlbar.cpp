@@ -154,7 +154,7 @@ void CtrlBar::OnVolumeSliderValueChanged()
 
 void CtrlBar::on_PlayOrPauseBtn_clicked()
 {
-    emit SigPause();
+    emit SigPlayOrPause();
 }
 
 void CtrlBar::on_VolumeBtn_clicked()

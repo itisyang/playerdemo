@@ -124,6 +124,8 @@ signals:
 	void SigPlay(QString strFile); ///<播放
 								   
 	void SigFullScreen();//全屏播放
+    void SigPlayOrPause();
+    void SigStop();
 private:
     Ui::Show *ui;
 

@@ -44,6 +44,8 @@ Show::Show(QWidget *parent) :
     m_nLastFrameHeight = 0;
 
     m_stActionGroup.addAction("全屏");
+    m_stActionGroup.addAction("暂停");
+    m_stActionGroup.addAction("停止");
 
     m_stMenu.addActions(m_stActionGroup.actions());
 }
@@ -134,6 +136,7 @@ void Show::keyPressEvent(QKeyEvent *event)
 void Show::contextMenuEvent(QContextMenuEvent* event)
 {
     m_stMenu.exec(event->globalPos());
+    qDebug() << "Show::contextMenuEvent";
 }
 
 // void Show::mouseMoveEvent(QMouseEvent *event)
@@ -175,6 +178,14 @@ void Show::OnActionsTriggered(QAction *action)
     if (strAction == "全屏")
     {
         emit SigFullScreen();
+    }
+    else if (strAction == "停止")
+    {
+        emit SigStop();
+    }
+    else if (strAction == "暂停" || strAction == "播放")
+    {
+        emit SigPlayOrPause();
     }
 }
 

@@ -76,7 +76,7 @@ signals:
     void SigSeekBack();
     void SigAddVolume();
     void SigSubVolume();
-    void SigPause();
+    void SigPlayOrPause();
 private:
     Ui::MainWid *ui;
 

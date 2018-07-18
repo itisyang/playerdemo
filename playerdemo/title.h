@@ -41,7 +41,10 @@ private:
     bool InitUi();
 
     void contextMenuEvent(QContextMenuEvent* event);
-    void OnActionsTriggered(QAction *action);
+
+    void ShowAbout();
+
+    void OpenFile();
 public:
 	/**
 	 * @brief	改变最大化按钮显示图标

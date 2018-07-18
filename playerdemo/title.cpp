@@ -13,6 +13,7 @@
 #include <QFileInfo>
 #include <QFontMetrics>
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include "title.h"
 #include "ui_title.h"
@@ -33,15 +34,15 @@ Title::Title(QWidget *parent) :
     connect(ui->MinBtn, &QPushButton::clicked, this, &Title::SigMinBtnClicked);
     connect(ui->MaxBtn, &QPushButton::clicked, this, &Title::SigMaxBtnClicked);
     connect(ui->FullScreenBtn, &QPushButton::clicked, this, &Title::SigFullScreenBtnClicked);
-    connect(&m_stActionGroup, &QActionGroup::triggered, this, &Title::OnActionsTriggered);
-    
-    m_stActionGroup.addAction("最大化");
-    m_stActionGroup.addAction("最小化");
-    m_stActionGroup.addAction("关闭");
-    m_stActionGroup.addAction("关于");
 
-    m_stMenu.addActions(m_stActionGroup.actions());
+ 
+    m_stMenu.addAction("最大化", this, &Title::SigMaxBtnClicked);
+    m_stMenu.addAction("最小化", this, &Title::SigMinBtnClicked);
+    m_stMenu.addAction("关闭", this, &Title::SigCloseBtnClicked);
+    m_stMenu.addAction("关于", this, &Title::ShowAbout);
 
+    QMenu* stMenu = m_stMenu.addMenu("打开");
+    stMenu->addAction("打开文件", this, &Title::OpenFile);
 }
 
 Title::~Title()
@@ -74,7 +75,7 @@ bool Title::InitUi()
 
     GlobalHelper::SetIcon(ui->FullScreenBtn, 9, QChar(0xf065));
     
-    ui->LogoLab->setToolTip("显示主菜单");
+    //ui->LogoLab->setToolTip("显示主菜单");
 
     if (about.Init() == false)
     {
@@ -90,25 +91,14 @@ void Title::contextMenuEvent(QContextMenuEvent* event)
     m_stMenu.exec(event->globalPos());
 }
 
-void Title::OnActionsTriggered(QAction *action)
+void Title::ShowAbout()
 {
-    QString strAction = action->text();
-    if (strAction == "最大化")
-    {
-        emit SigMaxBtnClicked();
-    }
-    else if (strAction == "最小化")
-    {
-        emit SigMinBtnClicked();
-    }
-    else if (strAction == "关闭")
-    {
-        emit SigCloseBtnClicked();
-    }
-    else if (strAction == "关于")
-    {
-        about.show();
-    }
+    about.show();
+}
+
+void Title::OpenFile()
+{
+    QString strFileName = QFileDialog::getOpenFileName(this, "打开文件", QDir::homePath());
 }
 
 void Title::paintEvent(QPaintEvent *event)

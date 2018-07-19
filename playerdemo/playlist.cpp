@@ -111,6 +111,19 @@ bool Playlist::GetPlaylistStatus()
 
 void Playlist::OnAddFile(QString strFileName)
 {
+    bool bSupportMovie = strFileName.endsWith(".mkv", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".rmvb", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".mp4", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".avi", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".flv", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".wmv", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".3gp", Qt::CaseInsensitive);
+    if (!bSupportMovie)
+    {
+        return;
+    }
+
+
     QFileInfo fileInfo(strFileName);
 	QList<QListWidgetItem *> listItem = ui->List->findItems(fileInfo.fileName(), Qt::MatchExactly);
     QListWidgetItem *pItem = nullptr;
@@ -126,7 +139,37 @@ void Playlist::OnAddFile(QString strFileName)
     {
         pItem = listItem.at(0);
     }
+}
 
+void Playlist::OnAddFileAndPlay(QString strFileName)
+{
+    bool bSupportMovie = strFileName.endsWith(".mkv", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".rmvb", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".mp4", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".avi", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".flv", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".wmv", Qt::CaseInsensitive) ||
+        strFileName.endsWith(".3gp", Qt::CaseInsensitive);
+    if (!bSupportMovie)
+    {
+        return;
+    }
+
+    QFileInfo fileInfo(strFileName);
+    QList<QListWidgetItem *> listItem = ui->List->findItems(fileInfo.fileName(), Qt::MatchExactly);
+    QListWidgetItem *pItem = nullptr;
+    if (listItem.isEmpty())
+    {
+        pItem = new QListWidgetItem(ui->List);
+        pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
+        pItem->setText(fileInfo.fileName());  // 显示文本
+        pItem->setToolTip(fileInfo.filePath());
+        ui->List->addItem(pItem);
+    }
+    else
+    {
+        pItem = listItem.at(0);
+    }
     on_List_itemDoubleClicked(pItem);
 }
 
@@ -173,13 +216,8 @@ void Playlist::dropEvent(QDropEvent *event)
     for (QUrl url : urls)
     {
         QString strFileName = url.toLocalFile();
-        QFileInfo fileInfo(strFileName);
 
-        QListWidgetItem *pItem = new QListWidgetItem(ui->List);
-        pItem->setData(Qt::UserRole, QVariant(fileInfo.filePath()));  // 用户数据
-        pItem->setText(QString("%1").arg(fileInfo.fileName()));  // 显示文本
-        pItem->setToolTip(fileInfo.filePath());
-        ui->List->addItem(pItem);
+        OnAddFile(strFileName);
     }
 }
 

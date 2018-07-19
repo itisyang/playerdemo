@@ -47,6 +47,7 @@ public:
 	 * @note 	
 	 */
     void OnAddFile(QString strFileName);
+    void OnAddFileAndPlay(QString strFileName);
 
     void OnBackwardPlay();
     void OnForwardPlay();

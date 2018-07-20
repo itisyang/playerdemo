@@ -225,7 +225,7 @@ void Show::dropEvent(QDropEvent *event)
     {
         QString strFileName = url.toLocalFile();
         qDebug() << strFileName;
-        emit SigAddFile(strFileName);
+        emit SigOpenFile(strFileName);
         break;
     }
 

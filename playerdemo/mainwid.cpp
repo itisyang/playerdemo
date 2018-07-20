@@ -132,10 +132,11 @@ bool MainWid::ConnectSignalSlots()
 	connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
 	connect(ui->TitleWid, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
     connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
+    connect(ui->TitleWid, &Title::SigOpenFile, ui->PlaylistWid, &Playlist::OnAddFileAndPlay);
 
     connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 
-	connect(ui->ShowWid, &Show::SigAddFile, ui->PlaylistWid, &Playlist::OnAddFileAndPlay);
+	connect(ui->ShowWid, &Show::SigOpenFile, ui->PlaylistWid, &Playlist::OnAddFileAndPlay);
     connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);
     connect(ui->ShowWid, &Show::SigPlayOrPause, VideoCtl::GetInstance(), &VideoCtl::OnPause);
     connect(ui->ShowWid, &Show::SigStop, VideoCtl::GetInstance(), &VideoCtl::OnStop);

@@ -62,6 +62,8 @@ signals:
     void SigDoubleClicked();	//< 双击标题栏
 
     void SigFullScreenBtnClicked(); ///< 点击全屏按钮
+
+    void SigOpenFile(QString strFileName); //打开文件
 private:
     Ui::Title *ui;
 

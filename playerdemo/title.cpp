@@ -98,7 +98,10 @@ void Title::ShowAbout()
 
 void Title::OpenFile()
 {
-    QString strFileName = QFileDialog::getOpenFileName(this, "打开文件", QDir::homePath());
+    QString strFileName = QFileDialog::getOpenFileName(this, "打开文件", QDir::homePath(), 
+        "视频文件(*.mkv *.rmvb *.mp4 *.avi *.flv *.wmv *.3gp)");
+
+    emit SigOpenFile(strFileName);
 }
 
 void Title::paintEvent(QPaintEvent *event)

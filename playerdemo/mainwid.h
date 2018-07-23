@@ -16,6 +16,7 @@
 #include <QDragEnterEvent>
 #include <QMenu>
 #include <QActionGroup>
+#include <QPropertyAnimation>
 
 namespace Ui {
 class MainWid;
@@ -94,6 +95,8 @@ private:
 
     QMenu m_stMenu;
     QActionGroup m_stActionGroup;
+
+    QPropertyAnimation *m_stCtrlbarAnimation; //全屏时控制面板浮动显示
 };
 
 #endif // MainWid_H

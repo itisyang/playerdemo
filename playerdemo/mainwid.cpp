@@ -17,6 +17,7 @@
 #include <QSizeGrip>
 #include <QWindow>
 #include <QDesktopWidget>
+#include <QScreen>
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
@@ -39,15 +40,6 @@ MainWid::MainWid(QWidget *parent) :
     //加载样式
     QString qss = GlobalHelper::GetQssStr(":/Resources/qss/mainwid.css");
     setStyleSheet(qss);
-
-
-    FramelessHelper *pHelper = new FramelessHelper(this);
-    pHelper->activateOn(this);  //激活当前窗体
-    pHelper->setTitleHeight(ui->TitleWid->height());  //设置窗体的标题栏高度
-    pHelper->setWidgetMovable(true);  //设置窗体可移动
-    pHelper->setWidgetResizable(true);  //设置窗体可缩放
-    pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
-    pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
 
     // 追踪鼠标 用于播放时隐藏鼠标
     this->setMouseTracking(true);
@@ -88,6 +80,14 @@ MainWid::~MainWid()
 bool MainWid::Init()
 {
 
+    FramelessHelper *pHelper = new FramelessHelper(this); //无边框管理
+    pHelper->activateOn(this);  //激活当前窗体
+    pHelper->setTitleHeight(ui->TitleWid->height());  //设置窗体的标题栏高度
+    pHelper->setWidgetMovable(true);  //设置窗体可移动
+    pHelper->setWidgetResizable(true);  //设置窗体可缩放
+    pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
+    pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
+
     //连接自定义信号与槽
     if (ConnectSignalSlots() == false)
     {
@@ -103,6 +103,7 @@ bool MainWid::Init()
     }
 
 
+    m_stCtrlbarAnimation = new QPropertyAnimation(ui->CtrlBarWid, "pos");
 
     return true;
 }
@@ -224,12 +225,22 @@ void MainWid::OnFullScreenPlay()
     if (m_bFullScreenPlay == false)
     {
         m_bFullScreenPlay = true;
+        //脱离父窗口后才能设置
         ui->ShowWid->setWindowFlags(Qt::Window);
         //多屏情况下，在当前屏幕全屏
-        ui->ShowWid->windowHandle()->setScreen(qApp->screens().at(qApp->desktop()->screenNumber(this)));
+        QScreen *pStCurScreen = qApp->screens().at(qApp->desktop()->screenNumber(this));
+        ui->ShowWid->windowHandle()->setScreen(pStCurScreen);
         
         ui->ShowWid->showFullScreen();
 
+
+        QRect stScreenRect = pStCurScreen->geometry();
+        int nCtrlBarHeight = ui->CtrlBarWid->height();
+        m_stCtrlbarAnimation->setStartValue(QPoint(0, stScreenRect.height()));
+        m_stCtrlbarAnimation->setEndValue(QPoint(0, stScreenRect.height() - nCtrlBarHeight * 2));
+
+        m_stCtrlbarAnimation->setDuration(1000);
+        m_stCtrlbarAnimation->start();
     }
     else
     {
@@ -246,7 +257,19 @@ void MainWid::OnCloseBtnClicked()
 
 void MainWid::OnMinBtnClicked()
 {
+#if 0
     this->showMinimized();
+#else
+    //ui->CtrlBarWid->setWindowFlags(Qt::Window);
+    QScreen *pStCurScreen = qApp->screens().at(qApp->desktop()->screenNumber(this));
+    QRect stScreenRect = pStCurScreen->geometry();
+    int nCtrlBarHeight = ui->CtrlBarWid->height();
+    m_stCtrlbarAnimation->setStartValue(QPoint(0, stScreenRect.height()));
+    m_stCtrlbarAnimation->setEndValue(QPoint(0, stScreenRect.height() - nCtrlBarHeight*2));
+
+    m_stCtrlbarAnimation->setDuration(1000);
+    m_stCtrlbarAnimation->start();
+#endif
 }
 
 void MainWid::OnMaxBtnClicked()

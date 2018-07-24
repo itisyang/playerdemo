@@ -103,7 +103,7 @@ bool MainWid::Init()
     }
 
 
-    m_stCtrlbarAnimation = new QPropertyAnimation(ui->CtrlBarWid, "pos");
+    m_stCtrlbarAnimation = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
 
     return true;
 }
@@ -221,7 +221,6 @@ void MainWid::contextMenuEvent(QContextMenuEvent* event)
 
 void MainWid::OnFullScreenPlay()
 {
-    qDebug() << "MainWid::OnFullScreenPlay()";
     if (m_bFullScreenPlay == false)
     {
         m_bFullScreenPlay = true;
@@ -236,17 +235,32 @@ void MainWid::OnFullScreenPlay()
 
         QRect stScreenRect = pStCurScreen->geometry();
         int nCtrlBarHeight = ui->CtrlBarWid->height();
-        m_stCtrlbarAnimation->setStartValue(QPoint(0, stScreenRect.height()));
-        m_stCtrlbarAnimation->setEndValue(QPoint(0, stScreenRect.height() - nCtrlBarHeight * 2));
-
+        int nX = ui->ShowWid->x();
+        m_stCtrlBarAnimationShow = QRect(nX, stScreenRect.height() - nCtrlBarHeight, stScreenRect.width(), nCtrlBarHeight);
+        m_stCtrlBarAnimationHide = QRect(nX, stScreenRect.height(), stScreenRect.width(), nCtrlBarHeight);
+        m_stCtrlbarAnimation->setStartValue(m_stCtrlBarAnimationHide);
+        m_stCtrlbarAnimation->setEndValue(m_stCtrlBarAnimationShow);
+        
+        ui->CtrlBarWid->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+        ui->CtrlBarWid->windowHandle()->setScreen(pStCurScreen);
+        ui->CtrlBarWid->raise();
+        ui->CtrlBarWid->setWindowOpacity(0.5);
+        ui->CtrlBarWid->showNormal();
         m_stCtrlbarAnimation->setDuration(1000);
         m_stCtrlbarAnimation->start();
     }
     else
     {
+        m_stCtrlbarAnimation->stop(); //快速切换时，动画还没结束导致控制面板消失
+        ui->CtrlBarWid->setWindowOpacity(1);
+        ui->CtrlBarWid->setWindowFlags(Qt::SubWindow);
+        
+
         m_bFullScreenPlay = false;
         ui->ShowWid->setWindowFlags(Qt::SubWindow);
-        ui->ShowWid->showFullScreen();
+
+        ui->CtrlBarWid->showNormal();
+        ui->ShowWid->showNormal();
     }
 }
 

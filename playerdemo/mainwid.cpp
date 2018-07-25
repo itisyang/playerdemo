@@ -44,7 +44,7 @@ MainWid::MainWid(QWidget *parent) :
     // 追踪鼠标 用于播放时隐藏鼠标
     this->setMouseTracking(true);
 
-    ui->ShowWid->setMouseTracking(true);
+    //ui->ShowWid->setMouseTracking(true);
 
     //保证窗口不被绘制上的部分透明
     //setAttribute(Qt::WA_TranslucentBackground);
@@ -69,7 +69,7 @@ MainWid::MainWid(QWidget *parent) :
 
     m_bFullScreenPlay = false;
 
-
+    m_timerCtrlBarAnimation.setInterval(2000);
 }
 
 MainWid::~MainWid()
@@ -103,7 +103,8 @@ bool MainWid::Init()
     }
 
 
-    m_stCtrlbarAnimation = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
+    m_stCtrlbarAnimationShow = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
+    m_stCtrlbarAnimationHide = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
 
     return true;
 }
@@ -169,6 +170,9 @@ bool MainWid::ConnectSignalSlots()
 
     connect(&m_stActionGroup, &QActionGroup::triggered, this, &MainWid::OnActionsTriggered);
 
+
+    connect(&m_timerCtrlBarAnimation, &QTimer::timeout, this, &MainWid::OnCtrlBarAnimationTimeOut);
+
 	return true;
 }
 
@@ -212,6 +216,19 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 void MainWid::mouseMoveEvent(QMouseEvent *event)
 {
     qDebug() << "MainWid::mouseMoveEvent";
+    QApplication::setOverrideCursor(Qt::ArrowCursor);
+    m_timerCtrlBarAnimation.start();
+    qDebug() << ui->CtrlBarWid->geometry() << event->pos();
+    if (ui->CtrlBarWid->geometry().contains(event->pos()))
+    {
+        m_stCtrlbarAnimationShow->start();
+        m_timerCtrlBarAnimation.stop();
+    }
+    else
+    {
+        m_stCtrlbarAnimationHide->start();
+        m_timerCtrlBarAnimation.start();
+    }
 }
 
 void MainWid::contextMenuEvent(QContextMenuEvent* event)
@@ -238,20 +255,27 @@ void MainWid::OnFullScreenPlay()
         int nX = ui->ShowWid->x();
         m_stCtrlBarAnimationShow = QRect(nX, stScreenRect.height() - nCtrlBarHeight, stScreenRect.width(), nCtrlBarHeight);
         m_stCtrlBarAnimationHide = QRect(nX, stScreenRect.height(), stScreenRect.width(), nCtrlBarHeight);
-        m_stCtrlbarAnimation->setStartValue(m_stCtrlBarAnimationHide);
-        m_stCtrlbarAnimation->setEndValue(m_stCtrlBarAnimationShow);
+
+        m_stCtrlbarAnimationShow->setStartValue(m_stCtrlBarAnimationHide);
+        m_stCtrlbarAnimationShow->setEndValue(m_stCtrlBarAnimationShow);
+        m_stCtrlbarAnimationShow->setDuration(1000);
+
+        m_stCtrlbarAnimationHide->setStartValue(m_stCtrlBarAnimationShow);
+        m_stCtrlbarAnimationHide->setEndValue(m_stCtrlBarAnimationHide);
+        m_stCtrlbarAnimationHide->setDuration(1000);
         
         ui->CtrlBarWid->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
         ui->CtrlBarWid->windowHandle()->setScreen(pStCurScreen);
         ui->CtrlBarWid->raise();
         ui->CtrlBarWid->setWindowOpacity(0.5);
         ui->CtrlBarWid->showNormal();
-        m_stCtrlbarAnimation->setDuration(1000);
-        m_stCtrlbarAnimation->start();
+        
+        m_stCtrlbarAnimationShow->start();
     }
     else
     {
-        m_stCtrlbarAnimation->stop(); //快速切换时，动画还没结束导致控制面板消失
+        m_stCtrlbarAnimationShow->stop(); //快速切换时，动画还没结束导致控制面板消失
+        m_stCtrlbarAnimationHide->stop();
         ui->CtrlBarWid->setWindowOpacity(1);
         ui->CtrlBarWid->setWindowFlags(Qt::SubWindow);
         
@@ -264,6 +288,11 @@ void MainWid::OnFullScreenPlay()
     }
 }
 
+void MainWid::OnCtrlBarAnimationTimeOut()
+{
+    QApplication::setOverrideCursor(Qt::BlankCursor);
+}
+
 void MainWid::OnCloseBtnClicked()
 {
     this->close();
@@ -271,19 +300,7 @@ void MainWid::OnCloseBtnClicked()
 
 void MainWid::OnMinBtnClicked()
 {
-#if 0
     this->showMinimized();
-#else
-    //ui->CtrlBarWid->setWindowFlags(Qt::Window);
-    QScreen *pStCurScreen = qApp->screens().at(qApp->desktop()->screenNumber(this));
-    QRect stScreenRect = pStCurScreen->geometry();
-    int nCtrlBarHeight = ui->CtrlBarWid->height();
-    m_stCtrlbarAnimation->setStartValue(QPoint(0, stScreenRect.height()));
-    m_stCtrlbarAnimation->setEndValue(QPoint(0, stScreenRect.height() - nCtrlBarHeight*2));
-
-    m_stCtrlbarAnimation->setDuration(1000);
-    m_stCtrlbarAnimation->start();
-#endif
 }
 
 void MainWid::OnMaxBtnClicked()

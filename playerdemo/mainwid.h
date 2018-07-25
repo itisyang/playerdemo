@@ -17,6 +17,7 @@
 #include <QMenu>
 #include <QActionGroup>
 #include <QPropertyAnimation>
+#include <QTimer>
 
 namespace Ui {
 class MainWid;
@@ -70,6 +71,8 @@ private:
     * @brief	全屏播放
     */
     void OnFullScreenPlay();
+
+    void OnCtrlBarAnimationTimeOut();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -96,9 +99,12 @@ private:
     QMenu m_stMenu;
     QActionGroup m_stActionGroup;
 
-    QPropertyAnimation *m_stCtrlbarAnimation; //全屏时控制面板浮动显示
+    QPropertyAnimation *m_stCtrlbarAnimationShow; //全屏时控制面板浮动显示
+    QPropertyAnimation *m_stCtrlbarAnimationHide; //全屏时控制面板浮动显示
     QRect m_stCtrlBarAnimationShow;//控制面板显示区域
     QRect m_stCtrlBarAnimationHide;//控制面板隐藏区域
+
+    QTimer m_timerCtrlBarAnimation;
 };
 
 #endif // MainWid_H

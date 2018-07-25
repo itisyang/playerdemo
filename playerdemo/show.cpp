@@ -36,7 +36,7 @@ Show::Show(QWidget *parent) :
     //ui->label->setAttribute(Qt::WA_OpaquePaintEvent);
 
 
-    //this->setMouseTracking(true);
+    this->setMouseTracking(true);
     
 
 
@@ -48,6 +48,8 @@ Show::Show(QWidget *parent) :
     m_stActionGroup.addAction("停止");
 
     m_stMenu.addActions(m_stActionGroup.actions());
+
+    
 }
 
 Show::~Show()
@@ -139,12 +141,12 @@ void Show::contextMenuEvent(QContextMenuEvent* event)
     qDebug() << "Show::contextMenuEvent";
 }
 
-// void Show::mouseMoveEvent(QMouseEvent *event)
-// {
-//     qDebug() << "Show::mouseMoveEvent";
-//     setCursor(Qt::ArrowCursor);
-//     timerShowCursor.start(1000 * 2);
-// }
+void Show::mouseMoveEvent(QMouseEvent *event)
+{
+    qDebug() << "Show::mouseMoveEvent";
+    setCursor(Qt::ArrowCursor);
+    timerShowCursor.start();
+}
 
 void Show::OnDisplayMsg(QString strMsg)
 {
@@ -169,6 +171,7 @@ void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
 
 void Show::OnTimerShowCursorUpdate()
 {
+    qDebug() << "Show::OnTimerShowCursorUpdate()";
     setCursor(Qt::BlankCursor);
 }
 
@@ -197,6 +200,7 @@ bool Show::ConnectSignalSlots()
 	bRet = connect(this, &Show::SigPlay, this, &Show::OnPlay);
     listRet.append(bRet);
 
+    timerShowCursor.setInterval(2000);
     bRet = connect(&timerShowCursor, &QTimer::timeout, this, &Show::OnTimerShowCursorUpdate);
     listRet.append(bRet);
 

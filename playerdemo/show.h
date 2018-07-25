@@ -71,7 +71,7 @@ protected:
      */
     void keyPressEvent(QKeyEvent *event);
 
-    //void mouseMoveEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
     void contextMenuEvent(QContextMenuEvent* event);
 public:

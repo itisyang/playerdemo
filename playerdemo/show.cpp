@@ -144,8 +144,8 @@ void Show::contextMenuEvent(QContextMenuEvent* event)
 void Show::mouseMoveEvent(QMouseEvent *event)
 {
     qDebug() << "Show::mouseMoveEvent";
-    setCursor(Qt::ArrowCursor);
-    timerShowCursor.start();
+    //setCursor(Qt::ArrowCursor);
+    //timerShowCursor.start();
 }
 
 void Show::OnDisplayMsg(QString strMsg)
@@ -171,8 +171,8 @@ void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
 
 void Show::OnTimerShowCursorUpdate()
 {
-    qDebug() << "Show::OnTimerShowCursorUpdate()";
-    setCursor(Qt::BlankCursor);
+    //qDebug() << "Show::OnTimerShowCursorUpdate()";
+    //setCursor(Qt::BlankCursor);
 }
 
 void Show::OnActionsTriggered(QAction *action)

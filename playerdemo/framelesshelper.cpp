@@ -3,6 +3,8 @@
 #include <QMouseEvent>
 #include <QHoverEvent>
 #include <QApplication>
+#include <QDebug>
+
 #include "framelesshelper.h"
 
 //FramelessHelperPrivate

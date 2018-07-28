@@ -1,6 +1,6 @@
-#include "medialist.h"
+﻿#include "medialist.h"
 
-MediaList::MediaList(QObject *parent)
+MediaList::MediaList(QWidget *parent)
     : QListWidget(parent)
 {
 }

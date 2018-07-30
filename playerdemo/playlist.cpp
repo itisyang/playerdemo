@@ -30,6 +30,11 @@ Playlist::~Playlist()
 
 bool Playlist::Init()
 {
+    if (ui->List->Init() == false)
+    {
+        return false;
+    }
+
     if (InitUi() == false)
     {
         return false;
@@ -80,6 +85,8 @@ bool Playlist::ConnectSignalSlots()
 	QList<bool> listRet;
 	bool bRet;
 
+    bRet = connect(ui->List, &MediaList::SigAddFile, this, &Playlist::OnAddFile);
+    listRet.append(bRet);
 
 	for (bool bReturn : listRet)
 	{

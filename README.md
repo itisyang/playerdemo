@@ -19,9 +19,8 @@
 - 亦可以选择下载release下面的安装包，安装后，将安装目录下的文件拷贝到bin目录下，依赖库肯定是全的
 
 ## 沟通
-- Issues: 欢迎给我提 issues，关于本项目的问题，请优先提 issues，我每天都会上 github
-- 邮件: itisyang@gmail.com，一起探讨音视频相关技术
+- Issues: 欢迎给我提 issues，关于本项目的问题，请优先提 issues，我会尽量当天回复
 
 
-## [开发日志记录](https://github.com/itisyang/playerdemo/blob/master/note.md)
+### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)
 

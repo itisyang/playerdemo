@@ -22,9 +22,13 @@ bool MediaList::Init()
 {
     m_stActAdd.setText("添加");
     m_stMenu.addAction(&m_stActAdd);
+    m_stActRemove.setText("移除所选名单");
+    QMenu* stRemoveMenu = m_stMenu.addMenu("移除");
+    stRemoveMenu->addAction(&m_stActRemove);
 
 
     connect(&m_stActAdd, &QAction::triggered, this, &MediaList::AddFile);
+    connect(&m_stActRemove, &QAction::triggered, this, &MediaList::RemoveFile);
 
     return true;
 }
@@ -40,4 +44,9 @@ void MediaList::AddFile()
         "视频文件(*.mkv *.rmvb *.mp4 *.avi *.flv *.wmv *.3gp)");
 
     emit SigAddFile(strFileName);
+}
+
+void MediaList::RemoveFile()
+{
+    takeItem(currentRow());
 }

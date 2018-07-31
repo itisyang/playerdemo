@@ -74,6 +74,11 @@ bool Playlist::InitUi()
             ui->List->addItem(pItem);
         }
     }
+    if (strListPlaylist.length() > 0)
+    {
+        ui->List->setCurrentRow(0);
+    }
+
     //ui->List->addItems(strListPlaylist);
 
 

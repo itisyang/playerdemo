@@ -15,13 +15,15 @@ public:
 protected:
     void contextMenuEvent(QContextMenuEvent* event);
 private:
-    void AddFile();
+    void AddFile(); //添加文件
+    void RemoveFile();
 signals:
-    void SigAddFile(QString strFileName);
+    void SigAddFile(QString strFileName);   //添加文件信号
 
 
 private:
     QMenu m_stMenu;
 
-    QAction m_stActAdd;
+    QAction m_stActAdd;     //添加文件
+    QAction m_stActRemove;  //移除文件
 };

@@ -21,6 +21,5 @@
 ## 沟通
 - Issues: 欢迎给我提 issues，关于本项目的问题，请优先提 issues，我会尽量当天回复
 
-
 ### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)
 

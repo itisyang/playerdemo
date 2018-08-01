@@ -18,12 +18,15 @@
 #include <QWindow>
 #include <QDesktopWidget>
 #include <QScreen>
+#include <QRect>
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
 #include "framelesshelper.h"
 #include "globalhelper.h"
 #include "videoctl.h"
+
+const int FULLSCREEN_MOUSE_DETECT_TIME = 500;
 
 MainWid::MainWid(QWidget *parent) :
     QWidget(parent),
@@ -69,7 +72,8 @@ MainWid::MainWid(QWidget *parent) :
 
     m_bFullScreenPlay = false;
 
-    m_timerCtrlBarAnimation.setInterval(2000);
+    m_stCtrlBarAnimationTimer.setInterval(2000);
+    m_stFullscreenMouseDetectTimer.setInterval(FULLSCREEN_MOUSE_DETECT_TIME);
 }
 
 MainWid::~MainWid()
@@ -129,6 +133,7 @@ void MainWid::leaveEvent(QEvent *event)
 
 bool MainWid::ConnectSignalSlots()
 {
+    //连接信号与槽
 	connect(ui->TitleWid, &Title::SigCloseBtnClicked, this, &MainWid::OnCloseBtnClicked);
 	connect(ui->TitleWid, &Title::SigMaxBtnClicked, this, &MainWid::OnMaxBtnClicked);
 	connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
@@ -166,12 +171,13 @@ bool MainWid::ConnectSignalSlots()
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->TitleWid, &Title::OnStopFinished, Qt::DirectConnection);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStartPlay, ui->TitleWid, &Title::OnPlay, Qt::DirectConnection);
 
-    //连接信号与槽
+
 
     connect(&m_stActionGroup, &QActionGroup::triggered, this, &MainWid::OnActionsTriggered);
 
+    connect(&m_stCtrlBarAnimationTimer, &QTimer::timeout, this, &MainWid::OnCtrlBarAnimationTimeOut);
 
-    connect(&m_timerCtrlBarAnimation, &QTimer::timeout, this, &MainWid::OnCtrlBarAnimationTimeOut);
+    connect(&m_stFullscreenMouseDetectTimer, &QTimer::timeout, this, &MainWid::OnFullscreenMouseDetectTimeOut);
 
 	return true;
 }
@@ -216,19 +222,19 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 void MainWid::mouseMoveEvent(QMouseEvent *event)
 {
     qDebug() << "MainWid::mouseMoveEvent";
-    QApplication::setOverrideCursor(Qt::ArrowCursor);
-    m_timerCtrlBarAnimation.start();
-    qDebug() << ui->CtrlBarWid->geometry() << event->pos();
-    if (ui->CtrlBarWid->geometry().contains(event->pos()))
-    {
-        m_stCtrlbarAnimationShow->start();
-        m_timerCtrlBarAnimation.stop();
-    }
-    else
-    {
-        m_stCtrlbarAnimationHide->start();
-        m_timerCtrlBarAnimation.start();
-    }
+//     QApplication::setOverrideCursor(Qt::ArrowCursor);
+//     m_stCtrlBarAnimationTimer.start();
+//     qDebug() << ui->CtrlBarWid->geometry() << event->pos();
+//     if (ui->CtrlBarWid->geometry().contains(event->pos()))
+//     {
+//         m_stCtrlbarAnimationShow->start();
+//         m_stCtrlBarAnimationTimer.stop();
+//     }
+//     else
+//     {
+//         m_stCtrlbarAnimationHide->start();
+//         m_stCtrlBarAnimationTimer.start();
+//     }
 }
 
 void MainWid::contextMenuEvent(QContextMenuEvent* event)
@@ -269,8 +275,11 @@ void MainWid::OnFullScreenPlay()
         ui->CtrlBarWid->raise();
         ui->CtrlBarWid->setWindowOpacity(0.5);
         ui->CtrlBarWid->showNormal();
+        ui->CtrlBarWid->windowHandle()->setScreen(pStCurScreen);
         
         m_stCtrlbarAnimationShow->start();
+        m_bFullscreenCtrlBarShow = true;
+        m_stFullscreenMouseDetectTimer.start();
     }
     else
     {
@@ -285,12 +294,58 @@ void MainWid::OnFullScreenPlay()
 
         ui->CtrlBarWid->showNormal();
         ui->ShowWid->showNormal();
+
+        m_stFullscreenMouseDetectTimer.stop();
     }
 }
 
 void MainWid::OnCtrlBarAnimationTimeOut()
 {
     QApplication::setOverrideCursor(Qt::BlankCursor);
+}
+
+void MainWid::OnFullscreenMouseDetectTimeOut()
+{
+//     qDebug() << m_stCtrlBarAnimationShow;
+//     qDebug() << cursor().pos();
+//     qDebug() << ui->CtrlBarWid->geometry();
+    if (m_bFullScreenPlay)
+    {
+        if (m_stCtrlBarAnimationShow.contains(cursor().pos()))
+        {
+            //判断鼠标是否在控制面板上面
+            if (ui->CtrlBarWid->geometry().contains(cursor().pos()))
+            {
+                //继续显示
+                m_bFullscreenCtrlBarShow = true;
+            }
+            else
+            {
+                //需要显示
+                ui->CtrlBarWid->raise();
+                
+                m_stCtrlbarAnimationShow->start();
+                m_stCtrlbarAnimationHide->stop();
+                stCtrlBarHideTimer.stop();
+            }
+        }
+        else  
+        {
+            if (m_bFullscreenCtrlBarShow)
+            {
+                //需要隐藏
+                m_bFullscreenCtrlBarShow = false;
+                stCtrlBarHideTimer.singleShot(2000, this, &MainWid::OnCtrlBarHideTimeOut);
+            }
+
+        }
+
+    }
+}
+
+void MainWid::OnCtrlBarHideTimeOut()
+{
+    m_stCtrlbarAnimationHide->start();
 }
 
 void MainWid::OnCloseBtnClicked()

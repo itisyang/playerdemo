@@ -73,6 +73,9 @@ private:
     void OnFullScreenPlay();
 
     void OnCtrlBarAnimationTimeOut();
+    void OnFullscreenMouseDetectTimeOut();
+
+    void OnCtrlBarHideTimeOut();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -104,7 +107,10 @@ private:
     QRect m_stCtrlBarAnimationShow;//控制面板显示区域
     QRect m_stCtrlBarAnimationHide;//控制面板隐藏区域
 
-    QTimer m_timerCtrlBarAnimation;
+    QTimer m_stCtrlBarAnimationTimer;
+    QTimer m_stFullscreenMouseDetectTimer;//全屏时鼠标位置监测时钟
+    bool m_bFullscreenCtrlBarShow;
+    QTimer stCtrlBarHideTimer;
 };
 
 #endif // MainWid_H

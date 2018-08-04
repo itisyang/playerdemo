@@ -36,6 +36,8 @@ private:
     //双击
     void mouseDoubleClickEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent *event);
+    //void mouseMoveEvent(QMouseEvent *event);
+
     void ChangeMovieNameShow();
 
     bool InitUi();

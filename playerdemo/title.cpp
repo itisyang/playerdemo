@@ -30,6 +30,8 @@ Title::Title(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //this->setMouseTracking(true);
+
     connect(ui->CloseBtn, &QPushButton::clicked, this, &Title::SigCloseBtnClicked);
     connect(ui->MinBtn, &QPushButton::clicked, this, &Title::SigMinBtnClicked);
     connect(ui->MaxBtn, &QPushButton::clicked, this, &Title::SigMaxBtnClicked);
@@ -43,6 +45,7 @@ Title::Title(QWidget *parent) :
 
     QMenu* stMenu = m_stMenu.addMenu("打开");
     stMenu->addAction("打开文件", this, &Title::OpenFile);
+
 }
 
 Title::~Title()
@@ -121,6 +124,11 @@ void Title::resizeEvent(QResizeEvent *event)
 {
     //ChangeMovieNameShow();
 }
+
+// void Title::mouseMoveEvent(QMouseEvent *event)
+// {
+//     qDebug() << "Title::mouseMoveEvent";
+// }
 
 void Title::ChangeMovieNameShow()
 {

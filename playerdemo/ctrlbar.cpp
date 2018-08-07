@@ -119,6 +119,7 @@ void CtrlBar::OnVideopVolume(double dPercent)
 
 void CtrlBar::OnPauseStat(bool bPaused)
 {
+    qDebug() << "CtrlBar::OnPauseStat" << bPaused;
     if (bPaused)
     {
         GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));

@@ -9,11 +9,13 @@
 
 
 Playlist::Playlist(QWidget *parent) :
-    QWidget(parent),
+    QDockWidget(parent),
     ui(new Ui::Playlist)
 {
     ui->setupUi(this);
-	
+    setAllowedAreas(Qt::LeftDockWidgetArea);
+    //setWindowFlag();
+    setWindowFlags(Qt::WindowTitleHint);
 }
 
 Playlist::~Playlist()

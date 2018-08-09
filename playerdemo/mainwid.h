@@ -18,17 +18,17 @@
 #include <QActionGroup>
 #include <QPropertyAnimation>
 #include <QTimer>
-
+#include <QMainWindow>
 namespace Ui {
 class MainWid;
 }
 
-class MainWid : public QWidget
+class MainWid : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainWid(QWidget *parent = 0);
+    explicit MainWid(QMainWindow *parent = 0);
     ~MainWid();
 
     //初始化

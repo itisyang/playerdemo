@@ -28,8 +28,8 @@
 
 const int FULLSCREEN_MOUSE_DETECT_TIME = 500;
 
-MainWid::MainWid(QWidget *parent) :
-    QWidget(parent),
+MainWid::MainWid(QMainWindow *parent) :
+    QMainWindow(parent),
     ui(new Ui::MainWid),
     m_nShadowWidth(0),
     m_stActionGroup(this),

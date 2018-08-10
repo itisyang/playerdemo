@@ -19,6 +19,8 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <QMainWindow>
+#include "playlist.h"
+
 namespace Ui {
 class MainWid;
 }
@@ -111,6 +113,8 @@ private:
     QTimer m_stFullscreenMouseDetectTimer;//全屏时鼠标位置监测时钟
     bool m_bFullscreenCtrlBarShow;
     QTimer stCtrlBarHideTimer;
+
+    Playlist m_stPlaylist;
 };
 
 #endif // MainWid_H

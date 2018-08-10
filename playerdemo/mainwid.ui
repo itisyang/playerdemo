@@ -115,7 +115,7 @@
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="Playlist" name="PlaylistWid">
+  <widget class="QDockWidget" name="PlaylistWid">
    <property name="layoutDirection">
     <enum>Qt::LeftToRight</enum>
    </property>
@@ -145,12 +145,6 @@
    <class>CtrlBar</class>
    <extends>QWidget</extends>
    <header>ctrlbar.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>Playlist</class>
-   <extends>QDockWidget</extends>
-   <header location="global">playlist.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

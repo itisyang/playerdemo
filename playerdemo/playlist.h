@@ -16,13 +16,12 @@
 #include <QDropEvent>
 #include <QDragEnterEvent>
 #include <QMimeData>
-#include <QDockWidget>
 
 namespace Ui {
 class Playlist;
 }
 
-class Playlist : public QDockWidget
+class Playlist : public QWidget
 {
     Q_OBJECT
 

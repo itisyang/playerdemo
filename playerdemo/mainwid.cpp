@@ -33,7 +33,8 @@ MainWid::MainWid(QMainWindow *parent) :
     ui(new Ui::MainWid),
     m_nShadowWidth(0),
     m_stActionGroup(this),
-    m_stMenu(this)
+    m_stMenu(this),
+    m_stPlaylist(this)
 {
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
@@ -74,6 +75,8 @@ MainWid::MainWid(QMainWindow *parent) :
 
     m_stCtrlBarAnimationTimer.setInterval(2000);
     m_stFullscreenMouseDetectTimer.setInterval(FULLSCREEN_MOUSE_DETECT_TIME);
+
+    
 }
 
 MainWid::~MainWid()
@@ -83,14 +86,15 @@ MainWid::~MainWid()
 
 bool MainWid::Init()
 {
+    ui->PlaylistWid->setWidget(&m_stPlaylist);
 
-    FramelessHelper *pHelper = new FramelessHelper(this); //无边框管理
-    pHelper->activateOn(this);  //激活当前窗体
-    pHelper->setTitleHeight(ui->TitleWid->height());  //设置窗体的标题栏高度
-    pHelper->setWidgetMovable(true);  //设置窗体可移动
-    pHelper->setWidgetResizable(true);  //设置窗体可缩放
-    pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
-    pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
+//     FramelessHelper *pHelper = new FramelessHelper(this); //无边框管理
+//     pHelper->activateOn(this);  //激活当前窗体
+//     pHelper->setTitleHeight(ui->TitleWid->height());  //设置窗体的标题栏高度
+//     pHelper->setWidgetMovable(true);  //设置窗体可移动
+//     pHelper->setWidgetResizable(true);  //设置窗体可缩放
+//     pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
+//     pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
 
     //连接自定义信号与槽
     if (ConnectSignalSlots() == false)
@@ -99,7 +103,7 @@ bool MainWid::Init()
     }
 
     if (ui->CtrlBarWid->Init() == false || 
-        ui->PlaylistWid->Init() == false || 
+        m_stPlaylist.Init() == false ||
         ui->ShowWid->Init() == false || 
         ui->TitleWid->Init() == false)
     {
@@ -139,11 +143,11 @@ bool MainWid::ConnectSignalSlots()
 	connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
 	connect(ui->TitleWid, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
     connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
-    connect(ui->TitleWid, &Title::SigOpenFile, ui->PlaylistWid, &Playlist::OnAddFileAndPlay);
+    connect(ui->TitleWid, &Title::SigOpenFile, &m_stPlaylist, &Playlist::OnAddFileAndPlay);
 
-    connect(ui->PlaylistWid, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
+    connect(&m_stPlaylist, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 
-	connect(ui->ShowWid, &Show::SigOpenFile, ui->PlaylistWid, &Playlist::OnAddFileAndPlay);
+	connect(ui->ShowWid, &Show::SigOpenFile, &m_stPlaylist, &Playlist::OnAddFileAndPlay);
     connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);
     connect(ui->ShowWid, &Show::SigPlayOrPause, VideoCtl::GetInstance(), &VideoCtl::OnPause);
     connect(ui->ShowWid, &Show::SigStop, VideoCtl::GetInstance(), &VideoCtl::OnStop);
@@ -153,8 +157,8 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->CtrlBarWid, &CtrlBar::SigPlayVolume, VideoCtl::GetInstance(), &VideoCtl::OnPlayVolume);
     connect(ui->CtrlBarWid, &CtrlBar::SigPlayOrPause, VideoCtl::GetInstance(), &VideoCtl::OnPause);
     connect(ui->CtrlBarWid, &CtrlBar::SigStop, VideoCtl::GetInstance(), &VideoCtl::OnStop);
-    connect(ui->CtrlBarWid, &CtrlBar::SigBackwardPlay, ui->PlaylistWid, &Playlist::OnBackwardPlay);
-    connect(ui->CtrlBarWid, &CtrlBar::SigForwardPlay, ui->PlaylistWid, &Playlist::OnForwardPlay);
+    connect(ui->CtrlBarWid, &CtrlBar::SigBackwardPlay, &m_stPlaylist, &Playlist::OnBackwardPlay);
+    connect(ui->CtrlBarWid, &CtrlBar::SigForwardPlay, &m_stPlaylist, &Playlist::OnForwardPlay);
 
     connect(this, &MainWid::SigShowMax, ui->TitleWid, &Title::OnChangeMaxBtnStyle);
     connect(this, &MainWid::SigSeekForward, VideoCtl::GetInstance(), &VideoCtl::OnSeekForward);

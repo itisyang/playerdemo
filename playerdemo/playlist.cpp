@@ -9,13 +9,11 @@
 
 
 Playlist::Playlist(QWidget *parent) :
-    QDockWidget(parent),
+    QWidget(parent),
     ui(new Ui::Playlist)
 {
     ui->setupUi(this);
-    //setAllowedAreas(Qt::LeftDockWidgetArea);
-    //setWindowFlag();
-    //setWindowFlags(Qt::WindowTitleHint);
+	
 }
 
 Playlist::~Playlist()
@@ -59,7 +57,7 @@ bool Playlist::InitUi()
     //this->setFixedWidth(ui->HideOrShowBtn->width());
     //GlobalHelper::SetIcon(ui->HideOrShowBtn, 12, QChar(0xf104));
 
-    //ui->List->clear();
+    ui->List->clear();
 
     QStringList strListPlaylist;
     GlobalHelper::GetPlaylist(strListPlaylist);

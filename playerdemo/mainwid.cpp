@@ -34,7 +34,8 @@ MainWid::MainWid(QMainWindow *parent) :
     m_nShadowWidth(0),
     m_stActionGroup(this),
     m_stMenu(this),
-    m_stPlaylist(this)
+    m_stPlaylist(this),
+    m_stTitle(this)
 {
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
@@ -86,7 +87,14 @@ MainWid::~MainWid()
 
 bool MainWid::Init()
 {
+    QWidget *em = new QWidget(this);
+    ui->PlaylistWid->setTitleBarWidget(em);
     ui->PlaylistWid->setWidget(&m_stPlaylist);
+
+    QWidget *emTitle = new QWidget(this);
+    ui->TitleWid->setTitleBarWidget(emTitle);
+    ui->TitleWid->setWidget(&m_stTitle);
+    
 
 //     FramelessHelper *pHelper = new FramelessHelper(this); //无边框管理
 //     pHelper->activateOn(this);  //激活当前窗体
@@ -105,7 +113,7 @@ bool MainWid::Init()
     if (ui->CtrlBarWid->Init() == false || 
         m_stPlaylist.Init() == false ||
         ui->ShowWid->Init() == false || 
-        ui->TitleWid->Init() == false)
+        m_stTitle.Init() == false)
     {
         return false;
     }
@@ -138,12 +146,12 @@ void MainWid::leaveEvent(QEvent *event)
 bool MainWid::ConnectSignalSlots()
 {
     //连接信号与槽
-	connect(ui->TitleWid, &Title::SigCloseBtnClicked, this, &MainWid::OnCloseBtnClicked);
-	connect(ui->TitleWid, &Title::SigMaxBtnClicked, this, &MainWid::OnMaxBtnClicked);
-	connect(ui->TitleWid, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
-	connect(ui->TitleWid, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
-    connect(ui->TitleWid, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
-    connect(ui->TitleWid, &Title::SigOpenFile, &m_stPlaylist, &Playlist::OnAddFileAndPlay);
+	connect(&m_stTitle, &Title::SigCloseBtnClicked, this, &MainWid::OnCloseBtnClicked);
+	connect(&m_stTitle, &Title::SigMaxBtnClicked, this, &MainWid::OnMaxBtnClicked);
+	connect(&m_stTitle, &Title::SigMinBtnClicked, this, &MainWid::OnMinBtnClicked);
+	connect(&m_stTitle, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
+    connect(&m_stTitle, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
+    connect(&m_stTitle, &Title::SigOpenFile, &m_stPlaylist, &Playlist::OnAddFileAndPlay);
 
     connect(&m_stPlaylist, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 
@@ -160,7 +168,7 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->CtrlBarWid, &CtrlBar::SigBackwardPlay, &m_stPlaylist, &Playlist::OnBackwardPlay);
     connect(ui->CtrlBarWid, &CtrlBar::SigForwardPlay, &m_stPlaylist, &Playlist::OnForwardPlay);
 
-    connect(this, &MainWid::SigShowMax, ui->TitleWid, &Title::OnChangeMaxBtnStyle);
+    connect(this, &MainWid::SigShowMax, &m_stTitle, &Title::OnChangeMaxBtnStyle);
     connect(this, &MainWid::SigSeekForward, VideoCtl::GetInstance(), &VideoCtl::OnSeekForward);
     connect(this, &MainWid::SigSeekBack, VideoCtl::GetInstance(), &VideoCtl::OnSeekBack);
     connect(this, &MainWid::SigAddVolume, VideoCtl::GetInstance(), &VideoCtl::OnAddVolume);
@@ -172,8 +180,8 @@ bool MainWid::ConnectSignalSlots()
     connect(VideoCtl::GetInstance(), &VideoCtl::SigPauseStat, ui->CtrlBarWid, &CtrlBar::OnPauseStat);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->CtrlBarWid, &CtrlBar::OnStopFinished, Qt::DirectConnection);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->ShowWid, &Show::OnStopFinished, Qt::DirectConnection);
-    connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->TitleWid, &Title::OnStopFinished, Qt::DirectConnection);
-    connect(VideoCtl::GetInstance(), &VideoCtl::SigStartPlay, ui->TitleWid, &Title::OnPlay, Qt::DirectConnection);
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, &m_stTitle, &Title::OnStopFinished, Qt::DirectConnection);
+    connect(VideoCtl::GetInstance(), &VideoCtl::SigStartPlay, &m_stTitle, &Title::OnPlay, Qt::DirectConnection);
 
 
 

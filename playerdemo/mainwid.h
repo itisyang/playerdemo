@@ -19,7 +19,9 @@
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <QMainWindow>
+
 #include "playlist.h"
+#include "title.h"
 
 namespace Ui {
 class MainWid;
@@ -115,6 +117,7 @@ private:
     QTimer stCtrlBarHideTimer;
 
     Playlist m_stPlaylist;
+    Title m_stTitle;
 };
 
 #endif // MainWid_H

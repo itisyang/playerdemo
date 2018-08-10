@@ -17,20 +17,19 @@ QPushButton:pressed {
 
 /*****列表*******/
 QListWidget{
-    /*background:#222930;*/
-    border: 1px solid Black;
+     border: 1px solid Black;
 }
 QListWidget::item:hover{
     /*background: Cyan;*/
     padding: 0px;
-    margin: 0px;
+    margin: 1px;
     color: Cyan;
     border: 1px solid Cyan;
 }
 QListWidget::item:selected {
     background: Cyan;
     padding: 0px;
-    margin: 0px;
+    margin: 1px;
     color: black;
     border: 1px solid Cyan;
 }

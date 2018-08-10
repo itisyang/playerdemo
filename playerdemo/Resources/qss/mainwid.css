@@ -4,6 +4,9 @@
     background-color: #202129;
     color:white;
 }
+QMainWindow#MainWid{
+    border: 1px solid black;
+}
 
 QWidget#BgWidget{
     border: 1px solid black;
@@ -15,7 +18,10 @@ QWidget#ShowCtrlBarPlaylistBgWidget{
     border-top:none;
 }
 
-
+QWidget#PlaylistWid>PlaylistContents
+{
+    border: 1px solid black;
+}
 
 /**********提示**********/
 QToolTip{

@@ -57,12 +57,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_ctrlbar.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_framelesshelper.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_framelesshelper.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_playlist.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -76,9 +70,6 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="ctrlbar.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="framelesshelper.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="mainwid.cpp">
@@ -153,9 +144,6 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ctrlbar.h">
-      <Filter>UI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="framelesshelper.h">
       <Filter>UI</Filter>
     </CustomBuild>
     <CustomBuild Include="mainwid.h">

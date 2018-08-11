@@ -22,7 +22,6 @@
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
-#include "framelesshelper.h"
 #include "globalhelper.h"
 #include "videoctl.h"
 
@@ -35,7 +34,8 @@ MainWid::MainWid(QMainWindow *parent) :
     m_stActionGroup(this),
     m_stMenu(this),
     m_stPlaylist(this),
-    m_stTitle(this)
+    m_stTitle(this),
+    m_bMoveDrag(false)
 {
     ui->setupUi(this);
     //无边框、无系统菜单、 任务栏点击最小化
@@ -231,22 +231,37 @@ void MainWid::keyPressEvent(QKeyEvent *event)
 }
 
 
+void MainWid::mousePressEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        if (ui->TitleWid->geometry().contains(event->pos()))
+        {
+            m_bMoveDrag = true;
+            m_DragPosition = event->globalPos() - this->pos();
+        }
+    }
+
+    QWidget::mousePressEvent(event);
+}
+
+void MainWid::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_bMoveDrag = false;
+
+    QWidget::mouseReleaseEvent(event);
+}
+
 void MainWid::mouseMoveEvent(QMouseEvent *event)
 {
     qDebug() << "MainWid::mouseMoveEvent";
-//     QApplication::setOverrideCursor(Qt::ArrowCursor);
-//     m_stCtrlBarAnimationTimer.start();
-//     qDebug() << ui->CtrlBarWid->geometry() << event->pos();
-//     if (ui->CtrlBarWid->geometry().contains(event->pos()))
-//     {
-//         m_stCtrlbarAnimationShow->start();
-//         m_stCtrlBarAnimationTimer.stop();
-//     }
-//     else
-//     {
-//         m_stCtrlbarAnimationHide->start();
-//         m_stCtrlBarAnimationTimer.start();
-//     }
+
+    if (m_bMoveDrag)
+    {
+        move(event->globalPos() - m_DragPosition);
+    }
+
+    QWidget::mouseMoveEvent(event);
 }
 
 void MainWid::contextMenuEvent(QContextMenuEvent* event)

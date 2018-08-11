@@ -55,9 +55,13 @@ protected:
     //按键事件
     void keyPressEvent(QKeyEvent *event);
 
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
 
     void contextMenuEvent(QContextMenuEvent* event);
+
+
 private:
     //连接信号槽
     bool ConnectSignalSlots();
@@ -118,6 +122,9 @@ private:
 
     Playlist m_stPlaylist;
     Title m_stTitle;
+
+    bool m_bMoveDrag;//移动窗口标志
+    QPoint m_DragPosition;
 };
 
 #endif // MainWid_H

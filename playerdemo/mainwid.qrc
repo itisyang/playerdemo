@@ -9,5 +9,6 @@
         <file>Resources/Player.ico</file>
         <file>Resources/player.png</file>
         <file>Resources/qss/about.css</file>
+        <file>Resources/fa-solid-900.ttf</file>
     </qresource>
 </RCC>

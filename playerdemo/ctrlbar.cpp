@@ -39,7 +39,7 @@ bool CtrlBar::Init()
     GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
     GlobalHelper::SetIcon(ui->StopBtn, 12, QChar(0xf04d));
     GlobalHelper::SetIcon(ui->VolumeBtn, 12, QChar(0xf028));
-    GlobalHelper::SetIcon(ui->PlaylistCtrlBtn, 20, QChar(0xf0ca));
+    GlobalHelper::SetIcon(ui->PlaylistCtrlBtn, 12, QChar(0xf036));
     GlobalHelper::SetIcon(ui->ForwardBtn, 12, QChar(0xf051));
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
     GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));

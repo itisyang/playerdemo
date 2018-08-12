@@ -254,8 +254,6 @@ void MainWid::mouseReleaseEvent(QMouseEvent *event)
 
 void MainWid::mouseMoveEvent(QMouseEvent *event)
 {
-    qDebug() << "MainWid::mouseMoveEvent";
-
     if (m_bMoveDrag)
     {
         move(event->globalPos() - m_DragPosition);

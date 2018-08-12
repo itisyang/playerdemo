@@ -10,6 +10,7 @@ int main(int argc, char *argv[])
     
     //使用第三方字库，用来作为UI图片
     QFontDatabase::addApplicationFont(":/Resources/fontawesome-webfont.ttf");
+    //QFontDatabase::addApplicationFont(":/Resources/fa-solid-900.ttf");
 
     MainWid w;
     if (w.Init() == false)

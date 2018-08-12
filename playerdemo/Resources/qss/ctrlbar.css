@@ -19,19 +19,6 @@ QPushButton:pressed{
     color:  CadetBlue;
 }
 
-QPushButton#PlaylistCtrlBtn{
-    border: 1px solid black;
-    border-top:none;
-    color:white;
-}
-QPushButton#PlaylistCtrlBtn:hover{
-    background-color:#41414e;
-    color:white;
-}
-QPushButton#PlaylistCtrlBtn:pressed{
-    background-color:#1a1a20;
-    color:white;
-}
 
 /*滑竿*/
 QSlider::groove:horizontal {

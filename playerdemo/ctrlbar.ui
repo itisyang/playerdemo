@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>652</width>
+    <width>594</width>
     <height>60</height>
    </rect>
   </property>
@@ -137,69 +137,57 @@
      </layout>
     </widget>
    </item>
-   <item row="0" column="1" rowspan="2">
-    <widget class="QPushButton" name="PlaylistCtrlBtn">
-     <property name="minimumSize">
-      <size>
-       <width>60</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>70</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>20</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>1</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="0">
     <layout class="QGridLayout" name="gridLayout">
      <property name="spacing">
       <number>0</number>
      </property>
-     <item row="0" column="7">
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="StopBtn">
-       <property name="minimumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
+     <item row="0" column="5">
+      <widget class="QLabel" name="TimeSplitLabel">
        <property name="maximumSize">
         <size>
-         <width>30</width>
-         <height>30</height>
+         <width>8</width>
+         <height>16777215</height>
         </size>
        </property>
        <property name="text">
-        <string/>
+        <string>/</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="8">
-      <widget class="QPushButton" name="SettingBtn">
+     <item row="0" column="6">
+      <widget class="QTimeEdit" name="VideoTotalTimeTimeEdit">
+       <property name="maximumSize">
+        <size>
+         <width>70</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="frame">
+        <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
+       <property name="keyboardTracking">
+        <bool>true</bool>
+       </property>
+       <property name="displayFormat">
+        <string>HH:mm:ss</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="3">
+      <widget class="QPushButton" name="ForwardBtn">
        <property name="minimumSize">
         <size>
          <width>30</width>
@@ -236,8 +224,8 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QPushButton" name="ForwardBtn">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="StopBtn">
        <property name="minimumSize">
         <size>
          <width>30</width>
@@ -252,56 +240,6 @@
        </property>
        <property name="text">
         <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="PlayOrPauseBtn">
-       <property name="minimumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>30</width>
-         <height>30</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="6">
-      <widget class="QTimeEdit" name="VideoTotalTimeTimeEdit">
-       <property name="maximumSize">
-        <size>
-         <width>70</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="buttonSymbols">
-        <enum>QAbstractSpinBox::NoButtons</enum>
-       </property>
-       <property name="keyboardTracking">
-        <bool>true</bool>
-       </property>
-       <property name="displayFormat">
-        <string>HH:mm:ss</string>
        </property>
       </widget>
      </item>
@@ -330,16 +268,78 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="5">
-      <widget class="QLabel" name="TimeSplitLabel">
+     <item row="0" column="7">
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="PlayOrPauseBtn">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>8</width>
-         <height>16777215</height>
+         <width>30</width>
+         <height>30</height>
         </size>
        </property>
        <property name="text">
-        <string>/</string>
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="9">
+      <widget class="QPushButton" name="SettingBtn">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="8">
+      <widget class="QPushButton" name="PlaylistCtrlBtn">
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>20</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>1</string>
        </property>
       </widget>
      </item>

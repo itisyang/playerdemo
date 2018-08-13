@@ -46,6 +46,7 @@ Title::Title(QWidget *parent) :
     QMenu* stMenu = m_stMenu.addMenu("打开");
     stMenu->addAction("打开文件", this, &Title::OpenFile);
 
+    ui->MenuBtn->setToolTip("显示主菜单");
 }
 
 Title::~Title()

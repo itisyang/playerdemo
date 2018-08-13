@@ -35,8 +35,18 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="4">
-    <widget class="QPushButton" name="FullScreenBtn">
+   <item row="0" column="1">
+    <widget class="QLabel" name="MovieNameLab">
+     <property name="text">
+      <string>movie_name</string>
+     </property>
+     <property name="margin">
+      <number>15</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QPushButton" name="MaxBtn">
      <property name="minimumSize">
       <size>
        <width>50</width>
@@ -73,8 +83,8 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QPushButton" name="MaxBtn">
+   <item row="0" column="4">
+    <widget class="QPushButton" name="FullScreenBtn">
      <property name="minimumSize">
       <size>
        <width>50</width>
@@ -89,49 +99,6 @@
      </property>
      <property name="text">
       <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="LogoLab">
-     <property name="minimumSize">
-      <size>
-       <width>130</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>180</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="font">
-      <font>
-       <family>Yu Gothic UI Semibold</family>
-       <pointsize>18</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="layoutDirection">
-      <enum>Qt::LeftToRight</enum>
-     </property>
-     <property name="text">
-      <string>PlayerDemo</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="MovieNameLab">
-     <property name="text">
-      <string>movie_name</string>
-     </property>
-     <property name="margin">
-      <number>15</number>
      </property>
     </widget>
    </item>
@@ -151,6 +118,31 @@
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QPushButton" name="MenuBtn">
+     <property name="minimumSize">
+      <size>
+       <width>130</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Bahnschrift Light SemiCondensed</family>
+       <pointsize>18</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>PlayerDemo</string>
      </property>
     </widget>
    </item>

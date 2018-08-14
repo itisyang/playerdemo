@@ -41,7 +41,6 @@ Title::Title(QWidget *parent) :
     m_stMenu.addAction("最大化", this, &Title::SigMaxBtnClicked);
     m_stMenu.addAction("最小化", this, &Title::SigMinBtnClicked);
     m_stMenu.addAction("退出", this, &Title::SigCloseBtnClicked);
-    m_stMenu.addAction("关于", this, &Title::ShowAbout);
 
     QMenu* stMenu = m_stMenu.addMenu("打开");
     stMenu->addAction("打开文件", this, &Title::OpenFile);
@@ -87,17 +86,6 @@ bool Title::InitUi()
     }
 
     return true;
-}
-
-
-// void Title::contextMenuEvent(QContextMenuEvent* event)
-// {
-//     m_stMenu.exec(event->globalPos());
-// }
-
-void Title::ShowAbout()
-{
-    about.show();
 }
 
 void Title::OpenFile()

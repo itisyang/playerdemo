@@ -121,7 +121,10 @@ bool MainWid::Init()
     m_stCtrlbarAnimationShow = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
     m_stCtrlbarAnimationHide = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
 
-
+    if (m_stAboutWidget.Init() == false)
+    {
+        return false;
+    }
 
 
     m_stActShowMax.setText("最大化");
@@ -135,6 +138,7 @@ bool MainWid::Init()
 
     m_stActAbout.setText("关于");
     m_stMenu.addAction(&m_stActAbout);
+    
 
     m_stActExit.setText("退出");
     m_stMenu.addAction(&m_stActExit);
@@ -205,6 +209,9 @@ bool MainWid::ConnectSignalSlots()
     connect(&m_stCtrlBarAnimationTimer, &QTimer::timeout, this, &MainWid::OnCtrlBarAnimationTimeOut);
 
     connect(&m_stFullscreenMouseDetectTimer, &QTimer::timeout, this, &MainWid::OnFullscreenMouseDetectTimeOut);
+
+
+    connect(&m_stActAbout, &QAction::triggered, this, &MainWid::OnShowAbout);
 
 	return true;
 }
@@ -391,6 +398,12 @@ void MainWid::OnCtrlBarHideTimeOut()
 void MainWid::OnShowMenu()
 {
     m_stMenu.exec(cursor().pos());
+}
+
+void MainWid::OnShowAbout()
+{
+    m_stAboutWidget.move(cursor().pos().x() - m_stAboutWidget.width()/2, cursor().pos().y() - m_stAboutWidget.height()/2);
+    m_stAboutWidget.show();
 }
 
 void MainWid::OnCloseBtnClicked()

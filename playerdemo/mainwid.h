@@ -85,6 +85,7 @@ private:
 
     void OnCtrlBarHideTimeOut();
     void OnShowMenu();
+    void OnShowAbout();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -123,6 +124,8 @@ private:
 
     bool m_bMoveDrag;//移动窗口标志
     QPoint m_DragPosition;
+
+    About m_stAboutWidget;
 
     QMenu m_stMenu;
     QAction m_stActExit;

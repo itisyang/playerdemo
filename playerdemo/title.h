@@ -42,7 +42,7 @@ private:
 
     bool InitUi();
 
-    void contextMenuEvent(QContextMenuEvent* event);
+    //void contextMenuEvent(QContextMenuEvent* event);
 
     void ShowAbout();
 
@@ -66,6 +66,7 @@ signals:
     void SigFullScreenBtnClicked(); ///< 点击全屏按钮
 
     void SigOpenFile(QString strFileName); //打开文件
+    void SigShowMenu();
 private:
     Ui::Title *ui;
 

@@ -15,7 +15,7 @@
 #include <QMouseEvent>
 #include <QDragEnterEvent>
 #include <QMenu>
-#include <QActionGroup>
+#include <QAction>
 #include <QPropertyAnimation>
 #include <QTimer>
 #include <QMainWindow>
@@ -84,6 +84,7 @@ private:
     void OnFullscreenMouseDetectTimeOut();
 
     void OnCtrlBarHideTimeOut();
+    void OnShowMenu();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -107,9 +108,6 @@ private:
 
     bool m_bFullScreenPlay; ///< 全屏播放标志
 
-    QMenu m_stMenu;
-    QActionGroup m_stActionGroup;
-
     QPropertyAnimation *m_stCtrlbarAnimationShow; //全屏时控制面板浮动显示
     QPropertyAnimation *m_stCtrlbarAnimationHide; //全屏时控制面板浮动显示
     QRect m_stCtrlBarAnimationShow;//控制面板显示区域
@@ -125,6 +123,13 @@ private:
 
     bool m_bMoveDrag;//移动窗口标志
     QPoint m_DragPosition;
+
+    QMenu m_stMenu;
+    QAction m_stActExit;
+    QAction m_stActShowMax;
+    QAction m_stActShowMin;
+    QAction m_stActAbout;
+    QAction m_stActOpen;
 };
 
 #endif // MainWid_H

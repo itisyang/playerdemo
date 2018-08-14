@@ -73,7 +73,7 @@ protected:
 
     void mouseMoveEvent(QMouseEvent *event);
 
-    void contextMenuEvent(QContextMenuEvent* event);
+    //void contextMenuEvent(QContextMenuEvent* event);
 public:
     /**
     * @brief	播放

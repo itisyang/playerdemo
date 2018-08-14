@@ -31,7 +31,6 @@ MainWid::MainWid(QMainWindow *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWid),
     m_nShadowWidth(0),
-    m_stActionGroup(this),
     m_stMenu(this),
     m_stPlaylist(this),
     m_stTitle(this),
@@ -122,6 +121,24 @@ bool MainWid::Init()
     m_stCtrlbarAnimationShow = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
     m_stCtrlbarAnimationHide = new QPropertyAnimation(ui->CtrlBarWid, "geometry");
 
+
+
+
+    m_stActShowMax.setText("最大化");
+    m_stMenu.addAction(&m_stActShowMax);
+
+    m_stActShowMin.setText("最小化");
+    m_stMenu.addAction(&m_stActShowMin);
+
+    m_stActOpen.setText("打开");
+    m_stMenu.addAction(&m_stActOpen);
+
+    m_stActAbout.setText("关于");
+    m_stMenu.addAction(&m_stActAbout);
+
+    m_stActExit.setText("退出");
+    m_stMenu.addAction(&m_stActExit);
+
     return true;
 }
 
@@ -152,6 +169,8 @@ bool MainWid::ConnectSignalSlots()
 	connect(&m_stTitle, &Title::SigDoubleClicked, this, &MainWid::OnMaxBtnClicked);
     connect(&m_stTitle, &Title::SigFullScreenBtnClicked, this, &MainWid::OnFullScreenPlay);
     connect(&m_stTitle, &Title::SigOpenFile, &m_stPlaylist, &Playlist::OnAddFileAndPlay);
+    connect(&m_stTitle, &Title::SigShowMenu, this, &MainWid::OnShowMenu);
+    
 
     connect(&m_stPlaylist, &Playlist::SigPlay, ui->ShowWid, &Show::SigPlay);
 
@@ -182,10 +201,6 @@ bool MainWid::ConnectSignalSlots()
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, ui->ShowWid, &Show::OnStopFinished, Qt::DirectConnection);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStopFinished, &m_stTitle, &Title::OnStopFinished, Qt::DirectConnection);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigStartPlay, &m_stTitle, &Title::OnPlay, Qt::DirectConnection);
-
-
-
-    connect(&m_stActionGroup, &QActionGroup::triggered, this, &MainWid::OnActionsTriggered);
 
     connect(&m_stCtrlBarAnimationTimer, &QTimer::timeout, this, &MainWid::OnCtrlBarAnimationTimeOut);
 
@@ -371,6 +386,11 @@ void MainWid::OnFullscreenMouseDetectTimeOut()
 void MainWid::OnCtrlBarHideTimeOut()
 {
     m_stCtrlbarAnimationHide->start();
+}
+
+void MainWid::OnShowMenu()
+{
+    m_stMenu.exec(cursor().pos());
 }
 
 void MainWid::OnCloseBtnClicked()

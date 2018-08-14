@@ -135,11 +135,11 @@ void Show::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void Show::contextMenuEvent(QContextMenuEvent* event)
-{
-    //m_stMenu.exec(event->globalPos());
-    qDebug() << "Show::contextMenuEvent";
-}
+// void Show::contextMenuEvent(QContextMenuEvent* event)
+// {
+//     //m_stMenu.exec(event->globalPos());
+//     qDebug() << "Show::contextMenuEvent";
+// }
 
 void Show::mouseMoveEvent(QMouseEvent *event)
 {

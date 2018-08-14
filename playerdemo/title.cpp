@@ -36,11 +36,11 @@ Title::Title(QWidget *parent) :
     connect(ui->MinBtn, &QPushButton::clicked, this, &Title::SigMinBtnClicked);
     connect(ui->MaxBtn, &QPushButton::clicked, this, &Title::SigMaxBtnClicked);
     connect(ui->FullScreenBtn, &QPushButton::clicked, this, &Title::SigFullScreenBtnClicked);
-
+    connect(ui->MenuBtn, &QPushButton::clicked, this, &Title::SigShowMenu);
  
     m_stMenu.addAction("最大化", this, &Title::SigMaxBtnClicked);
     m_stMenu.addAction("最小化", this, &Title::SigMinBtnClicked);
-    m_stMenu.addAction("关闭", this, &Title::SigCloseBtnClicked);
+    m_stMenu.addAction("退出", this, &Title::SigCloseBtnClicked);
     m_stMenu.addAction("关于", this, &Title::ShowAbout);
 
     QMenu* stMenu = m_stMenu.addMenu("打开");
@@ -90,10 +90,10 @@ bool Title::InitUi()
 }
 
 
-void Title::contextMenuEvent(QContextMenuEvent* event)
-{
-    m_stMenu.exec(event->globalPos());
-}
+// void Title::contextMenuEvent(QContextMenuEvent* event)
+// {
+//     m_stMenu.exec(event->globalPos());
+// }
 
 void Title::ShowAbout()
 {

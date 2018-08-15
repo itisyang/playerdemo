@@ -140,12 +140,14 @@ void Show::keyPressEvent(QKeyEvent *event)
 //     //m_stMenu.exec(event->globalPos());
 //     qDebug() << "Show::contextMenuEvent";
 // }
-
-void Show::mouseMoveEvent(QMouseEvent *event)
+void Show::mousePressEvent(QMouseEvent *event)
 {
-    qDebug() << "Show::mouseMoveEvent";
-    //setCursor(Qt::ArrowCursor);
-    //timerShowCursor.start();
+    if (event->buttons() & Qt::RightButton)
+    {
+        emit SigShowMenu();
+    }
+
+    QWidget::mousePressEvent(event);
 }
 
 void Show::OnDisplayMsg(QString strMsg)

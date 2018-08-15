@@ -71,8 +71,8 @@ protected:
      */
     void keyPressEvent(QKeyEvent *event);
 
-    void mouseMoveEvent(QMouseEvent *event);
 
+    void mousePressEvent(QMouseEvent *event);
     //void contextMenuEvent(QContextMenuEvent* event);
 public:
     /**
@@ -126,6 +126,7 @@ signals:
 	void SigFullScreen();//全屏播放
     void SigPlayOrPause();
     void SigStop();
+    void SigShowMenu();
 private:
     Ui::Show *ui;
 

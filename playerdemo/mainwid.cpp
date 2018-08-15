@@ -126,12 +126,10 @@ bool MainWid::Init()
         return false;
     }
 
+    m_stActFullscreen.setText("全屏");
+    m_stActFullscreen.setCheckable(true);
+    m_stMenu.addAction(&m_stActFullscreen);
 
-    m_stActShowMax.setText("最大化");
-    m_stMenu.addAction(&m_stActShowMax);
-
-    m_stActShowMin.setText("最小化");
-    m_stMenu.addAction(&m_stActShowMin);
 
     m_stActOpen.setText("打开");
     m_stMenu.addAction(&m_stActOpen);
@@ -182,6 +180,7 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->ShowWid, &Show::SigFullScreen, this, &MainWid::OnFullScreenPlay);
     connect(ui->ShowWid, &Show::SigPlayOrPause, VideoCtl::GetInstance(), &VideoCtl::OnPause);
     connect(ui->ShowWid, &Show::SigStop, VideoCtl::GetInstance(), &VideoCtl::OnStop);
+    connect(ui->ShowWid, &Show::SigShowMenu, this, &MainWid::OnShowMenu);
 
     connect(ui->CtrlBarWid, &CtrlBar::SigShowOrHidePlaylist, this, &MainWid::OnShowOrHidePlaylist);
     connect(ui->CtrlBarWid, &CtrlBar::SigPlaySeek, VideoCtl::GetInstance(), &VideoCtl::OnPlaySeek);
@@ -212,6 +211,7 @@ bool MainWid::ConnectSignalSlots()
 
 
     connect(&m_stActAbout, &QAction::triggered, this, &MainWid::OnShowAbout);
+    connect(&m_stActFullscreen, &QAction::triggered, this, &MainWid::OnFullScreenPlay);
 
 	return true;
 }
@@ -294,6 +294,7 @@ void MainWid::OnFullScreenPlay()
     if (m_bFullScreenPlay == false)
     {
         m_bFullScreenPlay = true;
+        m_stActFullscreen.setChecked(true);
         //脱离父窗口后才能设置
         ui->ShowWid->setWindowFlags(Qt::Window);
         //多屏情况下，在当前屏幕全屏
@@ -330,13 +331,14 @@ void MainWid::OnFullScreenPlay()
     }
     else
     {
+        m_bFullScreenPlay = false;
+        m_stActFullscreen.setChecked(false);
+
         m_stCtrlbarAnimationShow->stop(); //快速切换时，动画还没结束导致控制面板消失
         m_stCtrlbarAnimationHide->stop();
         ui->CtrlBarWid->setWindowOpacity(1);
         ui->CtrlBarWid->setWindowFlags(Qt::SubWindow);
         
-
-        m_bFullScreenPlay = false;
         ui->ShowWid->setWindowFlags(Qt::SubWindow);
 
         ui->CtrlBarWid->showNormal();

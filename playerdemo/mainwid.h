@@ -129,10 +129,9 @@ private:
 
     QMenu m_stMenu;
     QAction m_stActExit;
-    QAction m_stActShowMax;
-    QAction m_stActShowMin;
     QAction m_stActAbout;
     QAction m_stActOpen;
+    QAction m_stActFullscreen;
 };
 
 #endif // MainWid_H

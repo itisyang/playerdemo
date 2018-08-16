@@ -212,6 +212,8 @@ bool MainWid::ConnectSignalSlots()
 
     connect(&m_stActAbout, &QAction::triggered, this, &MainWid::OnShowAbout);
     connect(&m_stActFullscreen, &QAction::triggered, this, &MainWid::OnFullScreenPlay);
+    connect(&m_stActExit, &QAction::triggered, this, &MainWid::OnCloseBtnClicked);
+    
 
 	return true;
 }

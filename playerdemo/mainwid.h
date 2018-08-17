@@ -73,7 +73,7 @@ private:
     //显示、隐藏播放列表
     void OnShowOrHidePlaylist();
 
-    void OnActionsTriggered(QAction *action);
+
 
     /**
     * @brief	全屏播放
@@ -86,6 +86,7 @@ private:
     void OnCtrlBarHideTimeOut();
     void OnShowMenu();
     void OnShowAbout();
+    void OpenFile();
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -94,6 +95,7 @@ signals:
     void SigAddVolume();
     void SigSubVolume();
     void SigPlayOrPause();
+    void SigOpenFile(QString strFilename);
 private:
     Ui::MainWid *ui;
 

@@ -19,6 +19,7 @@
 #include <QDesktopWidget>
 #include <QScreen>
 #include <QRect>
+#include <QFileDialog>
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
@@ -195,6 +196,8 @@ bool MainWid::ConnectSignalSlots()
     connect(this, &MainWid::SigSeekBack, VideoCtl::GetInstance(), &VideoCtl::OnSeekBack);
     connect(this, &MainWid::SigAddVolume, VideoCtl::GetInstance(), &VideoCtl::OnAddVolume);
     connect(this, &MainWid::SigSubVolume, VideoCtl::GetInstance(), &VideoCtl::OnSubVolume);
+    connect(this, &MainWid::SigOpenFile, &m_stPlaylist, &Playlist::OnAddFileAndPlay);
+    
     
     connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoTotalSeconds, ui->CtrlBarWid, &CtrlBar::OnVideoTotalSeconds);
     connect(VideoCtl::GetInstance(), &VideoCtl::SigVideoPlaySeconds, ui->CtrlBarWid, &CtrlBar::OnVideoPlaySeconds);
@@ -213,6 +216,7 @@ bool MainWid::ConnectSignalSlots()
     connect(&m_stActAbout, &QAction::triggered, this, &MainWid::OnShowAbout);
     connect(&m_stActFullscreen, &QAction::triggered, this, &MainWid::OnFullScreenPlay);
     connect(&m_stActExit, &QAction::triggered, this, &MainWid::OnCloseBtnClicked);
+    connect(&m_stActOpen, &QAction::triggered, this, &MainWid::OpenFile);
     
 
 	return true;
@@ -410,6 +414,14 @@ void MainWid::OnShowAbout()
     m_stAboutWidget.show();
 }
 
+void MainWid::OpenFile()
+{
+    QString strFileName = QFileDialog::getOpenFileName(this, "打开文件", QDir::homePath(),
+        "视频文件(*.mkv *.rmvb *.mp4 *.avi *.flv *.wmv *.3gp)");
+
+    emit SigOpenFile(strFileName);
+}
+
 void MainWid::OnCloseBtnClicked()
 {
     this->close();
@@ -445,21 +457,3 @@ void MainWid::OnShowOrHidePlaylist()
          ui->PlaylistWid->hide();
      }
 }
-
-void MainWid::OnActionsTriggered(QAction *action)
-{
-    QString strAction = action->text();
-    if (strAction == "最大化")
-    {
-        OnMaxBtnClicked();
-    }
-    else if (strAction == "最小化")
-    {
-        OnMinBtnClicked();
-    }
-    else if (strAction == "关闭")
-    {
-        OnCloseBtnClicked();
-    }
-}
-

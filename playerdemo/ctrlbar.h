@@ -46,6 +46,7 @@ private slots:
     void on_PlayOrPauseBtn_clicked();
     void on_VolumeBtn_clicked();
     void on_StopBtn_clicked();
+    void on_SettingBtn_clicked();
 
     /**
     * @brief	连接信号槽
@@ -63,6 +64,7 @@ signals:
     void SigStop();
     void SigForwardPlay();
     void SigBackwardPlay();
+    void SigShowMenu();
 private:
     Ui::CtrlBar *ui;
 

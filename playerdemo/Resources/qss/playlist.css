@@ -65,3 +65,29 @@ QMenu::icon {
     padding-left: 2px;
     padding-right: 2px;
 }
+
+
+QScrollBar
+{
+    width:8px;
+    background:rgba(0,0,0,0%);
+    margin:0px;
+}
+QScrollBar::handle
+{
+    background:rgba(0,0,0,25%);
+    border-radius:4px;
+}
+QScrollBar::handle:hover
+{
+    background:rgba(0,0,0,50%);
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QScrollBar::sub-line:vertical   /* // 设置上箭头 */
+{
+    background: none;
+}

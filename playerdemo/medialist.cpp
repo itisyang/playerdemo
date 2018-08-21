@@ -40,10 +40,14 @@ void MediaList::contextMenuEvent(QContextMenuEvent* event)
 
 void MediaList::AddFile()
 {
-    QString strFileName = QFileDialog::getOpenFileName(this, "打开文件", QDir::homePath(),
+    //QList<QUrl> QFileDialog::getOpenFileUrls
+    QStringList listFileName = QFileDialog::getOpenFileNames(this, "打开文件", QDir::homePath(),
         "视频文件(*.mkv *.rmvb *.mp4 *.avi *.flv *.wmv *.3gp)");
 
-    emit SigAddFile(strFileName);
+    for (QString strFileName : listFileName)
+    {
+        emit SigAddFile(strFileName);
+    }
 }
 
 void MediaList::RemoveFile()

@@ -67,27 +67,37 @@ QMenu::icon {
 }
 
 
-QScrollBar
-{
-    width:8px;
-    background:rgba(0,0,0,0%);
-    margin:0px;
+QScrollBar:vertical {
+    width: 10px;
+    background: transparent;
 }
-QScrollBar::handle
-{
-    background:rgba(0,0,0,25%);
-    border-radius:4px;
+QScrollBar::handle:vertical {
+    min-height: 30px;
+    background: #202129;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
-QScrollBar::handle:hover
-{
-    background:rgba(0,0,0,50%);
+QScrollBar::handle:vertical:hover {
+    background: rgb(80, 80, 80);
 }
-
+QScrollBar::sub-line:vertical {
+    height: 0px;
+    background: transparent;
+    image: url(:/Black/arrowTop);
+    subcontrol-position: top;
+}
+QScrollBar::add-line:vertical {
+    height: 0px;
+    background: transparent;
+    image: url(:/Black/arrowBottom);
+    subcontrol-position: bottom;
+}
+QScrollBar::sub-line:vertical:hover {
+    background: rgb(68, 69, 73);
+}
+QScrollBar::add-line:vertical:hover {
+    background: rgb(68, 69, 73);
+}
 QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
-    background: none;
-}
-
-QScrollBar::sub-line:vertical   /* // 设置上箭头 */
-{
-    background: none;
+    background: transparent;
 }

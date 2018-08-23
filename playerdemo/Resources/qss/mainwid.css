@@ -4,6 +4,7 @@
     background-color: #202129;
     color:white;
 }
+
 QMainWindow#MainWid{
     border: 1px solid black;
 }
@@ -23,18 +24,14 @@ QWidget#PlaylistWid>PlaylistContents
     border: 1px solid black;
 }
 
-/**********提示**********/
-QToolTip{
-        border: none;
-        background-color: red;
-        color:white;
-}
+
 
 
 /**********菜单**********/
 QMenu {
     border: 1px solid rgb(100, 100, 100);
-    background: rgb(68, 69, 73);
+    background:#2e2f37;
+    color:white;
 }
 QMenu::item {
     height: 22px;
@@ -64,3 +61,9 @@ QMenu::icon {
 }
 
 
+/**********提示**********/
+QToolTip{
+    border: none;
+    background-color: #2e2f37;
+    color:white;
+}

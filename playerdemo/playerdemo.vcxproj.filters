@@ -124,7 +124,7 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="medialist.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,7 +174,7 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="medialist.h">
-      <Filter>Header Files</Filter>
+      <Filter>UI</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

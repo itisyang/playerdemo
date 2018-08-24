@@ -43,6 +43,9 @@ bool CtrlBar::Init()
     GlobalHelper::SetIcon(ui->ForwardBtn, 12, QChar(0xf051));
     GlobalHelper::SetIcon(ui->BackwardBtn, 12, QChar(0xf048));
     GlobalHelper::SetIcon(ui->SettingBtn, 12, QChar(0xf013));
+
+    ui->PlaylistCtrlBtn->setToolTip("播放列表");
+    ui->SettingBtn->setToolTip("设置");
     
     ConnectSignalSlots();
 

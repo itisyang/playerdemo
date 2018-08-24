@@ -81,3 +81,9 @@ QLabel#TimeSplitLabel {
     color: #c4c6d2;
 }
 
+/**********提示**********/
+QToolTip{
+    border: none;
+    background-color: #2e2f37;
+    color:white;
+}

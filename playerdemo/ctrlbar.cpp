@@ -46,6 +46,10 @@ bool CtrlBar::Init()
 
     ui->PlaylistCtrlBtn->setToolTip("播放列表");
     ui->SettingBtn->setToolTip("设置");
+    ui->VolumeBtn->setToolTip("静音");
+    ui->ForwardBtn->setToolTip("下一个");
+    ui->BackwardBtn->setToolTip("上一个");
+    ui->StopBtn->setToolTip("停止");
     
     ConnectSignalSlots();
 

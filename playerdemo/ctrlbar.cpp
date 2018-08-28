@@ -50,6 +50,7 @@ bool CtrlBar::Init()
     ui->ForwardBtn->setToolTip("下一个");
     ui->BackwardBtn->setToolTip("上一个");
     ui->StopBtn->setToolTip("停止");
+    ui->PlayOrPauseBtn->setToolTip("播放/暂停");
     
     ConnectSignalSlots();
 

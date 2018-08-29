@@ -46,6 +46,10 @@ Title::Title(QWidget *parent) :
     stMenu->addAction("打开文件", this, &Title::OpenFile);
 
     ui->MenuBtn->setToolTip("显示主菜单");
+    ui->MinBtn->setToolTip("最小化");
+    ui->MaxBtn->setToolTip("最大化");
+    ui->CloseBtn->setToolTip("关闭");
+    ui->FullScreenBtn->setToolTip("全屏");
 }
 
 Title::~Title()
@@ -140,10 +144,12 @@ void Title::OnChangeMaxBtnStyle(bool bIfMax)
     if (bIfMax)
     {
         GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d2));
+        ui->MaxBtn->setToolTip("还原");
     }
     else
     {
         GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d0));
+        ui->MaxBtn->setToolTip("最大化");
     }
 }
 

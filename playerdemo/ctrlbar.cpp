@@ -50,7 +50,7 @@ bool CtrlBar::Init()
     ui->ForwardBtn->setToolTip("下一个");
     ui->BackwardBtn->setToolTip("上一个");
     ui->StopBtn->setToolTip("停止");
-    ui->PlayOrPauseBtn->setToolTip("播放/暂停");
+    ui->PlayOrPauseBtn->setToolTip("播放");
     
     ConnectSignalSlots();
 
@@ -131,10 +131,12 @@ void CtrlBar::OnPauseStat(bool bPaused)
     if (bPaused)
     {
         GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+        ui->PlayOrPauseBtn->setToolTip("播放");
     }
     else
     {
         GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04c));
+        ui->PlayOrPauseBtn->setToolTip("暂停");
     }
 }
 
@@ -145,6 +147,7 @@ void CtrlBar::OnStopFinished()
     ui->VideoTotalTimeTimeEdit->setTime(StopTime);
     ui->VideoPlayTimeTimeEdit->setTime(StopTime);
     GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
+    ui->PlayOrPauseBtn->setToolTip("播放");
 }
 
 void CtrlBar::OnPlaySliderValueChanged()

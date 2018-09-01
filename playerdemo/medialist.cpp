@@ -22,13 +22,16 @@ bool MediaList::Init()
 {
     m_stActAdd.setText("添加");
     m_stMenu.addAction(&m_stActAdd);
-    m_stActRemove.setText("移除所选名单");
+    m_stActRemove.setText("移除所选项");
     QMenu* stRemoveMenu = m_stMenu.addMenu("移除");
     stRemoveMenu->addAction(&m_stActRemove);
+    m_stActClearList.setText("清空列表");
+    m_stMenu.addAction(&m_stActClearList);
 
 
     connect(&m_stActAdd, &QAction::triggered, this, &MediaList::AddFile);
     connect(&m_stActRemove, &QAction::triggered, this, &MediaList::RemoveFile);
+    connect(&m_stActClearList, &QAction::triggered, this, &QListWidget::clear);
 
     return true;
 }
@@ -54,3 +57,4 @@ void MediaList::RemoveFile()
 {
     takeItem(currentRow());
 }
+

@@ -26,4 +26,5 @@ private:
 
     QAction m_stActAdd;     //添加文件
     QAction m_stActRemove;  //移除文件
+    QAction m_stActClearList;//清空列表
 };

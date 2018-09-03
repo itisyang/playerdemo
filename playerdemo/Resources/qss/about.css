@@ -33,3 +33,15 @@ QTabBar::tab:selected {
     background: rgb(0, 160, 230);
 }
 
+QPushButton{
+    height: 23px;
+    width: 75px;
+    border: none;
+    background: rgb(0, 160, 230);
+}
+QPushButton:hover{
+    background: rgba(0, 161, 230, 0.582);
+}
+QPushButton:press{
+    background: rgb(0, 179, 255);
+}

@@ -1,5 +1,5 @@
 *{
-    background-color:transparent;
+    background-color:#202129;
     color:white;
 }
 
@@ -37,6 +37,7 @@ QPushButton{
     height: 23px;
     width: 75px;
     border: none;
+	border-radius: 4px;
     background: rgb(0, 160, 230);
 }
 QPushButton:hover{

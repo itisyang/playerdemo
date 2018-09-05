@@ -37,6 +37,37 @@ bool About::Init()
     return true;
 }
 
+
+
+void About::mousePressEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        m_bMoveDrag = true;
+        m_DragPosition = event->globalPos() - this->pos();
+    }
+
+    QWidget::mousePressEvent(event);
+}
+
+void About::mouseReleaseEvent(QMouseEvent *event)
+{
+    m_bMoveDrag = false;
+
+    QWidget::mouseReleaseEvent(event);
+}
+
+void About::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_bMoveDrag)
+    {
+        move(event->globalPos() - m_DragPosition);
+    }
+
+    QWidget::mouseMoveEvent(event);
+}
+
+
 void About::on_ClosePushButton_clicked()
 {
     hide();

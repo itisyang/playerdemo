@@ -126,6 +126,15 @@
     <ClCompile Include="medialist.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_settingwid.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_settingwid.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="settingwid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwid.ui">
@@ -176,6 +185,12 @@
     <CustomBuild Include="medialist.h">
       <Filter>UI</Filter>
     </CustomBuild>
+    <CustomBuild Include="settingwid.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="settingwid.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_mainwid.h">
@@ -206,6 +221,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_about.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_settingwid.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

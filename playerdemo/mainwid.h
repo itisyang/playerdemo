@@ -22,6 +22,7 @@
 
 #include "playlist.h"
 #include "title.h"
+#include "settingwid.h"
 
 namespace Ui {
 class MainWid;
@@ -87,6 +88,9 @@ private:
     void OnShowMenu();
     void OnShowAbout();
     void OpenFile();
+
+    void OnShowSettingWid();
+
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -128,6 +132,7 @@ private:
     QPoint m_DragPosition;
 
     About m_stAboutWidget;
+    SettingWid m_stSettingWid;
 
     QMenu m_stMenu;
     QAction m_stActExit;

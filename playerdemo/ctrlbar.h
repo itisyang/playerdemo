@@ -65,6 +65,7 @@ signals:
     void SigForwardPlay();
     void SigBackwardPlay();
     void SigShowMenu();
+    void SigShowSetting();
 private:
     Ui::CtrlBar *ui;
 

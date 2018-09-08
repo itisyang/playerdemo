@@ -191,6 +191,7 @@ bool MainWid::ConnectSignalSlots()
     connect(ui->CtrlBarWid, &CtrlBar::SigBackwardPlay, &m_stPlaylist, &Playlist::OnBackwardPlay);
     connect(ui->CtrlBarWid, &CtrlBar::SigForwardPlay, &m_stPlaylist, &Playlist::OnForwardPlay);
     connect(ui->CtrlBarWid, &CtrlBar::SigShowMenu, this, &MainWid::OnShowMenu);
+    connect(ui->CtrlBarWid, &CtrlBar::SigShowSetting, this, &MainWid::OnShowSettingWid);
 
     connect(this, &MainWid::SigShowMax, &m_stTitle, &Title::OnChangeMaxBtnStyle);
     connect(this, &MainWid::SigSeekForward, VideoCtl::GetInstance(), &VideoCtl::OnSeekForward);
@@ -219,6 +220,7 @@ bool MainWid::ConnectSignalSlots()
     connect(&m_stActExit, &QAction::triggered, this, &MainWid::OnCloseBtnClicked);
     connect(&m_stActOpen, &QAction::triggered, this, &MainWid::OpenFile);
     
+
 
 	return true;
 }
@@ -421,6 +423,11 @@ void MainWid::OpenFile()
         "视频文件(*.mkv *.rmvb *.mp4 *.avi *.flv *.wmv *.3gp)");
 
     emit SigOpenFile(strFileName);
+}
+
+void MainWid::OnShowSettingWid()
+{
+    m_stSettingWid.show();
 }
 
 void MainWid::OnCloseBtnClicked()

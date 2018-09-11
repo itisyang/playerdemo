@@ -5,7 +5,7 @@
 
 ## 简介
 - 使用 FFmpeg 解码，SDL2 渲染，ffmpeg-3.4，SDL2-2.0.7
-- 在 Windows 下使用 VS2017 和 Qt5.9.3 开发（X64）
+- 在 Windows 下使用 VS2017 + Qt5.9.3 开发（X64）
 - 项目目录下的 .pro 文件，支持在 Windows 和 Linux 下打开编译
 
 ![运行画面](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/0.png)

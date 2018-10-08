@@ -1,4 +1,4 @@
-﻿#include "about.h"
+#include "about.h"
 #include "ui_about.h"
 
 #include "globalhelper.h"

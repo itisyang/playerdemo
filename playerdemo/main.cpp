@@ -1,4 +1,4 @@
-﻿#include "mainwid.h"
+#include "mainwid.h"
 #include <QApplication>
 #include <QFontDatabase>
 

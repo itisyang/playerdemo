@@ -13,9 +13,10 @@
 
 #pragma once
 
-
+#if !(defined(unix) || defined(__unix__) || defined(__unix))
 #include <windows.h>
 #include <objbase.h>
+#endif
 #include <thread>
 
 #include <inttypes.h>

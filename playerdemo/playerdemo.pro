@@ -7,12 +7,11 @@ TARGET = playerdemo
 DESTDIR = ../bin
 QT += core gui widgets
 CONFIG += debug
-DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
+DEFINES += _UNICODE QT_WIDGETS_LIB
 INCLUDEPATH += ./lib/sdl/include \
     ./lib/ffmpeg/include \
     ./GeneratedFiles \
-    . \
-    ./GeneratedFiles/$(ConfigurationName)
+    .
 LIBS += -L"./lib/sdl/lib" \
     -L"./lib/ffmpeg/lib" \
     -lavcodec \
@@ -25,7 +24,7 @@ LIBS += -L"./lib/sdl/lib" \
     -lswscale \
     -lSDL2
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
+MOC_DIR += ./GeneratedFiles
 OBJECTS_DIR += release
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles

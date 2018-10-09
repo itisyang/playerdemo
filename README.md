@@ -18,14 +18,17 @@
 ### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)
 
 
-## 使用
-- 工程中包含 .sln 和 .pro 文件,其中 .sln 用于 Windows 环境，.pro 用于 Linux 环境
-- 若要编译工程代码，在 Windows 下除了安装 VS+Qt，还需要下载 FFmpeg 和 SDL2 的动态库（64bit），将这些动态库文件放在.\bin目录下面
-- 若运行不了，可以将lib目录下的*.lib换成和bin目录下dll一致的版本
-- 亦可以选择下载release下面的安装包，安装后，将安装目录下的文件拷贝到bin目录下，依赖库肯定是全的
-
 ## Windows平台编译调试
+1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。（注意统一静态库与动态库的版本、位数）
+2. 使用 QtCreator 打开 playerdemo.pro
+4. 编译运行
 
 ## Linux平台编译调试
+
+1. 安装 sdl2-dev。
+2. 编译、安装 FFmpeg。（参考文档：https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#RevertingChangesMadebyThisGuide）
+
+3. 使用 QtCreator 打开 playerdemo.pro
+4. 编译运行
 
 ## Mac平台编译调试

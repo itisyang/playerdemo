@@ -6,28 +6,32 @@ TEMPLATE = app
 TARGET = playerdemo
 DESTDIR = ../bin
 QT += core gui widgets
-CONFIG += debug
-DEFINES += _UNICODE QT_WIDGETS_LIB
+
+#CONFIG += debug
+#DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
 INCLUDEPATH += ./lib/sdl/include \
-    ./lib/ffmpeg/include \
-    ./GeneratedFiles \
-    .
-LIBS += -L"./lib/sdl/lib" \
-    -L"./lib/ffmpeg/lib" \
+    ./lib/ffmpeg/include 
+	
+LIBS += -L$$PWD/lib/sdl/lib \
+    -L$$PWD/lib/ffmpeg/lib \
+    -lSDL2 \
+
     -lavcodec \
     -lavdevice \
     -lavfilter \
     -lavformat \
     -lavutil \
-    -lpostproc \
+    #-lpostproc \
     -lswresample \
-    -lswscale \
-    -lSDL2
+    -lswscale
+	
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles
-OBJECTS_DIR += release
-UI_DIR += ./GeneratedFiles
-RCC_DIR += ./GeneratedFiles
+
+#MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
+#OBJECTS_DIR += release
+#UI_DIR += ./GeneratedFiles
+#RCC_DIR += ./GeneratedFiles
+
 win32:RC_FILE = playerdemo.rc
 HEADERS += ./resource.h \
     ./customthread.h \

@@ -1,4 +1,4 @@
-﻿/*
+/*
 * @file 	datactrl.h
 * @date 	2018/03/25 22:13
 *
@@ -13,9 +13,10 @@
 
 #pragma once
 
-
+#if !(defined(unix) || defined(__unix__) || defined(__unix))
 #include <windows.h>
 #include <objbase.h>
+#endif
 #include <thread>
 
 #include <inttypes.h>

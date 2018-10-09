@@ -1,7 +1,11 @@
-#pragma once
+#ifndef SETTINGWID_H_
+#define SETTINGWID_H_
 
 #include <QWidget>
-#include "ui_settingwid.h"
+
+namespace Ui {
+class SettingWid;
+}
 
 class SettingWid : public QWidget
 {
@@ -12,5 +16,7 @@ public:
     ~SettingWid();
 
 private:
-    Ui::SettingWid ui;
+    Ui::SettingWid *ui;
 };
+
+#endif

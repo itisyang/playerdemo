@@ -2,7 +2,7 @@
 #include <QApplication>
 #include <QFontDatabase>
 
-#undef main
+//#undef main
 
 int main(int argc, char *argv[])
 {

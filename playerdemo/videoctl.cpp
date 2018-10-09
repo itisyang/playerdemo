@@ -13,7 +13,6 @@
 #include <QDebug>
 
 #include <thread>
-
 #include "videoctl.h"
 
 #pragma execution_character_set("utf-8")
@@ -332,7 +331,7 @@ void VideoCtl::sync_clock_to_slave(Clock *c, Clock *slave)
 {
     double clock = get_clock(c);
     double slave_clock = get_clock(slave);
-    if (!isnan(slave_clock) && (isnan(clock) || fabs(clock - slave_clock) > AV_NOSYNC_THRESHOLD))
+    if (!std::isnan(slave_clock) && (std::isnan(clock) || fabs(clock - slave_clock) > AV_NOSYNC_THRESHOLD))
         set_clock(c, slave_clock, slave->serial);
 }
 
@@ -447,7 +446,7 @@ double VideoCtl::compute_target_delay(double delay, VideoState *is)
         delay to compute the threshold. I still don't know
         if it is the best guess */
         sync_threshold = FFMAX(AV_SYNC_THRESHOLD_MIN, FFMIN(AV_SYNC_THRESHOLD_MAX, delay));
-        if (!isnan(diff) && fabs(diff) < is->max_frame_duration) {
+        if (!std::isnan(diff) && fabs(diff) < is->max_frame_duration) {
             if (diff <= -sync_threshold)
                 delay = FFMAX(0, delay + diff);
             else if (diff >= sync_threshold && delay > AV_SYNC_FRAMEDUP_THRESHOLD)
@@ -466,7 +465,7 @@ double VideoCtl::compute_target_delay(double delay, VideoState *is)
 double VideoCtl::vp_duration(VideoState *is, Frame *vp, Frame *nextvp) {
     if (vp->serial == nextvp->serial) {
         double duration = nextvp->pts - vp->pts;
-        if (isnan(duration) || duration <= 0 || duration > is->max_frame_duration)
+        if (std::isnan(duration) || duration <= 0 || duration > is->max_frame_duration)
             return vp->duration;
         else
             return duration;
@@ -534,7 +533,7 @@ void VideoCtl::video_refresh(void *opaque, double *remaining_time)
                 is->frame_timer = time;
 
             SDL_LockMutex(is->pictq.mutex);
-            if (!isnan(vp->pts))
+            if (!std::isnan(vp->pts))
                 update_video_pts(is, vp->pts, vp->pos, vp->serial);
             SDL_UnlockMutex(is->pictq.mutex);
 
@@ -643,7 +642,7 @@ int VideoCtl::get_video_frame(VideoState *is, AVFrame *frame)
         if (framedrop>0 || (framedrop && get_master_sync_type(is) != AV_SYNC_VIDEO_MASTER)) {
             if (frame->pts != AV_NOPTS_VALUE) {
                 double diff = dpts - get_master_clock(is);
-                if (!isnan(diff) && fabs(diff) < AV_NOSYNC_THRESHOLD &&
+                if (!std::isnan(diff) && fabs(diff) < AV_NOSYNC_THRESHOLD &&
                     diff - is->frame_last_filter_delay < 0 &&
                     is->viddec.pkt_serial == is->vidclk.serial &&
                     is->videoq.nb_packets) {
@@ -803,7 +802,7 @@ int VideoCtl::synchronize_audio(VideoState *is, int nb_samples)
 
         diff = get_clock(&is->audclk) - get_master_clock(is);
 
-        if (!isnan(diff) && fabs(diff) < AV_NOSYNC_THRESHOLD) {
+        if (!std::isnan(diff) && fabs(diff) < AV_NOSYNC_THRESHOLD) {
             is->audio_diff_cum = diff + is->audio_diff_avg_coef * is->audio_diff_cum;
             if (is->audio_diff_avg_count < AUDIO_DIFF_AVG_NB) {
                 /* not enough measures to have a correct estimate */
@@ -938,7 +937,7 @@ int VideoCtl::audio_decode_frame(VideoState *is)
 
     audio_clock0 = is->audio_clock;
     /* update the audio clock with the pts */
-    if (!isnan(af->pts))
+    if (!std::isnan(af->pts))
         is->audio_clock = af->pts + (double)af->frame->nb_samples / af->frame->sample_rate;
     else
         is->audio_clock = NAN;
@@ -986,7 +985,7 @@ void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
     }
     is->audio_write_buf_size = is->audio_buf_size - is->audio_buf_index;
     /* Let's assume the audio driver that is used by SDL has two periods. */
-    if (!isnan(is->audio_clock)) {
+    if (!std::isnan(is->audio_clock)) {
         pVideoCtl->set_clock_at(&is->audclk, is->audio_clock - (double)(2 * is->audio_hw_buf_size + is->audio_write_buf_size) / is->audio_tgt.bytes_per_sec, is->audio_clock_serial, audio_callback_time / 1000000.0);
         pVideoCtl->sync_clock_to_slave(&is->extclk, &is->audclk);
     }
@@ -1843,7 +1842,7 @@ void VideoCtl::OnSeekForward()
     }
     double incr = 5.0;
     double pos = get_master_clock(m_CurStream);
-    if (isnan(pos))
+    if (std::isnan(pos))
         pos = (double)m_CurStream->seek_pos / AV_TIME_BASE;
     pos += incr;
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE && pos < m_CurStream->ic->start_time / (double)AV_TIME_BASE)
@@ -1859,7 +1858,7 @@ void VideoCtl::OnSeekBack()
     }
     double incr = -5.0;
     double pos = get_master_clock(m_CurStream);
-    if (isnan(pos))
+    if (std::isnan(pos))
         pos = (double)m_CurStream->seek_pos / AV_TIME_BASE;
     pos += incr;
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE && pos < m_CurStream->ic->start_time / (double)AV_TIME_BASE)

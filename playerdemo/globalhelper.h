@@ -85,7 +85,6 @@ extern "C"{
 #include "SDL.h"
 
 
-
 #define MAX_SLIDER_VALUE 65536
 
 

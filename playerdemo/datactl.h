@@ -13,10 +13,15 @@
 
 #pragma once
 
-#if !(defined(unix) || defined(__unix__) || defined(__unix))
+#ifdef _windows_
 #include <windows.h>
 #include <objbase.h>
 #endif
+
+#ifdef linux
+#include <unistd.h>
+#endif
+
 #include <thread>
 
 #include <inttypes.h>

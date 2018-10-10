@@ -1,4 +1,4 @@
-#include <QContextMenuEvent>
+﻿#include <QContextMenuEvent>
 #include <QFileDialog>
 
 #include "medialist.h"

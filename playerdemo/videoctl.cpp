@@ -1,4 +1,4 @@
-/*
+﻿/*
  * @file 	videoctl.cpp
  * @date 	2018/01/21 12:15
  *

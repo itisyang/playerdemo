@@ -1,4 +1,4 @@
-/*
+﻿/*
  * @file 	customthread.h
  * @date 	2018/01/07 10:13
  *

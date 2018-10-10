@@ -1,4 +1,4 @@
-#include "CustomSlider.h"
+﻿#include "CustomSlider.h"
 #include "globalhelper.h"
 
 CustomSlider::CustomSlider(QWidget *parent)

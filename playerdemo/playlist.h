@@ -51,6 +51,12 @@ public:
 
     void OnBackwardPlay();
     void OnForwardPlay();
+
+    /* 在这里定义dock的初始大小 */
+    QSize sizeHint() const
+    {
+        return QSize(150, 900);
+    }
 protected:
     /**
     * @brief	放下事件

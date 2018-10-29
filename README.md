@@ -38,7 +38,7 @@
 4. 编译运行。
 
 ## Mac平台编译调试
-
+暂无环境
 
 
 #### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)

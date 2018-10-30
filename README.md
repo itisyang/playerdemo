@@ -8,9 +8,9 @@
 欢迎音视频开发爱好者前来交流相关问题。
 
 ## 简介
-- 使用 FFmpeg 解码，SDL2 渲染，ffmpeg-3.4，SDL2-2.0.7。
+- 使用 FFmpeg 解码，SDL2 渲染，ffmpeg-3.4（X64），SDL2-2.0.7（X64）。
 
-- 在 Windows 下使用 VS2017 + Qt5.9.3 开发（X64）。
+- 在 Windows 下使用 VS2017 + Qt5.9.x 开发（X64）。
 
 - 项目目录下的 .pro 文件，支持在多平台（Windows、Linux、Mac）下 QtCreator 打开编译调试。
 
@@ -21,9 +21,9 @@
 
 ## Windows平台编译调试
 
-1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。（注意统一静态库与动态库的版本、位数）。
+1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。
 
-2. 使用 QtCreator 打开 playerdemo.pro。
+2. 使用 VS2017 打开 playerdemo.sln。（Windows 推荐使用 VS2017 编译，亦可选用 QtCreator）
 
 3. 编译运行。
 
@@ -38,7 +38,12 @@
 4. 编译运行。
 
 ## Mac平台编译调试
+
 暂无环境
+
+## 其他
+
+编译时，注意统一静态库与动态库的版本、位数。若开发环境为32位，库及头文件均要32位。
 
 
 #### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)

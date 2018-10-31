@@ -23,7 +23,7 @@
 
 1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。
 
-2. 使用 VS2017 打开 playerdemo.sln。（Windows 推荐使用 VS2017 编译，亦可选用 QtCreator）
+2. 使用 VS2017 打开 playerdemo.sln。（Windows 推荐使用 VS2017 编译，调试功能相对强大一些。亦可选用 QtCreator 打开 playerdemo.pro）
 
 3. 编译运行。
 

@@ -31,7 +31,7 @@ https://itisyang.github.io/playerdemo/
 
 ## Linux平台编译调试
 1. 安装 libsdl2-dev。  
-2. 编译、安装 FFmpeg。（参考文档：https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#RevertingChangesMadebyThisGuide，libx265、libaom、libvpx 无法安装，可跳过，编译时不启用）  
+2. 编译、安装 FFmpeg。（参考文档：https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu#RevertingChangesMadebyThisGuide libx265、libaom、libvpx 无法安装，可跳过，编译时不启用）  
 3. 使用 QtCreator 打开 playerdemo.pro。  
 4. 编译运行。  
 

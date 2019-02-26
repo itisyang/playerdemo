@@ -139,7 +139,7 @@ bool MainWid::Init()
     m_stActAbout.setText("关于");
     m_stMenu.addAction(&m_stActAbout);
     
-    m_stActExit.setText(QString::fromLocal8Bit("退出"));
+    m_stActExit.setText("退出");
     m_stMenu.addAction(&m_stActExit);
 
 

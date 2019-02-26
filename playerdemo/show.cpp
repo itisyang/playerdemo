@@ -157,8 +157,7 @@ void Show::OnDisplayMsg(QString strMsg)
 
 void Show::OnPlay(QString strFile)
 {
-	VideoCtl::GetInstance()->StartPlay(strFile, ui->label->winId());
-    //VideoCtl::GetInstance()->StartPlay(strFile, this->winId());
+    VideoCtl::GetInstance()->StartPlay(strFile, ui->label->winId());
 }
 
 void Show::OnStopFinished()

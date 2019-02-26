@@ -80,9 +80,10 @@ extern "C"{
 #include "libavutil/opt.h"
 #include "libavcodec/avfft.h"
 #include "libswresample/swresample.h"
+#include "SDL.h"
 }
 
-#include "SDL.h"
+
 
 
 #define MAX_SLIDER_VALUE 65536

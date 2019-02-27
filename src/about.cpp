@@ -25,10 +25,10 @@ bool About::Init()
     //this->setWindowFlags(Qt::Dialog);
     //setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
 
-    this->setWindowIcon(QIcon(":/Resources/player.png"));
-    ui->LogoLabel->setPixmap(QPixmap(":/Resources/player.png").scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    this->setWindowIcon(QIcon("://res/player.png"));
+    ui->LogoLabel->setPixmap(QPixmap("://res/player.png").scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
-    //setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/about.css"));
+    //setStyleSheet(GlobalHelper::GetQssStr("://res/qss/about.css"));
 
     QString strVersion = QString("版本：%1\n时间：%2").arg(GlobalHelper::GetAppVersion()).arg(QString(__DATE__) + " " + QString(__TIME__));
     ui->VersionLabel->setText(strVersion);

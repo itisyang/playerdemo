@@ -74,7 +74,7 @@ bool Title::InitUi()
     //保证窗口不被绘制上的部分透明
     setAttribute(Qt::WA_TranslucentBackground);
 
-    setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/title.css"));
+    setStyleSheet(GlobalHelper::GetQssStr("://res/qss/title.css"));
 
     GlobalHelper::SetIcon(ui->MaxBtn, 9, QChar(0xf2d0));
     GlobalHelper::SetIcon(ui->MinBtn, 9, QChar(0xf2d1));

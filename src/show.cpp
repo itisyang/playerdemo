@@ -27,7 +27,7 @@ Show::Show(QWidget *parent) :
     ui->setupUi(this);
 
     //加载样式
-    setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/show.css"));
+    setStyleSheet(GlobalHelper::GetQssStr("://res/qss/show.css"));
     setAcceptDrops(true);
 
 	

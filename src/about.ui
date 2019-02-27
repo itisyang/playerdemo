@@ -20,7 +20,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="mainwid.qrc">
-    <normaloff>:/Resources/Player.ico</normaloff>:/Resources/Player.ico</iconset>
+    <normaloff>://res/Player.ico</normaloff>://res/Player.ico</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">

@@ -10,8 +10,8 @@ QT += core gui widgets
 #DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
 
 
-LIBS += -L$$PWD/playerdemo/lib/sdl/lib \
-    -L$$PWD/playerdemo/lib/ffmpeg/lib \
+LIBS += -L$$PWD/lib/sdl/lib \
+    -L$$PWD/lib/ffmpeg/lib \
     -lSDL2 \
     -lavcodec \
     -lavdevice \
@@ -22,45 +22,44 @@ LIBS += -L$$PWD/playerdemo/lib/sdl/lib \
     -lswresample \
     -lswscale
 
-INCLUDEPATH += playerdemo \
-    playerdemo/lib/sdl/include \
-    playerdemo/lib/ffmpeg/include
+INCLUDEPATH += src \
+    lib/sdl/include \
+    lib/ffmpeg/include
 
-HEADERS += \
-    playerdemo/customthread.h \
-    playerdemo/datactl.h \
-    playerdemo/globalhelper.h \
-    playerdemo/settingwid.h \
-    playerdemo/about.h \
-    playerdemo/CustomSlider.h \
-    playerdemo/videoctl.h \
-    playerdemo/mainwid.h \
-    playerdemo/medialist.h \
-    playerdemo/title.h \
-    playerdemo/playlist.h \
-    playerdemo/show.h \
-    playerdemo/ctrlbar.h
+HEADERS += src/customthread.h \
+    src/datactl.h \
+    src/globalhelper.h \
+    src/settingwid.h \
+    src/about.h \
+    src/CustomSlider.h \
+    src/videoctl.h \
+    src/mainwid.h \
+    src/medialist.h \
+    src/title.h \
+    src/playlist.h \
+    src/show.h \
+    src/ctrlbar.h
 
-SOURCES += playerdemo/main.cpp \
-    playerdemo/about.cpp \
-    playerdemo/CustomSlider.cpp \
-    playerdemo/customthread.cpp \
-    playerdemo/globalhelper.cpp \
-    playerdemo/settingwid.cpp \
-    playerdemo/videoctl.cpp \
-    playerdemo/ctrlbar.cpp \
-    playerdemo/mainwid.cpp \
-    playerdemo/medialist.cpp \
-    playerdemo/playlist.cpp \
-    playerdemo/show.cpp \
-    playerdemo/title.cpp
+SOURCES += src/main.cpp \
+    src/about.cpp \
+    src/CustomSlider.cpp \
+    src/customthread.cpp \
+    src/globalhelper.cpp \
+    src/settingwid.cpp \
+    src/videoctl.cpp \
+    src/ctrlbar.cpp \
+    src/mainwid.cpp \
+    src/medialist.cpp \
+    src/playlist.cpp \
+    src/show.cpp \
+    src/title.cpp
 
-FORMS += playerdemo/mainwid.ui \
-    playerdemo/ctrlbar.ui \
-    playerdemo/show.ui \
-    playerdemo/playlist.ui \
-    playerdemo/title.ui \
-    playerdemo/about.ui \
-    playerdemo/settingwid.ui
+FORMS += src/mainwid.ui \
+    src/ctrlbar.ui \
+    src/show.ui \
+    src/playlist.ui \
+    src/title.ui \
+    src/about.ui \
+    src/settingwid.ui
 
-RESOURCES += playerdemo/mainwid.qrc
+RESOURCES += src/mainwid.qrc

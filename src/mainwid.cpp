@@ -41,9 +41,9 @@ MainWid::MainWid(QMainWindow *parent) :
     //无边框、无系统菜单、 任务栏点击最小化
     setWindowFlags(Qt::FramelessWindowHint /*| Qt::WindowSystemMenuHint*/ | Qt::WindowMinimizeButtonHint);
     //设置任务栏图标
-    this->setWindowIcon(QIcon(":/Resources/player.png"));
+    this->setWindowIcon(QIcon("://res/player.png"));
     //加载样式
-    QString qss = GlobalHelper::GetQssStr(":/Resources/qss/mainwid.css");
+    QString qss = GlobalHelper::GetQssStr("://res/qss/mainwid.css");
     setStyleSheet(qss);
 
     // 追踪鼠标 用于播放时隐藏鼠标

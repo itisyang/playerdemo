@@ -34,7 +34,7 @@ CtrlBar::~CtrlBar()
 
 bool CtrlBar::Init()
 {
-    setStyleSheet(GlobalHelper::GetQssStr(":/Resources/qss/ctrlbar.css"));
+    setStyleSheet(GlobalHelper::GetQssStr("://res/qss/ctrlbar.css"));
 
     GlobalHelper::SetIcon(ui->PlayOrPauseBtn, 12, QChar(0xf04b));
     GlobalHelper::SetIcon(ui->StopBtn, 12, QChar(0xf04d));

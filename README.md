@@ -11,7 +11,7 @@
 
 一个视频播放器，开源版 potplayer。  
 用于学习和交流音视频技术。  
-欢迎音视频开发爱好者前来交流相关问题。  
+欢迎音视频开发爱好者交流相关问题。  
 https://itisyang.github.io/playerdemo/
 
 ## 简介

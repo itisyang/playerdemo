@@ -15,8 +15,8 @@
 https://itisyang.github.io/playerdemo/
 
 ## 简介
-- 使用 FFmpeg 解码，SDL2 渲染，ffmpeg-3.4（X64），SDL2-2.0.7（X64）。  
-- 在 Windows 下使用 Qt5.12.x 开发（MinGW X64）。  
+- 使用 FFmpeg-3.4 (x64) 解码，SDL2-2.0.7 (x64) 渲染。  
+- 在 Windows 下使用 Qt5.12.x (MinGW x64) 开发。  
 - 项目目录下的 .pro 文件，支持在多平台（Windows、Linux、Mac）下 QtCreator 打开编译调试。  
 
 ![运行画面](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/0.png)

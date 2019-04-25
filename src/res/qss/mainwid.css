@@ -1,12 +1,13 @@
 
 
-*{
+/* *{
     background-color: #202129;
     color:white;
-}
+} */
 
 QMainWindow#MainWid{
     border: 1px solid black;
+    background-color: #202129;
 }
 
 QWidget#BgWidget{
@@ -66,4 +67,14 @@ QToolTip{
     border: none;
     background-color: #2e2f37;
     color:white;
+}
+
+
+/**********状态栏**********/
+QStatusBar {
+    background: rgb(57, 58, 60);
+}
+QStatusBar::item {
+    border: none;
+    border-right: 1px solid rgb(100, 100, 100);
 }

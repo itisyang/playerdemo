@@ -9,7 +9,7 @@ QT += core gui widgets
 #CONFIG += debug
 #DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
 
-
+win32 {
 LIBS += -L$$PWD/lib/sdl/lib \
     -L$$PWD/lib/ffmpeg/lib \
     -lSDL2 \
@@ -18,13 +18,35 @@ LIBS += -L$$PWD/lib/sdl/lib \
     -lavfilter \
     -lavformat \
     -lavutil \
-    #-lpostproc \
     -lswresample \
     -lswscale
 
 INCLUDEPATH += src \
     lib/sdl/include \
     lib/ffmpeg/include
+}
+
+
+###cmd install lib
+#sudo apt-get install ffmpeg
+#sudo apt-get install libavformat-dev
+#sudo apt-get install libavutil-dev
+#sudo apt-get install libavcodec-dev
+#sudo apt-get install libswscale-dev
+#sudo apt-get install libsdl2-dev
+###
+unix {
+LIBS += \
+    -lSDL2 \
+    -lavcodec \
+    -lavdevice \
+    -lavfilter \
+    -lavformat \
+    -lavutil \
+    -lswresample \
+    -lswscale
+}
+
 
 HEADERS += src/customthread.h \
     src/datactl.h \

@@ -11,12 +11,16 @@
 
 
 #include <QDebug>
+#include <QMutex>
+
 #include "show.h"
 #include "ui_show.h"
 
 #include "globalhelper.h"
 
 #pragma execution_character_set("utf-8")
+
+QMutex g_show_rect_mutex;
 
 Show::Show(QWidget *parent) :
     QWidget(parent),
@@ -72,39 +76,47 @@ bool Show::Init()
 	return true;
 }
 
-void Show::AdjustDisplay(int nFrameWidth, int nFrameHeight)
+void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
 {
+    qDebug() << "Show::OnFrameDimensionsChanged" << nFrameWidth << nFrameHeight;
     m_nLastFrameWidth = nFrameWidth;
     m_nLastFrameHeight = nFrameHeight;
     
-    //qDebug() << nFrameWidth << nFrameHeight;
-    if (nFrameWidth == 0 || nFrameHeight == 0)
-    {
-        return;
-//         int w = width();
-//         int h = height();
-//         ui->label->setGeometry(0, 0, w, h);
-    }
-	else if (nFrameHeight * width() >= nFrameWidth * height())
-	{   //当前供显示的区域，高偏小，以高为标准，高全部显示
-        int nShowHeight = height();
-        int nShowWidth = height() * nFrameWidth / nFrameHeight;
-		
-        int nY = 0;
-        int nX = width() / 2 - nShowWidth / 2;
-        
-		ui->label->setGeometry(nX, nY, nShowWidth, nShowHeight);
-	}
-	else
-	{   //当前供显示的区域，宽偏小，以宽为标准，宽全部显示
-        int nShowWidth = width();
-        int nShowHeight = width() * nFrameHeight / nFrameWidth;
+    ChangeShow();
+}
 
-        int nX = 0;
-        int nY = height() / 2 - nShowHeight / 2;
-        
-		ui->label->setGeometry(nX, nY, nShowWidth, nShowHeight);
-	}
+void Show::ChangeShow()
+{
+    g_show_rect_mutex.lock();
+
+    if (m_nLastFrameWidth == 0 && m_nLastFrameHeight == 0)
+    {
+        ui->label->setGeometry(0, 0, width(), height());
+    }
+    else
+    {
+        float aspect_ratio;
+        int width, height, x, y;
+        int scr_width = this->width();
+        int scr_height = this->height();
+
+        aspect_ratio = (float)m_nLastFrameWidth / (float)m_nLastFrameHeight;
+
+        height = scr_height;
+        width = lrint(height * aspect_ratio) & ~1;
+        if (width > scr_width)
+        {
+            width = scr_width;
+            height = lrint(width / aspect_ratio) & ~1;
+        }
+        x = (scr_width - width) / 2;
+        y = (scr_height - height) / 2;
+
+
+        ui->label->setGeometry(x, y, width, height);
+    }
+
+    g_show_rect_mutex.unlock();
 }
 
 void Show::dragEnterEvent(QDragEnterEvent *event)
@@ -120,7 +132,7 @@ void Show::resizeEvent(QResizeEvent *event)
 {
     Q_UNUSED(event);
 
-    AdjustDisplay(m_nLastFrameWidth, m_nLastFrameHeight);
+    ChangeShow();
 }
 
 void Show::keyPressEvent(QKeyEvent *event)
@@ -165,10 +177,6 @@ void Show::OnStopFinished()
     update();
 }
 
-void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
-{
-    AdjustDisplay(nFrameWidth, nFrameHeight);
-}
 
 void Show::OnTimerShowCursorUpdate()
 {

@@ -161,6 +161,9 @@ private:
 
     //播放刷新循环线程
     std::thread m_tPlayLoopThread;
+
+    int m_nFrameW;
+    int m_nFrameH;
 };
 
 #endif // VIDEOCTL_H

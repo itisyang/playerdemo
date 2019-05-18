@@ -11,11 +11,14 @@
 
 
 #include <QDebug>
+#include <QMutex>
 
 #include <thread>
 #include "videoctl.h"
 
 #pragma execution_character_set("utf-8")
+
+extern QMutex g_show_rect_mutex;
 
 static int framedrop = -1;
 static int infinite_buffer = -1;
@@ -183,6 +186,14 @@ void VideoCtl::video_image_display(VideoState *is)
             return;
         vp->uploaded = 1;
         vp->flip_v = vp->frame->linesize[0] < 0;
+
+        //通知宽高变化
+        if (m_nFrameW != vp->frame->width || m_nFrameH != vp->frame->height)
+        {
+            m_nFrameW = vp->frame->width;
+            m_nFrameH = vp->frame->height;
+            emit SigFrameDimensionsChanged(m_nFrameW, m_nFrameH);
+        }
     }
 
     SDL_RenderCopyEx(renderer, is->vid_texture, NULL, &rect, 0, NULL, (SDL_RendererFlip)(vp->flip_v ? SDL_FLIP_VERTICAL : 0));
@@ -632,6 +643,7 @@ int VideoCtl::get_video_frame(VideoState *is, AVFrame *frame)
         return -1;
 
     if (got_picture) {
+
         double dpts = NAN;
 
         if (frame->pts != AV_NOPTS_VALUE)
@@ -1886,10 +1898,16 @@ void VideoCtl::video_display(VideoState *is)
         video_open(is);
     if (renderer)
     {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-        SDL_RenderClear(renderer);
-        video_image_display(is);
-        SDL_RenderPresent(renderer);
+        //恰好显示控件大小在变化，则不刷新显示
+        if (g_show_rect_mutex.tryLock())
+        {
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+            SDL_RenderClear(renderer);
+            video_image_display(is);
+            SDL_RenderPresent(renderer);
+
+            g_show_rect_mutex.unlock();
+        }
     }
 
 }
@@ -1992,8 +2010,18 @@ void VideoCtl::OnStop()
     m_bPlayLoop = false;
 }
 
-VideoCtl::VideoCtl(QObject *parent) : QObject(parent), 
-m_bInited(false), m_CurStream(nullptr), m_bPlayLoop(false), screen_width(0), screen_height(0), startup_volume(30), renderer(nullptr), window(nullptr)
+VideoCtl::VideoCtl(QObject *parent) :
+QObject(parent),
+m_bInited(false),
+m_CurStream(nullptr),
+m_bPlayLoop(false),
+screen_width(0),
+screen_height(0),
+startup_volume(30),
+renderer(nullptr),
+window(nullptr),
+m_nFrameW(0),
+m_nFrameH(0)
 {
     //注册所有复用器、编码器
     av_register_all();

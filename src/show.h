@@ -83,6 +83,16 @@ public:
     */
     void OnPlay(QString strFile);
     void OnStopFinished();
+
+    /**
+     * @brief	调整显示画面的宽高，使画面保持原比例
+     *
+     * @param	nFrameWidth 宽
+     * @param	nFrameHeight 高
+     * @return
+     * @note
+     */
+    void OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight);
 private:
 	/**
 	 * @brief	显示信息
@@ -92,15 +102,6 @@ private:
 	 */
 	void OnDisplayMsg(QString strMsg);
 
-    /**
-     * @brief	视频宽高发生变化
-     * 
-     * @param	nFrameWidth 宽
-     * @param	nFrameHeight 高
-     * @return	
-     * @note 	
-     */
-    void OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight);
 
     void OnTimerShowCursorUpdate();
 
@@ -110,15 +111,9 @@ private:
 	 * @brief	连接信号槽	
 	 */
 	bool ConnectSignalSlots();
-    /**
-    * @brief	调整显示画面的宽高，使画面保持原比例
-    *
-    * @param	nFrameWidth 视频宽
-    * @param	nFrameWHeight 视频高
-    * @return
-    * @note
-    */
-    void AdjustDisplay(int nFrameWidth, int nFrameHeight);
+
+
+    void ChangeShow();
 signals:
     void SigOpenFile(QString strFileName);///< 增加视频文件
 	void SigPlay(QString strFile); ///<播放

@@ -13,30 +13,25 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <property name="leftMargin">
-    <number>0</number>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>60</y>
+     <width>361</width>
+     <height>221</height>
+    </rect>
    </property>
-   <property name="topMargin">
-    <number>0</number>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 0, 0);</string>
    </property>
-   <property name="rightMargin">
-    <number>0</number>
+   <property name="text">
+    <string/>
    </property>
-   <property name="bottomMargin">
-    <number>0</number>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string/>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-    </widget>
-   </item>
-  </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>

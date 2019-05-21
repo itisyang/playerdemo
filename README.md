@@ -26,6 +26,8 @@ https://itisyang.github.io/playerdemo/
 
 ## Windows平台编译调试
 1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。(直接从官网下载即可，亦可下载本项目最新release，安装后，从安装目录下拷贝动态库。)  
+FFmpeg 库下载地址 [https://ffmpeg.zeranoe.com/builds/](https://ffmpeg.zeranoe.com/builds/)  
+SDL2 库下载地址 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)  
 2. 使用 QtCreator 打开 playerdemo.pro。  
 3. 编译运行。  
 
@@ -48,7 +50,7 @@ sudo apt-get install libswscale-dev
 
 ## 其他
 
-编译时，注意统一静态库与动态库的版本、位数。若开发环境为32位，库及头文件均要32位。
+编译时，注意统一静态库与动态库的版本、位数。若开发环境为64位，库及头文件均要64位。
 
 
 #### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)

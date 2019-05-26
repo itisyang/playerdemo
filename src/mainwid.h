@@ -54,7 +54,7 @@ protected:
     //void dropEvent(QDropEvent *event);
 
     //按键事件
-    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
     void mousePressEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

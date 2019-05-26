@@ -69,7 +69,7 @@ protected:
      * @return	
      * @note 	
      */
-    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 
 
     void mousePressEvent(QMouseEvent *event);
@@ -122,6 +122,11 @@ signals:
     void SigPlayOrPause();
     void SigStop();
     void SigShowMenu();
+
+    void SigSeekForward();
+    void SigSeekBack();
+    void SigAddVolume();
+    void SigSubVolume();
 private:
     Ui::Show *ui;
 

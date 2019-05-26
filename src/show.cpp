@@ -39,6 +39,7 @@ Show::Show(QWidget *parent) :
     this->setAttribute(Qt::WA_OpaquePaintEvent);
     //ui->label->setAttribute(Qt::WA_OpaquePaintEvent);
 
+    ui->label->setUpdatesEnabled(false);
 
     this->setMouseTracking(true);
     
@@ -135,14 +136,33 @@ void Show::resizeEvent(QResizeEvent *event)
     ChangeShow();
 }
 
-void Show::keyPressEvent(QKeyEvent *event)
+void Show::keyReleaseEvent(QKeyEvent *event)
 {
+    qDebug() << "Show::keyPressEvent:" << event->key();
     switch (event->key())
     {
     case Qt::Key_Return://全屏
-        emit SigFullScreen();
+        SigFullScreen();
         break;
+    case Qt::Key_Left://后退5s
+        emit SigSeekBack();
+        break;
+    case Qt::Key_Right://前进5s
+        qDebug() << "前进5s";
+        emit SigSeekForward();
+        break;
+    case Qt::Key_Up://增加10音量
+        emit SigAddVolume();
+        break;
+    case Qt::Key_Down://减少10音量
+        emit SigSubVolume();
+        break;
+    case Qt::Key_Space://减少10音量
+        emit SigPlayOrPause();
+        break;
+
     default:
+        QWidget::keyPressEvent(event);
         break;
     }
 }

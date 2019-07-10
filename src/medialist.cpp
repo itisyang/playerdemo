@@ -7,7 +7,10 @@
 
 MediaList::MediaList(QWidget *parent)
     : QListWidget(parent),
-    m_stMenu(this)
+      m_stMenu(this),
+      m_stActAdd(this),
+      m_stActRemove(this),
+      m_stActClearList(this)
 {
 
 

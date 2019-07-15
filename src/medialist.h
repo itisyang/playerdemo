@@ -9,7 +9,7 @@ class MediaList : public QListWidget
     Q_OBJECT
 
 public:
-    MediaList(QWidget *parent);
+    MediaList(QWidget *parent = 0);
     ~MediaList();
     bool Init();
 protected:

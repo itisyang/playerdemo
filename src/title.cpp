@@ -125,12 +125,13 @@ void Title::resizeEvent(QResizeEvent *event)
 
 void Title::ChangeMovieNameShow()
 {
-    QFontMetrics fontMetrics(ui->MovieNameLab->font());
-    int fontSize = fontMetrics.width(m_strMovieName);
-    int showwidth = ui->MovieNameLab->width();
-    if (fontSize > showwidth)
+    QFontMetrics font_metrics(ui->MovieNameLab->font());
+    QRect rect = font_metrics.boundingRect(m_strMovieName);
+    int font_width = rect.width();
+    int show_width = ui->MovieNameLab->width();
+    if (font_width > show_width)
     {
-        QString str = fontMetrics.elidedText(m_strMovieName, Qt::ElideRight, ui->MovieNameLab->width());//返回一个带有省略号的字符串
+        QString str = font_metrics.elidedText(m_strMovieName, Qt::ElideRight, ui->MovieNameLab->width());//返回一个带有省略号的字符串
         ui->MovieNameLab->setText(str);
     }
     else

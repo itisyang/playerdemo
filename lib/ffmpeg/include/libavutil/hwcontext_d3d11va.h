@@ -37,6 +37,7 @@
  */
 
 #include <d3d11.h>
+#include <stdint.h>
 
 /**
  * This struct is allocated as AVHWDeviceContext.hwctx
@@ -163,6 +164,15 @@ typedef struct AVD3D11VAFramesContext {
      * This field is ignored/invalid if a user-allocated texture is provided.
      */
     UINT MiscFlags;
+
+    /**
+     * In case if texture structure member above is not NULL contains the same texture
+     * pointer for all elements and different indexes into the array texture.
+     * In case if texture structure member above is NULL, all elements contains
+     * pointers to separate non-array textures and 0 indexes.
+     * This field is ignored/invalid if a user-allocated texture is provided.
+    */
+    AVD3D11FrameDescriptor *texture_infos;
 } AVD3D11VAFramesContext;
 
 #endif /* AVUTIL_HWCONTEXT_D3D11VA_H */

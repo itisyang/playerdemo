@@ -95,7 +95,7 @@ private:
 
     int synchronize_audio(VideoState *is, int nb_samples);
 
-    int audio_open(void *opaque, int64_t wanted_channel_layout, int wanted_nb_channels, int wanted_sample_rate, struct AudioParams *audio_hw_params);
+    int audio_open(void* opaque, AVChannelLayout* wanted_channel_layout, int wanted_sample_rate, struct AudioParams* audio_hw_params);
     int stream_component_open(VideoState *is, int stream_index);
     int stream_has_enough_packets(AVStream *st, int stream_id, PacketQueue *queue);
     int is_realtime(AVFormatContext *s);
@@ -151,6 +151,8 @@ private:
 
     SDL_Window *window;
     SDL_Renderer *renderer;
+    SDL_RendererInfo renderer_info = { 0 };
+    SDL_AudioDeviceID audio_dev;
     WId play_wid;//播放窗口
 
 

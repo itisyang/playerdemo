@@ -154,6 +154,7 @@ void CtrlBar::OnPlaySliderValueChanged()
 {
     double dPercent = ui->PlaySlider->value()*1.0 / ui->PlaySlider->maximum();
     emit SigPlaySeek(dPercent);
+    qDebug() << dPercent;
 }
 
 void CtrlBar::OnVolumeSliderValueChanged()

@@ -8,7 +8,7 @@ class CustomSlider : public QSlider
     Q_OBJECT
 
 public:
-    CustomSlider(QWidget *parent);
+    CustomSlider(QWidget* parent);
     ~CustomSlider();
 protected:
     void mousePressEvent(QMouseEvent *ev);//重写QSlider的mousePressEvent事件
@@ -16,4 +16,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *ev);
 signals:
     void SigCustomSliderValueChanged();//自定义的鼠标单击信号，用于捕获并处理
+
+private:
+    bool mIsPressed = false;
 };

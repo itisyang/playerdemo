@@ -20,6 +20,7 @@ void CustomSlider::mousePressEvent(QMouseEvent *ev)
     setValue(pos * (maximum() - minimum()) + minimum());
 
     emit SigCustomSliderValueChanged();
+    mIsPressed = true;
 }
 
 void CustomSlider::mouseReleaseEvent(QMouseEvent *ev)
@@ -27,14 +28,18 @@ void CustomSlider::mouseReleaseEvent(QMouseEvent *ev)
     QSlider::mouseReleaseEvent(ev);
 
     //emit SigCustomSliderValueChanged();
+    mIsPressed = false;
 }
 
 void CustomSlider::mouseMoveEvent(QMouseEvent *ev)
 {
     QSlider::mouseMoveEvent(ev);
-    //获取鼠标的位置，这里并不能直接从ev中取值（因为如果是拖动的话，鼠标开始点击的位置没有意义了）
-    double pos = ev->pos().x() / (double)width();
-    setValue(pos * (maximum() - minimum()) + minimum());
+    if (mIsPressed)
+    {
+        //获取鼠标的位置，这里并不能直接从ev中取值（因为如果是拖动的话，鼠标开始点击的位置没有意义了）
+        double pos = ev->pos().x() / (double)width();
+        setValue(pos * (maximum() - minimum()) + minimum());
 
-    emit SigCustomSliderValueChanged();
+        emit SigCustomSliderValueChanged();
+    }
 }

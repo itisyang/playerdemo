@@ -91,6 +91,11 @@ private:
 
     void OnShowSettingWid();
 
+
+    //添加菜单
+    QMenu* AddMenuFun(QString menu_title, QMenu* menu);
+    void AddActionFun(QString action_title, QMenu* menu, void(MainWid::* slot_addr)());
+
 signals:
     //最大化信号
     void SigShowMax(bool bIfMax);
@@ -135,9 +140,6 @@ private:
     SettingWid m_stSettingWid;
 
     QMenu m_stMenu;
-    QAction m_stActExit;
-    QAction m_stActAbout;
-    QAction m_stActOpen;
     QAction m_stActFullscreen;
 };
 

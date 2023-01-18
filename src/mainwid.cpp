@@ -35,9 +35,6 @@ MainWid::MainWid(QMainWindow *parent) :
     m_stPlaylist(this),
     m_stTitle(this),
     m_bMoveDrag(false),
-    m_stActExit(this),
-    m_stActAbout(this),
-    m_stActOpen(this),
     m_stActFullscreen(this)
 {
     ui->setupUi(this);
@@ -50,7 +47,7 @@ MainWid::MainWid(QMainWindow *parent) :
     setStyleSheet(qss);
 
     // 追踪鼠标 用于播放时隐藏鼠标
-    //this->setMouseTracking(true);
+    this->setMouseTracking(true);
 
     //ui->ShowWid->setMouseTracking(true);
 
@@ -122,21 +119,25 @@ bool MainWid::Init()
         return false;
     }
 
-    m_stActFullscreen.setText("全屏");
-    m_stActFullscreen.setCheckable(true);
-    m_stMenu.addAction(&m_stActFullscreen);
+    {
+        QMenu* menu = AddMenuFun(tr("屏幕"), &m_stMenu);
+        m_stActFullscreen.setText(tr("全屏"));
+        m_stActFullscreen.setCheckable(true);
+        menu->addAction(&m_stActFullscreen);
+    }
+    {
+        QMenu* menu = AddMenuFun(tr("声音"), &m_stMenu);
+        AddActionFun(tr("音量 +"), menu, &MainWid::SigAddVolume);
+        AddActionFun(tr("音量 -"), menu, &MainWid::SigSubVolume);
+    }
 
+    {
+        QMenu* menu = AddMenuFun(tr("打开"), &m_stMenu);
+        AddActionFun(tr("打开文件"), menu, &MainWid::OpenFile);
+    }
 
-    m_stActOpen.setText("打开");
-    m_stMenu.addAction(&m_stActOpen);
-
-    m_stActAbout.setText("关于");
-    m_stMenu.addAction(&m_stActAbout);
-    
-    m_stActExit.setText("退出");
-    m_stMenu.addAction(&m_stActExit);
-
-
+    AddActionFun(tr("关于"), &m_stMenu, &MainWid::OnShowAbout);
+    AddActionFun(tr("退出"), &m_stMenu, &MainWid::OnCloseBtnClicked);
 
     return true;
 }
@@ -216,10 +217,7 @@ bool MainWid::ConnectSignalSlots()
     connect(&m_stFullscreenMouseDetectTimer, &QTimer::timeout, this, &MainWid::OnFullscreenMouseDetectTimeOut);
 
 
-    connect(&m_stActAbout, &QAction::triggered, this, &MainWid::OnShowAbout);
     connect(&m_stActFullscreen, &QAction::triggered, this, &MainWid::OnFullScreenPlay);
-    connect(&m_stActExit, &QAction::triggered, this, &MainWid::OnCloseBtnClicked);
-    connect(&m_stActOpen, &QAction::triggered, this, &MainWid::OpenFile);
     
 
 
@@ -409,6 +407,8 @@ void MainWid::OnFullscreenMouseDetectTimeOut()
 void MainWid::OnCtrlBarHideTimeOut()
 {
     m_stCtrlbarAnimationHide->start();
+    //setCursor(Qt::BlankCursor);
+
 }
 
 void MainWid::OnShowMenu()
@@ -433,6 +433,22 @@ void MainWid::OpenFile()
 void MainWid::OnShowSettingWid()
 {
     m_stSettingWid.show();
+}
+
+QMenu* MainWid::AddMenuFun(QString menu_title, QMenu* menu)
+{
+    QMenu* menu_t = new QMenu(this);
+    menu_t->setTitle(menu_title);
+    menu->addMenu(menu_t);
+    return menu_t;
+}
+
+void MainWid::AddActionFun(QString action_title, QMenu* menu, void(MainWid::* slot_addr)())
+{
+    QAction* action = new QAction(this);;
+    action->setText(action_title);
+    menu->addAction(action);
+    connect(action, &QAction::triggered, this, slot_addr);
 }
 
 void MainWid::OnCloseBtnClicked()

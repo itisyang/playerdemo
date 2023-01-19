@@ -406,7 +406,10 @@ void MainWid::OnFullscreenMouseDetectTimeOut()
 
 void MainWid::OnCtrlBarHideTimeOut()
 {
-    m_stCtrlbarAnimationHide->start();
+    if (m_bFullScreenPlay)
+    {
+        m_stCtrlbarAnimationHide->start();
+    }
     //setCursor(Qt::BlankCursor);
 
 }

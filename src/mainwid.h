@@ -93,6 +93,8 @@ private:
 
 
     //添加菜单
+    void InitMenu();
+    void MenuJsonParser(QJsonObject& json_obj, QMenu* menu);
     QMenu* AddMenuFun(QString menu_title, QMenu* menu);
     void AddActionFun(QString action_title, QMenu* menu, void(MainWid::* slot_addr)());
 
@@ -141,6 +143,7 @@ private:
 
     QMenu m_stMenu;
     QAction m_stActFullscreen;
+    QMap<QString, void(MainWid::*)()> map_act_;
 };
 
 #endif // MainWid_H

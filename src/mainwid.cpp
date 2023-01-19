@@ -19,6 +19,12 @@
 #include <QScreen>
 #include <QRect>
 #include <QFileDialog>
+#include <QJsonDocument>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonParseError>
+
 
 #include "mainwid.h"
 #include "ui_mainwid.h"
@@ -119,25 +125,29 @@ bool MainWid::Init()
         return false;
     }
 
-    {
-        QMenu* menu = AddMenuFun(tr("屏幕"), &m_stMenu);
-        m_stActFullscreen.setText(tr("全屏"));
-        m_stActFullscreen.setCheckable(true);
-        menu->addAction(&m_stActFullscreen);
-    }
-    {
-        QMenu* menu = AddMenuFun(tr("声音"), &m_stMenu);
-        AddActionFun(tr("音量 +"), menu, &MainWid::SigAddVolume);
-        AddActionFun(tr("音量 -"), menu, &MainWid::SigSubVolume);
-    }
+    //{
+    //    QMenu* menu = AddMenuFun(tr("屏幕"), &m_stMenu);
+    //    m_stActFullscreen.setText(tr("全屏"));
+    //    m_stActFullscreen.setCheckable(true);
+    //    menu->addAction(&m_stActFullscreen);
+    //}
+    //{
+    //    QMenu* menu = AddMenuFun(tr("声音"), &m_stMenu);
+    //    AddActionFun(tr("音量 +"), menu, &MainWid::SigAddVolume);
+    //    AddActionFun(tr("音量 -"), menu, &MainWid::SigSubVolume);
+    //}
 
-    {
-        QMenu* menu = AddMenuFun(tr("打开"), &m_stMenu);
-        AddActionFun(tr("打开文件"), menu, &MainWid::OpenFile);
-    }
+    //{
+    //    QMenu* menu = AddMenuFun(tr("打开"), &m_stMenu);
+    //    AddActionFun(tr("打开文件"), menu, &MainWid::OpenFile);
+    //}
 
-    AddActionFun(tr("关于"), &m_stMenu, &MainWid::OnShowAbout);
-    AddActionFun(tr("退出"), &m_stMenu, &MainWid::OnCloseBtnClicked);
+    //AddActionFun(tr("关于"), &m_stMenu, &MainWid::OnShowAbout);
+    //AddActionFun(tr("退出"), &m_stMenu, &MainWid::OnCloseBtnClicked);
+
+
+    InitMenu();
+
 
     return true;
 }
@@ -436,6 +446,65 @@ void MainWid::OpenFile()
 void MainWid::OnShowSettingWid()
 {
     m_stSettingWid.show();
+}
+
+void MainWid::InitMenu()
+{
+    QString menu_json_file_name = ":/res/menu.json";
+    QByteArray ba_json;
+    QFile json_file(menu_json_file_name);
+    if (json_file.open(QIODevice::ReadOnly))
+    {
+        ba_json = json_file.readAll();
+        json_file.close();
+    }
+
+    QJsonDocument json_doc = QJsonDocument::fromJson(ba_json);
+
+    if (json_doc.isObject())
+    {
+        QJsonObject json_obj = json_doc.object();
+        MenuJsonParser(json_obj, &m_stMenu);
+    }
+
+}
+
+void MainWid::MenuJsonParser(QJsonObject& json_obj, QMenu* menu)
+{
+    QJsonObject::iterator it = json_obj.begin();
+    QJsonObject::iterator end = json_obj.end();
+    while (it != end)
+    {
+        QString key = it.key();
+        auto value = it.value();
+        if (value.isObject())
+        {
+            QMenu* sub_menu = menu->addMenu(key);
+            QJsonObject obj = value.toObject();
+            MenuJsonParser(obj, sub_menu);
+        }
+        else
+        {
+            QString value_str = value.toString();
+            QStringList value_info = value_str.split("/");
+            if (value_info.size() == 2)
+            {
+                QString hot_key = value_info[1];
+                if (hot_key.length() > 0)
+                {
+                    key = key + "\t" + hot_key;
+                }
+                QAction* action = menu->addAction(key);
+
+                //TODO: 字符串与函数指针对应，连接信号
+                QString fun_str = value_info[0];
+
+
+            }
+        }
+
+        it++;
+    }
 }
 
 QMenu* MainWid::AddMenuFun(QString menu_title, QMenu* menu)

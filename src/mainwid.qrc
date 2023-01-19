@@ -10,5 +10,6 @@
         <file>res/qss/playlist.css</file>
         <file>res/qss/show.css</file>
         <file>res/qss/title.css</file>
+        <file>res/menu.json</file>
     </qresource>
 </RCC>

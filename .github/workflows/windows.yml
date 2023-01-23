@@ -1,10 +1,10 @@
 name: Windows
 on: 
   # 触发workflow
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  push
+  pull_request
+  create
+
 jobs:
   build:
     name: Build

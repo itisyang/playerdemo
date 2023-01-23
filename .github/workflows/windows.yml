@@ -55,7 +55,7 @@ jobs:
       - name: package
         id: package      
         env:
-          archiveName: ${env:targetBaseName}-qt${{ matrix.qt_ver }}-${{ matrix.qt_target }}-${{ matrix.qt_arch }}
+          archiveName: ${{ env.targetBaseName }}-qt${{ matrix.qt_ver }}-${{ matrix.qt_target }}-${{ matrix.qt_arch }}
           msvcArch: ${{ matrix.msvc_arch }}          
         shell: pwsh
         run: |

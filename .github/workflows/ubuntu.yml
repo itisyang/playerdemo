@@ -19,7 +19,7 @@ jobs:
           version: ${{ matrix.qt_ver }}
           cached: 'false'
       - name: ubuntu install GL library
-        run: sudo apt-get install -y libglew-dev libglfw3-dev libsdl2-dev libavformat-dev libavutil-dev libavcodec-dev libswscale-dev
+        run: sudo apt-get install -y libglew-dev libglfw3-dev libsdl2-dev libavformat-dev libavutil-dev libavcodec-dev libswscale-dev libavfilter-dev
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1

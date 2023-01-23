@@ -21,7 +21,7 @@ jobs:
             qt_arch_install: msvc2019_64
     env:
       targetBaseName: playerdemo
-      targetName: ${env:targetBaseName}.exe
+      targetName: ${targetBaseName}.exe
     # 步骤
     steps:
       # 安装Qt

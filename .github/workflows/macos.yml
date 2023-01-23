@@ -1,10 +1,7 @@
 name: MacOS
 on: 
   # 触发workflow
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  [push, pull_request, create]
 jobs:
   build:
     name: Build
@@ -23,7 +20,8 @@ jobs:
         run: |
           softwareupdate --all --install --force
           sudo xcode-select --print-path
-          sudo xcode-select --switch /Library/Developer/CommandLineTools       
+          sudo xcode-select --switch /Library/Developer/CommandLineTools   
+          brew install ffmpeg    
       - name: Install Qt
         uses: jurplel/install-qt-action@v2
         with:

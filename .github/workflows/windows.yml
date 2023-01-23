@@ -1,9 +1,7 @@
 name: Windows
 on: 
   # 触发workflow
-  push
-  pull_request
-  create
+  [push, pull_request, create]
 
 jobs:
   build:

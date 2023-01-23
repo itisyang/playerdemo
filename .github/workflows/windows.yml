@@ -24,10 +24,9 @@ jobs:
       targetName: playerdemo.exe
     # 步骤
     steps:
-      # 安装Qt
+      # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
-        # 使用外部action。这个action专门用来安装Qt
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
           # Version of Qt to install
           version: ${{ matrix.qt_ver }}

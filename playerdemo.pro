@@ -10,7 +10,7 @@ QT += core gui widgets
 #DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
 
 win32 {
-LIBS += -L$$PWD/lib/sdl/lib \
+LIBS += -L$$PWD/lib/SDL \
     -L$$PWD/lib/ffmpeg/lib \
     -lSDL2 \
     -lavcodec \
@@ -22,7 +22,7 @@ LIBS += -L$$PWD/lib/sdl/lib \
     -lswscale
 
 INCLUDEPATH += src \
-    lib/sdl/include \
+    lib \
     lib/ffmpeg/include
 }
 

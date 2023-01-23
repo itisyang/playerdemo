@@ -108,14 +108,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <IncludePath>lib/ffmpeg/include;lib/sdl/include;src;$(IncludePath)</IncludePath>
-    <LibraryPath>lib/ffmpeg/lib;lib/sdl/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>lib/ffmpeg/include;lib;src;$(IncludePath)</IncludePath>
+    <LibraryPath>lib/ffmpeg/lib;lib/SDL;$(LibraryPath)</LibraryPath>
     <OutDir>bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutDir>bin\$(Configuration)\</OutDir>
-    <IncludePath>lib/ffmpeg/include;lib/sdl/include;src;$(IncludePath)</IncludePath>
-    <LibraryPath>lib/ffmpeg/lib;lib/sdl/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>lib/ffmpeg/include;lib;src;$(IncludePath)</IncludePath>
+    <LibraryPath>lib/ffmpeg/lib;lib/SDL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>

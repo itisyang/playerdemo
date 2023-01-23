@@ -5,7 +5,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/itisyang/playerdemo.svg)](https://github.com/itisyang/playerdemo/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/itisyang/playerdemo.svg)](https://github.com/itisyang/playerdemo/network)
 [![GitHub release](https://img.shields.io/github/release/itisyang/playerdemo.svg)](https://github.com/itisyang/playerdemo/releases)
-![Build Status](https://travis-ci.org/itisyang/playerdemo.svg?branch=master)
+![Build Status](https://github.com/itisyang/playerdemo/actions/workflows/windows.yml/badge.svg)
+![Build Status](https://github.com/itisyang/playerdemo/actions/workflows/macos.yml/badge.svg)
+![Build Status](https://github.com/itisyang/playerdemo/actions/workflows/ubuntu.yml/badge.svg)
 ![language](https://img.shields.io/badge/language-c++-DeepPink.svg)
 [![GitHub license](https://img.shields.io/github/license/itisyang/playerdemo.svg)](https://github.com/itisyang/playerdemo/blob/master/LICENSE)
 

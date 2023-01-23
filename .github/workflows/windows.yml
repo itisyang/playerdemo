@@ -21,7 +21,7 @@ jobs:
             qt_arch_install: msvc2019_64
     env:
       targetBaseName: playerdemo
-      targetName: ${targetBaseName}.exe
+      targetName: playerdemo.exe
     # 步骤
     steps:
       # 安装Qt
@@ -56,7 +56,7 @@ jobs:
       - name: package
         id: package      
         env:
-          archiveName: -qt${{ matrix.qt_ver }}-${{ matrix.qt_target }}-${{ matrix.qt_arch }}
+          archiveName: ${env:archiveName}-qt${{ matrix.qt_ver }}-${{ matrix.qt_target }}-${{ matrix.qt_arch }}
           msvcArch: ${{ matrix.msvc_arch }}          
         shell: pwsh
         run: |

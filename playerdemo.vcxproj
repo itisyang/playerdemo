@@ -115,7 +115,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutDir>bin\$(Configuration)\</OutDir>
     <IncludePath>lib/ffmpeg/include;lib;src;$(IncludePath)</IncludePath>
-    <LibraryPath>lib/ffmpeg/lib;lib/SDL;$(LibraryPath)</LibraryPath>
+    <LibraryPath>lib/ffmpeg/lib;lib/SDL2;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>

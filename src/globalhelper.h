@@ -85,7 +85,7 @@ extern "C"{
 #include "libavcodec/avfft.h"
 #include "libswresample/swresample.h"
 
-#include "SDL/SDL.h"
+#include "SDL2/SDL.h"
 }
 
 

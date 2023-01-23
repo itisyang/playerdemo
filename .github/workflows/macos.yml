@@ -1,15 +1,10 @@
 name: MacOS
 on: 
+  # 触发workflow
   push:
-    paths:
-      - '*.pro'
-      - 'src/**'
-      - '.github/workflows/macos.yml'
+    branches: [ "master" ]
   pull_request:
-    paths:
-      - '*.pro'
-      - 'src/**'
-      - '.github/workflows/macos.yml' 
+    branches: [ "master" ]
 jobs:
   build:
     name: Build

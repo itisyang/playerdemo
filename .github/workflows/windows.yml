@@ -1,6 +1,6 @@
 name: Windows
 on: 
-  # push代码时触发workflow
+  # 触发workflow
   push:
     branches: [ "master" ]
   pull_request:

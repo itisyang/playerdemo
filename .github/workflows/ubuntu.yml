@@ -1,16 +1,11 @@
 name: Ubuntu
 # Qt官方没有linux平台的x86包
 on: 
+  # 触发workflow
   push:
-    paths:
-      - '*.pro'
-      - 'src/**'
-      - '.github/workflows/ubuntu.yml'
+    branches: [ "master" ]
   pull_request:
-    paths:
-      - '*.pro'
-      - 'src/**'
-      - '.github/workflows/ubuntu.yml' 
+    branches: [ "master" ]
 jobs:
   build:
     name: Build
@@ -20,11 +15,6 @@ jobs:
         os: [ubuntu-20.04]
         qt_ver: [6.2.4]
         qt_arch: [gcc_64]
-        exclude: 
-          # Qt6.2.2 need GLIBC_2.28, ubuntu 18.04 have not.
-          - os: ubuntu-18.04
-            qt_ver: 6.2.2
-            qt_arch: gcc_64
     steps:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2

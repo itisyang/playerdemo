@@ -19,9 +19,11 @@ jobs:
         with:
           version: ${{ matrix.qt_ver }}
           cache: 'false'
-      - name: ubuntu install GL library
-        run: sudo add-apt-repository ppa:savoury1/ffmpeg5 -y
-        run: sudo apt-get install -y libglew-dev libglfw3-dev libsdl2-dev libavformat-dev libavutil-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev
+      - name: ubuntu install ffmpeg5
+        run: sudo add-apt-repository ppa:savoury1/ffmpeg5 -y 
+      - name: ubuntu install library
+        run: sudo apt-get install -y libsdl2-dev libavformat-dev libavutil-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev
+
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1

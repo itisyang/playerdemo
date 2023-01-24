@@ -19,10 +19,12 @@ jobs:
         with:
           version: ${{ matrix.qt_ver }}
           cache: 'false'
+      - name: ubuntu install ffmpeg5
+        run: sudo add-apt-repository ppa:savoury1/ffmpeg5 -y 
+      - name: ubuntu install ffmpeg4
+        run: sudo add-apt-repository ppa:savoury1/ffmpeg4 -y 
       - name: ubuntu install library
-        run0: sudo add-apt-repository ppa:savoury1/ffmpeg5 -y 
-        run1: sudo add-apt-repository ppa:savoury1/ffmpeg4 -y 
-        run2: sudo apt-get install -y libsdl2-dev libavformat-dev libavutil-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev
+        run: sudo apt-get install -y libsdl2-dev libavformat-dev libavutil-dev libavcodec-dev libswscale-dev libavfilter-dev libavdevice-dev
 
       - uses: actions/checkout@v2
         with:

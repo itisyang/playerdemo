@@ -1092,7 +1092,8 @@ int VideoCtl::stream_component_open(VideoState *is, int stream_index)
     AVDictionary* opts = NULL;
     const AVDictionaryEntry* t = NULL;
     int sample_rate;
-    AVChannelLayout ch_layout = { 0 };
+    AVChannelLayout ch_layout;
+    memset(&ch_layout, 0, sizeof(AVChannelLayout));
     int ret = 0;
     int stream_lowres = 0;
 

@@ -16,8 +16,9 @@ jobs:
     steps:
       # 安装ffmpeg sdl
       - name: install lib
-        brew install ffmpeg
-        brew install SDL2
+        run: |
+          brew install ffmpeg
+          brew install SDL2
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

@@ -8,20 +8,16 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-11.0]
+        os: [macos-10.15]
         qt_ver: [6.2.4]
         qt_arch: [clang_64]
     env:
       targetName: playerdemo
     steps:
-      # macos 11.0 默认环境变了,要指定
-      - name: prepare env
-        if: ${{ matrix.os == 'macos-11.0' }}
-        run: |
-          softwareupdate --all --install --force
-          sudo xcode-select --print-path
-          sudo xcode-select --switch /Library/Developer/CommandLineTools   
-          brew install ffmpeg    
+      # 安装ffmpeg sdl
+      - name: install lib
+        brew install ffmpeg
+        brew install SDL2
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

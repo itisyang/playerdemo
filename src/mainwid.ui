@@ -85,7 +85,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -120,13 +120,13 @@
   <customwidget>
    <class>Show</class>
    <extends>QWidget</extends>
-   <header location="global">show.h</header>
+   <header>src/show.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>CtrlBar</class>
    <extends>QWidget</extends>
-   <header location="global">ctrlbar.h</header>
+   <header>src/ctrlbar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

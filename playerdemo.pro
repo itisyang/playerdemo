@@ -9,6 +9,8 @@ QT += core gui widgets
 #CONFIG += debug
 #DEFINES += _UNICODE WIN64 QT_WIDGETS_LIB
 
+INCLUDEPATH += src
+
 win32 {
 LIBS += -L$$PWD/lib/SDL2 \
     -L$$PWD/lib/ffmpeg/lib \
@@ -21,8 +23,7 @@ LIBS += -L$$PWD/lib/SDL2 \
     -lswresample \
     -lswscale
 
-INCLUDEPATH += src \
-    lib \
+INCLUDEPATH += lib \
     lib/ffmpeg/include
 }
 
@@ -47,6 +48,18 @@ LIBS += \
     -lswscale
 }
 
+macx {
+    INCLUDEPATH += /usr/local/Cellar/sdl2/2.26.0/include
+    LIBS += -L /usr/local/Cellar/sdl2/2.26.0/lib -lSDL2
+    INCLUDEPATH += /usr/local/Cellar/ffmpeg/5.1.1/include
+    LIBS += -L /usr/local/Cellar/ffmpeg/5.1.1/lib -lavcodec \
+    -lavdevice \
+    -lavfilter \
+    -lavformat \
+    -lavutil \
+    -lswresample \
+    -lswscale
+}
 
 HEADERS += src/customthread.h \
     src/datactl.h \

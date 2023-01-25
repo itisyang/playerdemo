@@ -12,7 +12,6 @@
 #define CTRLBAR_H
 
 #include <QWidget>
-#include "CustomSlider.h"
 
 namespace Ui {
 class CtrlBar;

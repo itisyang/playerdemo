@@ -120,13 +120,13 @@
   <customwidget>
    <class>Show</class>
    <extends>QWidget</extends>
-   <header>src/show.h</header>
+   <header>show.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>CtrlBar</class>
    <extends>QWidget</extends>
-   <header>src/ctrlbar.h</header>
+   <header>ctrlbar.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

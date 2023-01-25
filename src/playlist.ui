@@ -63,7 +63,7 @@
   <customwidget>
    <class>MediaList</class>
    <extends>QListWidget</extends>
-   <header>src/medialist.h</header>
+   <header>medialist.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

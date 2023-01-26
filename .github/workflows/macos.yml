@@ -17,9 +17,9 @@ jobs:
       # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg/5.1.2_3 sdl2.26.2: /usr/local/Cellar/sdl2/2.26.2
       - name: install lib
         run: |
-          brew install https://ghcr.io/v2/homebrew/core/ffmpeg/manifests/5.1.2_3
+          brew install ffmpeg@5.1.2_3
           brew uninstall SDL2
-          brew install https://ghcr.io/v2/homebrew/core/sdl2/manifests/2.26.2
+          brew install SDL2@2.26.2
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

@@ -14,12 +14,12 @@ jobs:
     env:
       targetName: playerdemo
     steps:
-      # 安装ffmpeg5.1.1 sdl2.26.0: /usr/local/Cellar/sdl2/2.26.0
+      # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg/5.1.2_3 sdl2.26.2: /usr/local/Cellar/sdl2/2.26.2
       - name: install lib
         run: |
-          brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/6fde8f8564f2d0968567b2fb78609e6ad67d4215/Formula/ffmpeg.rb
+          brew install https://ghcr.io/v2/homebrew/core/ffmpeg/manifests/5.1.2_3
           brew uninstall SDL2
-          brew install https://github.com/Homebrew/homebrew-core/blob/88496e1c2da142171a3613dd6dcd422dd2bcae06/Formula/sdl2.rb
+          brew install https://ghcr.io/v2/homebrew/core/sdl2/manifests/2.26.2
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

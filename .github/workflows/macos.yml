@@ -23,7 +23,7 @@ jobs:
           brew info ffmpeg
           brew info ffmpeg@5.1.1
           brew info SDL2
-          pkg-config --libs libavutil
+          pkg-config --libs libavcodec
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

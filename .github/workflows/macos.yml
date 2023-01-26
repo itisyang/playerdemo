@@ -14,7 +14,7 @@ jobs:
     env:
       targetName: playerdemo
     steps:
-      # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg/5.1.2_3 sdl2.26.2: /usr/local/Cellar/sdl2/2.26.2
+      # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg/5.1.2 sdl2.26.2: /usr/local/Cellar/sdl2/2.26.2
       - name: install lib
         run: |
           brew install ffmpeg@5.1.2_3

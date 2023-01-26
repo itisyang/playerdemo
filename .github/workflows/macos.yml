@@ -14,13 +14,15 @@ jobs:
     env:
       targetName: playerdemo
     steps:
-      # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg/5.1.2 sdl2.26.2: /usr/local/Cellar/sdl2/2.26.2
+      # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg@5.1.1/5.1.1_1 sdl2: /usr/local/Cellar/sdl2/2.24.1
       - name: install lib
         run: |
           brew tap-new $USER/local-tap
           brew extract --version='5.1.1' ffmpeg $USER/local-tap
           brew install ffmpeg@5.1.1
           brew info ffmpeg
+          brew info ffmpeg@5.1.1
+          brew info SDL2
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

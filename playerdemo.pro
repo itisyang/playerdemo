@@ -49,10 +49,10 @@ LIBS += \
 }
 
 macx {
-    INCLUDEPATH += /usr/local/Cellar/sdl2/2.26.0/include
-    LIBS += -L /usr/local/Cellar/sdl2/2.26.0/lib -lSDL2
-    INCLUDEPATH += /usr/local/Cellar/ffmpeg/5.1.1/include
-    LIBS += -L /usr/local/Cellar/ffmpeg/5.1.1/lib -lavcodec \
+    INCLUDEPATH += /usr/local/Cellar/sdl2/2.24.1/include
+    LIBS += -L /usr/local/Cellar/sdl2/2.24.1/lib -lSDL2
+    INCLUDEPATH += /usr/local/Cellar/ffmpeg@5.1.1/5.1.1_1/include
+    LIBS += -L /usr/local/Cellar/ffmpeg@5.1.1/5.1.1_1/lib -lavcodec \
     -lavdevice \
     -lavfilter \
     -lavformat \

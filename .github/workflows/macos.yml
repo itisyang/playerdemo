@@ -17,10 +17,10 @@ jobs:
       # 安装ffmpeg5.1.2_3:/usr/local/Cellar/ffmpeg/5.1.2 sdl2.26.2: /usr/local/Cellar/sdl2/2.26.2
       - name: install lib
         run: |
-          brew install ffmpeg
+          brew tap-new $USER/local-tap
+          brew extract --version='5.1.1' ffmpeg $USER/local-tap
+          brew install ffmpeg@5.1.1
           brew info ffmpeg
-          brew uninstall SDL2
-          brew install SDL2@2.26.2
       # 安装Qt https://github.com/jurplel/install-qt-action
       - name: Install Qt
         uses: jurplel/install-qt-action@v3

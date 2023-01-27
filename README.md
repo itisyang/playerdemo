@@ -21,7 +21,7 @@ https://itisyang.github.io/playerdemo/
 - 在 Windows 下使用 Qt5.12.x (MinGW x64) 开发。  
 - 项目目录下的 .pro 文件，支持在多平台（Windows、Linux、Mac）下 QtCreator 打开编译调试。  
 
-![运行画面](https://raw.githubusercontent.com/itisyang/MyImages/master/playerdemo/0.jpg)
+![运行画面](https://cdn.staticaly.com/gh/itisyang/MyImages@master/images/0.png)
 
 ## 沟通
 - Issues: 欢迎给我提 issues，关于本项目的问题，请优先提 issues，我会尽量当天回复。

@@ -28,31 +28,47 @@ https://itisyang.github.io/playerdemo/
 
 ## Windows平台编译调试
 1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。(直接从官网下载即可，亦可下载本项目最新release，安装后，从安装目录下拷贝动态库。)  
-FFmpeg 库下载地址 [https://ffmpeg.zeranoe.com/builds/](https://ffmpeg.zeranoe.com/builds/)  
-SDL2 库下载地址 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)  
+    FFmpeg 库下载地址 [https://ffmpeg.zeranoe.com/builds/](https://ffmpeg.zeranoe.com/builds/)  
+    SDL2 库下载地址 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)  
 2. 使用 QtCreator 打开 playerdemo.pro。  
 3. 编译运行。  
 
-## Linux平台编译调试
+## Linux平台编译调试  
 1. 安装 SDL2相关的开发包 libsdl2-dev。  
-```
-sudo apt-get install libsdl2-dev
-```
+    ```
+    sudo apt-get install libsdl2-dev
+    ```
 2. 安装 FFmpeg相关的开发包 libavformat-dev、libavutil-dev、libavcodec-dev、libswscale-dev...
-```
-sudo apt-get install libavformat-dev
-sudo apt-get install libavutil-dev
-sudo apt-get install libavcodec-dev
-sudo apt-get install libswscale-dev
-```
+    ```
+    sudo apt-get install libavformat-dev
+    sudo apt-get install libavutil-dev
+    sudo apt-get install libavcodec-dev
+    sudo apt-get install libswscale-dev
+    ```
 3. 使用 QtCreator 打开 playerdemo.pro。  
 4. 编译运行。  
 
+## Macos平台编译调试
+1. 安装 FFmpeg相关的开发包。
+    ```
+    brew install ffmpeg
+    ```
+2. 使用 QtCreator 打开 playerdemo.pro。  
+3. 修改 playerdemo.pro 配置 ffmpeg、SDL2 头文件和库目录。
+    ```
+    # 将下面的路径改为自己设备上的路径
+    macx {
+        INCLUDEPATH += /usr/local/Cellar/sdl2/2.24.1/include
+        LIBS += -L/usr/local/Cellar/sdl2/2.24.1/lib -lSDL2
+        INCLUDEPATH += /usr/local/Cellar/ffmpeg@5.1.1/5.1.1_1/include
+        LIBS += -L/usr/local/Cellar/ffmpeg@5.1.1/5.1.1_1/lib -lavcodec -lavdevice -lavfilter -lavformat -lavutil -lswresample -lswscale
+    }
+    ```
+    *通过 brew info ffmpeg 查询 ffmpeg 安装目录*  
+    *ffmpeg 安装时会自动安装SDL2依赖，通过 brew info SDL2 查询 SDL2 安装目录*  
 
+4. 编译运行。  
 
 ## 其他
 
-编译时，注意统一静态库与动态库的版本、位数。若开发环境为64位，库及头文件均要64位。
-
-
-#### [开发问题记录](https://github.com/itisyang/playerdemo/blob/master/note.md)
+    编译时，注意统一静态库与动态库的版本、位数。若开发环境为64位，库及头文件均要64位。

@@ -27,7 +27,7 @@ https://itisyang.github.io/playerdemo/
 - Issues: 欢迎给我提 issues，关于本项目的问题，请优先提 issues，我会尽量当天回复。
 
 ## Windows平台编译调试
-1. 下载 FFmpeg、SDL2 动态库，放在 bin 目录下。(直接从官网下载即可，亦可下载本项目最新release，安装后，从安装目录下拷贝动态库。)  
+1. 下载 FFmpeg、SDL2 动态库，dll放在 bin 目录下，头文件和lib文件替换掉lib文件夹中的内容。(直接从官网下载即可)  
     FFmpeg 库下载地址 [https://ffmpeg.zeranoe.com/builds/](https://ffmpeg.zeranoe.com/builds/)  
     SDL2 库下载地址 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)  
 2. 使用 QtCreator 打开 playerdemo.pro。  
@@ -71,4 +71,6 @@ https://itisyang.github.io/playerdemo/
 
 ## 其他
 
-    编译时，注意统一静态库与动态库的版本、位数。若开发环境为64位，库及头文件均要64位。
+    编译时，注意统一静态库与动态库的版本、位数。若开发环境为64位，库及头文件均要64位。  
+    tag中的打包版本不包含ffmpeg和SDL2动态库，后续研究如何一起打包。
+

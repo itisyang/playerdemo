@@ -72,5 +72,5 @@ https://itisyang.github.io/playerdemo/
 ## 其他
 
     编译时，注意统一静态库与动态库的版本、位数。若开发环境为64位，库及头文件均要64位。  
-    tag中的打包版本不包含ffmpeg和SDL2动态库，后续研究如何一起打包。
+    tag中的打包版本使用actions打包，不包含ffmpeg和SDL2动态库，后续研究如何一起打包。
 

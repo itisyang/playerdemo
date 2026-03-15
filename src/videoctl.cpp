@@ -11,6 +11,7 @@
 
 
 #include <QDebug>
+#include <QMetaObject>
 #include <QMutex>
 
 #include <thread>
@@ -122,9 +123,55 @@ int VideoCtl::upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext
     return ret;
 }
 
+QImage VideoCtl::frame_to_image(AVFrame *frame, struct SwsContext **img_convert_ctx)
+{
+    if (frame == nullptr)
+        return QImage();
+    const int w = frame->width;
+    const int h = frame->height;
+    QImage image(w, h, QImage::Format_ARGB32);
+    if (image.isNull())
+        return QImage();
+
+    *img_convert_ctx = sws_getCachedContext(*img_convert_ctx,
+        w, h, (AVPixelFormat)frame->format,
+        w, h, AV_PIX_FMT_BGRA,
+        SWS_BICUBIC, NULL, NULL, NULL);
+    if (*img_convert_ctx == NULL) {
+        av_log(NULL, AV_LOG_FATAL, "Cannot initialize the conversion context\n");
+        return QImage();
+    }
+
+    uint8_t *dst_data[4] = { image.bits(), NULL, NULL, NULL };
+    int dst_linesize[4] = { static_cast<int>(image.bytesPerLine()), 0, 0, 0 };
+    sws_scale(*img_convert_ctx, (const uint8_t * const *)frame->data, frame->linesize,
+        0, h, dst_data, dst_linesize);
+
+    return image;
+}
+
 //显示视频画面
 void VideoCtl::video_image_display(VideoState *is)
 {
+#if defined(__APPLE__)
+    if (frame_queue_nb_remaining(&is->pictq) <= 0)
+        return;
+    Frame *vp = frame_queue_peek_last(&is->pictq);
+    if (vp && vp->frame &&
+        vp->frame->width > 0 && vp->frame->height > 0 &&
+        vp->frame->data[0] != NULL && vp->frame->linesize[0] > 0) {
+        if (m_nFrameW != vp->frame->width || m_nFrameH != vp->frame->height)
+        {
+            m_nFrameW = vp->frame->width;
+            m_nFrameH = vp->frame->height;
+            emit SigFrameDimensionsChanged(m_nFrameW, m_nFrameH);
+        }
+        QImage img = frame_to_image(vp->frame, &is->img_convert_ctx);
+        if (!img.isNull())
+            emit SigVideoFrame(img);
+    }
+    return;
+#else
     Frame *vp;
     Frame *sp = NULL;
     SDL_Rect rect;
@@ -200,6 +247,7 @@ void VideoCtl::video_image_display(VideoState *is)
     if (sp) {
         SDL_RenderCopy(renderer, is->sub_texture, NULL, &rect);
     }
+#endif
 }
 
 
@@ -215,8 +263,12 @@ void VideoCtl::stream_component_close(VideoState *is, int stream_index)
 
     switch (codecpar->codec_type) {
     case AVMEDIA_TYPE_AUDIO:
+        if (audio_dev) {
+            SDL_PauseAudioDevice(audio_dev, 1);
+            SDL_CloseAudioDevice(audio_dev);
+            audio_dev = 0;
+        }
         decoder_abort(&is->auddec, &is->sampq);
-        SDL_CloseAudio();
         decoder_destroy(&is->auddec);
         swr_free(&is->swr_ctx);
         av_freep(&is->audio_buf1);
@@ -407,6 +459,14 @@ void VideoCtl::stream_seek(VideoState *is, int64_t pos, int64_t rel)
         is->seek_rel = rel;
         is->seek_flags &= ~AVSEEK_FLAG_BYTE;
         is->seek_req = 1;
+        is->force_refresh = 1;
+        SDL_CondSignal(is->continue_read_thread);
+    } else {
+        // Overwrite pending seek so the latest user action wins.
+        is->seek_pos = pos;
+        is->seek_rel = rel;
+        is->seek_flags &= ~AVSEEK_FLAG_BYTE;
+        is->force_refresh = 1;
         SDL_CondSignal(is->continue_read_thread);
     }
 }
@@ -990,8 +1050,16 @@ void sdl_audio_callback(void *opaque, Uint8 *stream, int len)
             memcpy(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1);
         else {
             memset(stream, 0, len1);
-            if (is->audio_buf)
-                SDL_MixAudio(stream, (uint8_t *)is->audio_buf + is->audio_buf_index, len1, is->audio_volume);
+            if (is->audio_buf) {
+                int16_t *dst = (int16_t *)stream;
+                int16_t *src = (int16_t *)((uint8_t *)is->audio_buf + is->audio_buf_index);
+                int samples = len1 / sizeof(int16_t);
+                int volume = is->audio_volume;
+                for (int i = 0; i < samples; ++i) {
+                    int v = (int)src[i] * volume / SDL_MIX_MAXVOLUME;
+                    dst[i] = (int16_t)av_clip(v, -32768, 32767);
+                }
+            }
         }
         len -= len1;
         stream += len1;
@@ -1710,18 +1778,38 @@ the_end:
     stream_component_open(is, stream_index);
 }
 
+int VideoCtl::pump_events(SDL_Event *event)
+{
+#if defined(__APPLE__)
+    int num_events = 0;
+    if (QThread::currentThread() == this->thread()) {
+        SDL_PumpEvents();
+        num_events = SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
+    } else {
+        QMetaObject::invokeMethod(this, [this, event, &num_events]() {
+            SDL_PumpEvents();
+            num_events = SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
+        }, Qt::BlockingQueuedConnection);
+    }
+    return num_events;
+#else
+    SDL_PumpEvents();
+    return SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
+#endif
+}
+
 
 void VideoCtl::refresh_loop_wait_event(VideoState *is, SDL_Event *event) {
     double remaining_time = 0.0;
-    SDL_PumpEvents();
-    while (!SDL_PeepEvents(event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT) && m_bPlayLoop)
+    int got_event = pump_events(event);
+    while (!got_event && m_bPlayLoop)
     {
         if (remaining_time > 0.0)
             av_usleep((int64_t)(remaining_time * 1000000.0));
         remaining_time = REFRESH_RATE;
         if (!is->paused || is->force_refresh)
             video_refresh(is, &remaining_time);
-        SDL_PumpEvents();
+        got_event = pump_events(event);
     }
 }
 
@@ -1814,6 +1902,16 @@ void VideoCtl::LoopThread(VideoState *cur_stream)
 
 }
 
+void VideoCtl::OnRefreshTick()
+{
+    QMutexLocker locker(&m_playMutex);
+    if (!m_bPlayLoop || m_CurStream == nullptr)
+        return;
+
+    double remaining_time = 0.0;
+    video_refresh(m_CurStream, &remaining_time);
+}
+
 
 void VideoCtl::OnPlaySeek(double dPercent)
 {
@@ -1821,7 +1919,19 @@ void VideoCtl::OnPlaySeek(double dPercent)
     {
         return;
     }
-    int64_t ts = dPercent * m_CurStream->ic->duration;
+    double percent = dPercent;
+    if (percent < 0.0)
+        percent = 0.0;
+    if (percent > 1.0)
+        percent = 1.0;
+    int64_t ts = percent * m_CurStream->ic->duration;
+    if (m_CurStream->ic->duration > 0) {
+        int64_t max_ts = m_CurStream->ic->duration;
+        if (max_ts > static_cast<int64_t>(0.1 * AV_TIME_BASE))
+            max_ts -= static_cast<int64_t>(0.1 * AV_TIME_BASE);
+        if (ts > max_ts)
+            ts = max_ts;
+    }
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE)
         ts += m_CurStream->ic->start_time;
     stream_seek(m_CurStream, ts, 0);
@@ -1829,12 +1939,22 @@ void VideoCtl::OnPlaySeek(double dPercent)
 
 void VideoCtl::OnPlayVolume(double dPercent)
 {
-    startup_volume = dPercent * SDL_MIX_MAXVOLUME;
+    if (dPercent < 0.0)
+        dPercent = 0.0;
+    if (dPercent > 1.0)
+        dPercent = 1.0;
+    double gain = sqrt(dPercent);
+    int volume_percent = lrint(gain * 100.0);
+    volume_percent = av_clip(volume_percent, 0, 100);
+    startup_volume = volume_percent;
     if (m_CurStream == nullptr)
     {
         return;
     }
-    m_CurStream->audio_volume = startup_volume;
+    int vol = av_clip(SDL_MIX_MAXVOLUME * volume_percent / 100, 0, SDL_MIX_MAXVOLUME);
+    if (dPercent > 0.0 && vol == 0)
+        vol = 1;
+    m_CurStream->audio_volume = vol;
 }
 
 void VideoCtl::OnSeekForward()
@@ -1848,6 +1968,15 @@ void VideoCtl::OnSeekForward()
     if (std::isnan(pos))
         pos = (double)m_CurStream->seek_pos / AV_TIME_BASE;
     pos += incr;
+    if (m_CurStream->ic->duration > 0) {
+        double max_pos = m_CurStream->ic->duration / (double)AV_TIME_BASE;
+        if (max_pos > 0.1)
+            max_pos -= 0.1;
+        if (m_CurStream->ic->start_time != AV_NOPTS_VALUE)
+            max_pos += m_CurStream->ic->start_time / (double)AV_TIME_BASE;
+        if (pos > max_pos)
+            pos = max_pos;
+    }
     if (m_CurStream->ic->start_time != AV_NOPTS_VALUE && pos < m_CurStream->ic->start_time / (double)AV_TIME_BASE)
         pos = m_CurStream->ic->start_time / (double)AV_TIME_BASE;
     stream_seek(m_CurStream, (int64_t)(pos * AV_TIME_BASE), (int64_t)(incr * AV_TIME_BASE));
@@ -1885,6 +2014,10 @@ void VideoCtl::UpdateVolume(int sign, double step)
 /* display the current picture, if any */
 void VideoCtl::video_display(VideoState *is)
 {
+#if defined(__APPLE__)
+    video_image_display(is);
+    return;
+#endif
     if (!window)
         video_open(is);
     if (renderer)
@@ -1948,6 +2081,14 @@ int VideoCtl::video_open(VideoState *is)
 
 void VideoCtl::do_exit(VideoState* &is)
 {
+#if defined(__APPLE__)
+    if (QThread::currentThread() != this->thread()) {
+        QMetaObject::invokeMethod(this, [this, &is]() { do_exit(is); }, Qt::BlockingQueuedConnection);
+        return;
+    }
+    if (m_refreshTimer.isActive())
+        m_refreshTimer.stop();
+#endif
     if (is)
     {
         stream_close(is);
@@ -1961,7 +2102,7 @@ void VideoCtl::do_exit(VideoState* &is)
 
     if (window)
     {
-        //SDL_DestroyWindow(window);
+        SDL_DestroyWindow(window);
         window = nullptr;
     }
 
@@ -1998,7 +2139,20 @@ void VideoCtl::OnPause()
 
 void VideoCtl::OnStop()
 {
+#if defined(__APPLE__)
+    if (QThread::currentThread() != this->thread()) {
+        QMetaObject::invokeMethod(this, [this]() { OnStop(); }, Qt::BlockingQueuedConnection);
+        return;
+    }
+#endif
+    QMutexLocker locker(&m_playMutex);
     m_bPlayLoop = false;
+#if defined(__APPLE__)
+    if (m_refreshTimer.isActive())
+        m_refreshTimer.stop();
+#endif
+    if (m_CurStream)
+        do_exit(m_CurStream);
 }
 
 VideoCtl::VideoCtl(QObject *parent) :
@@ -2011,12 +2165,18 @@ screen_height(0),
 startup_volume(30),
 renderer(nullptr),
 window(nullptr),
+audio_dev(0),
 m_nFrameW(0),
 m_nFrameH(0)
 {
     avdevice_register_all();
     //网络格式初始化
     avformat_network_init();
+
+#if defined(__APPLE__)
+    m_refreshTimer.setInterval(static_cast<int>(REFRESH_RATE * 1000));
+    connect(&m_refreshTimer, &QTimer::timeout, this, &VideoCtl::OnRefreshTick);
+#endif
 }
 
 bool VideoCtl::Init()
@@ -2047,7 +2207,7 @@ bool VideoCtl::Init()
 
 bool VideoCtl::ConnectSignalSlots()
 {
-    connect(this, &VideoCtl::SigStop, &VideoCtl::OnStop);
+    connect(this, &VideoCtl::SigStop, this, &VideoCtl::OnStop, Qt::QueuedConnection);
 
     return true;
 }
@@ -2074,7 +2234,14 @@ VideoCtl::~VideoCtl()
 
 bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
 {
-    m_bPlayLoop = false;
+    {
+        QMutexLocker locker(&m_playMutex);
+        m_bPlayLoop = false;
+#if defined(__APPLE__)
+        if (m_refreshTimer.isActive())
+            m_refreshTimer.stop();
+#endif
+    }
     if (m_tPlayLoopThread.joinable())
     {
         m_tPlayLoopThread.join();
@@ -2095,10 +2262,22 @@ bool VideoCtl::StartPlay(QString strFileName, WId widPlayWid)
         do_exit(m_CurStream);
     }
 
-    m_CurStream = is;
+    {
+        QMutexLocker locker(&m_playMutex);
+        m_CurStream = is;
+    }
 
     //事件循环
+#if defined(__APPLE__)
+    {
+        QMutexLocker locker(&m_playMutex);
+        m_bPlayLoop = true;
+        if (!m_refreshTimer.isActive())
+            m_refreshTimer.start();
+    }
+#else
     m_tPlayLoopThread = std::thread(&VideoCtl::LoopThread, this, is);
+#endif
 
 
     return true;

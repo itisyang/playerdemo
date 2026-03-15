@@ -13,7 +13,10 @@
 
 #include <QObject>
 #include <QThread>
+#include <QTimer>
 #include <QString>
+#include <QImage>
+#include <QMutex>
 
 #include "globalhelper.h"
 #include "datactl.h"
@@ -48,6 +51,7 @@ public:
 signals:
     void SigPlayMsg(QString strMsg);//< 错误信息
     void SigFrameDimensionsChanged(int nFrameWidth, int nFrameHeight); //<视频宽高发生变化
+    void SigVideoFrame(const QImage &frame);
 
     void SigVideoTotalSeconds(int nSeconds);
     void SigVideoPlaySeconds(int nSeconds);
@@ -104,6 +108,7 @@ private:
     VideoState *stream_open(const char *filename);
 
     void stream_cycle_channel(VideoState *is, int codec_type);
+    int pump_events(SDL_Event *event);
     void refresh_loop_wait_event(VideoState *is, SDL_Event *event);
     void seek_chapter(VideoState *is, int incr);
     void video_refresh(void *opaque, double *remaining_time);
@@ -118,6 +123,7 @@ private:
     int realloc_texture(SDL_Texture **texture, Uint32 new_format, int new_width, int new_height, SDL_BlendMode blendmode, int init_texture);
     void calculate_display_rect(SDL_Rect *rect, int scr_xleft, int scr_ytop, int scr_width, int scr_height, int pic_width, int pic_height, AVRational pic_sar);
     int upload_texture(SDL_Texture *tex, AVFrame *frame, struct SwsContext **img_convert_ctx);
+    QImage frame_to_image(AVFrame *frame, struct SwsContext **img_convert_ctx);
     void video_image_display(VideoState *is);
     void stream_component_close(VideoState *is, int stream_index);
     void stream_close(VideoState *is);
@@ -137,6 +143,7 @@ private:
     double compute_target_delay(double delay, VideoState *is);
     double vp_duration(VideoState *is, Frame *vp, Frame *nextvp);
     void update_video_pts(VideoState *is, double pts, int64_t pos, int serial);
+    void OnRefreshTick();
 public:
 
 
@@ -163,9 +170,12 @@ private:
 
     //播放刷新循环线程
     std::thread m_tPlayLoopThread;
+    QTimer m_refreshTimer;
 
     int m_nFrameW;
     int m_nFrameH;
+
+    QMutex m_playMutex;
 };
 
 #endif // VIDEOCTL_H

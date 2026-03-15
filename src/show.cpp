@@ -12,6 +12,7 @@
 
 #include <QDebug>
 #include <QMutex>
+#include <QPainter>
 
 #include "show.h"
 #include "ui_show.h"
@@ -69,12 +70,19 @@ bool Show::Init()
         return false;
     }
 
-	//ui->label->setUpdatesEnabled(false);
+#if defined(__APPLE__)
+    setFocusPolicy(Qt::StrongFocus);
+#else
+    setAttribute(Qt::WA_NativeWindow);
+    setAttribute(Qt::WA_DontCreateNativeAncestors);
+    setFocusPolicy(Qt::StrongFocus);
+    winId();
+#endif
+#if defined(__APPLE__)
+    ui->label->hide();
+#endif
 
-
-
-
-	return true;
+    return true;
 }
 
 void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
@@ -86,8 +94,24 @@ void Show::OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight)
     ChangeShow();
 }
 
+void Show::OnVideoFrame(const QImage &frame)
+{
+#if defined(__APPLE__)
+    {
+        QMutexLocker locker(&m_frameMutex);
+        m_frame = frame;
+    }
+    update();
+#else
+    Q_UNUSED(frame);
+#endif
+}
+
 void Show::ChangeShow()
 {
+#if defined(__APPLE__)
+    return;
+#endif
     g_show_rect_mutex.lock();
 
     if (m_nLastFrameWidth == 0 && m_nLastFrameHeight == 0)
@@ -120,6 +144,22 @@ void Show::ChangeShow()
     g_show_rect_mutex.unlock();
 }
 
+QRect Show::CalcAspectRect(const QSize &srcSize, const QRect &dstRect) const
+{
+    if (srcSize.isEmpty())
+        return dstRect;
+    const double srcAspect = static_cast<double>(srcSize.width()) / static_cast<double>(srcSize.height());
+    int w = dstRect.width();
+    int h = static_cast<int>(w / srcAspect);
+    if (h > dstRect.height()) {
+        h = dstRect.height();
+        w = static_cast<int>(h * srcAspect);
+    }
+    const int x = dstRect.x() + (dstRect.width() - w) / 2;
+    const int y = dstRect.y() + (dstRect.height() - h) / 2;
+    return QRect(x, y, w, h);
+}
+
 void Show::dragEnterEvent(QDragEnterEvent *event)
 {
 //    if(event->mimeData()->hasFormat("text/uri-list"))
@@ -134,6 +174,20 @@ void Show::resizeEvent(QResizeEvent *event)
     Q_UNUSED(event);
 
     ChangeShow();
+}
+
+void Show::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+#if defined(__APPLE__)
+    QPainter painter(this);
+    painter.fillRect(rect(), Qt::black);
+    QMutexLocker locker(&m_frameMutex);
+    if (!m_frame.isNull()) {
+        QRect target = CalcAspectRect(m_frame.size(), rect());
+        painter.drawImage(target, m_frame);
+    }
+#endif
 }
 
 void Show::keyReleaseEvent(QKeyEvent *event)
@@ -189,11 +243,24 @@ void Show::OnDisplayMsg(QString strMsg)
 
 void Show::OnPlay(QString strFile)
 {
-    VideoCtl::GetInstance()->StartPlay(strFile, ui->label->winId());
+    setFocus(Qt::OtherFocusReason);
+#if !defined(__APPLE__)
+    ui->label->hide();
+#endif
+    VideoCtl::GetInstance()->StartPlay(strFile, winId());
 }
 
 void Show::OnStopFinished()
 {
+#if !defined(__APPLE__)
+    ui->label->show();
+#endif
+#if defined(__APPLE__)
+    {
+        QMutexLocker locker(&m_frameMutex);
+        m_frame = QImage();
+    }
+#endif
     update();
 }
 

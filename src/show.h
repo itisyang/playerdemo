@@ -20,6 +20,8 @@
 #include <QMenu>
 #include <QActionGroup>
 #include <QAction>
+#include <QImage>
+#include <QMutex>
 
 #include "videoctl.h"
 
@@ -61,6 +63,7 @@ protected:
      * @note
      */
     void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
 
     /**
      * @brief	按键事件
@@ -93,6 +96,7 @@ public:
      * @note
      */
     void OnFrameDimensionsChanged(int nFrameWidth, int nFrameHeight);
+    void OnVideoFrame(const QImage &frame);
 private:
 	/**
 	 * @brief	显示信息
@@ -114,6 +118,11 @@ private:
 
 
     void ChangeShow();
+
+    QRect CalcAspectRect(const QSize &srcSize, const QRect &dstRect) const;
+
+    QImage m_frame;
+    QMutex m_frameMutex;
 signals:
     void SigOpenFile(QString strFileName);///< 增加视频文件
 	void SigPlay(QString strFile); ///<播放

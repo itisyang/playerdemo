@@ -21,7 +21,9 @@ LIBS += -L$$PWD/lib/SDL2 \
     -lavformat \
     -lavutil \
     -lswresample \
-    -lswscale
+    -lswscale \
+    -L$$PWD/lib/windows-kits/lib \
+    -lOle32
 
 INCLUDEPATH += lib \
     lib/ffmpeg/include

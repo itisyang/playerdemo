@@ -312,6 +312,8 @@ void MainWid::OnFullScreenPlay()
 {
     if (m_bFullScreenPlay == false)
     {
+        // 全屏前隐藏 PlaylistWid，避免它留在旧位置被渲染到视频画面上
+        ui->PlaylistWid->hide();
         m_bFullScreenPlay = true;
         m_stActFullscreen.setChecked(true);
         //脱离父窗口后才能设置
@@ -364,6 +366,8 @@ void MainWid::OnFullScreenPlay()
 
         ui->CtrlBarWid->showNormal();
         ui->ShowWid->showNormal();
+        // 退出全屏时显示 PlaylistWid
+        ui->PlaylistWid->show();
 
         m_stFullscreenMouseDetectTimer.stop();
         this->setFocus();

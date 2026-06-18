@@ -13,7 +13,7 @@
 
 #pragma once
 
-#ifdef _windows_
+#if defined(_WIN32)
 #include <windows.h>
 #include <objbase.h>
 #endif
